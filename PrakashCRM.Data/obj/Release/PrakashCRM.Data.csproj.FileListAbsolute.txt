@@ -1,0 +1,27 @@
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\bin\Release\PrakashCRM.Data.dll
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\bin\Release\PrakashCRM.Data.pdb
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\bin\Release\Newtonsoft.Json.dll
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\bin\Release\Newtonsoft.Json.xml
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.AssemblyReference.cache
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CoreCompileInputs.cache
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CopyComplete
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\obj\Release\PrakashCRM.Data.dll
+D:\Nishant\Projects\PrakashCRM\Project\Final PrakashCRM - NewTemp\Final PrakashCRM - NewTemp\PrakashCRM.Data\obj\Release\PrakashCRM.Data.pdb
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\bin\Release\PrakashCRM.Data.dll
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\bin\Release\PrakashCRM.Data.pdb
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\bin\Release\Newtonsoft.Json.dll
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\bin\Release\Newtonsoft.Json.xml
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.AssemblyReference.cache
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CoreCompileInputs.cache
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CopyComplete
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\obj\Release\PrakashCRM.Data.dll
+D:\Nishant\Projects\PrakashCRM\Project\Updated\SalesPerson PrakashCRM\PrakashCRM.Data\obj\Release\PrakashCRM.Data.pdb
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\PrakashCRM.Data.dll
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\PrakashCRM.Data.pdb
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\Newtonsoft.Json.dll
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\Newtonsoft.Json.xml
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.AssemblyReference.cache
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CoreCompileInputs.cache
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CopyComplete
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.dll
+D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.pdb

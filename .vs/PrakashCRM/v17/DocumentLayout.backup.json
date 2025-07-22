@@ -1,0 +1,212 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BF410FDF-E32A-4445-8BBE-BDDCD0671C34}|PrakashCRM.Data\\PrakashCRM.Data.csproj|c:\\users\\pradumanprajapati\\documents\\github\\prakashcrm_salesperson\\prakashcrm.data\\models\\spwarehouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BF410FDF-E32A-4445-8BBE-BDDCD0671C34}|PrakashCRM.Data\\PrakashCRM.Data.csproj|solutionrelative:prakashcrm.data\\models\\spwarehouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm\\views\\spwarehouse\\warehousecard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\spwarehouse\\warehousecard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm.service\\controllers\\spwarehousecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|solutionrelative:prakashcrm.service\\controllers\\spwarehousecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\spwarehouselist.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\spwarehouselist.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\spwarehousecard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\spwarehousecard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm\\controllers\\spgrncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\controllers\\spgrncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\spgrncard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\spgrncard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm.service\\controllers\\spgrncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|solutionrelative:prakashcrm.service\\controllers\\spgrncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BF410FDF-E32A-4445-8BBE-BDDCD0671C34}|PrakashCRM.Data\\PrakashCRM.Data.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm.data\\models\\spgrn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BF410FDF-E32A-4445-8BBE-BDDCD0671C34}|PrakashCRM.Data\\PrakashCRM.Data.csproj|solutionrelative:prakashcrm.data\\models\\spgrn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\prakashcrm\\views\\spgrn\\grncard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\spgrn\\grncard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\obj\\Release\\AspnetCompileMerge\\Source\\Views\\SPWarehouse\\WarehouseList.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PrakashCRM\\obj\\Release\\AspnetCompileMerge\\Source\\Views\\SPWarehouse\\WarehouseList.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SPWarehouseController.cs",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SPWarehouseController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Service\\Controllers\\SPWarehouseController.cs",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SPWarehouseController.cs",
+              "RelativeToolTip": "PrakashCRM.Service\\Controllers\\SPWarehouseController.cs",
+              "ViewState": "AgIAAIwCAAAAAAAAAAASwJYCAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T07:37:59.441Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WarehouseCard.cshtml",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPWarehouse\\WarehouseCard.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\SPWarehouse\\WarehouseCard.cshtml",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPWarehouse\\WarehouseCard.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\SPWarehouse\\WarehouseCard.cshtml",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAWwKsAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-22T07:37:59.652Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SPWarehouse.cs",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM.Data\\Models\\SPWarehouse.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Data\\Models\\SPWarehouse.cs",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM.Data\\Models\\SPWarehouse.cs",
+              "RelativeToolTip": "PrakashCRM.Data\\Models\\SPWarehouse.cs",
+              "ViewState": "AgIAANQAAAAAAAAAAIAwwN8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T07:37:59.656Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SPWarehouseCard.js",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPWarehouseCard.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\SPWarehouseCard.js",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPWarehouseCard.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\SPWarehouseCard.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-22T07:37:59.657Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SPGRN.cs",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM.Data\\Models\\SPGRN.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Data\\Models\\SPGRN.cs",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM.Data\\Models\\SPGRN.cs",
+              "RelativeToolTip": "PrakashCRM.Data\\Models\\SPGRN.cs",
+              "ViewState": "AgIAAFcBAAAAAAAAAAA6wHABAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T07:37:59.664Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SPGRNController.cs",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SPGRNController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Service\\Controllers\\SPGRNController.cs",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SPGRNController.cs",
+              "RelativeToolTip": "PrakashCRM.Service\\Controllers\\SPGRNController.cs",
+              "ViewState": "AgIAACIDAAAAAAAAAAAAADkDAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T07:37:59.665Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SPGRNController.cs",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPGRNController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM\\Controllers\\SPGRNController.cs",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPGRNController.cs",
+              "RelativeToolTip": "PrakashCRM\\Controllers\\SPGRNController.cs",
+              "ViewState": "AgIAACsBAAAAAAAAAAAIwDIBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T07:37:59.68Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GRNCard.cshtml",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPGRN\\GRNCard.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\SPGRN\\GRNCard.cshtml",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPGRN\\GRNCard.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\SPGRN\\GRNCard.cshtml",
+              "ViewState": "AgIAAEoBAAAAAAAAAAAEwGMBAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-22T09:02:03.129Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SPWarehouseList.js",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPWarehouseList.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\SPWarehouseList.js",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPWarehouseList.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\SPWarehouseList.js",
+              "ViewState": "AgIAAOwAAAAAAAAAAAAAwPoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-22T11:40:56.995Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "WarehouseList.cshtml",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\obj\\Release\\AspnetCompileMerge\\Source\\Views\\SPWarehouse\\WarehouseList.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\obj\\Release\\AspnetCompileMerge\\Source\\Views\\SPWarehouse\\WarehouseList.cshtml",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\obj\\Release\\AspnetCompileMerge\\Source\\Views\\SPWarehouse\\WarehouseList.cshtml",
+              "RelativeToolTip": "PrakashCRM\\obj\\Release\\AspnetCompileMerge\\Source\\Views\\SPWarehouse\\WarehouseList.cshtml",
+              "ViewState": "AgIAADwAAAAAAAAAAAAEwEEAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-22T09:56:09.08Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SPGRNCard.js",
+              "DocumentMoniker": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPGRNCard.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\SPGRNCard.js",
+              "ToolTip": "C:\\Users\\PradumanPrajapati\\Documents\\GitHub\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPGRNCard.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\SPGRNCard.js",
+              "ViewState": "AgIAAGwBAAAAAAAAAAAIwJQBAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-22T08:52:52.914Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
