@@ -658,7 +658,8 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_Mobile_No_ = transferLine.PCPL_Driver_Mobile_No_;
                             sPWarehouseCard.PCPL_Driver_License_No_ = transferLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = transferLine.PCPL_Remarks;
-                           
+                            sPWarehouseCard.PackingQty = transferLine.PCPL_Packing_Qty_;
+
                         }
                         warehouseCardLine.Add(new WarehouseCardLine
                         {
@@ -670,7 +671,8 @@ namespace PrakashCRM.Service.Controllers
                             PackingUOM = transferLine.PCPL_Packing_UOM,
                             PackingStyle = transferLine.PCPLPackingStyleDescription_SalesLine,
                             TransportQty = transferLine.Transport_Quantity_Line,
-                            
+                            PackingQty = transferLine.PCPL_Packing_Qty_
+
 
                         });
 
