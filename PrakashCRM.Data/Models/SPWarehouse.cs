@@ -351,6 +351,7 @@ namespace PrakashCRM.Data.Models
         public string PCPL_Remarks { get; set; }
         public string ToArea { get; set; }
         public string FromArea { get; set; }
+        public dynamic PackingQty { get; set; }
     }
 
     public class WarehouseCardLine
