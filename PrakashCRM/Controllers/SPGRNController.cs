@@ -314,23 +314,29 @@ namespace PrakashCRM.Controllers
 
             return flag;
         }
-        public async Task<JsonResult> GetMakeMfgCodeAndName()
-        {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPGRN/GetMakeMfgCodeAndName";
-            HttpClient Client = new HttpClient();
-            List<SPGRNVendors> makemfgcode = new List<SPGRNVendors>();
-            Client.BaseAddress = new Uri(apiUrl);
-            Client.DefaultRequestHeaders.Accept.Clear();
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await Client.GetAsync(apiUrl);
+        [HttpPost]
+        public async Task<JsonResult> GetMakeMfgCodeAndName(string prefix)
+        {
+           string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPGRN/GetMakeMfgCodeAndName?prefix=" + prefix;
+
+            HttpClient client = new HttpClient();
+            List<SPGRNVendors> makemfgcode = new List<SPGRNVendors>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
             if (response.IsSuccessStatusCode)
             {
-                var data = await response.Content?.ReadAsStringAsync();
+                var data = await response.Content.ReadAsStringAsync();
                 makemfgcode = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPGRNVendors>>(data);
             }
+
             return Json(makemfgcode, JsonRequestBehavior.AllowGet);
         }
+
 
     }
 }

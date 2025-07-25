@@ -1,17 +1,18 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PrakashCRM.Data.Models;
 using PrakashCRM.Service.Classes;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Net.Http.Headers;
-using System.Globalization;
 
 namespace PrakashCRM.Service.Controllers
 {
@@ -515,7 +516,6 @@ namespace PrakashCRM.Service.Controllers
                 {
                     foreach (SPGRNCardLineRequest lineRequest in sPGRNCardLineRequests)
                     {
-
                         var resultLine = (dynamic)null;
                         lineRequest.bedate = dd_MM_yyyytoyyyy_MM_dd(lineRequest.bedate);
                         resultLine = PostGRNLine("APIMngt_GRNPostLines", lineRequest, resGRNSave);
@@ -822,18 +822,19 @@ namespace PrakashCRM.Service.Controllers
             }
             return (responseModel, errordetail);
         }
-        [HttpGet]
+
         [Route("GetMakeMfgCodeAndName")]
-        public List<SPGRNVendors> GetMakeMfgCodeAndName()
+        public List<SPGRNVendors> GetMakeMfgCodeAndName(string prefix)
         {
             API ac = new API();
             List<SPGRNVendors> makemfgcode = new List<SPGRNVendors>();
-            var result = ac.GetData<SPGRNVendors>("VendorDotNetAPI", "");
+            var result = ac.GetData<SPGRNVendors>("VendorDotNetAPI", "startswith(Name,'" + prefix + "')");
 
             if (result != null && result.Result.Item1.value.Count > 0)
                 makemfgcode = result.Result.Item1.value;
-
             return makemfgcode;
+
+
         }
     }
 }

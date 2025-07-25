@@ -243,7 +243,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label"> </label>
                                             <div class="col-sm-9">
-                                             </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -346,12 +346,13 @@
                                                             @if (Model.DocumentType == "Purchase Order")
                                                             {
                                                                 <td>
-                                                                    <div class="input-group">
-                                                                        <select id="ddlManufacturers_@line.LineNo" name="ddlManufacturers_@line.LineNo" value="@line.MakeMfgCode" class="form-select ddlManufacturers" style="width:180px;" data-lineno="@line.LineNo">
-                                                                            <option value=""> </option>
-                                                                        </select>
+                                                                    <div class="" id="spinnerId_@line.LineNo" style="width: 200px;">
+                                                                        <span class="input-group-text" id="loader_@line.LineNo" style="display: none;">
+                                                                            <span class="spinner-border spinner-border-sm text-primary"></span>
+                                                                        </span>
+                                                                        <input type="text" id="txtManufacturer_@line.LineNo" onkeyup="ManufacturerAutocompleteAPI('txtManufacturer_' + @line.LineNo)" class="form-control" data-lineno="@line.LineNo" placeholder="Type Manufacturer Name" value="@line.MfgName" />
                                                                     </div>
-                                                                    <input type="hidden" id="hdnManufacturerNo_@line.LineNo" name="hdnManufacturerNo_@line.LineNo" value="" />
+                                                                        <input type="hidden" id="hdnManufacturerNo_@line.LineNo" name="hdnManufacturerNo_@line.LineNo" value="@line.MakeMfgCode|@line.MfgName" />
                                                                 </td>
                                                             }
                                                             <td>@line.HSNSACCode</td>
