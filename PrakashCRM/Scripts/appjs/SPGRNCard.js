@@ -7,27 +7,18 @@ $(document).ready(function () {
         selectYears: true,
         format: 'dd-mm-yyyy'
     });
-
     ShowHideFields($('#lblDocumentType').html());
     $('.btn-close').click(function () {
         $('#modalItemTracking').css('display', 'none');
     });
-
-    $('.ddlManufacturers').each(function () {
-        var lineNo = $(this).data("lineno");
-        BindMakeMgfCodeName(lineNo);
-    });
-    $(document).on("change", ".ddlManufacturers", function () {
-        var lineNo = $(this).data("lineno");
-        var selectedVal = $(this).val();
-
-        if (selectedVal == "-1") {
-            $('#hdnManufacturerNo_' + lineNo).val("0");
-        } else {
-            $('#hdnManufacturerNo_' + lineNo).val(selectedVal);
-        }
-    });
 });
+var delay = (function () {
+    var timer = 0;
+    return function (callback, ms) {
+        clearTimeout(timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
 
 function ShowErrMsg(errMsg) {
 
@@ -43,7 +34,6 @@ function ShowErrMsg(errMsg) {
     });
 
 }
-
 function ShowActionMsg(actionMsg) {
 
     Lobibox.notify('success', {
@@ -126,8 +116,21 @@ function SaveGRN() {
         const bedate = document.querySelector(`input[name="txtBillOfEntryDate_${lineNo}"]`);
         const remarks = document.querySelector(`input[name="txtRemarks_${lineNo}"]`);
         const concentrationratepercent = document.querySelector(`input[name="txtConcentrationRatePercent_${lineNo}"]`);
-        const mfgname = document.querySelector(`input[name="txtMfgName_${lineNo}"]`);
-        const makeMfgCode = document.querySelector(`input[name="txtMakeMfgCode_${lineNo}"]`);
+        // Save MakeMfgname/MgfCode
+        const manufacturerValue = $('#txtManufacturer_' + lineNo).val();
+        let mfgcode = "";
+        let makemfgname = "";
+        if (manufacturerValue && manufacturerValue.includes(" - ")) {
+            const parts = manufacturerValue.split(" - ");
+            makemfgname = parts[1].trim();
+            mfgcode = parts[0].trim();
+        } else {
+            makemfgname = manufacturerValue;
+            mfgcode = $('#hdnManufacturerNo_' + lineNo).val();
+        }
+        GRNLine.makemfgname = makemfgname;
+        GRNLine.mfgcode = mfgcode;
+
 
         GRNLine.documenttype = doctype;
         GRNLine.documentno = docnumber;
@@ -140,8 +143,7 @@ function SaveGRN() {
         GRNLine.bedate = bedate ? bedate.value : null;
         GRNLine.remarks = remarks ? remarks.value : "";
         GRNLine.concentratepercent = concentrationratepercent ? concentrationratepercent.value : "";
-        GRNLine.makemfgname = mfgname ? mfgname.value : "";
-        GRNLine.makemfgcode = makeMfgCode ? makeMfgCode.value : "";
+
 
         grnLines.push(GRNLine);
     });
@@ -389,24 +391,75 @@ function AddItemTrackingInGrid() {
     firstRow.find('input[type="text"]').val('');
 }
 function DeleteItemTrackingInGrid() {
-
     alert("Development under process..");
 }
+// Create Make/Mgf function 
+function ManufacturerAutocompleteAPI(LineDetailsLineNo) {
+    if (typeof ($.fn.autocomplete) === 'undefined') return;
 
-function BindMakeMgfCodeName(lineNo) {
-    $.ajax({
-        url: '/SPGRN/GetMakeMfgCodeAndName',
-        type: 'GET',
-        contentType: 'application/json',
-        success: function (data) {
-            var ddlId = '#ddlManufacturers_' + lineNo;
-            $(ddlId + ' option').remove();
+    const $input = $("#" + LineDetailsLineNo);
+    const lineNo = $input.data("lineno");
+    const $hiddenInput = $("#hdnManufacturerNo_" + lineNo);
+    const $loader = $("#loader_" + lineNo);
+    const $spinner = $("#spinnerId_" + lineNo);
 
-            var Makemfg = "<option value='-1'>---Select---</option>";
-            $.each(data, function (index, item) {
-                Makemfg += "<option value='" + item.No + "'>" + item.Name + "</option>";
-            });
-            $(ddlId).append(Makemfg);
+    if ($input.data("autocomplete-initialized")) {
+        if ($input.val().length >= 2) {
+            $input.autocomplete("search");
+        }
+        return;
+    }
+
+    $input.data("autocomplete-initialized", true);
+    $input.autocomplete({
+        serviceUrl: '/SPGRN/GetMakeMfgCodeAndName',
+        paramName: "prefix",
+        minChars: 2,
+        noCache: true,
+        ajaxSettings: {
+            type: "POST"
         },
+
+        onSearchStart: function () {
+            $spinner.addClass("input-group");
+            $loader.show();
+        },
+        transformResult: function (response) {
+            try {
+                $spinner.removeClass("input-group");
+                $loader.hide();
+                const parsed = $.parseJSON(response);
+                return {
+                    suggestions: $.map(parsed, function (item) {
+                        return {
+                            value: item.Name,
+                            data: item.No
+                        };
+                    })
+                };
+            } catch (e) {
+                console.error("Invalid autocomplete response", e);
+                return { suggestions: [] };
+            }
+        },
+
+        onSelect: function (suggestion) {
+            $input.val(suggestion.value);
+            $hiddenInput.val(suggestion.data);
+            return false;
+        },
+
+        onShow: function () {
+            setTimeout(() => {
+                $input.focus();
+            }, 10);
+        }
     });
+
+    $input.on('input', function () {
+        $hiddenInput.val('');
+    });
+    if ($input.val().length >= 2) {
+        $input.autocomplete("search");
+    }
 }

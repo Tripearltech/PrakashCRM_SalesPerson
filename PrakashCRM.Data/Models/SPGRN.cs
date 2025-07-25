@@ -302,6 +302,7 @@ namespace PrakashCRM.Data.Models
         public string remarks { get; set; }
         public decimal concentratepercent { get; set; }
         public string makemfgname { get; set; }
+        public string mfgcode { get; set; }
     }
 
     public class SPGRNSaveResponse
@@ -364,8 +365,8 @@ namespace PrakashCRM.Data.Models
     }
     public class SPGRNVendors
     {
-        public string No { get; set; }
         public string Name { get; set; }
+        public string No { get; set; }
     }
 }
 
