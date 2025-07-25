@@ -1106,7 +1106,7 @@ namespace PrakashCRM.Service.Controllers
                 lineno = lineno,
                 vendorno = vendorno
             };
-            result = PostCodeUnit("CodeunitEventMngt_CreatePOForProductIncharge", requestWarehouseSales, resWarehouseSales);
+            result = PostCodeUnit("APIMngt_CreatePOForProductIncharge", requestWarehouseSales, resWarehouseSales);
             if (result.Result.Item1 != null)
             {
                 msg = result.Result.Item1.value;
