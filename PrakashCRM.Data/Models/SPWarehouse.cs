@@ -397,6 +397,7 @@ namespace PrakashCRM.Data.Models
 
         public string Transporter_Name { get; set; }
         public string Contact_No { get; set; }
+        public bool Latest_Rate { get; set; }
 
     }
 

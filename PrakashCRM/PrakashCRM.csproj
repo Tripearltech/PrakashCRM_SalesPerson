@@ -1272,8 +1272,10 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\ng-table.js" />
     <Content Include="Scripts\ng-table.min.js" />
+    <Content Include="Scripts\reportjs\CustomerLedgerEntry.js" />
     <Content Include="Scripts\reportjs\InventoryView.js" />
     <Content Include="SPProfileImages\UserProfileImage.png" />
+    <Content Include="Views\SPReports\CustomerLedgerEntry.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1357,6 +1359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="CustomerLedgerEntryPrint\" />
     <Folder Include="Models\" />
     <Folder Include="SalespersonDocs\" />
     <Folder Include="SalesQuotePrint\" />

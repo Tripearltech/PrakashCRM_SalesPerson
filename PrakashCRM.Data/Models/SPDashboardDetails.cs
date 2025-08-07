@@ -75,4 +75,25 @@ namespace PrakashCRM.Data.Models
         public string enddate { get; set; }
     }
 
+    public class SPInwardDetails
+    {
+        public string PCPL_Vendor_Name { get; set; }
+        public string PCPL_Mfg_Name { get; set; }
+        public string Document_Type { get; set; }
+        public string Lot_No { get; set; }
+        public string PCPL_Remarks { get; set; }
+        public string Document_No { get; set; }
+        public string Posting_Date { get; set; }
+        public double Remaining_Quantity { get; set; }
+        public double Reserved_Quantity { get; set; }
+        public string Entry_Type { get; set; }
+        public double Quantity { get; set; }
+        public string Source_Description { get; set; }
+        public string PCPL_Salesperson_Code { get; set; }
+        public string PCPL_Original_Buying_Date { get; set; }
+        public int No_of_days { get; set; }
+        public double Cost_Amount_Actual { get; set; }
+        public string Item_Category_Code { get; set;}
+
+    }
 }
