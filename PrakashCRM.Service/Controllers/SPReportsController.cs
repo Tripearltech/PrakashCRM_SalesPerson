@@ -159,14 +159,11 @@ namespace PrakashCRM.Service.Controllers
 
         [HttpGet]
         [Route("GetInv_Inward")]
-        public List<SPInwardDetails> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName, string FromDate, string ToDate)
+        public List<SPInwardDetails> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName)
         {
             API ac = new API();
             List<SPInwardDetails> Inv_Inward = new List<SPInwardDetails>();
-
-            // Start building the filter with required Entry_Type
-            string filter = $"Entry_Type eq '{Entry_Type}'";
-
+            string filter = "";
             if (Document_Type == "''")
             {
                 filter += $"Entry_Type eq '{Entry_Type}'";
@@ -191,12 +188,21 @@ namespace PrakashCRM.Service.Controllers
                 filter += $" and Item_Description eq '{itemName}'";
             }
 
-            if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+           /* if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
             {
-                filter += $" and Posting_Date ge '{FromDate}' and Posting_Date le '{ToDate}'";
-            }
+                if (DateTime.TryParse(FromDate, out DateTime fromDateParsed) &&
+                    DateTime.TryParse(ToDate, out DateTime toDateParsed))
+                {
+                    string from = fromDateParsed.ToString("yyyy-MM-dd");
+                    string to = toDateParsed.ToString("yyyy-MM-dd");
+
+                    // No quotes around date
+                    filter += $" and Posting_Date ge {from} and Posting_Date le {to}";
+                }
+            }*/
 
             var ItemWiseResult = ac.GetData<SPInwardDetails>("ItemLedgerEntriesDotNetAPI", filter);
+
             if (ItemWiseResult != null && ItemWiseResult.Result.Item1.value.Count > 0)
             {
                 Inv_Inward = ItemWiseResult.Result.Item1.value;
@@ -211,9 +217,6 @@ namespace PrakashCRM.Service.Controllers
 
             return Inv_Inward;
         }
-
-
-
 
         // Customer Ledger Entry Pdf Api
         [HttpGet]

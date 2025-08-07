@@ -106,3 +106,12 @@ C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\o
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashC.3DFDDAF9.Up2Date
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.dll
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.pdb
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.dll
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.xml
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.AssemblyReference.cache
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.CoreCompileInputs.cache
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashC.3DFDDAF9.Up2Date
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
+C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb
