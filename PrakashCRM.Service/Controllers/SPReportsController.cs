@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PrakashCRM.Data.Models;
 using PrakashCRM.Service.Classes;
 using System;
@@ -7,17 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.Ajax.Utilities;
+using System.Xml.Linq;
 
 namespace PrakashCRM.Service.Controllers
 {
     [RoutePrefix("api/SPReports")]
     public class SPReportsController : ApiController
     {
-        [HttpPost]
+      [HttpPost]
         [Route("GenerateInvData")]
         public string GenerateInvData(string FromDate, string ToDate)
         {
@@ -90,7 +92,6 @@ namespace PrakashCRM.Service.Controllers
 
             return Inv_ItemWise;
         }
-
         public async Task<(SPInvGenerateDataOData, errorDetails)> PostItemForGenerateInvData<SPInvGenerateDataOData>(string apiendpoint, SPInvGenerateDataPost requestModel, SPInvGenerateDataOData responseModel)
         {
             string _baseURL = System.Configuration.ConfigurationManager.AppSettings["BaseURL"];
@@ -155,5 +156,168 @@ namespace PrakashCRM.Service.Controllers
             }
             return (responseModel, errordetail);
         }
+
+        [HttpGet]
+        [Route("GetInv_Inward")]
+        public List<SPInwardDetails> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName, string FromDate, string ToDate)
+        {
+            API ac = new API();
+            List<SPInwardDetails> Inv_Inward = new List<SPInwardDetails>();
+
+            // Start building the filter with required Entry_Type
+            string filter = $"Entry_Type eq '{Entry_Type}'";
+
+            if (Document_Type == "''")
+            {
+                filter += $"Entry_Type eq '{Entry_Type}'";
+            }
+            else
+            {
+                filter += $"Entry_Type eq '{Entry_Type}'";
+
+                if (!string.IsNullOrWhiteSpace(Document_Type))
+                {
+                    filter += $" and Document_Type eq '{Document_Type}'";
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(branchCode) && !string.IsNullOrWhiteSpace(pgCode))
+            {
+                filter += $" and Location_Code eq '{branchCode}' and Item_Category_Code eq '{pgCode}'";
+            }
+
+            if (!string.IsNullOrWhiteSpace(itemName))
+            {
+                filter += $" and Item_Description eq '{itemName}'";
+            }
+
+            if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+            {
+                filter += $" and Posting_Date ge '{FromDate}' and Posting_Date le '{ToDate}'";
+            }
+
+            var ItemWiseResult = ac.GetData<SPInwardDetails>("ItemLedgerEntriesDotNetAPI", filter);
+            if (ItemWiseResult != null && ItemWiseResult.Result.Item1.value.Count > 0)
+            {
+                Inv_Inward = ItemWiseResult.Result.Item1.value;
+            }
+
+            for (int i = 0; i < Inv_Inward.Count; i++)
+            {
+                DateTime buyingDate = Convert.ToDateTime(Inv_Inward[i].PCPL_Original_Buying_Date);
+                DateTime postingDate = Convert.ToDateTime(Inv_Inward[i].Posting_Date);
+                Inv_Inward[i].No_of_days = (buyingDate - postingDate).Days;
+            }
+
+            return Inv_Inward;
+        }
+
+
+
+
+        // Customer Ledger Entry Pdf Api
+        [HttpGet]
+        [Route("PrintCustomerLedgerEntryPostApi")]
+        public string PrintCustomerLedgerEntryPostApi(string CustomerNo, string FromDate,string ToDate)
+        {
+            var PrintCustomerLedgerReportResponse = new PrintCustomerLedgerReportResponse();
+
+            PrintCustomerLedgerReportRequest PrintCustomerLedgerReportRequest = new PrintCustomerLedgerReportRequest
+            {
+                customerno = CustomerNo,
+                fromdate = FromDate,
+                todate = ToDate,
+            };
+
+            var result = (dynamic)null;
+            result = PostCustomerLegerEntryPrint("ReportAPIMngtDotNetAPI_CustomerLedgerReportPrint", PrintCustomerLedgerReportRequest, PrintCustomerLedgerReportResponse);
+
+            var base64PDF = "";
+            if (result.Result.Item1 != null)
+            {
+                base64PDF = result.Result.Item1.value;
+
+            }
+            return base64PDF;
+        }
+
+        public async Task<(PrintCustomerLedgerReportResponse, errorDetails)> PostCustomerLegerEntryPrint <PrintCustomerLedgerReportRequest>(string apiendpoint, PrintCustomerLedgerReportRequest requestModel, PrintCustomerLedgerReportResponse responseModel)
+        {
+            string _codeUnitBaseUrl = System.Configuration.ConfigurationManager.AppSettings["CodeUnitBaseURL"];
+            string _tenantId = System.Configuration.ConfigurationManager.AppSettings["TenantID"];
+            string _environment = System.Configuration.ConfigurationManager.AppSettings["Environment"];
+            string _companyName = System.Configuration.ConfigurationManager.AppSettings["CompanyName"];
+
+            API ac = new API();
+            var accessToken = await ac.GetAccessToken();
+
+            HttpClient _httpClient = new HttpClient();
+            //string encodeurl = Uri.EscapeUriString(_baseURL.Replace("{TenantID}", _tenantId).Replace("{Environment}", _environment).Replace("{CompanyName}", _companyName) + apiendpoint);
+            string encodeurl = Uri.EscapeUriString(_codeUnitBaseUrl.Replace("{TenantID}", _tenantId).Replace("{Environment}", _environment).Replace("{CompanyName}", _companyName).Replace("{Endpoint}", apiendpoint));
+            Uri baseuri = new Uri(encodeurl);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken.Token);
+
+            string ItemCardObjString = JsonConvert.SerializeObject(requestModel);
+            var content = new StringContent(ItemCardObjString, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = null;
+            try
+            {
+                response = _httpClient.PostAsync(baseuri, content).Result;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            errorDetails errordetail = new errorDetails();
+            errordetail.isSuccess = response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                var JsonData = response.Content.ReadAsStringAsync().Result;
+                try
+                {
+                    JObject res = JObject.Parse(JsonData);
+                    responseModel = res.ToObject<PrintCustomerLedgerReportResponse>();
+
+                    errordetail.code = response.StatusCode.ToString();
+                    errordetail.message = response.ReasonPhrase;
+                }
+                catch (Exception ex1)
+                {
+                }
+            }
+            else
+            {
+                var JsonData = response.Content.ReadAsStringAsync().Result;
+
+                try
+                {
+                    JObject res = JObject.Parse(JsonData);
+                    errorMaster<errorDetails> emd = res.ToObject<errorMaster<errorDetails>>();
+                    errordetail = emd.error;
+                }
+                catch (Exception ex1)
+                {
+                }
+            }
+            return (responseModel, errordetail);
+        }
+
+
+        // Customer Report DrowDown Api.
+        [HttpGet]
+        [Route("GetCustomerReport")]
+        public List<SPCustomerReport> GetCustomerReport(string prefix)
+        {
+            API ac = new API();
+            List<SPCustomerReport> customerReports = new List<SPCustomerReport>();
+            var result = ac.GetData<SPCustomerReport>("CustomerCardDotNetAPI", "startswith(Name,'" + prefix + "')");
+
+            if (result != null && result.Result.Item1.value.Count > 0)
+
+                customerReports = result.Result.Item1.value;
+            return customerReports;
+
+        }
+
     }
 }

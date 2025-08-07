@@ -18,6 +18,7 @@ namespace PrakashCRM.Service.Controllers
     [RoutePrefix("api/SPWarehouse")]
     public class SPWarehouseController : ApiController
     {
+        public bool Latest_Rate { get; private set; }
         #region IncomingTask
 
         [Route("GetWarehouseSales")]
@@ -691,7 +692,7 @@ namespace PrakashCRM.Service.Controllers
             List<TransporterRateCard> transporterRateCards = new List<TransporterRateCard>();
 
             string filter = "";
-            string UOMfilter = "";//(UOM eq 'BAG' or UOM eq 'MT')
+            string UOMfilter = "";
             string[] packinguomlist = PackingUOMs.Trim().Split(',');
 
             if (packinguomlist.Length > 0)
@@ -701,25 +702,20 @@ namespace PrakashCRM.Service.Controllers
                     if (packinguomlist[i] != "")
                         UOMfilter += "UOM eq '" + packinguomlist[i] + "' or ";
                 }
-
-                //if (UOMfilter.EndsWith(" or "))
-                //{
-                //    UOMfilter = UOMfilter.Substring(0, UOMfilter.LastIndexOf(" or "));
-                //}
                 UOMfilter += " UOM eq ''";
-
                 UOMfilter = "(" + UOMfilter + ")";
             }
             else
             {
-                UOMfilter = " UOM eq ''";
+                UOMfilter = "UOM eq ''";
             }
 
-            if (TransporterNo == "" || TransporterNo == null)
-                filter = "From_Post_Code eq '" + FromPincode + "' and To_Post_Code eq '" + ToPincode + "' and " + UOMfilter;
+            string latestRateFilter = "Latest_Rate eq true";
 
-            if (TransporterNo != "" && TransporterNo != null)
-                filter = "From_Post_Code eq '" + FromPincode + "' and To_Post_Code eq '" + ToPincode + "' and Transporter_No eq '" + TransporterNo + "' and " + UOMfilter;
+            if (string.IsNullOrEmpty(TransporterNo))
+            {
+                filter+= $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and {latestRateFilter}";
+            }
 
             var result = ac.GetData1<TransporterRateCard>("Transporter_Rate_Details", filter, 0, 0, "Rate_Effective_Date desc");
 
@@ -729,14 +725,15 @@ namespace PrakashCRM.Service.Controllers
             return transporterRateCards;
         }
 
+
         [Route("GetContactOfCompany")]
         public List<WarehouseCardDrivers> GetContactOfCompany(string No)
         {
             API ac = new API();
             List<WarehouseCardDrivers> warehouseCardDrivers = new List<WarehouseCardDrivers>();
 
-            var result = ac.GetData<WarehouseCardDrivers>("ContactDotNetAPI", "Company_No eq '" + No + "' and Type eq 'Person'");
 
+            var result = ac.GetData<WarehouseCardDrivers>("ContactDotNetAPI", "Company_No eq '" + No + "' and Type eq 'Person'");
             if (result.Result.Item1.value.Count > 0)
                 warehouseCardDrivers = result.Result.Item1.value;
 
