@@ -38,7 +38,7 @@ namespace PrakashCRM.Controllers
             var Model = new SPCustomerReport
             {
                 Name = "",
-                No = "",   
+                No = "",
             };
 
             return View(Model);
@@ -64,7 +64,7 @@ namespace PrakashCRM.Controllers
 
             return Json(InvBranchWiseTotals, JsonRequestBehavior.AllowGet);
         }
-
+        [HttpGet]
         public async Task<JsonResult> GetInv_ProductGroupsWise(string branchCode)
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPReports/GetInv_ProductGroupsWise?branchCode=" + branchCode;
@@ -82,6 +82,9 @@ namespace PrakashCRM.Controllers
             }
             return Json(Inv_ProductGroupsWise, JsonRequestBehavior.AllowGet);
         }
+        
+
+        [HttpGet]
         public async Task<JsonResult> GetInv_ItemWise(string branchCode, string pgCode)
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPReports/GetInv_ItemWise?branchCode=" + branchCode + "&pgCode=" + pgCode;
@@ -102,7 +105,8 @@ namespace PrakashCRM.Controllers
 
             return Json(Inv_ItemWise, JsonRequestBehavior.AllowGet);
         }
-        public async Task<JsonResult> GetInv_Inward(string Entry_Type, string Document_Type,string branchCode,string pgCode,string itemName)
+        
+        public async Task<JsonResult> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName)
         {
             string baseUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString();
             string apiUrl = baseUrl + "SPReports/GetInv_Inward?" + "Entry_Type=" + HttpUtility.UrlEncode(Entry_Type) + "&Document_Type=" + HttpUtility.UrlEncode(Document_Type) + "&branchCode=" + HttpUtility.UrlEncode(branchCode) + "&pgCode=" + HttpUtility.UrlEncode(pgCode) + "&itemName=" + HttpUtility.UrlEncode(itemName);
@@ -129,21 +133,28 @@ namespace PrakashCRM.Controllers
         [HttpPost]
         public async Task<string> PrintCustomerLedgerEntryPostApi(string CustomerNo, string FromDate, string ToDate)
         {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPReports/";
-
-            apiUrl = apiUrl + "PrintCustomerLedgerEntryPostApi?CustomerNo=" + CustomerNo + "&FromDate=" + FromDate + "&ToDate=" + ToDate;
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() +
+                $"SPReports/PrintCustomerLedgerEntryPostApi?CustomerNo={CustomerNo}&FromDate={FromDate}&ToDate={ToDate}";
 
             HttpClient client = new HttpClient();
             string savedPath = "";
+
+            // Generate unique file name using CustomerNo + FromDate + ToDate
+            string expectedFileName = $"{CustomerNo}_{FromDate}_{ToDate}"
+                                        .Replace("/", "-")
+                                        .Replace(":", "-")
+                                        .Replace(" ", "_");
 
             string path = Server.MapPath("~/CustomerLedgerEntryPrint/");
 
             DirectoryInfo di = new DirectoryInfo(path);
             FileInfo[] smFiles = di.GetFiles("*.*");
             bool flag = false;
+
+            // Check if file already exists
             foreach (FileInfo smFile in smFiles)
             {
-                if (Path.GetFileNameWithoutExtension(smFile.Name) == CustomerNo)
+                if (Path.GetFileNameWithoutExtension(smFile.Name).Equals(expectedFileName, StringComparison.OrdinalIgnoreCase))
                 {
                     flag = true;
                     savedPath = smFile.Name;
@@ -152,43 +163,48 @@ namespace PrakashCRM.Controllers
             }
 
             if (flag)
+            {
                 return savedPath;
+            }
             else
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
-                    var base64PDF = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(data);
-                    savedPath = SaveBase64ToPdf(base64PDF, "CustomerLedgerEntryPrint", CustomerNo);
+                    var base64PDF = JsonConvert.DeserializeObject<string>(data);
+                    savedPath = SaveBase64ToPdf(base64PDF, "CustomerLedgerEntryPrint", expectedFileName);
                 }
                 else
                 {
-                    var JsonData = response.Content.ReadAsStringAsync().Result;
+                    var JsonData = await response.Content.ReadAsStringAsync(); // For debugging/logging if needed
                 }
+
                 return savedPath;
             }
-
         }
 
         public string SaveBase64ToPdf(string base64String, string relativeFolderPath, string fileNameWithoutExtension)
         {
             string projectRoot = Server.MapPath("~/");
             string fullFolderPath = Path.Combine(projectRoot, relativeFolderPath);
+
             if (!Directory.Exists(fullFolderPath))
             {
                 Directory.CreateDirectory(fullFolderPath);
             }
+
             string filePath = Path.Combine(fullFolderPath, $"{fileNameWithoutExtension}.pdf");
             byte[] pdfBytes = Convert.FromBase64String(base64String);
             System.IO.File.WriteAllBytes(filePath, pdfBytes);
 
             return $"{fileNameWithoutExtension}.pdf";
         }
+
 
         // Customer Report DrowDown Api.
 
