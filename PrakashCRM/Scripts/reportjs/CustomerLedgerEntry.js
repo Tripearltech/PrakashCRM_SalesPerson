@@ -46,8 +46,8 @@ function CustomerEntrypdfApi() {
 
 function CustomerEntryAutocompleteAPI() {
 	if (typeof ($.fn.autocomplete) === 'undefined') return;
-	/*const $loader = $("#loader");
-	const $spinner = $("#spinnerId");*/
+	const $loader = $("#loader");
+	const $spinner = $("#spinnerId");
 	$('#txtCustomerName').autocomplete({
 		serviceUrl: '/SPReports/GetCustomerReport',
 		paramName: "prefix",
@@ -60,7 +60,18 @@ function CustomerEntryAutocompleteAPI() {
 			$("#hdntxtCustomerNo").val(suggestion.data);
 			$("#txtCustomerName").val(suggestion.value);
 		},
+		onShow: function () {
+			setTimeout(() => {
+				$input.focus();
+			}, 10);
+		},
+		onSearchStart: function () {
+			$spinner.addClass("input-group");
+			$loader.show();
+		},
 		transformResult: function (response) {
+			$spinner.removeClass("input-group");
+			$loader.hide();
 			var json;
 			try {
 				json = $.parseJSON(response);
