@@ -46,7 +46,8 @@ function CustomerEntrypdfApi() {
 
 function CustomerEntryAutocompleteAPI() {
 	if (typeof ($.fn.autocomplete) === 'undefined') return;
-
+	/*const $loader = $("#loader");
+	const $spinner = $("#spinnerId");*/
 	$('#txtCustomerName').autocomplete({
 		serviceUrl: '/SPReports/GetCustomerReport',
 		paramName: "prefix",

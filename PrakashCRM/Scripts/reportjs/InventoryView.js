@@ -136,13 +136,14 @@ function BindInvBranchWiseTotals() {
                     $row.empty();
                     $icon.removeClass('bx-plus-circle').addClass('bx-minus-circle');
 
-                    if ($itemRows.length === 0) {
+                    if ($itemRows.length === 0 || $itemRows.length === 1) {
                         loadItems(branchIndex, pgIndex, $row);
                     } else {
                         $itemRows.show();
                     }
                 }
             });
+
 
             // Quantity click handler for pop-up
             $tbl.on('click', '.quantity-link', function (e) {
