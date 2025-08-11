@@ -121,7 +121,10 @@
                                     <th>Quote Date</th>
                                     <th>Customer Name</th>
                                     <th>Payment Terms</th>
+                                    <th hidden>ApprovalFor</th>
                                     <th></th>
+                                    <th>Salesperson Code</th>
+                                    <th hidden>Salesperson Email</th>
                                 </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -135,12 +138,16 @@
                                     <th>Quote Date</th>
                                     <th>Customer Name</th>
                                     <th>Payment Terms</th>
+                                    <th hidden>ApprovalFor</th>
                                     <th></th>
+                                    <th>Salesperson Code</th>
+                                    <th hidden>Salesperson Email</th>
                                 </tr>
                             </tfoot>
                         </table>
                         <input id="hdnLoggedInUserNo" value="@Session["loggedInUserNo"]" style="display:none" />
                         <input id="hdnLoggedInUserSPCode" value="@Session["loggedInUserSPCode"]" style="display:none" />
+                        <input id="hdnLoggedInUserEmail" value="@Session["loggedInUserEmail"]" style="display:none" />
                         <input id="hdnLoggedInUserRole" value="@Session["loggedInUserRole"]" style="display:none" />
                         <input id="hdnSPSQCount" style="display:none" />
                         <div id="orderInfo"></div>
@@ -199,32 +206,85 @@
                     </div>
                 </div>
                 <br />
-                <div class="row g-3">
-                    <div class="col-md-12">
-                        <div class="row mb-3">
-                            <div class="col-sm-12">
-                                <table class="table mb-0 table-striped">
-                                    <thead>
+                <div id="dvAprDetailsFinanceUser" style="display:none">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <table class="table mb-0 table-striped">
                                         <tr>
-                                            <th scope="col">Product No</th>
-                                            <th scope="col">Product Name</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Packing Style</th>
-                                            <th scope="col">UOM</th>
-                                            <th scope="col">MRP</th>
-                                            <th scope="col">Unit Price(Sales Price)</th>
-                                            <th scope="col">Drop Shipment</th>
-                                            @*<th scope="col">Vendor</th>*@
+                                            <td style="font-weight:bold">Customer Name</td>
+                                            <td>Abc Pvt Ltd</td>
                                         </tr>
-                                    </thead>
-                                    <tbody id="tblSQProduct">
-                                    </tbody>
-                                </table>
+                                        <tr>
+                                            <td style="font-weight:bold">Justification For</td>
+                                            <td>Credit Limit/Margin/Both</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Justification Reason</td>
+                                            <td>Reason for justification</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Trader/Mfg</td>
+                                            <td>Trader/Mfg details</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Total Expo</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Overdue</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Avg Delay Days</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Approve/Reject</td>
+                                            <td>Approved/Rejected</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Location</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+                <div id="dvAprDetailsRPerson" style="display:none">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <table class="table mb-0 table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Product No</th>
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Packing Style</th>
+                                                <th scope="col">UOM</th>
+                                                <th scope="col">MRP</th>
+                                                <th scope="col">Unit Price(Sales Price)</th>
+                                                <th scope="col">Payment Terms</th>
+                                                <th scope="col">Delivery Date</th>
+                                                <th scope="col">Total Cost</th>
+                                                <th scope="col">Margin</th>
+                                                <th scope="col">Drop Shipment</th>
+                                                @*<th scope="col">Vendor</th>*@
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblSQProduct">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -288,3 +348,10 @@
 </div>
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/appjs/SQListForApproveReject.js"></script>
+<script>
+    function RedirectToSQCard(SQNo, ScheduleStatus, SQStatus, SQFor, LoggedInUserRole) {
+
+        window.location.replace('@Url.Action("SalesQuote", "SPSalesQuotes")?SQNo=' + SQNo + '&ScheduleStatus=' + ScheduleStatus + '&SQStatus=' + SQStatus + '&SQFor=' + SQFor + '&LoggedInUserRole=' + LoggedInUserRole);
+
+    }
+</script>

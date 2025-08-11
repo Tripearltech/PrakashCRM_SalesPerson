@@ -380,7 +380,7 @@ function SetLoaingUnloading() {
     else if (doctype == "Purchase Order") {
         filter = "Code eq '" + tocode + "'";
     }
-    else if (doctype == "Transfer Order") {
+    else if (doctype == "Transfer Order" || doctype == "Sales Return") {
         filter = "(Code eq '" + fromcode + "' or Code eq '" + tocode + "')";
     }
 

@@ -162,11 +162,14 @@
                                                     // Initialize a variable to store the concatenated PackingUOM values
                                                     var packingUOMs = "";
                                                     decimal totalQty = 0;
+                                                    decimal totalGrossWeight = 0;
                                                 }
+
                                                 @foreach (var line in Model.warehouseCardLines)
                                                 {
                                                     packingUOMs += line.PackingUOM + " ";
                                                     totalQty = totalQty + @line.Qty;
+                                                    totalGrossWeight = totalGrossWeight + @line.GrossWeightperunit;
                                                     <tr>
                                                         <td>@line.ItemNo</td>
                                                         <td>@line.ItemDescription</td>
@@ -179,11 +182,16 @@
                                                         <td>@line.PackingQty</td>
                                                     </tr>
                                                 }
-                                                @* @if (packingUOMs.EndsWith(", "))
-                                                    {
-                                                        packingUOMs = packingUOMs.Substring(0, packingUOMs.Length - 2);
 
-                                                    }*@
+                                                @{
+                                                    totalQty = totalQty * totalGrossWeight;
+                                                }
+
+                                                @* @if (packingUOMs.EndsWith(", "))
+                                                {
+                                                    packingUOMs = packingUOMs.Substring(0, packingUOMs.Length - 2);
+
+                                                }*@
                                             </tbody>
                                         </table>
                                     </div>

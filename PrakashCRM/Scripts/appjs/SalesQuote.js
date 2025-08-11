@@ -1,4 +1,5 @@
 ﻿var apiUrl = $('#getServiceApiUrl').val() + 'SPSalesQuotes/';
+var InqNo = "", SQNo = "", ScheduleStatus = "", SQStatus = "", SQFor = "", LoggedInUser = "";
 
 $(document).ready(function () {
 
@@ -96,8 +97,6 @@ $(document).ready(function () {
     BindTransportMethod();
     BindVendors();
 
-    var InqNo = "", SQNo = "", ScheduleStatus = "";
-
     if (UrlVars["InquiryNo"] != undefined) {
         
         InqNo = UrlVars["InquiryNo"];
@@ -137,11 +136,28 @@ $(document).ready(function () {
         
     }
 
-    if (UrlVars["SQNo"] != undefined && UrlVars["ScheduleStatus"] != undefined) {
-        
+    if (UrlVars["SQNo"] != undefined && UrlVars["ScheduleStatus"] != undefined && UrlVars["SQStatus"] != undefined
+        && UrlVars["SQFor"] != undefined && UrlVars["LoggedInUserRole"] != undefined && 
+        UrlVars["LoggedInUserRole"] != "") {
+
         SQNo = UrlVars["SQNo"];
         ScheduleStatus = UrlVars["ScheduleStatus"];
-        GetSalesQuoteDetailsAndFill(SQNo, ScheduleStatus);
+        SQStatus = UrlVars["SQStatus"];
+        SQFor = UrlVars["SQFor"];
+        LoggedInUserRole = UrlVars["LoggedInUserRole"];
+        GetSalesQuoteDetailsAndFill(SQNo, ScheduleStatus, SQStatus, SQFor, LoggedInUserRole);
+
+    }
+    else if (UrlVars["SQNo"] != undefined && UrlVars["ScheduleStatus"] != undefined && UrlVars["SQStatus"] != undefined
+        && UrlVars["SQFor"] != undefined && UrlVars["LoggedInUserRole"] == "") {
+
+        SQNo = UrlVars["SQNo"];
+        ScheduleStatus = UrlVars["ScheduleStatus"];
+        SQStatus = UrlVars["SQStatus"];
+        SQFor = UrlVars["SQFor"];
+        LoggedInUserRole = $('#hdnLoggedInUserRole').val();
+        GetSalesQuoteDetailsAndFill(SQNo, ScheduleStatus, SQStatus, SQFor, LoggedInUserRole);
+
     }
 
     //$('#ddlInquiries').change(function () {
@@ -1160,6 +1176,8 @@ $(document).ready(function () {
 
     });
 
+
+
     //$('#btnAddQty').click(function () {
 
     //    var errMsg = "";
@@ -1717,6 +1735,36 @@ $(document).ready(function () {
 
     });
 
+    $('#btnCloseApproveRejectMsg').click(function () {
+
+        $('#modalApproveRejectMsg').css('display', 'none');
+        $('#lblApproveRejectMsg').text("");
+        RedirectToSQApproval();
+
+    });
+
+    $('#btnReject').click(function () {
+
+        $('#modalRejectRemarks').css('display', 'block');
+
+    });
+
+    $('#btnConfirmReject').click(function () {
+
+        if ($('#txtRejectRemarks').val() == "") {
+            $('#lblRemarksMsg').text("Please Fill Remarks");
+        }
+        else {
+            ApproveRejectSQ("Reject", $('#txtRejectRemarks').val());
+        }
+
+    });
+
+    $('#btnCloseModalRejectRemarks').click(function () {
+
+        $('#modalRejectRemarks').css('display', 'none');
+
+    });
 
 });
 
@@ -2223,6 +2271,12 @@ function GetCreditLimitAndCustDetails(companyName) {
                     $('#txtAvailableCreditLimit').val(data.AvailableCredit).prop('disabled', true);
                     $('#txtOutstandingDue').val(data.OutstandingDue).prop('disabled', true);
                     $('#hfUsedCreditLimit').val(data.UsedCreditLimit);
+                    $('#hdnCustBalanceLCY').val(data.AccountBalance);
+
+                    if (SQFor == "ApproveReject") {
+                        $('#tdOverdue').text($('#txtOutstandingDue').val());
+                        $('#tdTotalExpo').text($('#hdnCustBalanceLCY').val());
+                    }
 
                     $('#ddlConsigneeAddress option').remove();
                     var consigneeAddOpts = "<option value='-1'>---Select---</option>";
@@ -2632,7 +2686,7 @@ function BindGSTPlaceOfSupply() {
 
 //}
 
-function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus) {
+function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQFor, LoggedInUserRole) {
 
     var apiUrl = $('#getServiceApiUrl').val() + 'SPSalesQuotes/';
     //$.get(apiUrl + "GetSalesQuoteFromNo?SQNo=" + $('#hfSalesQuoteNo').val(), function (data) {
@@ -2656,6 +2710,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus) {
             $('#hfSavedPaymentMethod').val(data.PaymentMethodCode);
             //$('#hfSavedTransportMethod').val(data.TransportMethodCode);
             $('#hfPaymentTerms').val(data.PaymentTermsCode);
+            $('#hdnSalespersonEmail').val(data.SalespersonEmail);
+            $('#hdnApprovalFor').val(data.ApprovalFor);
             BindPaymentTerms();
             //$('#ddlPaymentTerms').val(data.PaymentTermsCode);
             $('#hfSavedIncoTerms').val(data.ShipmentMethodCode);
@@ -2685,6 +2741,16 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus) {
             }
             else {
                 //$('#chkIsShortclose').prop('checked', false);
+                $('#btnSaveProd').prop('disabled', false);
+                $('#btnSave').prop('disabled', false);
+            }
+
+            if (data.Status == "Approval pending from finance" || data.Status == "Approval pending from HOD"
+                || data.Status == "Approved") {
+                $('#btnSaveProd').prop('disabled', true);
+                $('#btnSave').prop('disabled', true);
+            }
+            else {
                 $('#btnSaveProd').prop('disabled', false);
                 $('#btnSave').prop('disabled', false);
             }
@@ -2782,6 +2848,47 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus) {
 
             itemLineNo = data.QuoteNo + "," + itemLineNo;
             $('#hfSalesQuoteResDetails').val(itemLineNo);
+
+            if (SQFor == "ApproveReject") {
+
+                if (LoggedInUserRole != "Admin" && LoggedInUserRole != "Salesperson")
+                {
+                    $('#dvSQApproveRejectBtn').css('display', 'block');
+
+                    if (LoggedInUserRole == "Finance") {
+                        $('#dvSQAprJustificationDetails').css('display', 'block');
+                        $('#dvAprDetailsFinanceUser').css('display', 'block');
+                        $('#lblJustificationTitle').text("Last 10 Sales Quote Justification Details");
+
+                        $('#AprDetailsCustName').text(data.ContactCompanyName);
+                        $('#AprDetailsApprovalFor').text(data.ApprovalFor);
+                        $('#AprDetailsJustificationReason').text(data.WorkDescription);
+                        $('#tdDetailsStatus').text(data.Status);
+                        $('#tdDetailsLocationCode').text(data.LocationCode);
+                        //$('#tdOverdue').text($('#txtOutstandingDue').val());
+                        //$('#tdTotalExpo').text($('#hdnCustBalanceLCY').val());
+                        GetAndFillCompanyIndustry(data.ContactCompanyNo);
+                    }
+                    else {
+                        $('#dvSQAprJustificationDetails').css('display', 'none');
+                        $('#dvAprDetailsFinanceUser').css('display', 'none');
+                        $('#lblJustificationTitle').text("Last 3 Sales Quote Justification Details");
+                    }
+
+                    $('#dvSQJustificationDetails').css('display', 'block');
+                    BindJustificationDetails(LoggedInUserRole, data.ContactCompanyNo);
+                }
+
+            }
+            else {
+
+                $('#dvSQApproveRejectBtn').css('display', 'none');
+                $('#dvSQAprJustificationDetails').css('display', 'none');
+                $('#dvAprDetailsFinanceUser').css('display', 'none');
+                $('#dvSQJustificationDetails').css('display', 'none');
+                $('#lblJustificationTitle').text("");
+
+            }
 
         }
 
@@ -4317,6 +4424,111 @@ function BindShortcloseReason() {
             }
         }
     );
+
+}
+
+function BindJustificationDetails(LoggedInUserRole, ContactCompanyNo) {
+
+    $.ajax(
+        {
+            url: '/SPSalesQuotes/GetSalesQuoteJustificationDetails?LoggedInUserRole=' + LoggedInUserRole + '&CCompanyNo=' + ContactCompanyNo,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+
+                var TROpts = "";
+
+                $.each(data, function (index, item) {
+                    TROpts += "<tr><td>" + item.PCPL_Target_Date + "</td><td>" + item.No + "</td><td>" + item.WorkDescription + "</td></tr>";
+                });
+
+                $('#tblSQJustificationDetails').append(TROpts);
+
+            },
+            error: function () {
+                alert("error");
+            }
+        }
+    );
+
+}
+
+function GetAndFillCompanyIndustry(ContactCompanyNo) {
+
+    $.ajax(
+        {
+            url: '/SPSalesQuotes/GetCompanyIndustry?CCompanyNo=' + ContactCompanyNo,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tdTraderMfg').text(data);
+                }
+
+            },
+            error: function () {
+                alert("error");
+            }
+        }
+    );
+
+}
+
+function ApproveRejectSQ(Action, RejectRemarks) {
+
+    if (RejectRemarks == null || RejectRemarks == "") {
+        $('#btnApproveSpinner').show();
+    }
+    else {
+        $('#btnRejectSpinner').show();
+    }
+
+    let SQNos = new Array();
+    var a = 0;
+    var str = $('#hfSalesQuoteNo').val() + ":" + $('#hdnApprovalFor').val() + ":" + $('#hdnSalespersonEmail').val() + ",";
+    SQNosAndApprovalFor_ = str;
+
+    var UserRoleORReportingPerson = "";
+
+    if ($('#hdnLoggedInUserRole').val() == "Finance") {
+        UserRoleORReportingPerson = "Finance";
+    }
+    else {
+        UserRoleORReportingPerson = "ReportingPerson";
+    }
+
+    $.post(apiUrl + "SQApproveReject?SQNosAndApprovalFor=" + SQNosAndApprovalFor_ + "&LoggedInUserNo=" + $('#hdnLoggedInUserNo').val() + "&Action=" + Action + "&UserRoleORReportingPerson=" + UserRoleORReportingPerson + "&RejectRemarks=" + RejectRemarks + "&LoggedInUserEmail=" + $('#hdnLoggedInUserEmail').val(), function (data) {
+
+        var resMsg = data;
+
+        if (RejectRemarks == null || RejectRemarks == "") {
+            $('#btnApproveSpinner').hide();
+        }
+        else {
+            $('#btnRejectSpinner').hide();
+        }
+
+        if (resMsg == "True") {
+
+            $('#modalApproveRejectMsg').css('display', 'block');
+            if (Action == "Approve") {
+                $('#lblApproveRejectMsg').text("Sales Quote Approved Successfully");
+            }
+            else if (Action == "Reject") {
+                $('#modalRejectRemarks').css('display', 'none');
+                $('#lblApproveRejectMsg').text("Sales Quote Rejected Successfully");
+            }
+
+        }
+        else if (resMsg.includes("Error:")) {
+            const resMsgDetails = resMsg.split(':');
+
+            $('#modalErrMsg').css('display', 'block');
+            $('#modalErrDetails').text(resMsgDetails[1]);
+        }
+
+    });
 
 }
 

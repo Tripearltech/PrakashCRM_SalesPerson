@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\Nishant\Projects\PrakashCRM\Published4\Salesperson Portal</_PublishTargetUrl>
-    <History>True|2025-06-09T10:00:23.9697379Z;True|2025-06-06T12:03:04.2846109+05:30;True|2025-06-04T16:50:42.1591458+05:30;True|2025-06-03T12:59:42.6825372+05:30;True|2025-05-29T15:58:06.6483608+05:30;True|2025-05-26T10:47:04.1911384+05:30;False|2025-05-26T10:46:06.1306973+05:30;False|2025-05-25T22:34:15.0606354+05:30;True|2025-05-24T23:30:07.0126672+05:30;True|2025-05-24T12:02:25.1836575+05:30;True|2025-05-21T16:35:41.0943822+05:30;True|2025-05-20T19:06:02.1167437+05:30;True|2025-05-20T16:51:16.0208323+05:30;True|2025-05-20T12:17:39.9193761+05:30;False|2025-05-19T12:32:09.2306399+05:30;True|2025-05-19T11:12:17.2348653+05:30;False|2025-05-15T16:04:49.1510726+05:30;False|2025-05-12T14:27:05.8927343+05:30;False|2025-05-09T16:04:28.7414059+05:30;False|2025-05-08T13:49:43.4723682+05:30;True|2025-05-05T16:24:32.0944871+05:30;True|2025-01-03T11:40:40.6466778+05:30;True|2024-12-31T16:47:44.7615416+05:30;True|2024-12-19T18:16:54.5085265+05:30;True|2024-12-19T12:39:41.3519084+05:30;</History>
+    <History>False|2025-08-07T09:55:56.4929852Z;True|2025-08-05T18:53:28.6373396+05:30;False|2025-08-04T11:11:55.6028590+05:30;True|2025-08-01T17:22:28.0102521+05:30;False|2025-08-01T15:39:04.5947374+05:30;False|2025-08-01T15:36:40.3476705+05:30;False|2025-08-01T15:34:24.0042416+05:30;False|2025-08-01T15:29:06.6557849+05:30;False|2025-08-01T15:22:08.7027537+05:30;False|2025-08-01T15:18:16.2856770+05:30;False|2025-08-01T15:16:00.4876694+05:30;False|2025-08-01T15:15:06.3124616+05:30;False|2025-08-01T15:14:09.3314158+05:30;True|2025-07-29T16:43:12.0622568+05:30;False|2025-07-28T14:58:39.7927361+05:30;True|2025-07-28T14:57:08.5534237+05:30;False|2025-07-28T14:56:13.4079831+05:30;True|2025-07-28T14:00:43.5405570+05:30;True|2025-06-09T15:30:23.9697379+05:30;True|2025-06-06T12:03:04.2846109+05:30;True|2025-06-04T16:50:42.1591458+05:30;True|2025-06-03T12:59:42.6825372+05:30;True|2025-05-29T15:58:06.6483608+05:30;True|2025-05-26T10:47:04.1911384+05:30;False|2025-05-26T10:46:06.1306973+05:30;False|2025-05-25T22:34:15.0606354+05:30;True|2025-05-24T23:30:07.0126672+05:30;True|2025-05-24T12:02:25.1836575+05:30;True|2025-05-21T16:35:41.0943822+05:30;True|2025-05-20T19:06:02.1167437+05:30;True|2025-05-20T16:51:16.0208323+05:30;True|2025-05-20T12:17:39.9193761+05:30;False|2025-05-19T12:32:09.2306399+05:30;True|2025-05-19T11:12:17.2348653+05:30;False|2025-05-15T16:04:49.1510726+05:30;False|2025-05-12T14:27:05.8927343+05:30;False|2025-05-09T16:04:28.7414059+05:30;False|2025-05-08T13:49:43.4723682+05:30;True|2025-05-05T16:24:32.0944871+05:30;True|2025-01-03T11:40:40.6466778+05:30;True|2024-12-31T16:47:44.7615416+05:30;True|2024-12-19T18:16:54.5085265+05:30;True|2024-12-19T12:39:41.3519084+05:30;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -16,10 +16,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2013 04:59:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>07/18/2025 17:58:28</publishTime>
+      <publishTime>08/08/2025 17:28:58</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>07/18/2025 17:58:28</publishTime>
+      <publishTime>08/08/2025 17:28:58</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>10/27/2023 00:51:52</publishTime>
@@ -70,25 +70,25 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/08/2023 12:39:56</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Data.dll">
-      <publishTime>07/17/2025 18:02:41</publishTime>
+      <publishTime>08/08/2025 17:28:19</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Data.pdb">
-      <publishTime>07/17/2025 18:02:41</publishTime>
+      <publishTime>08/08/2025 17:28:19</publishTime>
     </File>
     <File Include="bin/PrakashCRM.dll">
-      <publishTime>07/18/2025 17:57:54</publishTime>
+      <publishTime>08/08/2025 17:28:24</publishTime>
     </File>
     <File Include="bin/PrakashCRM.pdb">
-      <publishTime>07/18/2025 17:57:54</publishTime>
+      <publishTime>08/08/2025 17:28:24</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Service.dll">
-      <publishTime>07/18/2025 17:57:52</publishTime>
+      <publishTime>08/08/2025 17:28:21</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Service.dll.config">
       <publishTime>03/11/2025 12:10:54</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Service.pdb">
-      <publishTime>07/18/2025 17:57:52</publishTime>
+      <publishTime>08/08/2025 17:28:21</publishTime>
     </File>
     <File Include="bin/RBush.dll">
       <publishTime>12/30/2022 04:03:34</publishTime>
@@ -714,11 +714,14 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Content/Site.css">
       <publishTime>01/01/2024 18:07:43</publishTime>
     </File>
+    <File Include="CustomerLedgerEntryPrint/CUST00002.pdf">
+      <publishTime>08/07/2025 15:20:43</publishTime>
+    </File>
     <File Include="favicon.ico">
       <publishTime>12/06/2023 17:36:05</publishTime>
     </File>
     <File Include="Files/CreditLimitEmail-1.html">
-      <publishTime>07/10/2025 18:43:38</publishTime>
+      <publishTime>07/22/2025 17:30:16</publishTime>
     </File>
     <File Include="Files/CreditLimitEmail.html">
       <publishTime>06/20/2025 18:46:23</publishTime>
@@ -3187,7 +3190,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/22/2021 22:43:17</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>07/18/2025 17:58:01</publishTime>
+      <publishTime>08/08/2025 17:28:28</publishTime>
     </File>
     <File Include="QuoteApprovalEmail.html">
       <publishTime>08/13/2018 12:13:27</publishTime>
@@ -3313,10 +3316,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/30/2025 17:24:04</publishTime>
     </File>
     <File Include="Scripts/appjs/SalesQuote.js">
-      <publishTime>07/08/2025 15:43:30</publishTime>
+      <publishTime>08/08/2025 16:40:51</publishTime>
     </File>
     <File Include="Scripts/appjs/SalesQuoteList.js">
-      <publishTime>07/18/2025 17:01:48</publishTime>
+      <publishTime>08/05/2025 14:21:58</publishTime>
     </File>
     <File Include="Scripts/appjs/SiteActivityList.js">
       <publishTime>10/27/2024 21:14:34</publishTime>
@@ -3334,7 +3337,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/23/2025 14:50:02</publishTime>
     </File>
     <File Include="Scripts/appjs/SPGRNCard.js">
-      <publishTime>07/17/2025 19:21:54</publishTime>
+      <publishTime>07/25/2025 15:49:37</publishTime>
     </File>
     <File Include="Scripts/appjs/SPGRNList.js">
       <publishTime>06/30/2025 11:45:59</publishTime>
@@ -3355,7 +3358,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/30/2025 17:05:32</publishTime>
     </File>
     <File Include="Scripts/appjs/SPWarehouseCard.js">
-      <publishTime>07/17/2025 16:47:55</publishTime>
+      <publishTime>07/28/2025 14:55:23</publishTime>
     </File>
     <File Include="Scripts/appjs/SPWarehouseClosedCard.js">
       <publishTime>04/03/2025 17:40:45</publishTime>
@@ -3364,10 +3367,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>07/07/2025 14:56:13</publishTime>
     </File>
     <File Include="Scripts/appjs/SPWarehouseList.js">
-      <publishTime>07/17/2025 12:47:51</publishTime>
+      <publishTime>07/22/2025 17:11:50</publishTime>
     </File>
     <File Include="Scripts/appjs/SQListForApproveReject.js">
-      <publishTime>07/18/2025 17:26:09</publishTime>
+      <publishTime>08/05/2025 14:18:52</publishTime>
     </File>
     <File Include="Scripts/appjs/TransferAcceptedTaskList.js">
       <publishTime>01/22/2025 00:40:08</publishTime>
@@ -3480,8 +3483,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Scripts/ng-table.min.js.map">
       <publishTime>12/11/2023 16:44:53</publishTime>
     </File>
+    <File Include="Scripts/reportjs/CustomerLedgerEntry.js">
+      <publishTime>08/08/2025 16:46:22</publishTime>
+    </File>
     <File Include="Scripts/reportjs/InventoryView.js">
-      <publishTime>07/10/2025 16:45:59</publishTime>
+      <publishTime>08/08/2025 15:39:02</publishTime>
     </File>
     <File Include="SPProfileImages/JO_ProfileImage.PNG">
       <publishTime>08/27/2024 17:40:50</publishTime>
@@ -3538,7 +3544,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>12/06/2023 17:36:05</publishTime>
     </File>
     <File Include="Views/Shared/_SalespersonMasterLayout.cshtml">
-      <publishTime>07/16/2025 18:00:42</publishTime>
+      <publishTime>08/07/2025 14:59:26</publishTime>
     </File>
     <File Include="Views/SPActivities/Activities.cshtml">
       <publishTime>05/16/2024 19:11:56</publishTime>
@@ -3598,7 +3604,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/23/2025 14:57:01</publishTime>
     </File>
     <File Include="Views/SPGRN/GRNCard.cshtml">
-      <publishTime>07/17/2025 19:21:54</publishTime>
+      <publishTime>07/25/2025 15:40:08</publishTime>
     </File>
     <File Include="Views/SPGRN/GRNList.cshtml">
       <publishTime>06/16/2025 18:27:19</publishTime>
@@ -3637,7 +3643,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/15/2025 22:07:57</publishTime>
     </File>
     <File Include="Views/SPReports/InventoryView.cshtml">
-      <publishTime>07/09/2025 14:43:54</publishTime>
+      <publishTime>08/01/2025 15:33:19</publishTime>
     </File>
     <File Include="Views/SPRoleRights/RoleRights.cshtml">
       <publishTime>10/18/2024 14:30:03</publishTime>
@@ -3652,13 +3658,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/15/2025 22:03:28</publishTime>
     </File>
     <File Include="Views/SPSalesQuotes/SalesQuote.cshtml">
-      <publishTime>07/08/2025 16:23:08</publishTime>
+      <publishTime>08/08/2025 15:50:18</publishTime>
     </File>
     <File Include="Views/SPSalesQuotes/SalesQuoteList.cshtml">
-      <publishTime>07/11/2025 15:06:15</publishTime>
+      <publishTime>08/07/2025 12:53:52</publishTime>
     </File>
     <File Include="Views/SPSalesQuotes/SalesQuoteStatus.cshtml">
-      <publishTime>07/10/2025 12:46:04</publishTime>
+      <publishTime>08/05/2025 14:19:43</publishTime>
     </File>
     <File Include="Views/SPSiteActivity/SiteActivityList.cshtml">
       <publishTime>08/09/2024 12:05:01</publishTime>
@@ -3688,7 +3694,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/24/2025 15:48:27</publishTime>
     </File>
     <File Include="Views/SPWarehouse/WarehouseCard.cshtml">
-      <publishTime>07/17/2025 14:21:14</publishTime>
+      <publishTime>07/28/2025 14:52:56</publishTime>
     </File>
     <File Include="Views/SPWarehouse/WarehouseClosedCard.cshtml">
       <publishTime>07/07/2025 14:52:25</publishTime>

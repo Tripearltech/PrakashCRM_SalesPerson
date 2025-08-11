@@ -89,7 +89,7 @@
                                     </div>
                                     <div id="divCurrencyCode" class="col-md-6">
                                         <div class="row mb-3">
-                                            <label class="col-sm-3 col-form-label">Currancy : </label>
+                                            <label class="col-sm-3 col-form-label">Currency : </label>
                                             <div class="col-sm-9">
                                                 <label id="lblCurrencyCode">@Model.CurrencyCode</label>
                                             </div>
@@ -243,7 +243,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label"> </label>
                                             <div class="col-sm-9">
-                                             </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -286,8 +286,7 @@
                                                         <th scope="col">Packing UOM</th>
                                                         @if (Model.DocumentType == "Purchase Order")
                                                         {
-                                                            <th scope="col">Make/Mfg. Name</th>
-                                                            <th scope="col">Make/Mgf Code</th>
+                                                            <th scope="col">Make/Mgf</th>
                                                         }
                                                         <th scope="col">HSN Code</th>
                                                         @if (Model.DocumentType != "Transfer Order")
@@ -346,8 +345,15 @@
                                                             <td>@line.PackingUOM</td>
                                                             @if (Model.DocumentType == "Purchase Order")
                                                             {
-                                                                <td><input type="text" name="txtMfgName_@line.LineNo" value="@line.MfgName" class="form-control" style="width:110px;" /></td>
-                                                                <td><input type="text" name="txtMakeMfgCode_@line.LineNo" value="@line.MakeMfgCode" class="form-control" style="width:110px;" /></td>
+                                                                <td>
+                                                                    <div class="" id="spinnerId_@line.LineNo" style="width: 200px;">
+                                                                        <span class="input-group-text" id="loader_@line.LineNo" style="display: none;">
+                                                                            <span class="spinner-border spinner-border-sm text-primary"></span>
+                                                                        </span>
+                                                                        <input type="text" id="txtManufacturer_@line.LineNo" onkeyup="ManufacturerAutocompleteAPI('txtManufacturer_' + @line.LineNo)" class="form-control" data-lineno="@line.LineNo" placeholder="Type Manufacturer Name" value="@line.MfgName" />
+                                                                    </div>
+                                                                        <input type="hidden" id="hdnManufacturerNo_@line.LineNo" name="hdnManufacturerNo_@line.LineNo" value="@line.MakeMfgCode|@line.MfgName" />
+                                                                </td>
                                                             }
                                                             <td>@line.HSNSACCode</td>
                                                             @if (Model.DocumentType != "Transfer Order")

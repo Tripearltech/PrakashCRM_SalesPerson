@@ -99,7 +99,7 @@ namespace PrakashCRM.Data.Models
         public string FromArea { get; set; }
         public string PCPL_Ship_to_Area { get; set; }
         public string Job_To_Area { get; set; }
-        public string GrossWeightperunit { get; set; }
+        public decimal GrossWeightperunit { get; set; }
         public string Sell_to_Customer_Name { get; set; }
     }
 
@@ -154,7 +154,7 @@ namespace PrakashCRM.Data.Models
         public string Location_Code { get; set; }
         public string PCPLBuyfromArea { get; set; }
         public object PCPL_Ship_to_Area { get; set; }
-        public string GrossWeightperunit { get; set; }
+        public decimal GrossWeightperunit { get; set; }
 
         /* public string CustomerVendorName { get; set; }*/
 
@@ -217,7 +217,7 @@ namespace PrakashCRM.Data.Models
 
         public object TransferfromCity { get; set; }
         public object TransfertoCity { get; set; }
-        public string GrossWeightperunit { get; set; }
+        public decimal GrossWeightperunit { get; set; }
     }
 
     public class SPWarehouseList
@@ -366,7 +366,7 @@ namespace PrakashCRM.Data.Models
         public string PackingQty { get; set; }
         public string FromLocation { get; set; }
         public string ToLocation { get; set; }
-        public string GrossWeightperunit { get; set; }
+        public decimal GrossWeightperunit { get; set; }
     }
 
     public class TransporterRateCard
@@ -397,7 +397,6 @@ namespace PrakashCRM.Data.Models
 
         public string Transporter_Name { get; set; }
         public string Contact_No { get; set; }
-        public bool Latest_Rate { get; set; }
 
     }
 

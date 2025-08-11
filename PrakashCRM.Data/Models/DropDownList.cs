@@ -13,6 +13,7 @@ namespace PrakashCRM.Data.Models
         public string PCPL_State_Code { get; set; }
         public string Country_Region_Code { get; set; }
     }
+
     public class Country
     {
         public string Code { get; set; }

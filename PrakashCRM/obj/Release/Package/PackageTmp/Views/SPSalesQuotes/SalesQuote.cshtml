@@ -115,12 +115,6 @@
                                 <input id="hfPostCode" name="hfPostCode" value="" style="display:none" />
                                 <input id="hfAreaCode" name="hfAreaCode" value="" style="display:none" />
 
-
-
-
-
-
-
                                 @*<input id="hfCreditDays" value="0" style="display:none" />*@
 
                                 <!--<input id="hfQuoteNo" name="hfQuoteNo" value="@ViewBag.QuoteNo" style="display:none" />
@@ -133,6 +127,31 @@
 
                             </div>
                         </div>
+                        <br />
+
+                        <div id="dvSQApproveRejectBtn" style="display:none">
+
+                            <div class="row g-3">
+
+                                <div class="col-md-12" align="right">
+                                    <button id="btnApproveSpinner" class="btn btn-primary" type="button" disabled style="display:none">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Loading...</span>
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-outline-success px-5" onclick="ApproveRejectSQ('Approve','')">
+                                        <i class='bx bx-check mr-1'></i>Approve
+                                    </button>
+                                    &nbsp;
+                                    <button id="btnReject" type="button" class="btn btn-outline-danger px-5">
+                                        <i class='bx bx-x mr-1'></i>Reject
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
                         <h6 class="mb-0 font-weight-bold">Quote Details</h6>
                         <hr />
 
@@ -271,20 +290,20 @@
                         </div>
 
                         @*<div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <div id="dvIsShortclose" style="display:none">
-                                        <label id="lblIsShortclose" class="col-sm-3 col-form-label">Is Shortclose</label>
-                                        <div class="col-sm-9">
-                                            <input type="checkbox" id="chkIsShortclose" class="form-check-input" />
-                                            <input id="hfShortcloseType" style="display:none" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                            </div>
-                        </div>*@
+            <div class="col-md-6">
+                <div class="row mb-3">
+                    <div id="dvIsShortclose" style="display:none">
+                        <label id="lblIsShortclose" class="col-sm-3 col-form-label">Is Shortclose</label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" id="chkIsShortclose" class="form-check-input" />
+                            <input id="hfShortcloseType" style="display:none" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>*@
 
                         <div class="row g-3">
                             <div class="col-md-12">
@@ -385,7 +404,7 @@
                                             <input id="txtProductName" type="text" class="form-control" />
                                             <br />
                                             @*<input type="checkbox" id="chkShowAllProducts" class="form-check-input" />&nbsp;Show All
-                                            &nbsp;&nbsp;*@
+                            &nbsp;&nbsp;*@
                                             <input type="checkbox" id="chkIsLiquidProd" class="form-check-input" />&nbsp;Is Liquid Product
                                             @*@Html.TextBoxFor(model => model.Description, new { @id = "txtProductName", @class = "form-control" })*@
                                         </div>
@@ -444,9 +463,9 @@
                                             <input id="txtProdQty" type="text" class="form-control" />
                                             @*@Html.TextBoxFor(model => model.Quantity, new { @id = "txtProdQty", @class = "form-control" })*@
                                             @*<div id="divRemainQty" style="display:none">
-                                                <input type="text" id="txtAdditionalQty" class="form-control" />
-                                                <label id="lblAdditionalQty" class="col-form-label">Additional Qty</label>
-                                            </div>*@
+                                <input type="text" id="txtAdditionalQty" class="form-control" />
+                                <label id="lblAdditionalQty" class="col-form-label">Additional Qty</label>
+                            </div>*@
                                         </div>
                                         <div class="col-sm-3">
                                             <input type="text" id="txtUOM" class="form-control" disabled />
@@ -491,26 +510,26 @@
                             </div>
 
                             @*<div class="row g-3" style="display:none">
-            <div class="col-md-6">
-                <label class="col-sm-3 col-form-label">Excise</label>
-                <div class="col-sm-9">
-                    <input id="txtExcise" type="text" class="form-control" />
+                <div class="col-md-6">
+                    <label class="col-sm-3 col-form-label">Excise</label>
+                    <div class="col-sm-9">
+                        <input id="txtExcise" type="text" class="form-control" />
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
 
                             @*<div class="row g-3" style="display:none">
-            <div class="col-md-6">
-                SCVD&nbsp;<label id="lblAEDAmt" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
-                    <select id="ddlSCVD" class="form-select">
-                        <option value="---Select---">---Select---</option>
-                        <option value="YES">Not Pass</option>
-                        <option value="NO">Pass</option>
-                    </select>
+                <div class="col-md-6">
+                    SCVD&nbsp;<label id="lblAEDAmt" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <select id="ddlSCVD" class="form-select">
+                            <option value="---Select---">---Select---</option>
+                            <option value="YES">Not Pass</option>
+                            <option value="NO">Pass</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
 
                             <div class="row g-3">
                                 <div class="col-md-6">
@@ -551,18 +570,18 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Sales Discount</label>
                                         @*<div class="col-sm-1">
-                        <input type="checkbox" id="chkIsSalesDisc" class="form-check-input" />
-                    </div>
-                    <div class="col-sm-3">
-                        <select id="ddlSalesDiscPerUnitPercent" class="form-select" disabled>
-                            <option value="-1">---Select---</option>
-                            <option value="Per Unit">Per Unit</option>
-                            <option value="%">Percentage</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <input type="text" id="txtSalesDiscPercent" class="form-control" disabled />
-                    </div>*@
+                            <input type="checkbox" id="chkIsSalesDisc" class="form-check-input" />
+                        </div>
+                        <div class="col-sm-3">
+                            <select id="ddlSalesDiscPerUnitPercent" class="form-select" disabled>
+                                <option value="-1">---Select---</option>
+                                <option value="Per Unit">Per Unit</option>
+                                <option value="%">Percentage</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="txtSalesDiscPercent" class="form-control" disabled />
+                        </div>*@
                                         <div class="col-sm-9">
                                             <input type="text" id="txtSalesDiscount" class="form-control" />
                                             @*@Html.TextBoxFor(model => model.Sales_Discount, new { @id = "txtSalesDiscount", @class = "form-control" })*@
@@ -695,52 +714,52 @@
                                 </div>
                             </div>
                             <!--<div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label">Interest</label>
-                                    <div class="col-sm-9">-->
-                                                    @*@Html.LabelFor(model => model.Interest, new { @id = "txtInterest", @class = "form-label" })*@
-                                                    <!--<label id="lblInterest" class="form-label"></label>
-                                            <label id="lblInterestRate" class="form-label"> (Int.Rate: <span id="spnInterestRate" runat="server" title="Interest Rate">0</span>% )</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="row mb-3">
-                                        <label class="col-sm-3 col-form-label">Tax Groups</label>
-                                        <div class="col-sm-9">
-                                            <select id="ddlTaxGroup" class="form-select">
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
-                                                    @*<div class="row g-3" style="display:none">
-                                    <div class="col-md-6">
-                                        <div class="row mb-3">
-                                            <label class="col-sm-3 col-form-label">Tax Amount</label>
-                                            <div class="col-sm-9">
-                                                <label id="lblTaxGroupAmount" class="form-label"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row mb-3">
-                                            <label class="col-sm-3 col-form-label">Total Sales Price</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" id="txtTotalSales" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>*@
+        <div class="col-md-6">
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Interest</label>
+                <div class="col-sm-9">-->
+                            @*@Html.LabelFor(model => model.Interest, new { @id = "txtInterest", @class = "form-label" })*@
+                            <!--<label id="lblInterest" class="form-label"></label>
+                        <label id="lblInterestRate" class="form-label"> (Int.Rate: <span id="spnInterestRate" runat="server" title="Interest Rate">0</span>% )</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Tax Groups</label>
+                    <div class="col-sm-9">
+                        <select id="ddlTaxGroup" class="form-select">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+                            @*<div class="row g-3" style="display:none">
+                <div class="col-md-6">
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Tax Amount</label>
+                        <div class="col-sm-9">
+                            <label id="lblTaxGroupAmount" class="form-label"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Total Sales Price</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="txtTotalSales" />
+                        </div>
+                    </div>
+                </div>
+            </div>*@
 
                             <div class="row g-3" style="display:none">
                                 <div class="col-md-6">
                                     <label class="col-sm-3 col-form-label">GST Place of Supply</label>
                                     <div class="col-sm-9">
                                         @*<select class="form-select">
-                                            <option>---Select---</option>
-                                        </select>*@
+                            <option>---Select---</option>
+                        </select>*@
                                         @*@Html.DropDownListFor(model => model.GST_Place_Of_Supply, Enumerable.Empty<SelectListItem>(), new { @id = "ddlGSTPlaceOfSupply", @class = "form-select" })*@
                                     </div>
                                 </div>
@@ -795,7 +814,7 @@
                                                     <th>Transport Method</th>
                                                     <th>Transport Cost</th>
                                                     @*<th>Sales Disc.(%/Per Unit)</th>
-                                <th>Sales Disc Percent</th>*@
+                                    <th>Sales Disc Percent</th>*@
                                                     <th>Sales Discount</th>
                                                     <th>Commission(%/Per Unit)</th>
                                                     <th>Commission Percent</th>
@@ -819,58 +838,58 @@
                                             <tbody id="tblProducts">
 
                                                 @*@foreach (PrakashCRM.Data.Models.SPSQLines SQLines in ViewBag.SQLines)
-                            {
-                                <tr>
-                                    <td>@SQLines.No</td>
-                                    <td>@SQLines.Description</td>
-                                    <td>@SQLines.Unit_Price</td>
-                                    <td>@SQLines.Quantity</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>@SQLines.GST_Place_Of_Supply</td>
-                                    <td>@SQLines.Unit_Price</td>
-                                    <td></td>
-                                    <td>@SQLines.PCPL_Sales_Discount</td>
-                                    <td></td>
-                                    <td>@SQLines.PCPL_Commission_Amount</td>
-                                    <td>@SQLines.PCPL_Transport_Method</td>
-                                    <td>@SQLines.PCPL_Transport_Amount</td>
-                                    <td>@SQLines.PCPL_Credit_Days</td>
-                                    <td>@SQLines.PCPL_Interest</td>
-                                    <td>@SQLines.PCPL_Margin</td>
-                                    <td></td>
-                                    <td>@SQLines.PCPL_Sales_Price</td>
-                                </tr>
-                            }*@
+                                {
+                                    <tr>
+                                        <td>@SQLines.No</td>
+                                        <td>@SQLines.Description</td>
+                                        <td>@SQLines.Unit_Price</td>
+                                        <td>@SQLines.Quantity</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@SQLines.GST_Place_Of_Supply</td>
+                                        <td>@SQLines.Unit_Price</td>
+                                        <td></td>
+                                        <td>@SQLines.PCPL_Sales_Discount</td>
+                                        <td></td>
+                                        <td>@SQLines.PCPL_Commission_Amount</td>
+                                        <td>@SQLines.PCPL_Transport_Method</td>
+                                        <td>@SQLines.PCPL_Transport_Amount</td>
+                                        <td>@SQLines.PCPL_Credit_Days</td>
+                                        <td>@SQLines.PCPL_Interest</td>
+                                        <td>@SQLines.PCPL_Margin</td>
+                                        <td></td>
+                                        <td>@SQLines.PCPL_Sales_Price</td>
+                                    </tr>
+                                }*@
                                             </tbody>
                                             @*<tfoot>
-                            <tr>
-                                <th></th>
-                                <th>Product Code</th>
-                                <th>Product Name</th>
-                                <th>MRP</th>
-                                <th>Qty</th>
-                                <th>GST Place of Supply</th>
-                                <th>Basic Price</th>
-                                <th>Sales Disc.(%/Per Unit)</th>
-                                <th>Sales Disc.</th>
-                                <th>Commission(%/Per Unit)</th>
-                                <th>Commission</th>
-                                <th>Transport Method</th>
-                                <th>Transport Cost</th>
-                                <th>Credit Days</th>
-                                <th>Interest</th>
-                                <th>Margin</th>
-                                <th>Pur Trade Disc.</th>
-                                <th>Pur Qty Disc.</th>
-                                <th>Pur Consig.Disc.</th>
-                                <th>Pur Distance Disc.</th>
-                                <th>Total Cost</th>
-                                <th>Sales Price</th>
-                            </tr>
-                        </tfoot>*@
+                                <tr>
+                                    <th></th>
+                                    <th>Product Code</th>
+                                    <th>Product Name</th>
+                                    <th>MRP</th>
+                                    <th>Qty</th>
+                                    <th>GST Place of Supply</th>
+                                    <th>Basic Price</th>
+                                    <th>Sales Disc.(%/Per Unit)</th>
+                                    <th>Sales Disc.</th>
+                                    <th>Commission(%/Per Unit)</th>
+                                    <th>Commission</th>
+                                    <th>Transport Method</th>
+                                    <th>Transport Cost</th>
+                                    <th>Credit Days</th>
+                                    <th>Interest</th>
+                                    <th>Margin</th>
+                                    <th>Pur Trade Disc.</th>
+                                    <th>Pur Qty Disc.</th>
+                                    <th>Pur Consig.Disc.</th>
+                                    <th>Pur Distance Disc.</th>
+                                    <th>Total Cost</th>
+                                    <th>Sales Price</th>
+                                </tr>
+                            </tfoot>*@
                                         </table>
                                     </div>
                                 </div>
@@ -885,6 +904,12 @@
                                     <div class="col-sm-8">
                                         <input id="hdnLoggedInUserSPCode" value="@Session["loggedInUserSPCode"].ToString()" style="display:none" />
                                         <input id="getServiceApiUrl" value="@System.Configuration.ConfigurationManager.AppSettings["ServiceApiUrl"].ToString()" style="display:none" />
+                                        <input type="hidden" id="hdnSalespersonEmail" value="" />
+                                        <input id="hdnLoggedInUserRole" value="@Session["loggedInUserRole"]" style="display:none" />
+                                        <input id="hdnLoggedInUserEmail" value="@Session["loggedInUserEmail"]" style="display:none" />
+                                        <input id="hdnLoggedInUserNo" value="@Session["loggedInUserNo"]" style="display:none" />
+                                        <input id="hdnApprovalFor" value="" style="display:none" />
+                                        <input id="hdnCustBalanceLCY" value="" style="display:none" />
                                         <input type="hidden" id="hdnSalesQuoteAction" value="@Session["SalesQuoteAction"]" />
                                         <input type="hidden" id="hdnSalesQuoteActionErr" value="@Session["SalesQuoteActionErr"]" />
                                     </div>
@@ -900,6 +925,87 @@
                                                 </td>
                                             </tr>
                                         </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="dvSQAprJustificationDetails" style="display:none">
+
+                            <h6 class="mb-0 font-weight-bold">SalesQuote Approval Details</h6>
+                            <hr />
+
+                            <div id="dvAprDetailsFinanceUser" style="display:none">
+                                <div class="row g-3">
+                                    <div class="col-md-12">
+                                        <div class="row mb-3">
+                                            <div class="col-sm-12">
+                                                <table class="table mb-0 table-striped">
+                                                    <tr>
+                                                        <td style="font-weight:bold" width="30%">Customer Name</td>
+                                                        <td id="AprDetailsCustName" width="70%"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="font-weight:bold" width="30%">Justification For</td>
+                                                        <td id="AprDetailsApprovalFor" width="70%"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="font-weight:bold" width="30%">Justification Reason</td>
+                                                        <td id="AprDetailsJustificationReason" width="70%"></td>
+                                                    </tr>
+                                                </table>
+                                                <br />
+                                                <table class="table mb-0 table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Trader/Mfg</th>
+                                                            <th>Total Expo</th>
+                                                            <th>Overdue</th>
+                                                            <th>Avg Delay Days</th>
+                                                            <th>Approve/Reject</th>
+                                                            <th>Location</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="tdTraderMfg"></td>
+                                                            <td id="tdTotalExpo"></td>
+                                                            <td id="tdOverdue"></td>
+                                                            <td id="tdAvgDelayDays"></td>
+                                                            <td id="tdDetailsStatus"></td>
+                                                            <td id="tdDetailsLocationCode"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="dvSQJustificationDetails" style="display:none">
+
+                            <br />
+                            <h6 id="lblJustificationTitle" class="mb-0 font-weight-bold"></h6>
+                            <hr />
+
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-12">
+                                            <table class="table mb-0 table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Target Date</th>
+                                                        <th scope="col">Sales Quote No</th>
+                                                        <th scope="col">Justification</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblSQJustificationDetails">
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1703,6 +1809,64 @@
         </div>
     </div>
 </div>
+<div class="modal" id="modalRejectRemarks" tabindex="-1" aria-hidden="true" style="display:none">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reject Remarks</h5>
+                <button id="btnCloseModalRejectRemarks" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Remarks</label>
+                            <div class="col-sm-9">
+                                <textarea id="txtRejectRemarks" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-bottom:0px">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <div class="row mb-3">
+                            <div class="col-sm-12" align="right">
+                                <label id="lblRemarksMsg" class="col-form-label" style="color:red"></label>
+                                &nbsp;
+                                <button id="btnRejectSpinner" class="btn btn-primary" type="button" disabled style="display:none">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Loading...</span>
+                                </button>
+                                &nbsp;
+                                <button id="btnConfirmReject" type="button" class="btn btn-primary">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalApproveRejectMsg" tabindex="-1" aria-hidden="true" style="display:none">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sales Quote Approval</h5>
+                <button id="btnCloseApproveRejectMsg" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <img id="resIcon" src="~/Layout/assets/images/appImages/Icon-1.png" />
+                    <br />
+                    <label id="lblApproveRejectMsg" class="form-label"></label>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/appjs/SalesQuote.js"></script>
@@ -2190,4 +2354,9 @@
         /*}*/
 
     }
+
+    function RedirectToSQApproval() {
+        window.location.replace('@Url.Action("SalesQuoteStatus", "SPSalesQuotes")');
+    }
+
 </script>

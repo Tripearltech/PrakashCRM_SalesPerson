@@ -79,24 +79,6 @@ D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data
 D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.CopyComplete
 D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
 D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.dll
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.pdb
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.dll
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.xml
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.AssemblyReference.cache
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.CoreCompileInputs.cache
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashC.3DFDDAF9.Up2Date
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
-C:\Praduman\PrakashCRM_SalesPerson 19\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.dll
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.pdb
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.dll
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.xml
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.AssemblyReference.cache
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.CoreCompileInputs.cache
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashC.3DFDDAF9.Up2Date
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.dll
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.pdb
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.dll
@@ -106,12 +88,3 @@ C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\o
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashC.3DFDDAF9.Up2Date
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
 C:\Users\PradumanPrajapati\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.dll
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.pdb
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.dll
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.xml
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.AssemblyReference.cache
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.CoreCompileInputs.cache
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashC.3DFDDAF9.Up2Date
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
-C:\Users\PradumanPrajapati\Documents\GitHub\PrakashCRM_SalesPerson\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb

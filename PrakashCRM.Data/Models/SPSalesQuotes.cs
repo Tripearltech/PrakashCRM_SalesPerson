@@ -46,6 +46,10 @@ namespace PrakashCRM.Data.Models
         public string TPTPL_SC_Reason_Setup_Value { get; set; }
 
         public string PCPL_Status { get; set; }
+
+        public string PCPL_Rejected_Reason { get; set; }
+
+        public string PCPL_Rejected_Reason_HOD { get; set; }
     }
 
 
@@ -60,6 +64,12 @@ namespace PrakashCRM.Data.Models
         public string Payment_Terms_Code { get; set; }
 
         public string PCPL_Status { get; set; }
+
+        public string PCPL_ApprovalFor { get; set; }
+
+        public string Salesperson_Code { get; set; }
+
+        public string PCPL_SalesPerson_Email { get; set; }
     }
 
     //public class SPSalesQuotesListWithQuantites
@@ -341,6 +351,10 @@ namespace PrakashCRM.Data.Models
 
         public string TPTPL_SC_Reason_Setup_Value { get; set; }
 
+        public string PCPL_ApprovalFor { get; set; }
+
+        public string PCPL_SalesPerson_Email { get; set; }
+
         public errorDetails errorDetails { get; set; } = null;
     }
 
@@ -413,6 +427,12 @@ namespace PrakashCRM.Data.Models
         public byte[] zipApprovalFormatFile { get; set; }
 
         public string SQApprovalFormURL { get; set; }
+
+        public string Status { get; set; }
+
+        public string WorkDescription { get; set; }
+
+        public string SalespersonEmail { get; set; }
 
         public List<SPSQLinesWithInvQty> Products { get; set; }
 
@@ -498,7 +518,7 @@ namespace PrakashCRM.Data.Models
         public string PCPL_ApprovalFor { get; set; }
 
         public string PCPL_ApproverHOD { get; set; }
-        
+
     }
 
     public class SPSQHeaderPostWithCustTemplateCode
@@ -1639,5 +1659,18 @@ namespace PrakashCRM.Data.Models
     {
         public string Entry_No { get; set; }
         public string Short_Close_Reason { get; set; }
+    }
+
+    public class SPSQJustificationDetails
+    {
+        public string No { get; set; }
+        public string PCPL_Target_Date { get; set; }
+        public string WorkDescription { get; set; }
+        public string PCPL_Status { get; set; }
+    }
+
+    public class SPSQCompanyIndustry
+    {
+        public string Industry { get; set; }
     }
 }
