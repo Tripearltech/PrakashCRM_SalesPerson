@@ -224,7 +224,13 @@ $(document).ready(function () {
             ShowErrMsg(msg);
 
         }
-        else {
+        else if (checked.length > 1) {
+
+            var msg = "Please Select Single Sales Quote For Reject";
+            ShowErrMsg(msg);
+
+        }
+        else if (checked.length == 1) {
 
             $('#modalRejectRemarks').css('display', 'block');
 
@@ -292,8 +298,8 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                             rowData += "<td></td>";
                         }
                         
-                        rowData += "<td><a style='cursor:pointer' onclick='ShowSQProduct(\"" + item.No + "\")'><i class='bx bx-show'></i></a></td><td>" + item.No + "</td><td>" +
-                            item.Order_Date + "</td><td>" + item.Sell_to_Customer_Name + "</td><td>" + item.Payment_Terms_Code + "</td>";
+                        rowData += "<td><a style='cursor:pointer' onclick='ShowSQProduct(\"" + item.No + "\",\"" + item.PCPL_Status + "\")'><i class='bx bx-show'></i></a></td><td><a onclick='RedirectToSQCard(\"" + item.No + "\",\"" + item.TPTPL_Schedule_status + "\",\"" + item.PCPL_Status + "\",SQFor=\"ApproveReject\",LoggedInUserRole=\"" + $('#hdnLoggedInUserRole').val() + "\")' href='#'>" + item.No + "</a></td><td>" +
+                            item.Order_Date + "</td><td>" + item.Sell_to_Customer_Name + "</td><td>" + item.Payment_Terms_Code + "</td><td hidden>" + item.PCPL_ApprovalFor + "</td>";
 
                         if (item.PCPL_Status == "Approval pending from HOD" || item.PCPL_Status == "Approval pending from finance") {
 
@@ -303,14 +309,16 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
 
                             rowData += "<td><span class='badge bg-primary'>Pending For Approval</span></td>";
                         }
-                        else if (item.PCPL_Status == "Approved") {
+                        //else if (item.PCPL_Status == "Approved") {
 
-                            rowData += "<td><span class='badge bg-success'>Approved</span></td>";
-                        }
-                        else if (item.PCPL_Status == "Rejected by HOD" || item.PCPL_Status == "Rejected by finance") {
+                        //    rowData += "<td><span class='badge bg-success'>Approved</span></td>";
+                        //}
+                        //else if (item.PCPL_Status == "Rejected by HOD" || item.PCPL_Status == "Rejected by finance") {
 
-                            rowData += "<td><span class='badge bg-danger'>Rejected</span></td>";
-                        }
+                        //    rowData += "<td><span class='badge bg-danger'>Rejected</span></td>";
+                        //}
+
+                        rowData += "<td>" + item.Salesperson_Code + "</td><td hidden>" + item.PCPL_SalesPerson_Email + "</td>";
                       
                         rowData += "</tr>";
                         
@@ -508,60 +516,74 @@ function pageMe() {
     }
 };
 
-function ShowSQProduct(SQNo) {
+function ShowSQProduct(SQNo, ApprovalStatus) {
 
     var apiUrl = $('#getServiceApiUrl').val() + 'SPSalesQuotes/';
 
-    $.ajax(
-        {
-            url: '/SPSalesQuotes/GetSalesLineItems?DocumentNo=' + SQNo,
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
+    $('#modalSQProds').css('display', 'block');
 
-                $('#lblSQProdSQNo').text(SQNo);
-                $('#tblSQProduct').empty();
-                var rowData = "";
+    if (ApprovalStatus == "Approval pending from finance") {
 
-                if (data != null && data != "") {
-                    $.each(data, function (index, item) {
-                        rowData = "<tr><td>" + item.No + "</td><td>" + item.Description + "</td><td>" + item.Quantity + "</td><td>" + item.PCPL_Packing_Style_Code + "</td><td>" +
-                            item.Unit_of_Measure_Code + "</td><td>" + item.PCPL_MRP + "</td><td>" + item.Unit_Price + "</td>";
+        $('#dvAprDetailsFinanceUser').css('display', 'block');
+        $('#dvAprDetailsRPerson').css('display', 'none');
 
-                        if (item.Drop_Shipment == true) {
-                            rowData += "<td>Yes</td>";
-                        }
-                        else {
-                            rowData += "<td>No</td>";
-                        }
+    }
+    else if (ApprovalStatus == "Approval pending from HOD") {
 
-                        /*rowData += "<td>" + item.PCPL_Vendor_Name + "</td></tr>";*/
+        $('#dvAprDetailsFinanceUser').css('display', 'none');
+        $('#dvAprDetailsRPerson').css('display', 'block');
 
-                        rowData += "</tr>";
+        $.ajax(
+            {
+                url: '/SPSalesQuotes/GetSalesLineItems?DocumentNo=' + SQNo,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
 
+                    $('#lblSQProdSQNo').text(SQNo);
+                    $('#tblSQProduct').empty();
+                    var rowData = "";
+
+                    if (data != null && data != "") {
+                        $.each(data, function (index, item) {
+                            rowData = "<tr><td>" + item.No + "</td><td>" + item.Description + "</td><td>" + item.Quantity + "</td><td>" + item.PCPL_Packing_Style_Code + "</td><td>" +
+                                item.Unit_of_Measure_Code + "</td><td>" + item.PCPL_MRP + "</td><td>" + item.Unit_Price + "</td><td></td><td>" + item.Delivery_Date + "</td>" +
+                                "<td>" + item.PCPL_Total_Cost + "</td><td>" + item.PCPL_Margin + "</td>";
+
+                            if (item.Drop_Shipment == true) {
+                                rowData += "<td>Yes</td>";
+                            }
+                            else {
+                                rowData += "<td>No</td>";
+                            }
+
+                            /*rowData += "<td>" + item.PCPL_Vendor_Name + "</td></tr>";*/
+
+                            rowData += "</tr>";
+
+                            $('#tblSQProduct').append(rowData);
+                        });
+                    }
+                    else {
+                        rowData = "<tr><td colspan=9>No Records Found</td></tr>";
                         $('#tblSQProduct').append(rowData);
-                    });
-                }
-                else {
-                    rowData = "<tr><td colspan=9>No Records Found</td></tr>";
-                    $('#tblSQProduct').append(rowData);
-                }
+                    }
 
-                $('#modalSQProds').css('display', 'block');
-                
-            },
-            error: function () {
-                alert("error");
+                },
+                error: function () {
+                    alert("error");
+                }
             }
-        }
-    );
+        );
+    }
+    
 }
 
 function ApproveRejectSQ(Action, RejectRemarks) {
 
     var checkboxes = $('input[type=checkbox]');
     var checked = checkboxes.filter(':checked');
-    var SQNos_ = "";
+    var SQNosAndApprovalFor_ = "";
 
     if (checked.length <= 0) {
 
@@ -585,12 +607,12 @@ function ApproveRejectSQ(Action, RejectRemarks) {
 
         $('#tableBody input[type=checkbox]:checked').each(function () {
             var row = $(this).closest("tr")[0];
-            SQNos[a] = row.cells[3].innerHTML;
-            str += row.cells[3].innerHTML + ",";
+            SQNos[a] = row.cells[3].innerHTML + ":" + row.cells[7].innerHTML;
+            str += row.cells[3].innerHTML + ":" + row.cells[7].innerHTML + ":" + row.cells[10].innerHTML + ",";
             a += 1;
         });
 
-        SQNos_ = str;
+        SQNosAndApprovalFor_ = str;
 
         //$.post(
         //    apiUrl + 'SendFeedbackFormLink?contactCompanyNo=' + ContactNos[a] + '&ToCCEmail=' + FeedbackEmailToCC[a] + '&contactName=' + ContactNames[a] + '&contactMobileNo=' + FeedbackMobiles[a] +
@@ -613,7 +635,7 @@ function ApproveRejectSQ(Action, RejectRemarks) {
             UserRoleORReportingPerson = "ReportingPerson";
         }
         
-        $.post(apiUrl + "SQApproveReject?SQNos=" + SQNos_ + "&LoggedInUserNo=" + $('#hdnLoggedInUserNo').val() + "&Action=" + Action + "&UserRoleORReportingPerson=" + UserRoleORReportingPerson + "&RejectRemarks=" + RejectRemarks, function (data) {
+        $.post(apiUrl + "SQApproveReject?SQNosAndApprovalFor=" + SQNosAndApprovalFor_ + "&LoggedInUserNo=" + $('#hdnLoggedInUserNo').val() + "&Action=" + Action + "&UserRoleORReportingPerson=" + UserRoleORReportingPerson + "&RejectRemarks=" + RejectRemarks + "&LoggedInUserEmail=" + $('#hdnLoggedInUserEmail').val(), function (data) {
 
             //$("#" + BtnSpinner).hide();
             var resMsg = data;

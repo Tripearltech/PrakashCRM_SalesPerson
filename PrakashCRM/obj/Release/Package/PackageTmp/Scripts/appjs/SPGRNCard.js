@@ -7,13 +7,18 @@ $(document).ready(function () {
         selectYears: true,
         format: 'dd-mm-yyyy'
     });
-
     ShowHideFields($('#lblDocumentType').html());
-
     $('.btn-close').click(function () {
         $('#modalItemTracking').css('display', 'none');
     });
 });
+var delay = (function () {
+    var timer = 0;
+    return function (callback, ms) {
+        clearTimeout(timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
 
 function ShowErrMsg(errMsg) {
 
@@ -29,7 +34,6 @@ function ShowErrMsg(errMsg) {
     });
 
 }
-
 function ShowActionMsg(actionMsg) {
 
     Lobibox.notify('success', {
@@ -112,8 +116,21 @@ function SaveGRN() {
         const bedate = document.querySelector(`input[name="txtBillOfEntryDate_${lineNo}"]`);
         const remarks = document.querySelector(`input[name="txtRemarks_${lineNo}"]`);
         const concentrationratepercent = document.querySelector(`input[name="txtConcentrationRatePercent_${lineNo}"]`);
-        const mfgname = document.querySelector(`input[name="txtMfgName_${lineNo}"]`);
-        const makeMfgCode = document.querySelector(`input[name="txtMakeMfgCode_${lineNo}"]`);
+        // Save MakeMfgname/MgfCode
+        const manufacturerValue = $('#txtManufacturer_' + lineNo).val();
+        let mfgcode = "";
+        let makemfgname = "";
+        if (manufacturerValue && manufacturerValue.includes(" - ")) {
+            const parts = manufacturerValue.split(" - ");
+            makemfgname = parts[1].trim();
+            mfgcode = parts[0].trim();
+        } else {
+            makemfgname = manufacturerValue;
+            mfgcode = $('#hdnManufacturerNo_' + lineNo).val();
+        }
+        GRNLine.makemfgname = makemfgname;
+        GRNLine.mfgcode = mfgcode;
+
 
         GRNLine.documenttype = doctype;
         GRNLine.documentno = docnumber;
@@ -126,8 +143,7 @@ function SaveGRN() {
         GRNLine.bedate = bedate ? bedate.value : null;
         GRNLine.remarks = remarks ? remarks.value : "";
         GRNLine.concentratepercent = concentrationratepercent ? concentrationratepercent.value : "";
-        GRNLine.makemfgname = mfgname ? mfgname.value : "";
-        GRNLine.makemfgcode = makeMfgCode ? makeMfgCode.value : "";
+
 
         grnLines.push(GRNLine);
     });
@@ -145,7 +161,6 @@ function SaveGRN() {
         });
         const res = await rawResponse.ok;
         if (res) {
-            //Sucessfully
             var actionMsg = "GRN Save Successfully.";
             ShowActionMsg(actionMsg);
             window.setTimeout(function () {
@@ -155,7 +170,6 @@ function SaveGRN() {
             }, 2000);
         }
         else {
-            //Error
             var actionMsg = "Error in GRN Save process. Try again.";
             ShowErrMsg(actionMsg);
         }
@@ -188,6 +202,7 @@ function validateForm() {
     }
 
 
+
     const txtQtyToReceive = document.querySelectorAll('input[name^="txtQtyToReceive_"]');
     var lineMsg = "";
     var QtyReceiveFlag = false;
@@ -198,9 +213,6 @@ function validateForm() {
         var qtytoreceive = input.value;
         const qcremarks = document.querySelector(`select[name="txtQCRemarks_${lineNo}"]`);
         const rejectqty = document.querySelector(`input[name="txtRejectQC_${lineNo}"]`);
-
-        //GRNLine.qcremarks = qcremarks ? qcremarks.value : "";
-        //GRNLine.rejectqty = rejectqty ? rejectqty.value : "";
         if (qtytoreceive == null || qtytoreceive == undefined || qtytoreceive == "") {
             QtyReceiveFlag = true;
         }
@@ -350,23 +362,14 @@ function SaveGRNItemTracking() {
 }
 
 function AddItemTrackingInGrid() {
-
-    // Remove "No Records Found" row if it exists
     $('#tbItemTrackingLines tr:contains("No Records Found")').remove();
-
-    // Get the first row (not including "No Records Found" row)
     var firstRow = $('#tbItemTrackingLines tr').first();
-
-    // Get values from the first row
     var entryno = firstRow.find('td').eq(0).text().trim()
     var lineno = firstRow.find('td').eq(1).text().trim();
     var itemNo = firstRow.find('td').eq(2).text().trim();
     var lotNo = firstRow.find('input[name^="txtLotNo"]').val();
     var qty = firstRow.find('input[name^="txtQtyToHandle"]').val();
     var expDate = firstRow.find('input[name^="txtExpDate"]').val();
-
-
-    // Create a new row using those values
     var newIndex = $('#tbItemTrackingLines tr').length;
     var newRow = `<tr class='itemtrackingtr'>
       <td style='display: none;'>${entryno}</td>
@@ -378,8 +381,6 @@ function AddItemTrackingInGrid() {
       <td>${qty}</td>
       <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid();">Delete</button></td>
     </tr>`;
-
-    // Append the new row to tbody
     $('#tbItemTrackingLines').append(newRow);
 
     $('.datepicker').pickadate({
@@ -387,11 +388,78 @@ function AddItemTrackingInGrid() {
         selectYears: true,
         format: 'dd-mm-yyyy'
     });
-
-    // Clear inputs in the current row
     firstRow.find('input[type="text"]').val('');
 }
 function DeleteItemTrackingInGrid() {
-
     alert("Development under process..");
+}
+// Create Make/Mgf function 
+function ManufacturerAutocompleteAPI(LineDetailsLineNo) {
+    if (typeof ($.fn.autocomplete) === 'undefined') return;
+
+    const $input = $("#" + LineDetailsLineNo);
+    const lineNo = $input.data("lineno");
+    const $hiddenInput = $("#hdnManufacturerNo_" + lineNo);
+    const $loader = $("#loader_" + lineNo);
+    const $spinner = $("#spinnerId_" + lineNo);
+
+    if ($input.data("autocomplete-initialized")) {
+        if ($input.val().length >= 2) {
+            $input.autocomplete("search");
+        }
+        return;
+    }
+
+    $input.data("autocomplete-initialized", true);
+    $input.autocomplete({
+        serviceUrl: '/SPGRN/GetMakeMfgCodeAndName',
+        paramName: "prefix",
+        minChars: 2,
+        noCache: true,
+        ajaxSettings: {
+            type: "POST"
+        },
+
+        onSearchStart: function () {
+            $spinner.addClass("input-group");
+            $loader.show();
+        },
+        transformResult: function (response) {
+            try {
+                $spinner.removeClass("input-group");
+                $loader.hide();
+                const parsed = $.parseJSON(response);
+                return {
+                    suggestions: $.map(parsed, function (item) {
+                        return {
+                            value: item.Name,
+                            data: item.No
+                        };
+                    })
+                };
+            } catch (e) {
+                console.error("Invalid autocomplete response", e);
+                return { suggestions: [] };
+            }
+        },
+
+        onSelect: function (suggestion) {
+            $input.val(suggestion.value);
+            $hiddenInput.val(suggestion.data);
+            return false;
+        },
+
+        onShow: function () {
+            setTimeout(() => {
+                $input.focus();
+            }, 10);
+        }
+    });
+
+    $input.on('input', function () {
+        $hiddenInput.val('');
+    });
+    if ($input.val().length >= 2) {
+        $input.autocomplete("search");
+    }
 }

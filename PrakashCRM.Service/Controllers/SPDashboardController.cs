@@ -111,6 +111,11 @@ namespace PrakashCRM.Service.Controllers
             List<SPMarketUpdateList> marketUpdateList = new List<SPMarketUpdateList>();
             string today = DateTime.Now.Date.ToString("yyyy-MM-dd");
 
+            //if (filter == "" || filter == null)
+            //    filter = "Salesperson_Code eq '" + SPNo + "'";
+            //else
+            //    filter = filter + " and Salesperson_Code eq '" + SPNo + "'";
+
             var result = (dynamic)null;
 
             result = ac.GetData1<SPMarketUpdateList>("MarketUpdateDotNetAPI", "Update_Date eq " + today, 0, 0, "SystemCreatedAt desc");
@@ -131,6 +136,40 @@ namespace PrakashCRM.Service.Controllers
         [Route("AddMarketUpdate")]
         public SPMarketUpdateResponse AddMarketUpdate(int Entry_No, string Update, string Update_Date, string Employee_Code)//SPMarketUpdate MarketUpdate, bool isEdit, string EntryNo
         {
+            //SPMarketUpdate requestMU = new SPMarketUpdate();
+            //SPMarketUpdateResponse responseMU = new SPMarketUpdateResponse();
+
+            //requestMU.Update_Date = MarketUpdate.Update_Date;
+            //requestMU.Update = MarketUpdate.Update;
+            //requestMU.Employee_Code= MarketUpdate.Employee_Code;
+
+            //var ac = new API();
+            //errorDetails ed = new errorDetails();
+
+            //var result = (dynamic)null;
+
+            //if (isEdit)
+            //{
+            //    result = PatchItemMarketUpdate("MarketUpdateDotNetAPI", requestMU, responseMU, "Entry_No='" + EntryNo + "'");
+            //    if (result.Result.Item1 != null)
+            //        responseMU = result.Result.Item1;
+            //}
+            //else
+            //{
+            //    result = PostItemMarketUpdate("MarketUpdateDotNetAPI", requestMU, responseMU);
+
+            //    if (result.Result.Item1 != null)
+            //        responseMU = result.Result.Item1;
+
+            //}
+
+            //if (result.Result.Item1.message != null)
+            //    ed = result.Result.Item1;
+
+            //return responseMU;
+
+            //bool flag = false;
+
             DateTime UpdateDate = Convert.ToDateTime(Update_Date);
             Update_Date = UpdateDate.ToString("yyyy-MM-dd");
 

@@ -43,14 +43,15 @@ $(document).ready(function () {
     //getGstnumber();
 
     $('#btnTransporterRateCard').click(function () {
-            var transporterno = $('#hfTransporterNo').val();
-            if ($('#txtTransporterNo').val() == "") {
-                transporterno = "";
+
+        var transporterno = $('#hfTransporterNo').val();
+        if ($('#txtTransporterNo').val() == "") {
+            transporterno = "";
         }
 
         $.ajax(
             {
-                url: '/SPWarehouse/GetTransporterRate?FromPincode=' + $('#hfFromPincode').val() + '&ToPincode=' + $('#hfToPincode').val() + '&PackingUOMs=' + $('#hfPackingUOMs').val() + '&TransporterNo=' + transporterno ,
+                url: '/SPWarehouse/GetTransporterRate?FromPincode=' + $('#hfFromPincode').val() + '&ToPincode=' + $('#hfToPincode').val() + '&PackingUOMs=' + $('#hfPackingUOMs').val() + '&TransporterNo=' + transporterno,
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {

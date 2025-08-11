@@ -131,9 +131,10 @@
                             <th>Schedule/<br />Ordered Qty</th>
                             <th>Invoiced<br />Qty</th>
                             <th>In Process<br />Order Qty</th>
-                            <th>Payment Terms</th>
-                            <th>Shortclose</th>
                             <th>Quote Approval</th>
+                            <th>Shortclose</th>
+                            <th>Payment Terms</th>
+                            <th>Reject Remarks</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -144,8 +145,8 @@
                             <th>Edit</th>
                             <th></th>
                             @*<th>SMS</th>
-        <th>Email</th>
-        <th>Print</th>*@
+                    <th>Email</th>
+                    <th>Print</th>*@
                             <th>Quote No</th>
                             <th>Quote Date</th>
                             <th>Customer Name</th>
@@ -154,13 +155,18 @@
                             <th>Schedule/<br />Ordered Qty</th>
                             <th>Invoiced<br />Qty</th>
                             <th>In Process<br />Order Qty</th>
-                            <th>Payment Terms</th>
-                            <th>Shortclose</th>
                             <th>Quote Approval</th>
+                            <th>Shortclose</th>
+                            <th>Payment Terms</th>
+                            <th>Reject Remarks</th>
                         </tr>
                     </tfoot>
                 </table>
                 <input id="hdnLoggedInUserSPCode" value="@Session["loggedInUserSPCode"]" style="display:none" />
+                @if (Session["loggedInUserRole"] != null)
+                {
+                    <input id="hdnLoggedInUserRole" value="@Session["loggedInUserRole"].ToString()" style="display:none" />
+                }
                 <input id="hdnSPCodesOfReportingPersonUser" value="@Session["SPCodesOfReportingPersonUser"]" style="display:none" />
                 <input id="hdnSPSQCount" style="display:none" />
                 <div id="orderInfo"></div>
@@ -700,8 +706,9 @@
 
     });
 
-    function EditSalesQuote(SQNo, ScheduleStatus) {
-        window.location.replace('@Url.Action("SalesQuote", "SPSalesQuotes")?SQNo=' + SQNo + '&ScheduleStatus=' + ScheduleStatus);
+    function EditSalesQuote(SQNo, ScheduleStatus, SQStatus, SQFor, LoggedInUserRole) {
+        window.location.replace('@Url.Action("SalesQuote", "SPSalesQuotes")?SQNo=' + SQNo + '&ScheduleStatus=' + ScheduleStatus + '&SQStatus=' + SQStatus + '&SQFor=' + SQFor + '&LoggedInUserRole=' + LoggedInUserRole);
 
     }
+
 </script>

@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Office2010.Word;
+using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using PrakashCRM.Data.Models;
@@ -89,7 +90,7 @@ namespace PrakashCRM.Controllers
             bool flag = false;
             string SQNoLineNoDetails = "";
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/";
-            salesquoteheader.SQApprovalFormURL = ConfigurationManager.AppSettings["SPPortalUrl"].ToString() + "SPSalesQuotes/SalesQuoteStatus";
+            salesquoteheader.SQApprovalFormURL = ConfigurationManager.AppSettings["SPPortalUrl"].ToString() + "SPSalesQuotes/SalesQuote";
             string apiUrl1, apiUrl2;
             apiUrl1 = apiUrl2 = "";
 
@@ -567,12 +568,15 @@ namespace PrakashCRM.Controllers
                     break;
             }
 
+            string LoggedInUserRole = "";
+            LoggedInUserRole = Session["loggedInUserRole"].ToString();
+
             if (Session["SPCodesOfReportingPersonUser"].ToString() == "")
-                apiUrl = apiUrl + "GetAllSalesQuotes?SPCode=" + Session["loggedInUserSPCode"].ToString() + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
+                apiUrl = apiUrl + "GetAllSalesQuotes?LoggedInUserRole=" + LoggedInUserRole + "&SPCode=" + Session["loggedInUserSPCode"].ToString() + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
             else
             {
                 string SPCode = Session["loggedInUserSPCode"].ToString() + "," + Session["SPCodesOfReportingPersonUser"].ToString();
-                apiUrl = apiUrl + "GetAllSalesQuotes?SPCode=" + SPCode + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
+                apiUrl = apiUrl + "GetAllSalesQuotes?LoggedInUserRole=" + LoggedInUserRole + "&SPCode=" + SPCode + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
             }
                 
             //apiUrl = apiUrl + "GetAllSalesQuotes?SPCode=" + Session["loggedInUserSPCode"].ToString() + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
@@ -1705,6 +1709,46 @@ namespace PrakashCRM.Controllers
             return Json(shortclosereasons, JsonRequestBehavior.AllowGet);
         }
 
+        public async Task<JsonResult> GetSalesQuoteJustificationDetails(string LoggedInUserRole, string CCompanyNo)
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/";
+
+            string orderByField = "No desc";
+            string filter = "PCPL_IsInquiry eq false and Sell_to_Contact_No eq '" + CCompanyNo + "' and (PCPL_Status eq 'Approved' OR PCPL_Status eq 'Rejected by finance' OR PCPL_Status eq 'Rejected by HOD')";
+            int skip, top;
+            skip = top = 0;
+
+            if(LoggedInUserRole == "Finance")
+            {
+                skip = 0;
+                top = 10;
+                apiUrl = apiUrl + "GetSalesQuoteJustificationDetails?skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
+            }
+            else
+            {
+                skip = 0;
+                top = 3;
+                apiUrl = apiUrl + "GetSalesQuoteJustificationDetails?skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
+            }
+
+            HttpClient client = new HttpClient();
+            List<SPSQJustificationDetails> salesquotes = new List<SPSQJustificationDetails>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                salesquotes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPSQJustificationDetails>>(data);
+
+            }
+
+            return Json(salesquotes, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public async Task<string> PrintQuote(string QuoteNo)
         {
@@ -1756,6 +1800,32 @@ namespace PrakashCRM.Controllers
                 return savedPath;
             }
             
+        }
+
+
+        public async Task<string> GetCompanyIndustry(string CCompanyNo)
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/";
+
+            apiUrl = apiUrl + "GetCompanyIndustry?CCompanyNo=" + CCompanyNo;
+
+            HttpClient client = new HttpClient();
+            SPSQCompanyIndustry companyIndustry = new SPSQCompanyIndustry();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                companyIndustry = Newtonsoft.Json.JsonConvert.DeserializeObject<SPSQCompanyIndustry>(data);
+            }
+
+            string companyIndustry_ = companyIndustry.Industry == null || companyIndustry.Industry == "" ? "" : companyIndustry.Industry;
+
+            return companyIndustry_;
         }
 
         public string SaveBase64ToPdf(string base64String, string relativeFolderPath, string fileNameWithoutExtension)

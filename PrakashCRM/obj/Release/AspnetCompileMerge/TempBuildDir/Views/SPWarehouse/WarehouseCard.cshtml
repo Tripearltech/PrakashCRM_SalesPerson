@@ -63,11 +63,8 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label">Customer/Vendor : </label>
                                             <div class="col-sm-9">
-                                                @if (Model.DocumentType != "Sales Return")
-                                                {
-                                                    @Html.Encode(Model.CustomerVendorName)
-                                                }
-                                                </div>
+                                                @Html.Encode(Model.CustomerVendorName)
+                                            </div>
                                         </div>
                                     </div>
                                     
@@ -153,6 +150,7 @@
                                                     <th scope="col">Product Name</th>
                                                     <th scope="col">Quantity</th>
                                                     <th scope="col">UOM</th>
+                                                    <th scope="col">Gross Weight</th>
                                                     <th scope="col">Packing UOM</th>
                                                     <th scope="col">Packing Style</th>
                                                     <th scope="col">Transport Qty</th>
@@ -164,27 +162,36 @@
                                                     // Initialize a variable to store the concatenated PackingUOM values
                                                     var packingUOMs = "";
                                                     decimal totalQty = 0;
+                                                    decimal totalGrossWeight = 0;
                                                 }
+
                                                 @foreach (var line in Model.warehouseCardLines)
                                                 {
                                                     packingUOMs += line.PackingUOM + " ";
                                                     totalQty = totalQty + @line.Qty;
+                                                    totalGrossWeight = totalGrossWeight + @line.GrossWeightperunit;
                                                     <tr>
                                                         <td>@line.ItemNo</td>
                                                         <td>@line.ItemDescription</td>
                                                         <td>@line.Qty</td>
                                                         <td>@line.UOM</td>
+                                                        <td>@line.GrossWeightperunit</td>
                                                         <td>@line.PackingUOM</td>
                                                         <td>@line.PackingStyle</td>
                                                         <td>@line.TransportQty</td>
                                                         <td>@line.PackingQty</td>
                                                     </tr>
                                                 }
-                                                @* @if (packingUOMs.EndsWith(", "))
-                                                    {
-                                                        packingUOMs = packingUOMs.Substring(0, packingUOMs.Length - 2);
 
-                                                    }*@
+                                                @{
+                                                    totalQty = totalQty * totalGrossWeight;
+                                                }
+
+                                                @* @if (packingUOMs.EndsWith(", "))
+                                                {
+                                                    packingUOMs = packingUOMs.Substring(0, packingUOMs.Length - 2);
+
+                                                }*@
                                             </tbody>
                                         </table>
                                     </div>
@@ -302,8 +309,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label">GST Number : </label>
                                             <div class="col-sm-9">
-                                                <input id="txtGSTorARNNo" class="form-control" type="text" value="@Model.GST_Registration_No" />
-                                                @Html.ValidationMessageFor(model => model.ARN_No, null, new { style = "color:red" })
+                                                <input id="txtGSTorARNNo" class="form-control" type="text" value="" />
                                             </div>
                                         </div>
                                     </div>

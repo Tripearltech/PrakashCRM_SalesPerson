@@ -30,40 +30,63 @@ namespace PrakashCRM.Service.Controllers
     public class SPSalesQuotesController : ApiController
     {
         [Route("GetAllSalesQuotes")]
-        public List<SPSalesQuotesList> GetAllSalesQuotes(string SPCode, int skip, int top, string orderby, string filter)
+        public List<SPSalesQuotesList> GetAllSalesQuotes(string LoggedInUserRole, string SPCode, int skip, int top, string orderby, string filter)
         {
             API ac = new API();
             List<SPSalesQuotesList> salesquotes = new List<SPSalesQuotesList>();
+            bool isFirstSPCodeFilter = false;
 
             string SPCodes = "";
-            if(SPCode.Contains(",") == true)
+            if(SPCode != null)
             {
-                string[] SPCode_ = SPCode.Split(',');
-                SPCodes = "(Salesperson_Code eq '" + SPCode_[0] + "'";
-                for (int a = 1; a < SPCode_.Length; a++)
+                if (SPCode.Contains(",") == true)
                 {
-                    if (SPCode_[a].Trim() != "")
-                        SPCodes += " OR Salesperson_Code eq '" + SPCode_[a] + "'";
+                    string[] SPCode_ = SPCode.Split(',');
+                    if (SPCode_[0] != "")
+                        SPCodes = "(Salesperson_Code eq '" + SPCode_[0] + "'";
+                    else
+                        SPCodes = "(";
 
+                    for (int a = 1; a < SPCode_.Length; a++)
+                    {
+                        if (SPCode_[a].Trim() != "")
+                        {
+                            if (SPCodes == "(")
+                                SPCodes += "Salesperson_Code eq '" + SPCode_[a] + "'";
+                            else
+                                SPCodes += " OR Salesperson_Code eq '" + SPCode_[a] + "'";
+                        }
+                            
+
+                    }
+                    SPCodes += ")";
                 }
-                SPCodes += ")";
             }
-
             //string SPCode_ = SPCode.Contains(",") == true ? 
 
             if (filter == "" || filter == null)
             {
-                if (SPCode.Contains(",") == true)
-                    filter = SPCodes + " and PCPL_IsInquiry eq false";
+                if(LoggedInUserRole == "Finance")
+                    filter = "PCPL_IsInquiry eq false";
                 else
-                    filter = "Salesperson_Code eq '" + SPCode + "' and PCPL_IsInquiry eq false";
+                {
+                    if (SPCode.Contains(",") == true)
+                        filter = SPCodes + " and PCPL_IsInquiry eq false";
+                    else
+                        filter = "Salesperson_Code eq '" + SPCode + "' and PCPL_IsInquiry eq false";
+                }
             }
             else
             {
-                if (SPCode.Contains(",") == true)
-                    filter = filter + " and " + SPCodes + " and PCPL_IsInquiry eq false";
+                if (LoggedInUserRole == "Finance")
+                    filter = filter + " and PCPL_IsInquiry eq false";
                 else
-                    filter = filter + " and Salesperson_Code eq '" + SPCode + "' and PCPL_IsInquiry eq false";
+                {
+                    if (SPCode.Contains(",") == true)
+                        filter = filter + " and " + SPCodes + " and PCPL_IsInquiry eq false";
+                    else
+                        filter = filter + " and Salesperson_Code eq '" + SPCode + "' and PCPL_IsInquiry eq false";
+                }
             }
                 
             var result = ac.GetData1<SPSalesQuotesList>("SalesQuoteDotNetAPI", filter, skip, top, orderby); // and Contact_Business_Relation eq 'Customer'
@@ -104,41 +127,48 @@ namespace PrakashCRM.Service.Controllers
 
             if (Page == "SQListForApproveReject")
             {
-
                 if (filter == "" || filter == null)
                 {
                     if (UserRoleORReportingPerson == "Finance")
-                        filter = "PCPL_Approver eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false";
+                        filter = "PCPL_Approver eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false and PCPL_Status eq 'Approval pending from finance'";
                     else if (UserRoleORReportingPerson == "ReportingPerson")
-                        filter = "PCPL_ApproverHOD eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false";
+                        filter = "PCPL_IsInquiry eq false and PCPL_ApproverHOD eq '" + LoggedInUserNo + "' and PCPL_Status eq 'Approval pending from HOD'";
                 }
                 else
                 {
                     if (UserRoleORReportingPerson == "Finance")
-                        filter = filter + " and PCPL_Approver eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false";
+                        filter = filter + " and PCPL_Approver eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false and PCPL_Status eq 'Approval pending from finance'";
                     else if (UserRoleORReportingPerson == "ReportingPerson")
-                        filter = filter + " and PCPL_ApproverHOD eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false";
+                        filter = filter + " and PCPL_IsInquiry eq false and PCPL_ApproverHOD eq '" + LoggedInUserNo + "' and PCPL_Status eq 'Approval pending from HOD'";
                 }
-
+            
             }
             else if(Page == "SQList")
             {
                 if (filter == "" || filter == null)
                 {
-                    if (SPCode.Contains(",") == true)
-                        filter = SPCodes + " and PCPL_IsInquiry eq false";
+                    if (UserRoleORReportingPerson == "Finance")
+                        filter = "PCPL_IsInquiry eq false";
                     else
-                        filter = "Salesperson_Code eq '" + SPCode + "' and PCPL_IsInquiry eq false";
+                    {
+                        if (SPCode.Contains(",") == true)
+                            filter = SPCodes + " and PCPL_IsInquiry eq false";
+                        else
+                            filter = "Salesperson_Code eq '" + SPCode + "' and PCPL_IsInquiry eq false";
+                    }
                 }
                 else
                 {
-                    if (SPCode.Contains(",") == true)
-                        filter = filter + " and " + SPCodes + " and PCPL_IsInquiry eq false";
+                    if (UserRoleORReportingPerson == "Finance")
+                        filter = filter + " and PCPL_IsInquiry eq false";
                     else
-                        filter = filter + " and Salesperson_Code eq '" + SPCode + "' and PCPL_IsInquiry eq false";
-
+                    {
+                        if (SPCode.Contains(",") == true)
+                            filter = filter + " and " + SPCodes + " and PCPL_IsInquiry eq false";
+                        else
+                            filter = filter + " and Salesperson_Code eq '" + SPCode + "' and PCPL_IsInquiry eq false";
+                    }
                 }
-                    
             }
 
             //if (Page == "SQListForApproveReject")
@@ -217,6 +247,7 @@ namespace PrakashCRM.Service.Controllers
             var ac = new API();
             errorDetails ed = new errorDetails();
             string ApprovalFormatFile = Unzip(salesQuoteDetails.zipApprovalFormatFile);
+            int QuoteValidityDays = 0;
 
             SPFinanceUserDetails financeUserDetails = new SPFinanceUserDetails();
             financeUserDetails.No = "";
@@ -230,6 +261,7 @@ namespace PrakashCRM.Service.Controllers
 
             SPUserReportingPersonDetails reportingPersonDetails = new SPUserReportingPersonDetails();
             reportingPersonDetails.Reporting_Person_No = "";
+            string StatusForUrl = "";
 
             var resultUserDetails = ac.GetData<SPUserReportingPersonDetails>("EmployeesDotNetAPI", "Salespers_Purch_Code eq '" + salesQuoteDetails.SalespersonCode + "'");
 
@@ -265,7 +297,7 @@ namespace PrakashCRM.Service.Controllers
                     if (salesQuoteDetails.ApprovalFor == "Negative Credit Limit")
                     {
                         requestSQHeader.PCPL_Approver = financeUserDetails.No;
-                        requestSQHeader.PCPL_Status = "Approval pending from finance";
+                        requestSQHeader.PCPL_Status = StatusForUrl =  "Approval pending from finance";
                         requestSQHeader.PCPL_ApprovalFor = "Credit Limit";
                         requestSQHeader.PCPL_Submitted_On = DateTime.Now.ToString("yyyy-MM-dd");
                         requestSQHeader.PCPL_ApproverHOD = "";
@@ -273,7 +305,7 @@ namespace PrakashCRM.Service.Controllers
                     else if (salesQuoteDetails.ApprovalFor == "Negative Margin")
                     {
                         requestSQHeader.PCPL_ApproverHOD = reportingPersonDetails.Reporting_Person_No;
-                        requestSQHeader.PCPL_Status = "Approval pending from HOD";
+                        requestSQHeader.PCPL_Status = StatusForUrl = "Approval pending from HOD";
                         requestSQHeader.PCPL_ApprovalFor = "Margin";
                         requestSQHeader.PCPL_Submitted_On = DateTime.Now.ToString("yyyy-MM-dd");
                         requestSQHeader.PCPL_Approver = "";
@@ -281,7 +313,7 @@ namespace PrakashCRM.Service.Controllers
                     else if (salesQuoteDetails.ApprovalFor == "Both")
                     {
                         requestSQHeader.PCPL_Approver = financeUserDetails.No;
-                        requestSQHeader.PCPL_Status = "Approval pending from finance";
+                        requestSQHeader.PCPL_Status = StatusForUrl = "Approval pending from finance";
                         requestSQHeader.PCPL_ApprovalFor = "Both";
                         requestSQHeader.PCPL_Submitted_On = DateTime.Now.ToString("yyyy-MM-dd");
                         requestSQHeader.PCPL_ApproverHOD = reportingPersonDetails.Reporting_Person_No;
@@ -740,8 +772,13 @@ namespace PrakashCRM.Service.Controllers
                 //if(Convert.ToDouble(salesQuoteDetails.AvailableCreditLimit) < 0)
                 if (salesQuoteDetails.ApprovalFor != null)
                 {
-                    
+
                     //
+
+                    DateTime quoteDate = Convert.ToDateTime(salesQuoteDetails.OrderDate);
+                    DateTime quoteValidUntilDate = Convert.ToDateTime(salesQuoteDetails.ValidUntillDate);
+
+                    QuoteValidityDays = (quoteValidUntilDate - quoteDate).Days;
 
                     string myString = ApprovalFormatFile;
                     string type = "";
@@ -764,6 +801,9 @@ namespace PrakashCRM.Service.Controllers
                         myString = myString.Replace("##heading##", "The user '" + SPName + "' was trying to create the quote, but the Credit limit is exceeded and Margin is less than Zero.");
                         type = "BOTH";
                     }
+
+                    salesQuoteDetails.SQApprovalFormURL = salesQuoteDetails.SQApprovalFormURL + "?SQNo=" + responseSQHeader.No + "&ScheduleStatus=''&SQStatus=" + StatusForUrl +
+                        "&SQFor=ApproveReject&LoggedInUserRole=";
 
                     //myString = myString.Replace("##SRN##", lblSalesQuoteNo.Text);
                     myString = myString.Replace("##SalesQuoteNo##", responseSQHeader.No);
@@ -874,6 +914,11 @@ namespace PrakashCRM.Service.Controllers
                     myString = myString.Replace("##custno##", salesQuoteDetails.CustomerNo);
                     myString = myString.Replace("##custname##", salesQuoteDetails.ContactCompanyName);
 
+                    if (QuoteValidityDays <= 1)
+                        myString = myString.Replace("##QuoteValidityDays##", QuoteValidityDays + " Day");
+                    else if (QuoteValidityDays >= 1)
+                        myString = myString.Replace("##QuoteValidityDays##", QuoteValidityDays + " Days");
+
                     //GSTTable += "</table>    </ td >    </ tr > ";
 
                     str_lineTable += "</table>";
@@ -927,16 +972,16 @@ namespace PrakashCRM.Service.Controllers
             if (filter == "" || filter == null)
             {
                 if (UserRoleORReportingPerson == "Finance")
-                    filter = "PCPL_Approver eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false";
+                    filter = "PCPL_Approver eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false and PCPL_Status eq 'Approval pending from finance'";
                 else if (UserRoleORReportingPerson == "ReportingPerson")
-                    filter = "PCPL_ApproverHOD eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false";
+                    filter = "PCPL_IsInquiry eq false and PCPL_ApproverHOD eq '" + LoggedInUserNo + "' and PCPL_Status eq 'Approval pending from HOD'";
             }
             else
             {
                 if (UserRoleORReportingPerson == "Finance")
-                    filter = filter + " and PCPL_Approver eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false";
+                    filter = filter + " and PCPL_Approver eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false and PCPL_Status eq 'Approval pending from finance'";
                 else if (UserRoleORReportingPerson == "ReportingPerson")
-                    filter = filter + " and PCPL_ApproverHOD eq '" + LoggedInUserNo + "' and PCPL_IsInquiry eq false";
+                    filter = filter + " and PCPL_IsInquiry eq false and PCPL_ApproverHOD eq '" + LoggedInUserNo + "' and PCPL_Status eq 'Approval pending from HOD'";
             }
 
             //if (filter == "" || filter == null)
@@ -962,7 +1007,7 @@ namespace PrakashCRM.Service.Controllers
         }
 
         [Route("SQApproveReject")]
-        public string SQApproveReject(string SQNos, string LoggedInUserNo, string Action, string UserRoleORReportingPerson, string RejectRemarks)
+        public string SQApproveReject(string SQNosAndApprovalFor, string LoggedInUserNo, string Action, string UserRoleORReportingPerson, string RejectRemarks, string LoggedInUserEmail)
         {
             string resMsg = "";
             API ac = new API();
@@ -972,27 +1017,41 @@ namespace PrakashCRM.Service.Controllers
             //SPBusinessPlanDetails businessPlanDetails = new SPBusinessPlanDetails();
             errorDetails ed = new errorDetails();
             var result = (dynamic)null;
-            SQNos = SQNos.Substring(0, SQNos.Length - 1);
-            string[] SQNos_ = SQNos.Split(',');
+            SQNosAndApprovalFor = SQNosAndApprovalFor.Substring(0, SQNosAndApprovalFor.Length - 1);
+            string[] SQNosAndApprovalForDetails_ = SQNosAndApprovalFor.Split(',');
+            string SQNos = "";
 
-            for(int a = 0; a < SQNos_.Length; a++)
+            for(int a = 0; a < SQNosAndApprovalForDetails_.Length; a++)
             {
                 SPSQForApprove sqForApprove = new SPSQForApprove();
                 SPSQForReject sqForReject = new SPSQForReject();
                 SPSQForApproveHOD sqForApproveHOD = new SPSQForApproveHOD();
                 SPSQForRejectHOD sqForRejectHOD = new SPSQForRejectHOD();
                 SPSQHeader sqHeader = new SPSQHeader();
+                string[] SQNosAndApprovalFor_ = SQNosAndApprovalForDetails_[a].Split(':');
+                string SQNo = SQNosAndApprovalFor_[0];
+                string ApprovalFor = SQNosAndApprovalFor_[1];
+                string SPEmail = SQNosAndApprovalFor_[2];
 
                 if (UserRoleORReportingPerson == "Finance")
                 {
-                    if (Action == "Approve")
+                    if (Action == "Approve" && ApprovalFor == "Credit Limit")
                     {
                         //sqForApprove.PCPL_Approver = LoggedInUserNo;
                         sqForApprove.PCPL_Approved_By_Rejected_By = LoggedInUserNo;
                         sqForApprove.PCPL_Status = "Approved";
                         sqForApprove.PCPL_Approved_Rejected_On = DateTime.Now.ToString("yyyy-MM-dd");
 
-                        result = PatchItemSQApproveReject("SalesQuoteDotNetAPI", sqForApprove, sqForReject, sqHeader, "Approve", "Document_Type='Quote',No='" + SQNos_[a] + "'");
+                        result = PatchItemSQApproveReject("SalesQuoteDotNetAPI", sqForApprove, sqForReject, sqHeader, "Approve", "Document_Type='Quote',No='" + SQNo + "'");
+                    }
+                    else if (Action == "Approve" && ApprovalFor == "Both")
+                    {
+                        //sqForApprove.PCPL_Approver = LoggedInUserNo;
+                        sqForApprove.PCPL_Approved_By_Rejected_By = LoggedInUserNo;
+                        sqForApprove.PCPL_Status = "Approval pending from HOD";
+                        sqForApprove.PCPL_Approved_Rejected_On = DateTime.Now.ToString("yyyy-MM-dd");
+
+                        result = PatchItemSQApproveReject("SalesQuoteDotNetAPI", sqForApprove, sqForReject, sqHeader, "Approve", "Document_Type='Quote',No='" + SQNo + "'");
                     }
                     else if (Action == "Reject")
                     {
@@ -1002,7 +1061,7 @@ namespace PrakashCRM.Service.Controllers
                         sqForReject.PCPL_Rejected_Reason = RejectRemarks;
                         sqForReject.PCPL_Approved_Rejected_On = DateTime.Now.ToString("yyyy-MM-dd");
 
-                        result = PatchItemSQApproveReject("SalesQuoteDotNetAPI", sqForApprove, sqForReject, sqHeader, "Reject", "Document_Type='Quote',No='" + SQNos_[a] + "'");
+                        result = PatchItemSQApproveReject("SalesQuoteDotNetAPI", sqForApprove, sqForReject, sqHeader, "Reject", "Document_Type='Quote',No='" + SQNo + "'");
                     }
                 }
                 else if (UserRoleORReportingPerson == "ReportingPerson")
@@ -1014,7 +1073,7 @@ namespace PrakashCRM.Service.Controllers
                         sqForApproveHOD.PCPL_Status = "Approved";
                         sqForApproveHOD.PCPL_Approved_Rejected_On_HOD = DateTime.Now.ToString("yyyy-MM-dd");
 
-                        result = PatchItemSQApproveRejectHOD("SalesQuoteDotNetAPI", sqForApproveHOD, sqForRejectHOD, sqHeader, "Approve", "Document_Type='Quote',No='" + SQNos_[a] + "'");
+                        result = PatchItemSQApproveRejectHOD("SalesQuoteDotNetAPI", sqForApproveHOD, sqForRejectHOD, sqHeader, "Approve", "Document_Type='Quote',No='" + SQNo + "'");
                     }
                     else if (Action == "Reject")
                     {
@@ -1024,7 +1083,7 @@ namespace PrakashCRM.Service.Controllers
                         sqForRejectHOD.PCPL_Rejected_Reason_HOD = RejectRemarks;
                         sqForRejectHOD.PCPL_Approved_Rejected_On_HOD = DateTime.Now.ToString("yyyy-MM-dd");
 
-                        result = PatchItemSQApproveRejectHOD("SalesQuoteDotNetAPI", sqForApproveHOD, sqForRejectHOD, sqHeader, "Reject", "Document_Type='Quote',No='" + SQNos_[a] + "'");
+                        result = PatchItemSQApproveRejectHOD("SalesQuoteDotNetAPI", sqForApproveHOD, sqForRejectHOD, sqHeader, "Reject", "Document_Type='Quote',No='" + SQNo + "'");
                     }
                 }
 
@@ -1034,11 +1093,46 @@ namespace PrakashCRM.Service.Controllers
                     sqHeader = result.Result.Item1;
                     ed = result.Result.Item2;
                     sqHeader.errorDetails = ed;
+                    SQNos = SQNo + ",";
                 }
 
                 if (!sqHeader.errorDetails.isSuccess)
                     resMsg = "Error:" + sqHeader.errorDetails.message;
+
+                if(SPEmail != null || SPEmail != "")
+                {
+                    EmailService emailService = new EmailService();
+                    StringBuilder sbMailBody = new StringBuilder();
+
+                    sbMailBody.Append("");
+                    sbMailBody.Append("<p>Hi,</p>");
+                    sbMailBody.Append("<p>Welcome to the <strong>Prakash CRM Portal</strong>.</p>");
+
+                    if (Action == "Approve")
+                    {
+                        if (UserRoleORReportingPerson == "Finance")
+                            sbMailBody.Append("<p>Sales Quote : " + SQNo + " Approved By Finance User</p>");
+                        else if (UserRoleORReportingPerson == "ReportingPerson")
+                            sbMailBody.Append("<p>Sales Quote : " + SQNo + " Approved By HOD User</p>");
+                    }
+                    else if (Action == "Reject")
+                    {
+                        if (UserRoleORReportingPerson == "Finance")
+                            sbMailBody.Append("<p>Sales Quote : " + SQNo + " Rejected By Finance User</p>");
+                        else if (UserRoleORReportingPerson == "ReportingPerson")
+                            sbMailBody.Append("<p>Sales Quote : " + SQNo + " Rejected By HOD User</p>");
+                    }
+
+                    sbMailBody.Append("<p>&nbsp;</p>");
+                    sbMailBody.Append("<p>Warm Regards,</p>");
+                    sbMailBody.Append("<p>Support Team</p>");
+
+                    emailService.SendEmail(SPEmail, LoggedInUserEmail, "Sales Quote Approval Status", sbMailBody.ToString());
+                }
+                
             }
+
+            //SQNos = SQNos.Substring(0, SQNos.Length - 1);
 
             return resMsg;
 
@@ -1703,6 +1797,10 @@ namespace PrakashCRM.Service.Controllers
                 SQHeaderDetails.JobtoCode = SQHeader.PCPL_Job_to_Code;
                 SQHeaderDetails.ShortcloseStatus = SQHeader.TPTPL_Short_Close;
                 SQHeaderDetails.SCRemarksSetupValue = SQHeader.TPTPL_SC_Reason_Setup_Value;
+                SQHeaderDetails.Status = SQHeader.PCPL_Status;
+                SQHeaderDetails.ApprovalFor = SQHeader.PCPL_ApprovalFor;
+                SQHeaderDetails.WorkDescription = SQHeader.WorkDescription;
+                SQHeaderDetails.SalespersonEmail = SQHeader.PCPL_SalesPerson_Email;
 
                 var resultSQLines = ac.GetData<SPSQLines>("SalesQuoteSubFormDotNetAPI", "Document_No eq '" + SQNo + "'");
                 
@@ -2255,6 +2353,41 @@ namespace PrakashCRM.Service.Controllers
                 shortCloseReasons = result.Result.Item1.value;
 
             return shortCloseReasons;
+        }
+
+        [Route("GetSalesQuoteJustificationDetails")]
+        public List<SPSQJustificationDetails> GetSalesQuoteJustificationDetails(int skip, int top, string orderby, string filter)
+        {
+            API ac = new API();
+            List<SPSQJustificationDetails> salesquotes = new List<SPSQJustificationDetails>();
+            
+            var result = ac.GetData1<SPSQJustificationDetails>("SalesQuoteDotNetAPI", filter, skip, top, orderby);
+
+            if (result.Result.Item1.value.Count > 0)
+                salesquotes = result.Result.Item1.value;
+
+            for(int a = 0; a < salesquotes.Count; a++)
+            {
+                DateTime date_ = Convert.ToDateTime(salesquotes[a].PCPL_Target_Date);
+                salesquotes[a].PCPL_Target_Date = date_.ToString("dd/MM/yyyy");
+            }
+
+            return salesquotes;
+        }
+
+        [Route("GetCompanyIndustry")]
+        public SPSQCompanyIndustry GetCompanyIndustry(string CCompanyNo)
+        {
+            API ac = new API();
+            SPSQCompanyIndustry companyIndustry = new SPSQCompanyIndustry();
+
+            var result = ac.GetData<SPSQCompanyIndustry>("ContactDotNetAPI", "No eq '" + CCompanyNo + "'"); // and Contact_Business_Relation eq 'Customer'
+
+            if (result.Result.Item1.value.Count > 0)
+                companyIndustry = result.Result.Item1.value[0];
+
+            return companyIndustry;
+
         }
 
         public async Task<(SPSQHeader, errorDetails)> PostItemSQ<SPSQHeader>(string apiendpoint, SPSQHeaderPost requestModel, SPSQHeader responseModel)

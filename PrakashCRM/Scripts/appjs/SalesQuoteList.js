@@ -954,7 +954,7 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
         SPCode = $('#hdnLoggedInUserSPCode').val() + "," + $('#hdnSPCodesOfReportingPersonUser').val();
     }
 
-    $.get(apiUrl + 'GetApiRecordsCount?Page=SQList&LoggedInUserNo=\'\'&UserRoleORReportingPerson=\'\'&SPCode=' + SPCode + '&apiEndPointName=SalesQuoteDotNetAPI&filter=' + filter, function (data) {
+    $.get(apiUrl + 'GetApiRecordsCount?Page=SQList&LoggedInUserNo=\'\'&UserRoleORReportingPerson=' + $('#hdnLoggedInUserRole').val() + '&SPCode=' + SPCode + '&apiEndPointName=SalesQuoteDotNetAPI&filter=' + filter, function (data) {
         $('#hdnSPSQCount').val(data);
     });
 
@@ -972,7 +972,7 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                 $.each(data, function (index, item) {
 
                     /*"<td><a href='#'><i class='bx bx-message'></i></a></td><td><a href='#'><i class='bx bx-mail-send'></i></a></td><td><a href='#'><i class='bx bx-printer'></i></a></td>"*/
-                    var rowData = "<tr><td></td><td><a class='EditCls' onclick='EditSalesQuote(\"" + item.No + "\",\"" + item.TPTPL_Schedule_status + "\")'><i class='bx bxs-edit'></i></a></td>" +
+                    var rowData = "<tr><td></td><td><a class='EditCls' onclick='EditSalesQuote(\"" + item.No + "\",\"" + item.TPTPL_Schedule_status + "\",\"" + item.PCPL_Status + "\",SQFor=\"Edit\",LoggedInUserRole=\"" + $('#hdnLoggedInUserRole').val() + "\")'><i class='bx bxs-edit'></i></a></td>" +
                         "<td><div class='dropdown ms-auto'><div class='cursor-pointer text-dark font-24 dropdown-toggle dropdown-toggle-nocaret' data-bs-toggle='dropdown'><i class='bx bx-dots-horizontal-rounded text-option'></i></div>" +
                         "<div class='dropdown-menu dropdown-menu-end'><a class='dropdown-item' href='javaScript:;'>Send SMS</a><a class='dropdown-item' onclick='SendEmail(\"" + item.No + "\",\"" + item.SellToEmail + "\")'>Send Email</a>" +
                         "<a class='dropdown-item' style='cursor:pointer' onclick='PrintQuote(\"" + item.No + "\")'>Print</a></div></div></td>" + "<td>" + item.No + "</td><td>" + item.Order_Date + "</td><td>" + item.Sell_to_Customer_Name + "</td>" +
@@ -1016,9 +1016,28 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                         "<td><a class='QtyCountCls' onclick='ShowInvoicedQtyDetails(\"" + item.No + "\"," + item.TPTPLTotal_Invoiced_Qty + ")'>" + item.TPTPLTotal_Invoiced_Qty + "</a></td>";
 
                         var InProcessQty = item.TPTPLTotal_Ordered_Qty - item.TPTPLTotal_Invoiced_Qty;
-                    rowData += "<td><a class='QtyCountCls' onclick='ShowInProcessQtyDetails(\"" + item.No + "\"," + InProcessQty + ")'>" + InProcessQty + "</a></td>" +
-                        "<td>" + item.Payment_Terms_Code + "</td>";
-                        
+                    rowData += "<td><a class='QtyCountCls' onclick='ShowInProcessQtyDetails(\"" + item.No + "\"," + InProcessQty + ")'>" + InProcessQty + "</a></td>";
+
+                    if (item.PCPL_Status == "Approval pending from finance") {
+                        rowData += "<td><span class='badge bg-primary'>Pending-Finance</span></td>";
+                    }
+                    else if (item.PCPL_Status == "Approval pending from HOD") {
+
+                        rowData += "<td><span class='badge bg-primary'>Pending-HOD</span></td>";
+                    }
+                    else if (item.PCPL_Status == "Approved") {
+
+                        rowData += "<td><span class='badge bg-success'>Approved</span></td>";
+                    }
+                    else if (item.PCPL_Status == "Rejected by finance") {
+
+                        rowData += "<td><span class='badge bg-danger'>Rejected-Finance</span></td>";
+                    }
+                    else if (item.PCPL_Status == "Rejected by HOD") {
+
+                        rowData += "<td><span class='badge bg-danger'>Rejected-HOD</span></td>";
+                    }
+   
                     if (item.TPTPL_Short_Close) {
                         rowData += "<td><span class='badge bg-primary'>Yes</span></td>";
                     }
@@ -1032,19 +1051,27 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                         }
                     }
 
-                    if (item.PCPL_Status == "Approval pending from HOD" || item.PCPL_Status == "Approval pending from finance") {
+                    rowData += "<td>" + item.Payment_Terms_Code + "</td>";
 
-                        rowData += "<td><span class='badge bg-primary'>Pending</span></td>";
-                    }
-                    else if (item.PCPL_Status == "Approved") {
 
-                        rowData += "<td><span class='badge bg-success'>Approved</span></td>";
+                    
+                    if (item.PCPL_Rejected_Reason != "") {
+                        rowData += "<td>" + item.PCPL_Rejected_Reason + "</td>";
                     }
-                    else if (item.PCPL_Status == "Rejected by HOD" || item.PCPL_Status == "Rejected by finance") {
+                    else if (item.PCPL_Rejected_Reason_HOD != "") {
+                        rowData += "<td>" + item.PCPL_Rejected_Reason_HOD + "</td>";
+                    }
+                    else {
+                        rowData += "<td></td>";
+                    }
 
-                        rowData += "<td><span class='badge bg-danger'>Rejected</span></td>";
-                    }
-                        
+                    //if (item.PCPL_Rejected_Reason == null || item.PCPL_Rejected_Reason == "") {
+                    //    rowData += "<td></td>";
+                    //}
+                    //else {
+                    //    rowData += "<td>" + item.PCPL_Rejected_Reason + "</td>";
+                    //}
+    
                     rowData += "</tr>";
 
                     $('#tableBody').append(rowData);
@@ -1096,10 +1123,16 @@ function commaSeparateNumber(val) {
 
 function ScheduleOrder(QuoteNo, LocCode, SQStatus) {
 
-    if (SQStatus != "Approved") {
+    if (SQStatus == "Approval pending from finance" || SQStatus == "Approval pending from HOD") {
 
         $('#modalErrMsg').css('display', 'block');
         $('#modalErrDetails').text("Sales Quote Approval is Pending, Can\'t Schedule Order");
+
+    }
+    else if (SQStatus == "Rejected by finance" || SQStatus == "Rejected by HOD") {
+
+        $('#modalErrMsg').css('display', 'block');
+        $('#modalErrDetails').text("Sales Quote Rejected, Can\'t Schedule Order");
 
     }
     else {
