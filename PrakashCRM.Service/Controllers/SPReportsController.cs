@@ -159,7 +159,7 @@ namespace PrakashCRM.Service.Controllers
 
         [HttpGet]
         [Route("GetInv_Inward")]
-        public List<SPInwardDetails> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName)
+        public List<SPInwardDetails> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName,string FromDate, string ToDate)
         {
             API ac = new API();
             List<SPInwardDetails> Inv_Inward = new List<SPInwardDetails>();
@@ -185,10 +185,10 @@ namespace PrakashCRM.Service.Controllers
 
             if (!string.IsNullOrWhiteSpace(itemName))
             {
-                filter += $" and Item_Description eq '{itemName}'";
+                filter += $" and tolower(Item_Description) eq '{itemName.ToLower()}'";
             }
 
-           /* if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+           if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
             {
                 if (DateTime.TryParse(FromDate, out DateTime fromDateParsed) &&
                     DateTime.TryParse(ToDate, out DateTime toDateParsed))
@@ -199,7 +199,7 @@ namespace PrakashCRM.Service.Controllers
                     // No quotes around date
                     filter += $" and Posting_Date ge {from} and Posting_Date le {to}";
                 }
-            }*/
+            }
 
             var ItemWiseResult = ac.GetData<SPInwardDetails>("ItemLedgerEntriesDotNetAPI", filter);
 

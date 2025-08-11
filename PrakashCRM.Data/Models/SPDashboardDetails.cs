@@ -94,6 +94,8 @@ namespace PrakashCRM.Data.Models
         public int No_of_days { get; set; }
         public double Cost_Amount_Actual { get; set; }
         public string Item_Category_Code { get; set;}
+        public string Item_Description { get; set;}
+        public string Location_Code { get; set;}
 
     }
 }
