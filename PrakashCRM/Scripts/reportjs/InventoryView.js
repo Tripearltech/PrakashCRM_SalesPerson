@@ -21,7 +21,7 @@ function GenerateInvData() {
     }
 }
 
-const ProductGroupsCode =  {};
+const ProductGroupsCode = {};
 function BindInvBranchWiseTotals() {
     $.ajax({
         url: '/SPReports/GetBranchWiseTotal',
@@ -194,34 +194,35 @@ function BindInvBranchWiseTotals() {
 
                 const branchCode = branches[branchIndex].LocationCode;
                 const pgCode = ProductGroupsCode[branchIndex][pgIndex].Code;
-                const iditemName = itemName; 
+                const iditemName = itemName;
 
                 const fromDate = $('#txtInvFDate').val(); // New
-                const toDate = $('#txtInvTDate').val(); 
+                const toDate = $('#txtInvTDate').val();
 
                 let entryType = "";
                 let documentType = "";
+                let apiUrlCall = "";
 
                 if (quantityType === "Inward") {
                     entryType = "Purchase";
                     documentType = "Purchase Receipt";
+                    apiUrlCall = `/SPReports/GetInv_Inward?Entry_Type=${encodeURIComponent(entryType)}&Document_Type=${encodeURIComponent(documentType)}&branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}`;
                 }
                 else if (quantityType === "Outward") {
                     entryType = "Sale";
                     documentType = "Sales Shipment";
+                    apiUrlCall = `/SPReports/GetInv_Inward?Entry_Type=${encodeURIComponent(entryType)}&Document_Type=${encodeURIComponent(documentType)}&branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}`;
                 }
                 else if (quantityType === "Reserved") {
-                    entryType = "Sale";
-                    documentType = ""; 
-                 }
+                    apiUrlCall = `/SPReports/GetReservedDetails?branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}`;
+                }
                 else if (quantityType === "CLStock") {
                     entryType = "Purchase";
                     documentType = "Purchase Receipt";
+                    apiUrlCall = `/SPReports/GetInv_Inward?Entry_Type=${encodeURIComponent(entryType)}&Document_Type=${encodeURIComponent(documentType)}&branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}`;
                 }
-
-                const url_ = `/SPReports/GetInv_Inward?` + `Entry_Type=${encodeURIComponent(entryType)}` + `&Document_Type=${encodeURIComponent(documentType)}` + `&branchCode=${encodeURIComponent(branchCode)}` + `&pgCode=${encodeURIComponent(pgCode)}` + `&itemName=${encodeURIComponent(iditemName)}` + `&FromDate=${encodeURIComponent(fromDate)}` + `&ToDate=${encodeURIComponent(toDate)}`;
-               $.ajax({
-                    url: url_,
+                $.ajax({
+                    url: apiUrlCall,
                     type: 'GET',
                     contentType: 'application/json',
                     success: function (data) {
@@ -268,10 +269,10 @@ function BindInvBranchWiseTotals() {
                                     rowHtml += `<td>${d.Source_Description}</td><td>${d.Document_No}</td><td>${d.Posting_Date}</td><td>${d.Quantity}</td><td>${d.Lot_No}</td>`;
                                 }
                                 else if (quantityType === "Reserved") {
-                                    rowHtml += `<td>${d.PCPL_Vendor_Name}</td><td>${d.PCPL_Salesperson_Code}</td><td>${d.Posting_Date}</td><td>${d.Reserved_Quantity}</td><td>${d.PCPL_Mfg_Name}</td><td>${d.PCPL_Remarks}</td>`;
+                                    rowHtml += `<td>${d.Sell_to_Customer_Name}</td><td>${d.PCPL_Salesperson_Name}</td><td>${d.Posting_Date}</td><td>${d.Outstanding_Quantity}</td><td> </td><td>${d.PCPL_Remarks}</td>`;
                                 }
                                 else if (quantityType === "CLStock") {
-                                    rowHtml += `<td>${d.Source_Description}</td><td>${d.PCPL_Mfg_Name}</td><td>${d.Document_Type}</td><td>${d.Remaining_Quantity}</td><td>${d.Reserved_Quantity}</td><td>${availableQty}</td><td>${d.Document_No}</td><td>${d.Lot_No}</td><td>${d.PCPL_Remarks}</td><td>${d.No_of_days}</td><td>${d.Cost_Amount_Actual}</td>`;
+                                    rowHtml += `<td>${d.PCPL_Vendor_Name}</td><td>${d.PCPL_Mfg_Name}</td><td>${d.Document_Type}</td><td>${d.Remaining_Quantity}</td><td>${d.Reserved_Quantity}</td><td>${availableQty}</td><td>${d.Document_No}</td><td>${d.Lot_No}</td><td>${d.PCPL_Remarks}</td><td>${d.No_of_days}</td><td>${d.Cost_Amount_Actual}</td>`;
                                 }
 
                                 rowHtml += '</tr>';

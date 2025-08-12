@@ -82,7 +82,7 @@ namespace PrakashCRM.Controllers
             }
             return Json(Inv_ProductGroupsWise, JsonRequestBehavior.AllowGet);
         }
-        
+
 
         [HttpGet]
         public async Task<JsonResult> GetInv_ItemWise(string branchCode, string pgCode)
@@ -105,11 +105,11 @@ namespace PrakashCRM.Controllers
 
             return Json(Inv_ItemWise, JsonRequestBehavior.AllowGet);
         }
-        
-        public async Task<JsonResult> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName, string FromDate, string ToDate)
+
+        public async Task<JsonResult> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName, string FromDate, string ToDate, string Type)
         {
             string baseUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString();
-            string apiUrl = baseUrl + "SPReports/GetInv_Inward?" + "Entry_Type=" + HttpUtility.UrlEncode(Entry_Type) + "&Document_Type=" + HttpUtility.UrlEncode(Document_Type) + "&branchCode=" + HttpUtility.UrlEncode(branchCode) + "&pgCode=" + HttpUtility.UrlEncode(pgCode) + "&itemName=" + HttpUtility.UrlEncode(itemName)+ "&FromDate=" + HttpUtility.UrlEncode(FromDate) + "&ToDate=" + HttpUtility.UrlEncode(ToDate);
+            string apiUrl = baseUrl + "SPReports/GetInv_Inward?" + "Entry_Type=" + HttpUtility.UrlEncode(Entry_Type) + "&Document_Type=" + HttpUtility.UrlEncode(Document_Type) + "&branchCode=" + HttpUtility.UrlEncode(branchCode) + "&pgCode=" + HttpUtility.UrlEncode(pgCode) + "&itemName=" + HttpUtility.UrlEncode(itemName) + "&FromDate=" + HttpUtility.UrlEncode(FromDate) + "&ToDate=" + HttpUtility.UrlEncode(ToDate) + "&Type=" + HttpUtility.UrlEncode(Type);
 
             HttpClient client = new HttpClient();
             List<SPInwardDetails> Inv_Inward = new List<SPInwardDetails>();
@@ -127,6 +127,27 @@ namespace PrakashCRM.Controllers
 
             return Json(Inv_Inward, JsonRequestBehavior.AllowGet);
         }
+        public async Task<JsonResult> GetReservedDetails(string branchCode, string pgCode, string itemName, string FromDate, string ToDate)
+        {
+            string baseUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString();
+            string apiUrl = baseUrl + "SPReports/GetReservedDetails?" + "&branchCode=" + HttpUtility.UrlEncode(branchCode) + "&pgCode=" + HttpUtility.UrlEncode(pgCode) + "&itemName=" + HttpUtility.UrlEncode(itemName) + "&FromDate=" + HttpUtility.UrlEncode(FromDate) + "&ToDate=" + HttpUtility.UrlEncode(ToDate);
+
+            HttpClient client = new HttpClient();
+            List<SPReservedQtyDetails> Inv_ReservedDetails = new List<SPReservedQtyDetails>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                Inv_ReservedDetails = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPReservedQtyDetails>>(data);
+            }
+
+            return Json(Inv_ReservedDetails, JsonRequestBehavior.AllowGet);
+        }
 
         // Customer Ledger Entry Report
 
@@ -140,10 +161,7 @@ namespace PrakashCRM.Controllers
             string savedPath = "";
 
             // Generate unique file name using CustomerNo + FromDate + ToDate
-            string expectedFileName = $"{CustomerNo}_{FromDate}_{ToDate}"
-                                        .Replace("/", "-")
-                                        .Replace(":", "-")
-                                        .Replace(" ", "_");
+            string expectedFileName = $"{CustomerNo}_{FromDate}_{ToDate}".Replace("/", "-").Replace(":", "-").Replace(" ", "_");
 
             string path = Server.MapPath("~/CustomerLedgerEntryPrint/");
 

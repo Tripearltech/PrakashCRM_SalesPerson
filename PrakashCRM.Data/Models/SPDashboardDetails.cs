@@ -93,9 +93,24 @@ namespace PrakashCRM.Data.Models
         public string PCPL_Original_Buying_Date { get; set; }
         public int No_of_days { get; set; }
         public double Cost_Amount_Actual { get; set; }
-        public string Item_Category_Code { get; set;}
-        public string Item_Description { get; set;}
-        public string Location_Code { get; set;}
+        public string Item_Category_Code { get; set; }
+        public string Item_Description { get; set; }
+        public string Location_Code { get; set; }
+        public string Item_No { get; set; }
+
+        public double Outstanding_Quantity { get; set; }
+
+    }
+    public class SPReservedQtyDetails
+    {
+        public string Location_Code { get; set; }
+        public string Item_Category_Code { get; set; }
+        public string Description { get; set; }
+        public string Posting_Date { get; set; }
+        public string Sell_to_Customer_Name { get; set; }
+        public double Outstanding_Quantity { get; set; }
+        public string PCPL_Salesperson_Name { get; set; }
+        public string PCPL_Remarks { get; set; }
 
     }
 }
