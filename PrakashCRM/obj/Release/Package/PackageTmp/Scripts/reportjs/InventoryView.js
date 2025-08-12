@@ -194,7 +194,10 @@ function BindInvBranchWiseTotals() {
 
                 const branchCode = branches[branchIndex].LocationCode;
                 const pgCode = ProductGroupsCode[branchIndex][pgIndex].Code;
-                const IdItemName = itemName;
+                const iditemName = itemName; 
+
+                const fromDate = $('#txtInvFDate').val(); // New
+                const toDate = $('#txtInvTDate').val(); 
 
                 let entryType = "";
                 let documentType = "";
@@ -216,9 +219,8 @@ function BindInvBranchWiseTotals() {
                     documentType = "Purchase Receipt";
                 }
 
-                const url_ = `/SPReports/GetInv_Inward?` +`Entry_Type=${encodeURIComponent(entryType)}` +`&Document_Type=${encodeURIComponent(documentType)}` +`&branchCode=${encodeURIComponent(branchCode)}` +`&pgCode=${encodeURIComponent(pgCode)}` +
-                    `&itemName=${encodeURIComponent(IdItemName)}`;
-                $.ajax({
+                const url_ = `/SPReports/GetInv_Inward?` + `Entry_Type=${encodeURIComponent(entryType)}` + `&Document_Type=${encodeURIComponent(documentType)}` + `&branchCode=${encodeURIComponent(branchCode)}` + `&pgCode=${encodeURIComponent(pgCode)}` + `&itemName=${encodeURIComponent(iditemName)}` + `&FromDate=${encodeURIComponent(fromDate)}` + `&ToDate=${encodeURIComponent(toDate)}`;
+               $.ajax({
                     url: url_,
                     type: 'GET',
                     contentType: 'application/json',

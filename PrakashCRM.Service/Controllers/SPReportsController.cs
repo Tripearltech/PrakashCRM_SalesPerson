@@ -12,6 +12,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Services.Description;
 using System.Xml.Linq;
 
 namespace PrakashCRM.Service.Controllers
@@ -19,7 +20,7 @@ namespace PrakashCRM.Service.Controllers
     [RoutePrefix("api/SPReports")]
     public class SPReportsController : ApiController
     {
-      [HttpPost]
+        [HttpPost]
         [Route("GenerateInvData")]
         public string GenerateInvData(string FromDate, string ToDate)
         {
@@ -159,69 +160,108 @@ namespace PrakashCRM.Service.Controllers
 
         [HttpGet]
         [Route("GetInv_Inward")]
-        public List<SPInwardDetails> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName,string FromDate, string ToDate)
+        public List<SPInwardDetails> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName, string FromDate, string ToDate)
         {
             API ac = new API();
             List<SPInwardDetails> Inv_Inward = new List<SPInwardDetails>();
-            string filter = "";
-            if (Document_Type == "''")
+            string filter1 = "";
+
+            if (Document_Type == null)
             {
-                filter += $"Entry_Type eq '{Entry_Type}'";
+                Document_Type = "";
+                filter1 += $"Entry_Type eq '{Entry_Type}'";
             }
             else
             {
-                filter += $"Entry_Type eq '{Entry_Type}'";
-
+                filter1 += $"Entry_Type eq '{Entry_Type}'";
                 if (!string.IsNullOrWhiteSpace(Document_Type))
                 {
-                    filter += $" and Document_Type eq '{Document_Type}'";
+                    filter1 += $" and Document_Type eq '{Document_Type}'";
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(branchCode) && !string.IsNullOrWhiteSpace(pgCode))
             {
-                filter += $" and Location_Code eq '{branchCode}' and Item_Category_Code eq '{pgCode}'";
+                filter1 += $" and Location_Code eq '{branchCode}' and Item_Category_Code eq '{pgCode}'";
             }
 
             if (!string.IsNullOrWhiteSpace(itemName))
             {
-                filter += $" and tolower(Item_Description) eq '{itemName.ToLower()}'";
+                filter1 += $" and Item_Description eq '{itemName}'";
             }
 
-           if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+            if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
             {
                 if (DateTime.TryParse(FromDate, out DateTime fromDateParsed) &&
                     DateTime.TryParse(ToDate, out DateTime toDateParsed))
                 {
                     string from = fromDateParsed.ToString("yyyy-MM-dd");
                     string to = toDateParsed.ToString("yyyy-MM-dd");
-
-                    // No quotes around date
-                    filter += $" and Posting_Date ge {from} and Posting_Date le {to}";
+                    filter1 += $" and Posting_Date ge {from} and Posting_Date le {to}";
                 }
             }
 
-            var ItemWiseResult = ac.GetData<SPInwardDetails>("ItemLedgerEntriesDotNetAPI", filter);
+            var result1 = ac.GetData<SPInwardDetails>("ItemLedgerEntriesDotNetAPI", filter1);
 
-            if (ItemWiseResult != null && ItemWiseResult.Result.Item1.value.Count > 0)
+            if (result1 != null && result1.Result.Item1.value.Count > 0)
             {
-                Inv_Inward = ItemWiseResult.Result.Item1.value;
+                Inv_Inward = result1.Result.Item1.value;
             }
 
-            for (int i = 0; i < Inv_Inward.Count; i++)
+            foreach (var item in Inv_Inward)
             {
-                DateTime buyingDate = Convert.ToDateTime(Inv_Inward[i].PCPL_Original_Buying_Date);
-                DateTime postingDate = Convert.ToDateTime(Inv_Inward[i].Posting_Date);
-                Inv_Inward[i].No_of_days = (buyingDate - postingDate).Days;
+                if (DateTime.TryParse(item.PCPL_Original_Buying_Date, out DateTime buyingDate) &&
+                    DateTime.TryParse(item.Posting_Date, out DateTime postingDate))
+                {
+                    item.No_of_days = (buyingDate - postingDate).Days;
+                }
             }
 
             return Inv_Inward;
         }
 
+        [HttpGet]
+        [Route("GetReservedDetails")]
+        public List<SPReservedQtyDetails> GetReservedDetails(string branchCode, string pgCode, string itemName, string FromDate, string ToDate)
+        {
+            API ac = new API();
+            List<SPReservedQtyDetails> Inv_ReservedDetails = new List<SPReservedQtyDetails>();
+            string filter1 = "";
+
+            if (!string.IsNullOrWhiteSpace(branchCode) && !string.IsNullOrWhiteSpace(pgCode))
+            {
+                filter1 += $" Location_Code eq '{branchCode}' and Item_Category_Code eq '{pgCode}'";
+            }
+
+            if (!string.IsNullOrWhiteSpace(itemName))
+            {
+                filter1 += $" and Description eq '{itemName}'";
+            }
+
+            if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+            {
+                if (DateTime.TryParse(FromDate, out DateTime fromDateParsed) &&
+                    DateTime.TryParse(ToDate, out DateTime toDateParsed))
+                {
+                    string from = fromDateParsed.ToString("yyyy-MM-dd");
+                    string to = toDateParsed.ToString("yyyy-MM-dd");
+                    filter1 += $" and Posting_Date ge {from} and Posting_Date le {to}";
+                }
+            }
+
+            var result1 = ac.GetData<SPReservedQtyDetails>("SalesLinesDotNetAPI", filter1);
+
+            if (result1 != null && result1.Result.Item1.value.Count > 0)
+            {
+                Inv_ReservedDetails = result1.Result.Item1.value;
+            }
+            return Inv_ReservedDetails;
+        }
+
         // Customer Ledger Entry Pdf Api
         [HttpGet]
         [Route("PrintCustomerLedgerEntryPostApi")]
-        public string PrintCustomerLedgerEntryPostApi(string CustomerNo, string FromDate,string ToDate)
+        public string PrintCustomerLedgerEntryPostApi(string CustomerNo, string FromDate, string ToDate)
         {
             var PrintCustomerLedgerReportResponse = new PrintCustomerLedgerReportResponse();
 
@@ -244,7 +284,7 @@ namespace PrakashCRM.Service.Controllers
             return base64PDF;
         }
 
-        public async Task<(PrintCustomerLedgerReportResponse, errorDetails)> PostCustomerLegerEntryPrint <PrintCustomerLedgerReportRequest>(string apiendpoint, PrintCustomerLedgerReportRequest requestModel, PrintCustomerLedgerReportResponse responseModel)
+        public async Task<(PrintCustomerLedgerReportResponse, errorDetails)> PostCustomerLegerEntryPrint<PrintCustomerLedgerReportRequest>(string apiendpoint, PrintCustomerLedgerReportRequest requestModel, PrintCustomerLedgerReportResponse responseModel)
         {
             string _codeUnitBaseUrl = System.Configuration.ConfigurationManager.AppSettings["CodeUnitBaseURL"];
             string _tenantId = System.Configuration.ConfigurationManager.AppSettings["TenantID"];

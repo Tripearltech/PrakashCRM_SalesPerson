@@ -37,6 +37,8 @@ namespace PrakashCRM.Data.Models
 
         public double TPTPLTotal_Invoiced_Qty { get; set; }
 
+        public double TPTPL_Short_Closed_Qty { get; set; }
+
         public string TPTPL_Schedule_status { get; set; }
 
         public string SellToEmail { get; set; }

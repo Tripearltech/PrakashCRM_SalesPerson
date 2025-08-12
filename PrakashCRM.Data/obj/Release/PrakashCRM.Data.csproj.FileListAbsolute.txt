@@ -25,3 +25,12 @@ D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data
 D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CopyComplete
 D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.dll
 D:\Nishant\Projects\PrakashCRM\Git Folder\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.pdb
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\PrakashCRM.Data.dll
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\PrakashCRM.Data.pdb
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\Newtonsoft.Json.dll
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\Newtonsoft.Json.xml
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.AssemblyReference.cache
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CoreCompileInputs.cache
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CopyComplete
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.dll
+C:\Users\Tripearltech\Source\Repos\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.pdb
