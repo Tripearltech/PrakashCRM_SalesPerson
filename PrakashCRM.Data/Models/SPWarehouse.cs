@@ -101,6 +101,8 @@ namespace PrakashCRM.Data.Models
         public string Job_To_Area { get; set; }
         public decimal GrossWeightperunit { get; set; }
         public string Sell_to_Customer_Name { get; set; }
+        public string PCPL_UnLoading_Vendor { get; set; }
+        public string PCPL_Loading_Vendor { get; set; }
     }
 
     public class SPWarehousePurchaseHeaderLine
@@ -352,6 +354,8 @@ namespace PrakashCRM.Data.Models
         public string ToArea { get; set; }
         public string FromArea { get; set; }
         public dynamic PackingQty { get; set; }
+        public string PCPL_UnLoading_Vendor { get; set; }
+        public string PCPL_Loading_Vendor { get; set; }
     }
 
     public class WarehouseCardLine
@@ -436,5 +440,12 @@ namespace PrakashCRM.Data.Models
     {
         public string Vendor_No { get; set; }
         public string Vendor_Name { get; set; }
+    }
+    public class UnloadingAndLoading
+    {
+        public string No { get; set; }
+        public string Name { get; set; }
+        public bool Transporter { get; set; }
+
     }
 }

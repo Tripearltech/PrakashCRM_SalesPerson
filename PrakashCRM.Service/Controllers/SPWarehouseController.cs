@@ -503,6 +503,8 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_Mobile_No_ = salesLine.PCPL_Driver_Mobile_No_;
                             sPWarehouseCard.PCPL_Driver_License_No_ = salesLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = salesLine.PCPL_Remarks;
+                            sPWarehouseCard.PCPL_UnLoading_Vendor = salesLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor = salesLine.PCPL_Loading_Vendor;
 
                         }
                         warehouseCardLine.Add(new WarehouseCardLine
@@ -581,8 +583,9 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_Mobile_No_ = purchaseLine.PCPL_Driver_Mobile_No_;
                             sPWarehouseCard.PCPL_Driver_License_No_ = purchaseLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = purchaseLine.PCPL_Remarks;
-                          /*  sPWarehouseCard.ARN_No = purchaseLine.ARN_No;
-                            sPWarehouseCard.GST_Registration_No = purchaseLine.GST_Registration_No;*/
+                            sPWarehouseCard.PCPL_UnLoading_Vendor = purchaseLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor = purchaseLine.PCPL_Loading_Vendor;
+                          
                         }
                         warehouseCardLine.Add(new WarehouseCardLine
                         {
@@ -660,6 +663,8 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_License_No_ = transferLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = transferLine.PCPL_Remarks;
                             sPWarehouseCard.PackingQty = transferLine.PCPL_Packing_Qty_;
+                            sPWarehouseCard.PCPL_UnLoading_Vendor = transferLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor = transferLine.PCPL_Loading_Vendor;
 
                         }
                         warehouseCardLine.Add(new WarehouseCardLine
@@ -1112,6 +1117,23 @@ namespace PrakashCRM.Service.Controllers
             return msg;
         }
 
+        [Route("GetloadingAndUnloadingDropDown")]
+        public List<UnloadingAndLoading> GetloadingAndUnloadingDropDown(string prefix/*, bool Transporter*/)
+        {
+            API ac = new API();
+            List<UnloadingAndLoading> unloadingAndloading = new List<UnloadingAndLoading>();
+            string filter = "startswith(Name,'" + prefix + "')";
+
+                filter += " and Transporter eq true"; 
+           
+
+            var result = ac.GetData<UnloadingAndLoading>("VendorDotNetAPI", filter);
+
+            if (result != null && result.Result.Item1.value.Count > 0)
+                unloadingAndloading = result.Result.Item1.value;
+
+            return unloadingAndloading;
+        }
         #endregion
     }
 }

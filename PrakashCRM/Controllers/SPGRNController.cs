@@ -318,7 +318,28 @@ namespace PrakashCRM.Controllers
         [HttpPost]
         public async Task<JsonResult> GetMakeMfgCodeAndName(string prefix)
         {
-           string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPGRN/GetMakeMfgCodeAndName?prefix=" + prefix;
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPGRN/GetMakeMfgCodeAndName?prefix=" + prefix;
+
+            HttpClient client = new HttpClient();
+            List<SPGRNVendors> makemfgcode = new List<SPGRNVendors>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                makemfgcode = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPGRNVendors>>(data);
+            }
+
+            return Json(makemfgcode, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public async Task<JsonResult> DeleteGRNLineItemTracking()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPGRN/DeleteGRNLineItemTracking";
 
             HttpClient client = new HttpClient();
             List<SPGRNVendors> makemfgcode = new List<SPGRNVendors>();

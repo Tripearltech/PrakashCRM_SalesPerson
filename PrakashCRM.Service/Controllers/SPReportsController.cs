@@ -201,7 +201,7 @@ namespace PrakashCRM.Service.Controllers
             }
             else if (Type == "CLStock")
             {
-                FromDate = ""; 
+                FromDate = "";
 
                 if (!string.IsNullOrWhiteSpace(ToDate))
                 {

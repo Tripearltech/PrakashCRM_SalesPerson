@@ -7,6 +7,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
@@ -23,6 +24,11 @@ namespace PrakashCRM.Controllers
             return View();
         }
         public ActionResult OutstandingPaymentList()
+        {
+            return View();
+        }
+
+        public ActionResult OutstandingDetails()
         {
             return View();
         }
@@ -188,10 +194,27 @@ namespace PrakashCRM.Controllers
             //put a breakpoint here and check datatable
             return dataTable;
         }
-
-        public ActionResult OutstandingDetails()
+        public async Task<JsonResult> GetCustomerOutStanding()
         {
-            return View();
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPOutstandingPayment/GetCustomerOutStanding";
+
+            HttpClient client = new HttpClient();
+            List<SPCustmerOutStandingDtails> outStandingDtails = new List<SPCustmerOutStandingDtails>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                outStandingDtails = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPCustmerOutStandingDtails>>(data);
+            }
+
+            return Json(outStandingDtails, JsonRequestBehavior.AllowGet);
         }
+
+
     }
 }

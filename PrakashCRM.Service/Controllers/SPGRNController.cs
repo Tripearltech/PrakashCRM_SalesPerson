@@ -733,6 +733,10 @@ namespace PrakashCRM.Service.Controllers
         public bool SaveGRNLineItemTracking(List<ReservationEntryForGRN> reservationEntryForGRNs)
         {
             bool headerflag = false;
+            if (reservationEntryForGRNs == null || reservationEntryForGRNs.Count == 0)
+            {
+                return false; 
+            }
 
             foreach (var item in reservationEntryForGRNs)
             {

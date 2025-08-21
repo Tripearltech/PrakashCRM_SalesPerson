@@ -345,7 +345,6 @@ namespace PrakashCRM.Data.Models
         public int Qty_to_Handle_Base { get; set; }
         public int Transferred_from_Entry_No { get; set; }
     }
-
     public class ReservationEntryForGRN
     {
         public string EntryNo { get; set; }
@@ -357,8 +356,9 @@ namespace PrakashCRM.Data.Models
         public string LotNo { get; set; }
         public string Qty { get; set; }
         public string ExpirationDate { get; set; }
+        public bool Positive { get; set; }
     }
-
+   
     public class ReservationEntryForGRNRequest
     {
         public string text { get; set; }
@@ -366,6 +366,11 @@ namespace PrakashCRM.Data.Models
     public class SPGRNVendors
     {
         public string Name { get; set; }
+        public string No { get; set; }
+    }
+    public class SPDeleteGRNLine
+    {
+        public string entory { get; set; }
         public string No { get; set; }
     }
 }
