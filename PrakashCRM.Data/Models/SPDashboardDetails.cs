@@ -99,7 +99,7 @@ namespace PrakashCRM.Data.Models
         public string Item_No { get; set; }
 
         public double Outstanding_Quantity { get; set; }
-
+        public bool Positive { get; set; }
     }
     public class SPReservedQtyDetails
     {
@@ -111,6 +111,7 @@ namespace PrakashCRM.Data.Models
         public double Outstanding_Quantity { get; set; }
         public string PCPL_Salesperson_Name { get; set; }
         public string PCPL_Remarks { get; set; }
+        public bool Positive { get; set; }
 
     }
 }

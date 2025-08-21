@@ -106,10 +106,10 @@ namespace PrakashCRM.Controllers
             return Json(Inv_ItemWise, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName, string FromDate, string ToDate, string Type)
+        public async Task<JsonResult> GetInv_Inward(string branchCode, string pgCode, string itemName, string FromDate, string ToDate, string Type, bool Positive)
         {
             string baseUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString();
-            string apiUrl = baseUrl + "SPReports/GetInv_Inward?" + "Entry_Type=" + HttpUtility.UrlEncode(Entry_Type) + "&Document_Type=" + HttpUtility.UrlEncode(Document_Type) + "&branchCode=" + HttpUtility.UrlEncode(branchCode) + "&pgCode=" + HttpUtility.UrlEncode(pgCode) + "&itemName=" + HttpUtility.UrlEncode(itemName) + "&FromDate=" + HttpUtility.UrlEncode(FromDate) + "&ToDate=" + HttpUtility.UrlEncode(ToDate) + "&Type=" + HttpUtility.UrlEncode(Type);
+            string apiUrl = baseUrl + "SPReports/GetInv_Inward?" + "branchCode=" + HttpUtility.UrlEncode(branchCode) + "&pgCode=" + HttpUtility.UrlEncode(pgCode) + "&itemName=" + HttpUtility.UrlEncode(itemName) + "&FromDate=" + HttpUtility.UrlEncode(FromDate) + "&ToDate=" + HttpUtility.UrlEncode(ToDate) + "&Type=" + HttpUtility.UrlEncode(Type) + "&Positive=" + HttpUtility.UrlEncode(Positive.ToString());
 
             HttpClient client = new HttpClient();
             List<SPInwardDetails> Inv_Inward = new List<SPInwardDetails>();

@@ -199,27 +199,23 @@ function BindInvBranchWiseTotals() {
                 const fromDate = $('#txtInvFDate').val(); // New
                 const toDate = $('#txtInvTDate').val();
 
-                let entryType = "";
-                let documentType = "";
+                let positive = false;
                 let apiUrlCall = "";
 
                 if (quantityType === "Inward") {
-                    entryType = "Purchase";
-                    documentType = "Purchase Receipt";
-                    apiUrlCall = `/SPReports/GetInv_Inward?Entry_Type=${encodeURIComponent(entryType)}&Document_Type=${encodeURIComponent(documentType)}&branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}`;
+                    positive = true;
+                    apiUrlCall = `/SPReports/GetInv_Inward?branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}&Type=${encodeURIComponent(quantityType)}&Positive=${encodeURIComponent(positive)}`;
                 }
                 else if (quantityType === "Outward") {
-                    entryType = "Sale";
-                    documentType = "Sales Shipment";
-                    apiUrlCall = `/SPReports/GetInv_Inward?Entry_Type=${encodeURIComponent(entryType)}&Document_Type=${encodeURIComponent(documentType)}&branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}`;
+                    apiUrlCall = `/SPReports/GetInv_Inward?branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}&Type=${encodeURIComponent(quantityType)}&Positive=${encodeURIComponent(positive)}`;
                 }
                 else if (quantityType === "Reserved") {
-                    apiUrlCall = `/SPReports/GetReservedDetails?branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}`;
+
+                    apiUrlCall = `/SPReports/GetReservedDetails?branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}&Type=${encodeURIComponent(quantityType)}`;
                 }
                 else if (quantityType === "CLStock") {
-                    entryType = "Purchase";
-                    documentType = "Purchase Receipt";
-                    apiUrlCall = `/SPReports/GetInv_Inward?Entry_Type=${encodeURIComponent(entryType)}&Document_Type=${encodeURIComponent(documentType)}&branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDate)}&ToDate=${encodeURIComponent(toDate)}`;
+                    const fromDateParam = fromDate ? encodeURIComponent(fromDate) : "''";
+                    apiUrlCall = `/SPReports/GetInv_Inward?branchCode=${encodeURIComponent(branchCode)}&pgCode=${encodeURIComponent(pgCode)}&itemName=${encodeURIComponent(iditemName)}&FromDate=${encodeURIComponent(fromDateParam)} &ToDate=${encodeURIComponent(toDate)}&Type=${encodeURIComponent(quantityType)}&Positive=${encodeURIComponent(positive)}`;
                 }
                 $.ajax({
                     url: apiUrlCall,
@@ -237,19 +233,19 @@ function BindInvBranchWiseTotals() {
 
                         if (quantityType === "Inward") {
                             modalTitle = "Inward Details";
-                            headerHtml = `<tr><th></th><th>Sr. No.</th><th>Name of the Supplier</th><th>Make</th><th>GRN QTY</th><th>Batch No.</th><th>Remarks</th></tr>`;
+                            headerHtml = `<tr><th></th><th>Sr. No.</th><th>Name of the Supplier</th><th>Make/Mfg Code</th><th>GRN Qty</th><th>Batch No.</th><th>Remarks</th></tr>`;
                         }
                         else if (quantityType === "Outward") {
                             modalTitle = "Outward Details";
-                            headerHtml = `<tr><th></th><th>Sr. No.</th><th>Name of the Customer</th><th>Inv No.</th><th>Inv Date</th><th>QTY</th><th>Batch No.</th></tr>`;
+                            headerHtml = `<tr><th></th><th>Sr. No.</th><th>Name of the Customer</th><th>Inv No.</th><th>Inv Date</th><th>Qty</th><th>Batch No.</th></tr>`;
                         }
                         else if (quantityType === "Reserved") {
                             modalTitle = "Reserved Details";
-                            headerHtml = `<tr><th></th><th>Sr. No.</th><th>Name of the Customer</th><th>Sales Person</th><th>Sales Order Date</th><th>QTY</th><th>Make</th><th>Remarks</th></tr>`;
+                            headerHtml = `<tr><th></th><th>Sr. No.</th><th>Name of the Customer</th><th>Sales Person</th><th>Sales Order Date</th><th>Qty</th><th>Make/Mfg Code</th><th>Remarks</th></tr>`;
                         }
                         else if (quantityType === "CLStock") {
                             modalTitle = "Closing Stock Details";
-                            headerHtml = `<tr><th></th><th>Sr. No.</th><th>Name of the Supplier</th><th>Make</th><th>Rec QTY</th><th>CI Stock</th><th>Reserved</th><th>Avaible</th><th>GRN No.</th><th>Batch No.</th><th>Remark</th><th>NO. Of Days</th><th>Cost Per Unit</th></tr>`;
+                            headerHtml = `<tr><th></th><th>Sr. No.</th><th>Name of the Supplier</th><th>Make/Mfg Code</th><th>Rec Qty</th><th>Cl.Stock</th><th>Reserved</th><th>Avaible</th><th>GRN No.</th><th>Batch No.</th><th>Remark</th><th>No. Of Days</th><th>Cost Per Unit</th></tr>`;
                         }
 
                         $thead.html(headerHtml);
