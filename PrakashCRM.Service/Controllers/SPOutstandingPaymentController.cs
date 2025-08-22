@@ -28,7 +28,7 @@ namespace PrakashCRM.Service.Controllers
             if (result.Result.Item1.value.Count > 0)
                 osPaymentDetails = result.Result.Item1.value;
 
-            for(int i = 0; i < osPaymentDetails.Count; i++)
+            for (int i = 0; i < osPaymentDetails.Count; i++)
             {
                 string[] strDate = osPaymentDetails[i].Due_Date.Split('-');
                 osPaymentDetails[i].Due_Date = strDate[2] + '-' + strDate[1] + '-' + strDate[0];
@@ -53,6 +53,21 @@ namespace PrakashCRM.Service.Controllers
             var count = ac.CalculateCount(apiEndPointName, filter);
 
             return Convert.ToInt32(count.Result);
+        }
+
+        // Added the customerOutStanding Report
+        [HttpGet]
+        [Route("GetCustomerOutStanding")]
+        public List<SPCustmerOutStandingDtails> GetCustomerOutStanding()
+        {
+            API ac = new API();
+            List<SPCustmerOutStandingDtails> outStandingDtails = new List<SPCustmerOutStandingDtails>();
+
+            var Result1 = ac.GetData<SPCustmerOutStandingDtails>("DailyCustomerCollectionView", "");
+            if (Result1 != null && Result1.Result.Item1.value.Count > 0)
+                outStandingDtails = Result1.Result.Item1.value;
+
+            return outStandingDtails;
         }
     }
 }

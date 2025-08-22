@@ -354,29 +354,6 @@
             <param name="cancellationToken">Notifies when request operations should be cancelled.</param>
             <returns>A task that represents the completion of the write operation.</returns>
         </member>
-        <member name="M:Microsoft.AspNetCore.Http.ResponseTrailerExtensions.DeclareTrailer(Microsoft.AspNetCore.Http.HttpResponse,System.String)">
-            <summary>
-            Adds the given trailer name to the 'Trailer' response header. This must happen before the response headers are sent.
-            </summary>
-            <param name="response"></param>
-            <param name="trailerName"></param>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.ResponseTrailerExtensions.SupportsTrailers(Microsoft.AspNetCore.Http.HttpResponse)">
-            <summary>
-            Indicates if the server supports sending trailer headers for this response.
-            </summary>
-            <param name="response"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.ResponseTrailerExtensions.AppendTrailer(Microsoft.AspNetCore.Http.HttpResponse,System.String,Microsoft.Extensions.Primitives.StringValues)">
-            <summary>
-            Adds the given trailer header to the trailers collection to be sent at the end of the response body.
-            Check <see cref="M:Microsoft.AspNetCore.Http.ResponseTrailerExtensions.SupportsTrailers(Microsoft.AspNetCore.Http.HttpResponse)" /> or an InvalidOperationException may be thrown.
-            </summary>
-            <param name="response"></param>
-            <param name="trailerName"></param>
-            <param name="trailerValues"></param>
-        </member>
         <member name="T:Microsoft.AspNetCore.Http.FragmentString">
             <summary>
             Provides correct handling for FragmentString value when needed to generate a URI string
@@ -879,7 +856,7 @@
         </member>
         <member name="M:Microsoft.AspNetCore.Http.PathString.#ctor(System.String)">
             <summary>
-            Initialize the path string with a given value. This value must be in unescaped format. Use
+            Initalize the path string with a given value. This value must be in unescaped format. Use
             PathString.FromUriComponent(value) if you have a path value which is in an escaped format.
             </summary>
             <param name="value">The unescaped path to be assigned to the Value property.</param>
@@ -1337,12 +1314,12 @@
         </member>
         <member name="T:Microsoft.AspNetCore.Builder.Extensions.MapMiddleware">
             <summary>
-            Represents a middleware that maps a request path to a sub-request pipeline.
+            Respresents a middleware that maps a request path to a sub-request pipeline.
             </summary>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.AspNetCore.Builder.Extensions.MapOptions)">
             <summary>
-            Creates a new instance of <see cref="T:Microsoft.AspNetCore.Builder.Extensions.MapMiddleware"/>.
+            Creates a new instace of <see cref="T:Microsoft.AspNetCore.Builder.Extensions.MapMiddleware"/>.
             </summary>
             <param name="next">The delegate representing the next middleware in the request pipeline.</param>
             <param name="options">The middleware options.</param>
@@ -1371,7 +1348,7 @@
         </member>
         <member name="T:Microsoft.AspNetCore.Builder.Extensions.MapWhenMiddleware">
             <summary>
-            Represents a middleware that runs a sub-request pipeline when a given predicate is matched.
+            Respresents a middleware that runs a sub-request pipeline when a given predicate is matched.
             </summary>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.Extensions.MapWhenMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.AspNetCore.Builder.Extensions.MapWhenOptions)">
@@ -1410,7 +1387,7 @@
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.Extensions.UsePathBaseMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.AspNetCore.Http.PathString)">
             <summary>
-            Creates a new instance of <see cref="T:Microsoft.AspNetCore.Builder.Extensions.UsePathBaseMiddleware"/>.
+            Creates a new instace of <see cref="T:Microsoft.AspNetCore.Builder.Extensions.UsePathBaseMiddleware"/>.
             </summary>
             <param name="next">The delegate representing the next middleware in the request pipeline.</param>
             <param name="pathBase">The path base to extract.</param>

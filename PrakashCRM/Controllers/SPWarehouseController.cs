@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -626,6 +627,30 @@ namespace PrakashCRM.Controllers
                 return View(sPWarehouseCard);
             else
                 return View(new SPWarehouseCard());
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetloadingAndUnloadingDropDown(string prefix)
+        {
+            string baseUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString();
+            string apiUrl = baseUrl + "SPWarehouse/GetloadingAndUnloadingDropDown?" + "prefix=" + HttpUtility.UrlEncode(prefix);
+           
+
+            HttpClient client = new HttpClient();
+            List<UnloadingAndLoading> unloadingAndloading = new List<UnloadingAndLoading>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                unloadingAndloading = Newtonsoft.Json.JsonConvert.DeserializeObject<List<UnloadingAndLoading>>(data);
+            }
+
+            return Json(unloadingAndloading, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

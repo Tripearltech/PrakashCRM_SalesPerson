@@ -160,44 +160,56 @@ namespace PrakashCRM.Service.Controllers
 
         [HttpGet]
         [Route("GetInv_Inward")]
-        public List<SPInwardDetails> GetInv_Inward(string Entry_Type, string Document_Type, string branchCode, string pgCode, string itemName, string FromDate, string ToDate)
+        public List<SPInwardDetails> GetInv_Inward(string branchCode, string pgCode, string itemName, string FromDate, string ToDate, string Type, bool Positive)
         {
             API ac = new API();
             List<SPInwardDetails> Inv_Inward = new List<SPInwardDetails>();
             string filter1 = "";
-
-            if (Document_Type == null)
-            {
-                Document_Type = "";
-                filter1 += $"Entry_Type eq '{Entry_Type}'";
-            }
-            else
-            {
-                filter1 += $"Entry_Type eq '{Entry_Type}'";
-                if (!string.IsNullOrWhiteSpace(Document_Type))
-                {
-                    filter1 += $" and Document_Type eq '{Document_Type}'";
-                }
-            }
-
             if (!string.IsNullOrWhiteSpace(branchCode) && !string.IsNullOrWhiteSpace(pgCode))
             {
-                filter1 += $" and Location_Code eq '{branchCode}' and Item_Category_Code eq '{pgCode}'";
+                filter1 += $" Location_Code eq '{branchCode}' and Item_Category_Code eq '{pgCode}'";
             }
-
             if (!string.IsNullOrWhiteSpace(itemName))
             {
                 filter1 += $" and Item_Description eq '{itemName}'";
             }
-
-            if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+            if (Type == "Inward")
             {
-                if (DateTime.TryParse(FromDate, out DateTime fromDateParsed) &&
-                    DateTime.TryParse(ToDate, out DateTime toDateParsed))
+                if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
                 {
-                    string from = fromDateParsed.ToString("yyyy-MM-dd");
-                    string to = toDateParsed.ToString("yyyy-MM-dd");
-                    filter1 += $" and Posting_Date ge {from} and Posting_Date le {to}";
+                    if (DateTime.TryParse(FromDate, out DateTime fromDateParsed) &&
+                        DateTime.TryParse(ToDate, out DateTime toDateParsed))
+                    {
+                        string from = fromDateParsed.ToString("yyyy-MM-dd");
+                        string to = toDateParsed.ToString("yyyy-MM-dd");
+                        filter1 += $" and Posting_Date ge {from} and Posting_Date le {to} and Positive eq true";
+                    }
+                }
+            }
+            else if (string.Equals(Type, "Outward", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+                {
+                    if (DateTime.TryParse(FromDate, out DateTime fromDateParsed) &&
+                        DateTime.TryParse(ToDate, out DateTime toDateParsed))
+                    {
+                        string from = fromDateParsed.ToString("yyyy-MM-dd");
+                        string to = toDateParsed.ToString("yyyy-MM-dd");
+                        filter1 += $" and Posting_Date ge {from} and Posting_Date le {to} and Positive eq false";
+                    }
+                }
+            }
+            else if (Type == "CLStock")
+            {
+                FromDate = "";
+
+                if (!string.IsNullOrWhiteSpace(ToDate))
+                {
+                    if (DateTime.TryParse(ToDate, out DateTime toDateParsed))
+                    {
+                        string to = toDateParsed.ToString("yyyy-MM-dd");
+                        filter1 += $" and Posting_Date le {to}";
+                    }
                 }
             }
 
@@ -208,6 +220,7 @@ namespace PrakashCRM.Service.Controllers
                 Inv_Inward = result1.Result.Item1.value;
             }
 
+            // Calculate No_of_days
             foreach (var item in Inv_Inward)
             {
                 if (DateTime.TryParse(item.PCPL_Original_Buying_Date, out DateTime buyingDate) &&
@@ -219,6 +232,7 @@ namespace PrakashCRM.Service.Controllers
 
             return Inv_Inward;
         }
+
 
         [HttpGet]
         [Route("GetReservedDetails")]
