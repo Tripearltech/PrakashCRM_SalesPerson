@@ -94,9 +94,6 @@ $(document).ready(function () {
     BindDrivers($('#hfTransporterNo').val(), "vendor");
     setTransporterGSTNumber($('#hfTransporterNo').val());
 
-    // Call AutoCompleteDropDownFunction
-    UnloadingVendorDropDown();
-    LoadingVendorDropDown();
 });
 var dtable;
 
@@ -587,98 +584,4 @@ function validateForm() {
         return false;
     }
     return true;
-}
-
-function UnloadingVendorDropDown() {
-    if (typeof ($.fn.autocomplete) === 'undefined') return;
-
-    $('#txtUnLoadingVendor').autocomplete({
-        serviceUrl: '/SPWarehouse/GetloadingAndUnloadingDropDown',
-        paramName: "prefix",
-        minChars: 2,
-        noCache: true,
-        ajaxSettings: {
-            type: "POST"
-        },
-        onSelect: function (suggestion) {
-            $("#hfUnLoadingVendor").val(suggestion.data);
-            $("#txtUnLoadingVendor").val(suggestion.value);
-        },
-        onShow: function () {
-            setTimeout(() => {
-                $input.focus();
-            }, 10);
-        },
-        /*onSearchStart: function () {
-            // Optional: Show spinner or loader
-            // $spinner.addClass("input-group");
-            // $loader.show();
-        },*/
-        transformResult: function (response) {
-           var json;
-            try {
-                json = $.parseJSON(response);
-            } catch (e) {
-                console.error("Invalid JSON response", response);
-                return { suggestions: [] };
-            }
-
-            return {
-                suggestions: $.map(json, function (item) {
-                    return {
-                        value: item.Name,
-                        data: item.No
-                    };
-                })
-            };
-        },
-        
-    });
-}
-
-function LoadingVendorDropDown() {
-   
-    if (typeof ($.fn.autocomplete) === 'undefined') return;
-    $('#txtLoadingVendor').autocomplete({
-        serviceUrl: '/SPWarehouse/GetloadingAndUnloadingDropDown',
-        paramName: "prefix",
-        minChars: 2,
-        noCache: true,
-        ajaxSettings: {
-            type: "POST"
-        },
-        onSelect: function (suggestion) {
-            $("#hfLoadingVendor").val(suggestion.data);
-            $("#txtLoadingVendor").val(suggestion.value);
-        },
-        onShow: function () {
-            setTimeout(() => {
-                $input.focus();
-            }, 10);
-        },
-        /*onSearchStart: function () {
-            *//*$spinner.addClass("input-group");
-            $loader.show();*//*
-        },*/
-        transformResult: function (response) {
-            var json;
-            try {
-                json = $.parseJSON(response);
-            } catch (e) {
-                console.error("Invalid JSON response", response);
-                return { suggestions: [] };
-            }
-
-            return {
-                suggestions: $.map(json, function (item) {
-                    return {
-                        value: item.Name,
-                        data: item.No
-                    };
-                })
-
-            };
-        },
-       
-    });
 }

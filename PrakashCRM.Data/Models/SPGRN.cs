@@ -294,7 +294,7 @@ namespace PrakashCRM.Data.Models
         public string documenttype { get; set; }
         public string documentno { get; set; }
         public int lineno { get; set; }
-        public decimal qtytoreceive { get; set; }
+        public double qtytoreceive { get; set; }
         public string qcremarks { get; set; }
         public decimal rejectqty { get; set; }
         public string beno { get; set; }
@@ -356,7 +356,7 @@ namespace PrakashCRM.Data.Models
         public string LotNo { get; set; }
         public string Qty { get; set; }
         public string ExpirationDate { get; set; }
-        public bool Positive { get; set; }
+
     }
    
     public class ReservationEntryForGRNRequest
@@ -368,10 +368,11 @@ namespace PrakashCRM.Data.Models
         public string Name { get; set; }
         public string No { get; set; }
     }
-    public class SPDeleteGRNLine
+    public class DeleteReservationEntryForGRNRequest
     {
-        public string entory { get; set; }
-        public string No { get; set; }
+        public string entryno { get; set; }
+        public bool positive { get; set; }
     }
+
 }
 

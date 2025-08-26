@@ -30,9 +30,7 @@ function ShowErrMsg(errMsg) {
         icon: 'bx bx-x-circle',
         continueDelayOnInactiveTab: false,
         position: 'top right',
-        msg: errMsg,
-        sound: false
-
+        msg: errMsg
     });
 
 }
@@ -245,285 +243,98 @@ function validateForm() {
     return true;
 }
 
-var deletedEntries = [];
-
-function DeleteItemTrackingInGrid(button) {
-    var entryNo = $(button).closest('tr').find('td').eq(0).text().trim();
-    if (entryNo !== '0') {
-        deletedEntries.push(entryNo);
-    }
-    $(button).closest('tr').remove();
-    UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
-    if ($('#tbItemTrackingLines .itemtrackingtr').length === 0) {
-        $('#tbItemTrackingLines').append("<tr><td colspan=8>No Records Found</td></tr>");
-    }
-}
-
-function UpdateItemTrackingTotals(originalBalance) {
-    let total = 0;
-    let isInvalid = false;
-
-    $('#lblItemTrackMsg').html('');
-
-    $('#tbItemTrackingLines input[name^="txtQtyToHandle"]').each(function () {
-        let val = parseFloat($(this).val()) || 0;
-
-        if (total + val > originalBalance) {
-            isInvalid = true;
-            $(this).addClass('is-invalid');
-            $('#lblItemTrackMsg').html('<span style="color: red;">Total quantity cannot exceed the balance quantity.</span>');
-        } else {
-            $(this).removeClass('is-invalid');
-            total += val;
-        }
-    });
-
-    $('#txttotalQty').val(total.toFixed(2));
-    $('#txtbalanceQty').val((originalBalance - total).toFixed(2));
-}
-
-function ShowItemTracking(lineNo, itemno) {SaveGRNItemTracking
-    var documentType = $('#lblDocumentType').text().trim();
-    var documentNo = $('#lblDocumentNo').text().trim();
-
-    let qtyToReceive = parseFloat($(`input[name='txtQtyToReceive_${lineNo}']`).val()) || 0;
-
-    $('#txtbalanceQty').data('original', qtyToReceive);
-    $('#txtbalanceQty').val(qtyToReceive.toFixed(2));
-    $('#txttotalQty').val('0.00');
+function ShowItemTracking(lineNo, itemno) {
+    debugger;
+    var documentType, documentNo;
+    documentType = $('#lblDocumentType')[0].innerText;
+    documentNo = $('#lblDocumentNo')[0].innerText;
 
     if (documentType != "" && documentNo != "") {
-        $.ajax({
-            url: '/SPGRN/GetGRNLineItemTrackingForPopup?DocumentType=' + documentType + '&DocumentNo=' + documentNo + '&LineNo=' + lineNo,
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-                var rowData = "";
-                $('#tbItemTrackingLines').empty();
-
-                // FILTER OUT DELETED ENTRIES BEFORE DISPLAYING (for current session)
-                if (deletedEntries.length > 0) {
-                    data = data.filter(item => !deletedEntries.includes(item.Entry_No.toString()));
-                }
-
-                if (documentType == "Transfer Order" || documentType == "Sales Return") {
-                    if (data && data.length > 0) {
-                        $.each(data, function (index, item) {
-                            rowData = `<tr class='itemtrackingtr'>
-                                <td style='display: none;'>${item.Entry_No}</td>
-                                <td>${lineNo}</td>
-                                <td>${item.Item_No}</td>
-                                <td><input type='text' name='txtLotNo_${index + 1}' value='${item.Lot_No}' class='form-control' disabled /></td>
-                                <td><input type='text' name='txtQtyToHandle_${index + 1}' value='${item.Qty_to_Handle_Base}' class='form-control' /></td>
-                                <td><input type='text' name='txtExpDate_${index + 1}' value='${item.Expiration_Date}' class='form-control' disabled /></td>
-                                <td>${item.Quantity}</td>
-                                <td></td>
-                            </tr>`;
+        $.ajax(
+            {
+                url: '/SPGRN/GetGRNLineItemTrackingForPopup?DocumentType=' + documentType + '&DocumentNo=' + documentNo + '&LineNo=' + lineNo,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    var rowData = "";
+                    $('#tbItemTrackingLines').empty();
+                    if (documentType == "Transfer Order" || documentType == "Sales Return") {
+                        if (data != null && data != "" && data.length > 0) {
+                            $.each(data, function (index, item) {
+                                rowData = "<tr class='itemtrackingtr'><td style='display: none;'>" + item.Entry_No + "</td><td>" + lineNo + "</td><td>" + item.Item_No + "</td><td><input type='text' name='txtLotNo_" + (index + 1) + "' value='" + item.Lot_No + "' class='form-control' disabled /></td><td><input type='text' name='txtQtyToHandle_" + (index + 1) + "' value='" + item.Qty_to_Handle_Base + "' class='form-control' /></td><td><input type='text' name='txtExpDate_" + (index + 1) + "' value='" + item.Expiration_Date + "' class='form-control' disabled /></td><td>" + item.Quantity + "</td><td></td></tr>";
+                                $('#tbItemTrackingLines').append(rowData);
+                            });
+                        }
+                        else {
+                            rowData = "<tr><td colspan=8>No Records Found</td></tr>";
                             $('#tbItemTrackingLines').append(rowData);
-                        });
-                    } else {
+                        }
+                    }
+                    else if (documentType == "Purchase Order") {
+
+                        rowData = "<tr><td style='display: none;'>0</td><td>" + lineNo + "</td><td>" + itemno + "</td><td><input type='text' name='txtLotNo_0' value='' class='form-control'/></td><td><input type='text' name='txtQtyToHandle_0' value='0' class='form-control' /></td><td><input type='text' name='txtExpDate_0' value='' class='form-control datepicker'/></td><td>0</td><td><button type='button' class='btn btn-primary btn-sm radius-30 px-4' onclick='AddItemTrackingInGrid();'>Add</button></td></tr>";
+                        $('#tbItemTrackingLines').append(rowData);
+
+                        if (data != null && data != "" && data.length > 0) {
+                            $.each(data, function (index, item) {
+                                rowData = "<tr class='itemtrackingtr'><td style='display: none;'>" + item.Entry_No + "</td><td>" + lineNo + "</td><td>" + item.Item_No + "</td><td><input type='text' name='txtLotNo_" + (index + 1) + "' value='" + item.Lot_No + "' class='form-control'/></td><td><input type='text' name='txtQtyToHandle_" + (index + 1) + "' value='" + item.Qty_to_Handle_Base + "' class='form-control' /></td><td><input type='text' name='txtExpDate_" + (index + 1) + "' value='" + item.Expiration_Date + "' class='form-control datepicker' /></td><td>" + item.Quantity + "</td><td><button type='button' class='btn btn-primary btn-sm radius-30 px-4' onclick='DeleteItemTrackingInGrid();'>Delete</button></td></tr>";
+                                $('#tbItemTrackingLines').append(rowData);
+                            });
+                        }
+                        else {
+                            rowData = "<tr><td colspan=8>No Records Found</td></tr>";
+                            $('#tbItemTrackingLines').append(rowData);
+                        }
+                    }
+                    else {
                         rowData = "<tr><td colspan=8>No Records Found</td></tr>";
                         $('#tbItemTrackingLines').append(rowData);
                     }
-                } else if (documentType == "Purchase Order") {
-                    rowData = `<tr class='itemtrackingtr'>
-                        <td style='display: none;'>0</td>
-                        <td>${lineNo}</td>
-                        <td>${itemno}</td>
-                        <td><input type='text' name='txtLotNo_0' value='' class='form-control'/></td>
-                        <td><input type='text' name='txtQtyToHandle_0' value='0' class='form-control' /></td>
-                        <td><input type='text' name='txtExpDate_0' value='' class='form-control datepicker'/></td>
-                        <td>0</td>
-                        <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="AddItemTrackingInGrid();">Add</button></td>
-                    </tr>`;
-                    $('#tbItemTrackingLines').append(rowData);
 
-                    if (data && data.length > 0) {
-                        $.each(data, function (index, item) {
-                            rowData = `<tr class='itemtrackingtr'>
-                                <td style='display: none;'>${item.Entry_No}</td>
-                                <td>${lineNo}</td>
-                                <td>${item.Item_No}</td>
-                                <td><input type='text' name='txtLotNo_${index + 1}' value='${item.Lot_No}' class='form-control'/></td>
-                                <td><input type='text' name='txtQtyToHandle_${index + 1}' value='${item.Qty_to_Handle_Base}' class='form-control' /></td>
-                                <td><input type='text' name='txtExpDate_${index + 1}' value='${item.Expiration_Date}' class='form-control datepicker' /></td>
-                                <td>${item.Quantity}</td>
-                                <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid(this)">Delete</button></td>
-                            </tr>`;
-                            $('#tbItemTrackingLines').append(rowData);
-                        });
-                    }
-                } else {
-                    rowData = "<tr><td colspan=8>No Records Found</td></tr>";
-                    $('#tbItemTrackingLines').append(rowData);
+                    $('.datepicker').pickadate({
+                        selectMonths: true,
+                        selectYears: true,
+                        format: 'dd-mm-yyyy'
+                    });
+
+                    $('#modalItemTracking').css('display', 'block');
+                    $('.modal-title').text('Item Tracking Lines');
+                    $('#dvItemTracking').css('display', 'block');
+                },
+                error: function () {
+                    alert("error");
                 }
-
-                $('.datepicker').pickadate({
-                    selectMonths: true,
-                    selectYears: true,
-                    format: 'dd-mm-yyyy'
-                });
-
-                $('#modalItemTracking').css('display', 'block');
-                $('.modal-title').text('Item Tracking Lines');
-                $('#dvItemTracking').css('display', 'block');
-
-                UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
-
-                // Event for live updates
-                $(document).off('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]').on('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]', function () {
-                    UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
-                });
-            },
-            error: function () {
-                ShowErrMsg("Error loading item tracking data. Please try again.");
             }
-        });
+        );
     }
 }
 
 function SaveGRNItemTracking() {
+
     $('#lblItemTrackMsg').html('');
 
-    let originalBalance = parseFloat($('#txtbalanceQty').data('original')) || 0;
-    let total = parseFloat($('#txttotalQty').val()) || 0;
-
-    if (total > originalBalance) {
-        $('#lblItemTrackMsg').html('<span style="color: red;">Total quantity cannot exceed the balance quantity.</span>');
-        return false;
-    }
-
-    var documenttype = $('#lblDocumentType').text().trim();
-    var orderno = $('#lblDocumentNo').text().trim();
-    var locationcode = $('#lblLocationCode').text().trim();
+    var documenttype = $('#lblDocumentType')[0].innerText;
+    var orderno = $('#lblDocumentNo')[0].innerText;
+    var locationcode = $('#lblLocationCode')[0].innerText;
 
     var reservationEntryforGRN = [];
 
     $('#tbItemTrackingLines .itemtrackingtr').each(function () {
         var $tds = $(this).find('td');
 
-        var entryno = $tds.eq(0).text().trim() || "0";
+        var entryno = $tds.eq(0).text().trim();
         var lineno = $tds.eq(1).text().trim();
         var itemno = $tds.eq(2).text().trim();
-        var lotno = $tds.eq(3).find('input').val() || "";
-        var qtytohandle = parseFloat($tds.eq(4).find('input').val()) || 0;
-        var expdate = $tds.eq(5).find('input').val() || "";
-        if (qtytohandle > 0) {
-            var reservationEntryforGRNObject = {};
-
-            reservationEntryforGRNObject.DocumentType = documenttype;
-            reservationEntryforGRNObject.OrderNo = orderno;
-            reservationEntryforGRNObject.LocationCode = locationcode;
-            reservationEntryforGRNObject.LineNo = lineno;
-            reservationEntryforGRNObject.ItemNo = itemno;
-            reservationEntryforGRNObject.LotNo = lotno;
-            reservationEntryforGRNObject.Qty = qtytohandle;
-            reservationEntryforGRNObject.ExpirationDate = expdate;
-            reservationEntryforGRNObject.EntryNo = entryno;
-
-            reservationEntryforGRN.push(reservationEntryforGRNObject);
-        }
-    });
-
-    var payload = {
-        ToSaveOrUpdate: reservationEntryforGRN,
-        ToDelete: deletedEntries
-    };
-
-    if (reservationEntryforGRN.length === 0 && deletedEntries.length === 0) {
-        $('#lblItemTrackMsg').html('<span style="color: red;">No valid item tracking lines to save.</span>');
-        return false;
-    }
-
-    $.ajax({
-        type: "POST",
-        url: '/SPGRN/SaveGRNLineItemTracking',
-        data: JSON.stringify(payload),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            if (data) {
-                $('#modalItemTracking').hide();
-                ShowActionMsg("Item Tracking lines saved successfully.");
-                deletedEntries = []; // Clear after successful save
-                $('#txttotalQty').val('0.00');
-                $('#txtbalanceQty').val($('#txtbalanceQty').data('original').toFixed(2));
-            } else {
-                $('#lblItemTrackMsg').html('<span style="color: red;">Error saving Item Tracking data.</span>');
-            }
-        },
-        error: function (xhr) {
-            ShowErrMsg("Error in SaveGRNLineItemTracking API. " + xhr.responseText);
-        }
-    });
-}
-
-function AddItemTrackingInGrid() {
-    $('#tbItemTrackingLines tr:contains("No Records Found")').remove();
-    var firstRow = $('#tbItemTrackingLines tr').first();
-    var lineno = firstRow.find('td').eq(1).text().trim();
-    var itemno = firstRow.find('td').eq(2).text().trim();
-
-    var rowCount = $('#tbItemTrackingLines tr').length;
-
-    var newRow = `<tr class='itemtrackingtr'>
-        <td style='display: none;'>0</td>
-        <td>${lineno}</td>
-        <td>${itemno}</td>
-        <td><input type='text' name='txtLotNo_${rowCount}' value='' class='form-control'/></td>
-        <td><input type='text' name='txtQtyToHandle_${rowCount}' value='0' class='form-control' /></td>
-        <td><input type='text' name='txtExpDate_${rowCount}' value='' class='form-control datepicker'/></td>
-        <td>0</td>
-        <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid(this)">Delete</button></td>
-    </tr>`;
-
-    $('#tbItemTrackingLines').append(newRow);
-
-    $('.datepicker').pickadate({
-        selectMonths: true,
-        selectYears: true,
-        format: 'dd-mm-yyyy'
-    });
-
-    firstRow.find('input[type="text"]').val('');
-    UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
-    $(document).off('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]').on('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]', function () {
-        UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
-    });
-}
-
-
-function SaveGRNItemTracking() {
-    $('#lblItemTrackMsg').html('');
-
-    let originalBalance = parseFloat($('#txtbalanceQty').data('original')) || 0;
-    let total = parseFloat($('#txttotalQty').val()) || 0;
-
-    if (total > originalBalance) {
-        $('#lblItemTrackMsg').html('<span style="color: red;">Total quantity cannot exceed the balance quantity.</span>');
-        return false;
-    }
-
-    var documenttype = $('#lblDocumentType').text().trim();
-    var orderno = $('#lblDocumentNo').text().trim();
-    var locationcode = $('#lblLocationCode').text().trim();
-
-    var reservationEntryforGRN = [];
-
-    $('#tbItemTrackingLines .itemtrackingtr').each(function () {
-        var $tds = $(this).find('td');
-
-        var entryno = $tds.eq(0).text().trim() || "0";
-        var lineno = $tds.eq(1).text().trim();
-        var itemno = $tds.eq(2).text().trim();
-        var lotno = $tds.eq(3).find('input').val() || "";
-        var qtytohandle = parseFloat($tds.eq(4).find('input').val()) || 0;
-        var expdate = $tds.eq(5).find('input').val() || "";
+        var lotno = $tds.eq(3).find('input').val();
+        var qtytohandle = $tds.eq(4).find('input').val();
+        var expdate = $tds.eq(5).find('input').val();
 
         var reservationEntryforGRNObject = {};
 
         reservationEntryforGRNObject.DocumentType = documenttype;
         reservationEntryforGRNObject.OrderNo = orderno;
         reservationEntryforGRNObject.LocationCode = locationcode;
+
         reservationEntryforGRNObject.LineNo = lineno;
         reservationEntryforGRNObject.ItemNo = itemno;
         reservationEntryforGRNObject.LotNo = lotno;
@@ -534,36 +345,18 @@ function SaveGRNItemTracking() {
         reservationEntryforGRN.push(reservationEntryforGRNObject);
     });
 
-    var payload = {
-        ToSaveOrUpdate: reservationEntryforGRN,
-        ToDelete: deletedEntries
-    };
-
-    if (reservationEntryforGRN.length === 0 && deletedEntries.length === 0) {
-        $('#lblItemTrackMsg').html('<span style="color: red;">No valid item tracking lines to save.</span>');
-        return false;
-    }
+    var apiUrl = '/SPGRN/SaveGRNLineItemTracking';
 
     $.ajax({
         type: "POST",
-        url: '/SPGRN/SaveGRNLineItemTracking',
-        data: JSON.stringify(payload),
+        url: apiUrl,
+        data: JSON.stringify(reservationEntryforGRN),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            if (data) {
-                $('#modalItemTracking').hide();
-                ShowActionMsg("Item Tracking lines saved successfully.");
-                deletedEntries = [];
-
-                $('#txttotalQty').val('0.00');
-                $('#txtbalanceQty').val($('#txtbalanceQty').data('original').toFixed(2));
-
-            } else {
-                $('#lblItemTrackMsg').html('<span style="color: red;">Error saving Item Tracking data.</span>');
-            }
-        },
-        error: function (xhr) {
-            ShowErrMsg("Error in SaveGRNLineItemTracking API. " + xhr.responseText);
+            if (data)
+                $('#modalItemTracking').css('display', 'none');
+            else
+                $('#lblItemTrackMsg').html('Error In Saving Data...');
         }
     });
 }
@@ -571,114 +364,7 @@ function SaveGRNItemTracking() {
 function AddItemTrackingInGrid() {
     $('#tbItemTrackingLines tr:contains("No Records Found")').remove();
     var firstRow = $('#tbItemTrackingLines tr').first();
-    var entryno = firstRow.find('td').eq(0).text().trim();
-    var lineno = firstRow.find('td').eq(1).text().trim();
-    var itemno = firstRow.find('td').eq(2).text().trim();
-
-    var rowCount = $('#tbItemTrackingLines tr').length;
-
-    var newRow = `<tr class='itemtrackingtr'>
-        <td style='display: none;'>0</td>
-        <td>${lineno}</td>
-        <td>${itemno}</td>
-        <td>${entryno}</td>
-        <td><input type='text' name='txtLotNo_${rowCount}' value='' class='form-control'/></td>
-        <td><input type='text' name='txtQtyToHandle_${rowCount}' value='0' class='form-control' /></td>
-        <td><input type='text' name='txtExpDate_${rowCount}' value='' class='form-control datepicker'/></td>
-        <td>0</td>
-        <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid(this)">Delete</button></td>
-    </tr>`;
-
-    $('#tbItemTrackingLines').append(newRow);
-
-    $('.datepicker').pickadate({
-        selectMonths: true,
-        selectYears: true,
-        format: 'dd-mm-yyyy'
-    });
-}
-function SaveGRNItemTracking() {
-    $('#lblItemTrackMsg').html('');
-
-    let originalBalance = parseFloat($('#txtbalanceQty').data('original')) || 0;
-    let total = parseFloat($('#txttotalQty').val()) || 0;
-
-    if (total > originalBalance) {
-        $('#lblItemTrackMsg').html('<span style="color: red;">Total quantity cannot exceed the balance quantity.</span>');
-        return false;
-    }
-
-    var documenttype = $('#lblDocumentType').text().trim();
-    var orderno = $('#lblDocumentNo').text().trim();
-    var locationcode = $('#lblLocationCode').text().trim();
-
-    var reservationEntryforGRN = [];
-
-    $('#tbItemTrackingLines .itemtrackingtr').each(function () {
-        var $tds = $(this).find('td');
-
-        var entryno = $tds.eq(0).text().trim() || "0";
-        var lineno = $tds.eq(1).text().trim();
-        var itemno = $tds.eq(2).text().trim();
-        var lotno = $tds.eq(3).find('input').val() || "";
-        var qtytohandle = parseFloat($tds.eq(4).find('input').val()) || 0;
-        var expdate = $tds.eq(5).find('input').val() || "";
-        if (qtytohandle > 0) {
-            var reservationEntryforGRNObject = {};
-
-            reservationEntryforGRNObject.DocumentType = documenttype;
-            reservationEntryforGRNObject.OrderNo = orderno;
-            reservationEntryforGRNObject.LocationCode = locationcode;
-            reservationEntryforGRNObject.LineNo = lineno;
-            reservationEntryforGRNObject.ItemNo = itemno;
-            reservationEntryforGRNObject.LotNo = lotno;
-            reservationEntryforGRNObject.Qty = qtytohandle;
-            reservationEntryforGRNObject.ExpirationDate = expdate;
-            reservationEntryforGRNObject.EntryNo = entryno;
-
-            reservationEntryforGRN.push(reservationEntryforGRNObject);
-        }
-    });
-
-    var payload = {
-        ToSaveOrUpdate: reservationEntryforGRN,
-        ToDelete: deletedEntries
-    };
-
-    if (reservationEntryforGRN.length === 0) {
-        $('#lblItemTrackMsg').html('<span style="color: red;">No valid item tracking lines to save.</span>');
-        return false;
-    }
-
-    $.ajax({
-        type: "POST",
-        url: '/SPGRN/SaveGRNLineItemTracking',
-        data: JSON.stringify(payload),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            if (data) {
-                $('#modalItemTracking').hide();
-                ShowActionMsg("Item Tracking lines saved successfully.");
-                deletedEntries = [];
-
-                $('#txttotalQty').val('0.00');
-                $('#txtbalanceQty').val($('#txtbalanceQty').data('original').toFixed(2));
-
-            } else {
-                $('#lblItemTrackMsg').html('<span style="color: red;">Error saving Item Tracking data.</span>');
-            }
-        },
-        error: function (xhr) {
-            ShowErrMsg("Error in SaveGRNLineItemTracking API. " + xhr.responseText);
-        }
-    });
-}
-
-
-function AddItemTrackingInGrid() {
-    $('#tbItemTrackingLines tr:contains("No Records Found")').remove();
-    var firstRow = $('#tbItemTrackingLines tr').first();
-    var entryno = firstRow.find('td').eq(0).text().trim();
+    var entryno = firstRow.find('td').eq(0).text().trim()
     var lineno = firstRow.find('td').eq(1).text().trim();
     var itemNo = firstRow.find('td').eq(2).text().trim();
     var lotNo = firstRow.find('input[name^="txtLotNo"]').val();
@@ -693,7 +379,7 @@ function AddItemTrackingInGrid() {
       <td><input type="text" name="txtQtyToHandle_${newIndex}" value="${qty}" class="form-control"></td>
       <td><input type="text" name="txtExpDate_${newIndex}" value="${expDate}" class="form-control datepicker"></td>
       <td>${qty}</td>
-      <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid(this)">Delete</button></td>
+      <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid();">Delete</button></td>
     </tr>`;
     $('#tbItemTrackingLines').append(newRow);
 
@@ -703,7 +389,9 @@ function AddItemTrackingInGrid() {
         format: 'dd-mm-yyyy'
     });
     firstRow.find('input[type="text"]').val('');
-    UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
+}
+function DeleteItemTrackingInGrid() {
+    alert("Development under process..");
 }
 // Create Make/Mgf function 
 function ManufacturerAutocompleteAPI(LineDetailsLineNo) {
@@ -775,4 +463,3 @@ function ManufacturerAutocompleteAPI(LineDetailsLineNo) {
         $input.autocomplete("search");
     }
 }
-

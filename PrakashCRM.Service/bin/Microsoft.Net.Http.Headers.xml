@@ -13,7 +13,7 @@
         <member name="M:Microsoft.Net.Http.Headers.ContentDispositionHeaderValue.SetMimeFileName(Microsoft.Extensions.Primitives.StringSegment)">
             <summary>
             Sets the FileName parameter using encodings appropriate for MIME headers.
-            The FileNameStar paraemter is removed.
+            The FileNameStar parameter is removed.
             </summary>
             <param name="fileName"></param>
         </member>

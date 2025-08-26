@@ -58,7 +58,7 @@
                                 </div>
 
                                 <div class="row g-3">
-
+                                   
                                     <div class="col-md-6">
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label">Customer/Vendor : </label>
@@ -67,7 +67,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="col-md-6">
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label">Document Type : </label>
@@ -188,10 +188,10 @@
                                                 }
 
                                                 @* @if (packingUOMs.EndsWith(", "))
-                        {
-                            packingUOMs = packingUOMs.Substring(0, packingUOMs.Length - 2);
+                                                {
+                                                    packingUOMs = packingUOMs.Substring(0, packingUOMs.Length - 2);
 
-                        }*@
+                                                }*@
                                             </tbody>
                                         </table>
                                     </div>
@@ -205,7 +205,6 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label">Transporter No : </label>
                                             <div class="col-sm-9">
-                                                
                                                 <input id="txtTransporterNo" class="form-control" type="text" value="@Model.PCPL_Transporter_Name" />
                                                 @Html.ValidationMessageFor(model => model.PCPL_Transporter_No, null, new { style = "color:red" })
                                             </div>
@@ -226,30 +225,10 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label class="col-sm-3 col-form-label">Loading Vendor : </label>
-                                            <div class="col-sm-9">
-                                                <input id="txtLoadingVendor" type="text" value="@Model.PCPL_Transporter_Name" class="form-control" />
-                                                @Html.ValidationMessageFor(model => model.PCPL_Loading_Vendor, null, new { style = "color:red" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label">Loading Charges : </label>
                                             <div class="col-sm-9">
 
                                                 <input id="txtLoadingCharges" type="text" value="@Model.PCPL_Loading_Charges" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="row mb-3">
-                                            <label class="col-sm-3 col-form-label">Unloading Vendor : </label>
-                                            <div class="col-sm-9">
-                                                <input id="txtUnLoadingVendor" type="text" value="@Model.PCPL_Transporter_Name" class="form-control" />
-                                                @Html.ValidationMessageFor(model => model.PCPL_UnLoading_Vendor, null, new { style = "color:red" })
                                             </div>
                                         </div>
                                     </div>
@@ -379,8 +358,6 @@
                                 <input id="hfToLocationCode" value="@Model.ToLocation" style="display:none" />
                                 <input id="hfSystemId" value="@Model.SystemId" style="display:none" />
                                 <input id="hfDriverflag" value="false" style="display:none" />
-                                <input id="hfUnLoadingVendor" value="@Model.PCPL_UnLoading_Vendor" style="display:none" />
-                                <input id="hfLoadingVendor" value="@Model.PCPL_Loading_Vendor" style="display:none" />
 
                                 <button id="btnSaveSpinner" class="btn btn-primary" type="button" disabled style="display:none">
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
