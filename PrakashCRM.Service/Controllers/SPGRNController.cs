@@ -840,5 +840,90 @@ namespace PrakashCRM.Service.Controllers
 
 
         }
+
+        [HttpPost]
+        [Route("DeleteGRNLineItemTracking")]
+        public string DeleteGRNLineItemTracking([FromBody] DeleteReservationEntryForGRNRequest request)
+        {
+            string msg = "";
+
+            var resDeleteitemline = new SPGRNSaveResponse();
+            dynamic result = null;
+            var requestDeleteitemline = new
+            {
+                request.entryno,
+                request.positive
+            };
+            result = PostCodeUnit("APIMngt_DeleteReservationEntry", requestDeleteitemline, resDeleteitemline);
+            if (result.Result.Item1 != null)
+            {
+                msg = result.Result.Item1.value;
+            }
+
+            return msg;
+        }
+
+        
+        public async Task<(SPGRNSaveResponse, errorDetails)> PostCodeUnit<DeleteReservationEntryForGRNRequest>(string apiendpoint, DeleteReservationEntryForGRNRequest requestModel, SPGRNSaveResponse responseModel)
+        {
+            string _codeUnitBaseUrl = System.Configuration.ConfigurationManager.AppSettings["CodeUnitBaseURL"];
+            string _tenantId = System.Configuration.ConfigurationManager.AppSettings["TenantID"];
+            string _environment = System.Configuration.ConfigurationManager.AppSettings["Environment"];
+            string _companyName = System.Configuration.ConfigurationManager.AppSettings["CompanyName"];
+
+            API ac = new API();
+            var accessToken = await ac.GetAccessToken();
+
+            HttpClient _httpClient = new HttpClient();
+            //string encodeurl = Uri.EscapeUriString(_baseURL.Replace("{TenantID}", _tenantId).Replace("{Environment}", _environment).Replace("{CompanyName}", _companyName) + apiendpoint);
+            string encodeurl = Uri.EscapeUriString(_codeUnitBaseUrl.Replace("{TenantID}", _tenantId).Replace("{Environment}", _environment).Replace("{CompanyName}", _companyName).Replace("{Endpoint}", apiendpoint));
+            Uri baseuri = new Uri(encodeurl);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken.Token);
+
+
+            string ItemCardObjString = JsonConvert.SerializeObject(requestModel);
+            var content = new StringContent(ItemCardObjString, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = null;
+            try
+            {
+                response = _httpClient.PostAsync(baseuri, content).Result;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            errorDetails errordetail = new errorDetails();
+            errordetail.isSuccess = response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                var JsonData = response.Content.ReadAsStringAsync().Result;
+                try
+                {
+                    JObject res = JObject.Parse(JsonData);
+                    responseModel = res.ToObject<SPGRNSaveResponse>();
+
+                    errordetail.code = response.StatusCode.ToString();
+                    errordetail.message = response.ReasonPhrase;
+                }
+                catch (Exception ex1)
+                {
+                }
+            }
+            else
+            {
+                var JsonData = response.Content.ReadAsStringAsync().Result;
+
+                try
+                {
+                    JObject res = JObject.Parse(JsonData);
+                    errorMaster<errorDetails> emd = res.ToObject<errorMaster<errorDetails>>();
+                    errordetail = emd.error;
+                }
+                catch (Exception ex1)
+                {
+                }
+            }
+            return (responseModel, errordetail);
+        }
     }
 }

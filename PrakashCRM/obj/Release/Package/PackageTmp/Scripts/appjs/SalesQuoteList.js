@@ -1065,8 +1065,6 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                         rowData += "<td></td>";
                     }
 
-                    rowData += "<td>" + item.TPTPL_Short_Closed_Qty + "</td>";
-
                     //if (item.PCPL_Rejected_Reason == null || item.PCPL_Rejected_Reason == "") {
                     //    rowData += "<td></td>";
                     //}

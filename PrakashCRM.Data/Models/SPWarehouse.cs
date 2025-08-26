@@ -157,6 +157,8 @@ namespace PrakashCRM.Data.Models
         public string PCPLBuyfromArea { get; set; }
         public object PCPL_Ship_to_Area { get; set; }
         public decimal GrossWeightperunit { get; set; }
+        public string PCPL_UnLoading_Vendor { get; set; }
+        public string PCPL_Loading_Vendor { get; set; }
 
         /* public string CustomerVendorName { get; set; }*/
 
@@ -220,6 +222,8 @@ namespace PrakashCRM.Data.Models
         public object TransferfromCity { get; set; }
         public object TransfertoCity { get; set; }
         public decimal GrossWeightperunit { get; set; }
+        public string PCPL_UnLoading_Vendor { get; set; }
+        public string PCPL_Loading_Vendor { get; set; }
     }
 
     public class SPWarehouseList
