@@ -102,9 +102,8 @@ namespace PrakashCRM.Data.Models
         public decimal GrossWeightperunit { get; set; }
         public string Sell_to_Customer_Name { get; set; }
         public string PCPL_UnLoading_Vendor { get; set; }
-        public string PCPL_UnLoading_Vendor_Name { get; set; }
         public string PCPL_Loading_Vendor { get; set; }
-
+        public string PCPL_UnLoading_Vendor_Name { get; set; }
         public string PCPL_Loading_Vendor_Name { get; set; }
     }
 
@@ -160,6 +159,8 @@ namespace PrakashCRM.Data.Models
         public string PCPLBuyfromArea { get; set; }
         public object PCPL_Ship_to_Area { get; set; }
         public decimal GrossWeightperunit { get; set; }
+        public string PCPL_UnLoading_Vendor { get; set; }
+        public string PCPL_Loading_Vendor { get; set; }
         public string PCPL_UnLoading_Vendor_Name { get; set; }
         public string PCPL_Loading_Vendor_Name { get; set; }
 
@@ -225,6 +226,8 @@ namespace PrakashCRM.Data.Models
         public object TransferfromCity { get; set; }
         public object TransfertoCity { get; set; }
         public decimal GrossWeightperunit { get; set; }
+        public string PCPL_UnLoading_Vendor { get; set; }
+        public string PCPL_Loading_Vendor { get; set; }
         public string PCPL_UnLoading_Vendor_Name { get; set; }
         public string PCPL_Loading_Vendor_Name { get; set; }
     }
@@ -290,8 +293,8 @@ namespace PrakashCRM.Data.Models
         public decimal transporteramount { get; set; }
         public string remarks { get; set; }
         public bool isclosed { get; set; }
-        public string unloadingvendorname { get; set; }
-        public string loadingvendorname { get; set; }
+        public string loadingvendor { get; set; }
+        public string unloadingvendor { get; set; }
 
 
     }
@@ -364,8 +367,8 @@ namespace PrakashCRM.Data.Models
         public string FromArea { get; set; }
         public dynamic PackingQty { get; set; }
         public string PCPL_UnLoading_Vendor { get; set; }
-        public string PCPL_UnLoading_Vendor_Name { get; set; }
         public string PCPL_Loading_Vendor { get; set; }
+        public string PCPL_UnLoading_Vendor_Name { get; set; }
         public string PCPL_Loading_Vendor_Name { get; set; }
     }
 

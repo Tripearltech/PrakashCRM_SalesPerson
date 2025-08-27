@@ -96,6 +96,27 @@ $(document).ready(function () {
     // Call AutoCompleteDropDownFunction
     UnloadingVendorDropDown();
     LoadingVendorDropDown();
+
+    // Force clear vendor fields based on doctype on page load/reopen
+    var doctype = $('#lblDocumentType').text();
+    if (doctype === "Sales Order") {
+        $('#hfUnLoadingVendorNo').val("");
+        $('#txtUnLoadingVendor').val("");
+        $('#txtUnloadingCharges').val("0"); // Also clear related charges if applicable
+        $('#txtUnLoadingVendor').prop('disabled', true); // Disable to prevent input
+    } else if (doctype === "Sales Return") {
+        $('#hfLoadingVendorNo').val("");
+        $('#txtLoadingVendor').val("");
+        $('#txtLoadingCharges').val("0");
+        $('#txtLoadingVendor').prop('disabled', true);
+    } else if (doctype === "Purchase Order") {
+        $('#hfLoadingVendorNo').val("");
+        $('#txtLoadingVendor').val("");
+        $('#txtLoadingCharges').val("0");
+        $('#txtLoadingVendor').prop('disabled', true);
+    } else if (doctype === "Transfer Order") {
+        // Both allowed, no clearing
+    }
 });
 var dtable;
 
@@ -271,7 +292,7 @@ function CloseTask() {
     if (systemIds.length > 0) {
         //return;
         $.post(
-            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemIds + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&applyloadingcharges=' + applyloadingcharges + '&applyunloadingcharges=' + applyunloadingcharges + '&applyfreightcharges=' + applyfreightcharges + '&freightcharge=' + freightcharge + '&remarks=' + remarks + '&loadingVendorname=' + loadingVendorname + '&unloadingVendorname=' + unloadingVendorname,
+            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemIds + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&applyloadingcharges=' + applyloadingcharges + '&applyunloadingcharges=' + applyunloadingcharges + '&applyfreightcharges=' + applyfreightcharges + '&freightcharge=' + freightcharge + '&remarks=' + remarks + '&loadingVendor=' + loadingVendor + '&unloadingVendor=' + unloadingVendor,
 
             function (data) {
                 //alert(data);
@@ -428,9 +449,10 @@ function SaveTransporter() {
     }
 
     $('#btnSaveSpinner').show();
-    var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, createDriver, loadingVendorname, unloadingVendorname;
+
+    var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, createDriver, loadingVendor, unloadingVendor, vendorcompanyNo;
+
     var systemId = "";
-    debugger;
     doctype = $('#lblDocumentType')[0].innerText;
     systemId = $('#hfSystemId')[0].value;
     transporterCode = $('#hfTransporterNo')[0].value;
@@ -448,44 +470,53 @@ function SaveTransporter() {
     createDriver = $('#hfDriverflag')[0].value;
     vendorcompanyNo = $('#hfVendorCompanyNo')[0].value;
 
-    loadingVendorname = $('#txtLoadingVendor').val();
-    unloadingVendorname = $('#txtUnLoadingVendor').val();
+    loadingVendor = "";
+    unloadingVendor = "";
+
+    if (doctype === "Sales Order") {
+        loadingVendor = $('#hfLoadingVendorNo').val() || "";
+        $('#hfUnLoadingVendorNo').val("");
+        $('#txtUnLoadingVendor').val("");
+    }
+    else if (doctype === "Sales Return") {
+        unloadingVendor = $('#hfUnLoadingVendorNo').val() || "";
+        $('#hfLoadingVendorNo').val("");
+        $('#txtLoadingVendor').val("");
+    }
+    else if (doctype === "Transfer Order") {
+        loadingVendor = $('#hfLoadingVendorNo').val() || "";
+        unloadingVendor = $('#hfUnLoadingVendorNo').val() || "";
+    }
+    else if (doctype === "Purchase Order") {
+        unloadingVendor = $('#hfUnLoadingVendorNo').val() || "";
+        $('#hfLoadingVendorNo').val("");
+        $('#txtLoadingVendor').val("");
+    }
 
     if (systemId.length > 0) {
-        //return;
         $.post(
-            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemId + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&loadingcharges=' + loadingcharges + '&unloadingcharges=' + unloadingcharges + '&transporteramount=' + transporteramount + '&remarks=' + remarks + '&isclosed=' + isclosed + '&selectedExisting=' + createDriver + '&vendorcompanyNo=' + vendorcompanyNo + '&loadingVendorname=' + loadingVendorname + '&unloadingVendorname=' + unloadingVendorname,
-
+            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemId + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&loadingcharges=' + loadingcharges + '&unloadingcharges=' + unloadingcharges + '&transporteramount=' + transporteramount + '&remarks=' + remarks + '&isclosed=' + isclosed + '&selectedExisting=' + createDriver + '&vendorcompanyNo=' + vendorcompanyNo + '&loadingVendor=' + loadingVendor + '&unloadingVendor=' + unloadingVendor,
             function (data) {
-                //alert(data);
                 if (data) {
-
                     $('#btnSaveSpinner').hide();
                     var actionMsg = "Task Save Successfully.";
                     ShowActionMsg(actionMsg);
                     window.setTimeout(function () {
-
                         window.location.href = '/SPWarehouse/WarehouseList';
-
                     }, 2000);
                 }
             }
         );
     }
-    else {
-        var msg = "Please Select Atleast One task to accept.";
-        ShowErrMsg(msg);
-
-    }
-
 }
+
 
 function SaveAndCloseTransporter() {
 
     var flag = validateForm();
 
     if (flag == true) {
-        var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, loadingVendorname, unloadingVendorname;
+        var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, loadingVendor, unloadingVendor;
         var systemId = "";
 
         doctype = $('#lblDocumentType')[0].innerText;
@@ -504,11 +535,30 @@ function SaveAndCloseTransporter() {
         isclosed = true;
         createDriver = $('#hfDriverflag')[0].value;
         vendorcompanyNo = $('#hfVendorCompanyNo')[0].value;
-        loadingVendorname = $('#txtLoadingVendor').val();
-        unloadingVendorname = $('#txtUnLoadingVendor').val();
 
-        $.post(
-            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemId + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&loadingcharges=' + loadingcharges + '&unloadingcharges=' + unloadingcharges + '&transporteramount=' + transporteramount + '&remarks=' + remarks + '&isclosed=' + isclosed + '&selectedExisting=' + createDriver + '&vendorcompanyNo=' + vendorcompanyNo + '&loadingVendorname=' + loadingVendorname + '&unloadingVendorname=' + unloadingVendorname,
+        loadingVendor = "";
+        unloadingVendor = "";
+
+        if (doctype === "Sales Order") {
+            loadingVendor = $('#hfLoadingVendorNo').val() || "";
+            $('#hfUnLoadingVendorNo').val("");
+            $('#txtUnLoadingVendor').val("");
+        } else if (doctype === "Sales Return") {
+
+            unloadingVendor = $('#hfUnLoadingVendorNo').val() || "";
+            $('#hfLoadingVendorNo').val(""); $('#txtLoadingVendor').val("");
+        } else if (doctype === "Transfer Order") {
+
+            loadingVendor = $('#hfLoadingVendorNo').val() || "";
+            unloadingVendor = $('#hfUnLoadingVendorNo').val() || "";
+        } else if (doctype === "Purchase Order") {
+
+            unloadingVendor = $('#hfUnLoadingVendorNo').val() || "";
+            $('#hfLoadingVendorNo').val(""); $('#txtLoadingVendor').val("");
+        }
+
+       $.post(
+            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemId + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&loadingcharges=' + loadingcharges + '&unloadingcharges=' + unloadingcharges + '&transporteramount=' + transporteramount + '&remarks=' + remarks + '&isclosed=' + isclosed + '&selectedExisting=' + createDriver + '&vendorcompanyNo=' + vendorcompanyNo + '&loadingVendor=' + loadingVendor + '&unloadingVendor=' + unloadingVendor,
 
             function (data) {
                 //alert(data);
@@ -546,6 +596,16 @@ function validateForm() {
         $('#txtTransporterNo').focus();
         return false;
     }
+    /*if ($('#hfLoadingVendorNo').val() == "") {
+        $('#lblMsg').html('Select Loading Vendor');
+        $('#txtLoadingVendor').focus();
+        return false;
+    }
+    if ($('#hfUnLoadingVendorNo').val() == "") {
+        $('#lblMsg').html('Select UnLoading Vendor');
+        $('#txtUnLoadingVendor').focus();
+        return false;
+    }*/
     else if ($('#txtFraightCharges').val() == "") {
         $('#lblMsg').html('Enter Fraight Charges');
         $('#txtFraightCharges').focus();
@@ -609,7 +669,7 @@ function UnloadingVendorDropDown() {
             type: "unloading"
         },
         onSelect: function (suggestion) {
-            $("#hfUnLoadingVendor").val(suggestion.data);
+            $("#hfUnLoadingVendorNo").val(suggestion.data);
             $("#txtUnLoadingVendor").val(suggestion.value);
         },
         onShow: function () {
@@ -654,7 +714,7 @@ function LoadingVendorDropDown() {
             type: "loading"
         },
         onSelect: function (suggestion) {
-            $("#hfLoadingVendor").val(suggestion.data);
+            $("#hfLoadingVendorNo").val(suggestion.data);
             $("#txtLoadingVendor").val(suggestion.value);
         },
         onShow: function () {
@@ -684,3 +744,39 @@ function LoadingVendorDropDown() {
 
     });
 }
+/*function BindTransporterData(data) {
+    var doctype = $('#lblDocumentType').text();
+
+    if (doctype === "Sales Order") {
+        // केवल loading vendor bind होगा
+        $('#hfLoadingVendorNo').val(data.loadingVendor || "");
+        $('#txtLoadingVendor').val(data.loadingVendorName || "");
+
+        $('#hfUnLoadingVendorNo').val("");
+        $('#txtUnLoadingVendor').val("");
+    }
+    else if (doctype === "Sales Return") {
+        // केवल unloading vendor bind होगा
+        $('#hfUnLoadingVendorNo').val(data.unloadingVendor || "");
+        $('#txtUnLoadingVendor').val(data.unloadingVendorName || "");
+
+        $('#hfLoadingVendorNo').val("");
+        $('#txtLoadingVendor').val("");
+    }
+    else if (doctype === "Transfer Order") {
+        // दोनों bind होंगे
+        $('#hfLoadingVendorNo').val(data.loadingVendor || "");
+        $('#txtLoadingVendor').val(data.loadingVendorName || "");
+
+        $('#hfUnLoadingVendorNo').val(data.unloadingVendor || "");
+        $('#txtUnLoadingVendor').val(data.unloadingVendorName || "");
+    }
+    else if (doctype === "Purchase Order") {
+        // केवल unloading vendor bind होगा
+        $('#hfUnLoadingVendorNo').val(data.unloadingVendor || "");
+        $('#txtUnLoadingVendor').val(data.unloadingVendorName || "");
+
+        $('#hfLoadingVendorNo').val("");
+        $('#txtLoadingVendor').val("");
+    }
+}*/
