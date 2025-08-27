@@ -11,6 +11,22 @@ $(document).ready(function () {
     $('.btn-close').click(function () {
         $('#modalItemTracking').css('display', 'none');
     });
+
+    //input validate
+    $("input[id^='txtQtyToReceive_']").on("change", function () {
+        var lineNo = $(this).attr("id").split("_")[1]; // Extract LineNo from id
+        var enteredQty = parseFloat($(this).val()) || 0;
+        var actualQty = parseFloat($("#qty_" + lineNo).text()) || 0;
+
+        if (enteredQty > actualQty) {
+            alert("Entered quantity cannot be greater than available quantity (" + actualQty + ").");
+            $(this).val(0);
+        } else if (enteredQty < 0) {
+            alert("Quantity cannot be negative.");
+            $(this).val(0);
+        }
+    });
+
 });
 var delay = (function () {
     var timer = 0;
@@ -277,13 +293,16 @@ function DeleteItemTrackingInGrid(button) {
         $('#tbItemTrackingLines').append("<tr><td colspan=8>No Records Found</td></tr>");
     }
 }
-
 function ShowItemTracking(lineNo, itemno) {
-    SaveGRNItemTracking
     var documentType = $('#lblDocumentType').text().trim();
     var documentNo = $('#lblDocumentNo').text().trim();
 
     let qtyToReceive = parseFloat($(`input[name='txtQtyToReceive_${lineNo}']`).val()) || 0;
+
+   if (qtyToReceive === 0) {
+        ShowErrMsg("Quantity cannot be 0.");
+        return false; 
+    }
 
     $('#txtbalanceQty').data('original', qtyToReceive);
     $('#txtbalanceQty').val(qtyToReceive.toFixed(2));
@@ -305,15 +324,7 @@ function ShowItemTracking(lineNo, itemno) {
                 if (documentType == "Transfer Order" || documentType == "Sales Return") {
                     if (data && data.length > 0) {
                         $.each(data, function (index, item) {
-                            rowData = `<tr class='itemtrackingtr'>
-                                <td style='display: none;'>${item.Entry_No}</td>
-                                <td>${lineNo}</td>
-                                <td>${item.Item_No}</td>
-                                <td><input type='text' name='txtLotNo_${index + 1}' value='${item.Lot_No}' class='form-control' disabled /></td>
-                                <td><input type='text' name='txtQtyToHandle_${index + 1}' value='${item.Qty_to_Handle_Base}' class='form-control' /></td>
-                                <td><input type='text' name='txtExpDate_${index + 1}' value='${item.Expiration_Date}' class='form-control' disabled /></td>
-                                <td>${item.Quantity}</td>
-                                <td></td>
+                            rowData = `<tr class='itemtrackingtr'><td style='display: none;'>${item.Entry_No}</td><td>${lineNo}</td><td>${item.Item_No}</td><td><input type='text' name='txtLotNo_${index + 1}' value='${item.Lot_No}' class='form-control' disabled /></td><td><input type='text' name='txtQtyToHandle_${index + 1}' value='${item.Qty_to_Handle_Base}' class='form-control' /></td><td><input type='text' name='txtExpDate_${index + 1}' value='${item.Expiration_Date}' class='form-control' disabled /></td><td>${item.Quantity}</td><td></td>
                             </tr>`;
                             $('#tbItemTrackingLines').append(rowData);
                         });
@@ -323,28 +334,13 @@ function ShowItemTracking(lineNo, itemno) {
                     }
                 } else if (documentType == "Purchase Order") {
                     rowData = `<tr class='itemtrackingtr'>
-                        <td style='display: none;'>0</td>
-                        <td>${lineNo}</td>
-                        <td>${itemno}</td>
-                        <td><input type='text' name='txtLotNo_0' value='' class='form-control'/></td>
-                        <td><input type='text' name='txtQtyToHandle_0' value='0' class='form-control' /></td>
-                        <td><input type='text' name='txtExpDate_0' value='' class='form-control datepicker'/></td>
-                        <td>0</td>
-                        <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="AddItemTrackingInGrid();">Add</button></td>
+                        <td style='display: none;'>0</td><td>${lineNo}</td><td>${itemno}</td><td><input type='text' name='txtLotNo_0' value='' class='form-control'/></td><td><input type='text' name='txtQtyToHandle_0' value='0' class='form-control' /></td><td><input type='text' name='txtExpDate_0' value='' class='form-control datepicker'/></td><td>0</td><td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="AddItemTrackingInGrid();">Add</button></td>
                     </tr>`;
                     $('#tbItemTrackingLines').append(rowData);
 
                     if (data && data.length > 0) {
                         $.each(data, function (index, item) {
-                            rowData = `<tr class='itemtrackingtr'>
-                                <td style='display: none;'>${item.Entry_No}</td>
-                                <td>${lineNo}</td>
-                                <td>${item.Item_No}</td>
-                                <td><input type='text' name='txtLotNo_${index + 1}' value='${item.Lot_No}' class='form-control'/></td>
-                                <td><input type='text' name='txtQtyToHandle_${index + 1}' value='${item.Qty_to_Handle_Base}' class='form-control' /></td>
-                                <td><input type='text' name='txtExpDate_${index + 1}' value='${item.Expiration_Date}' class='form-control datepicker' /></td>
-                                <td>${item.Quantity}</td>
-                                <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid(this)">Delete</button></td>
+                            rowData = `<tr class='itemtrackingtr'><td style='display: none;'>${item.Entry_No}</td><td>${lineNo}</td><td>${item.Item_No}</td><td><input type='text' name='txtLotNo_${index + 1}' value='${item.Lot_No}' class='form-control'/></td><td><input type='text' name='txtQtyToHandle_${index + 1}' value='${item.Qty_to_Handle_Base}' class='form-control' /></td><td><input type='text' name='txtExpDate_${index + 1}' value='${item.Expiration_Date}' class='form-control datepicker' /></td><td>${item.Quantity}</td><td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid(this)">Delete</button></td>
                             </tr>`;
                             $('#tbItemTrackingLines').append(rowData);
                         });
@@ -366,7 +362,6 @@ function ShowItemTracking(lineNo, itemno) {
 
                 UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
 
-                // Event for live updates
                 $(document).off('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]').on('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]', function () {
                     UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
                 });
@@ -377,6 +372,7 @@ function ShowItemTracking(lineNo, itemno) {
         });
     }
 }
+
 
 function UpdateItemTrackingTotals(originalBalance) {
     let total = 0;
@@ -481,15 +477,7 @@ function AddItemTrackingInGrid() {
     var qty = firstRow.find('input[name^="txtQtyToHandle"]').val();
     var expDate = firstRow.find('input[name^="txtExpDate"]').val();
     var newIndex = $('#tbItemTrackingLines tr').length;
-    var newRow = `<tr class='itemtrackingtr'>
-      <td style='display: none;'>${entryno}</td>
-      <td>${lineno}</td>
-      <td>${itemNo}</td>
-      <td><input type="text" name="txtLotNo_${newIndex}" value="${lotNo}" class="form-control"></td>
-      <td><input type="text" name="txtQtyToHandle_${newIndex}" value="${qty}" class="form-control"></td>
-      <td><input type="text" name="txtExpDate_${newIndex}" value="${expDate}" class="form-control datepicker"></td>
-      <td>${qty}</td>
-      <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid();">Delete</button></td>
+    var newRow = `<tr class='itemtrackingtr'><td style='display: none;'>${entryno}</td><td>${lineno}</td><td>${itemNo}</td><td><input type="text" name="txtLotNo_${newIndex}" value="${lotNo}" class="form-control"></td><td><input type="text" name="txtQtyToHandle_${newIndex}" value="${qty}" class="form-control"></td><td><input type="text" name="txtExpDate_${newIndex}" value="${expDate}" class="form-control datepicker"></td><td>${qty}</td><td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid();">Delete</button></td>
     </tr>`;
     $('#tbItemTrackingLines').append(newRow);
 

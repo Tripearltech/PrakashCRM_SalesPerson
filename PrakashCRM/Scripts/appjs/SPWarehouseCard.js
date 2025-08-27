@@ -40,7 +40,6 @@ $(document).ready(function () {
     });
 
     BindTransporter();
-    //getGstnumber();
 
     $('#btnTransporterRateCard').click(function () {
 
@@ -246,7 +245,7 @@ function setTransporterGSTNumber(vendorno) {
 }
 function CloseTask() {
     //debugger;
-    var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, applyloadingcharges, applyunloadingcharges, applyfreightcharges, freightcharge, remarks;
+    var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, applyloadingcharges, applyunloadingcharges, applyfreightcharges, freightcharge, remarks
     var systemIds = "";
 
     doctype = $('#lnlDocumentType')[0].innerText;
@@ -262,6 +261,7 @@ function CloseTask() {
     applyfreightcharges = $('#chkApplyFreightCharges')[0].checked;
     freightcharge = $('#txtFraightCharges')[0].value;
     remarks = $('#txtRemarks')[0].value;
+
     $('#tableBody input[type=checkbox]:checked').each(function () {
 
         systemIds += $(this).val() + "|";
@@ -271,7 +271,7 @@ function CloseTask() {
     if (systemIds.length > 0) {
         //return;
         $.post(
-            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemIds + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&applyloadingcharges=' + applyloadingcharges + '&applyunloadingcharges=' + applyunloadingcharges + '&applyfreightcharges=' + applyfreightcharges + '&freightcharge=' + freightcharge + '&remarks=' + remarks,
+            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemIds + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&applyloadingcharges=' + applyloadingcharges + '&applyunloadingcharges=' + applyunloadingcharges + '&applyfreightcharges=' + applyfreightcharges + '&freightcharge=' + freightcharge + '&remarks=' + remarks + '&loadingVendorname=' + loadingVendorname + '&unloadingVendorname=' + unloadingVendorname,
 
             function (data) {
                 //alert(data);
@@ -428,7 +428,7 @@ function SaveTransporter() {
     }
 
     $('#btnSaveSpinner').show();
-    var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, createDriver;
+    var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, createDriver, loadingVendorname, unloadingVendorname;
     var systemId = "";
     debugger;
     doctype = $('#lblDocumentType')[0].innerText;
@@ -448,10 +448,13 @@ function SaveTransporter() {
     createDriver = $('#hfDriverflag')[0].value;
     vendorcompanyNo = $('#hfVendorCompanyNo')[0].value;
 
+    loadingVendorname = $('#txtLoadingVendor').val();
+    unloadingVendorname = $('#txtUnLoadingVendor').val();
+
     if (systemId.length > 0) {
         //return;
         $.post(
-            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemId + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&loadingcharges=' + loadingcharges + '&unloadingcharges=' + unloadingcharges + '&transporteramount=' + transporteramount + '&remarks=' + remarks + '&isclosed=' + isclosed + '&selectedExisting=' + createDriver + '&vendorcompanyNo=' + vendorcompanyNo,
+            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemId + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&loadingcharges=' + loadingcharges + '&unloadingcharges=' + unloadingcharges + '&transporteramount=' + transporteramount + '&remarks=' + remarks + '&isclosed=' + isclosed + '&selectedExisting=' + createDriver + '&vendorcompanyNo=' + vendorcompanyNo + '&loadingVendorname=' + loadingVendorname + '&unloadingVendorname=' + unloadingVendorname,
 
             function (data) {
                 //alert(data);
@@ -482,7 +485,7 @@ function SaveAndCloseTransporter() {
     var flag = validateForm();
 
     if (flag == true) {
-        var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed;
+        var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, loadingVendorname, unloadingVendorname;
         var systemId = "";
 
         doctype = $('#lblDocumentType')[0].innerText;
@@ -501,9 +504,11 @@ function SaveAndCloseTransporter() {
         isclosed = true;
         createDriver = $('#hfDriverflag')[0].value;
         vendorcompanyNo = $('#hfVendorCompanyNo')[0].value;
+        loadingVendorname = $('#txtLoadingVendor').val();
+        unloadingVendorname = $('#txtUnLoadingVendor').val();
 
         $.post(
-            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemId + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&loadingcharges=' + loadingcharges + '&unloadingcharges=' + unloadingcharges + '&transporteramount=' + transporteramount + '&remarks=' + remarks + '&isclosed=' + isclosed + '&selectedExisting=' + createDriver + '&vendorcompanyNo=' + vendorcompanyNo,
+            apiUrl + 'ClosedTaskOfWarehouse?doctype=' + doctype + '&transporterCode=' + transporterCode + '&systemids=' + systemId + '&lrno=' + lrno + '&lrdate=' + lrdate + '&drivername=' + drivername + '&driverlicenseno=' + driverlicenseno + '&drivermobileno=' + drivermobileno + '&vehicleno=' + vehicleno + '&loadingcharges=' + loadingcharges + '&unloadingcharges=' + unloadingcharges + '&transporteramount=' + transporteramount + '&remarks=' + remarks + '&isclosed=' + isclosed + '&selectedExisting=' + createDriver + '&vendorcompanyNo=' + vendorcompanyNo + '&loadingVendorname=' + loadingVendorname + '&unloadingVendorname=' + unloadingVendorname,
 
             function (data) {
                 //alert(data);
@@ -600,6 +605,9 @@ function UnloadingVendorDropDown() {
         ajaxSettings: {
             type: "POST"
         },
+        params: {
+            type: "unloading"
+        },
         onSelect: function (suggestion) {
             $("#hfUnLoadingVendor").val(suggestion.data);
             $("#txtUnLoadingVendor").val(suggestion.value);
@@ -609,13 +617,8 @@ function UnloadingVendorDropDown() {
                 $input.focus();
             }, 10);
         },
-        /*onSearchStart: function () {
-            // Optional: Show spinner or loader
-            // $spinner.addClass("input-group");
-            // $loader.show();
-        },*/
         transformResult: function (response) {
-           var json;
+            var json;
             try {
                 json = $.parseJSON(response);
             } catch (e) {
@@ -632,12 +635,12 @@ function UnloadingVendorDropDown() {
                 })
             };
         },
-        
+
     });
 }
 
 function LoadingVendorDropDown() {
-   
+
     if (typeof ($.fn.autocomplete) === 'undefined') return;
     $('#txtLoadingVendor').autocomplete({
         serviceUrl: '/SPWarehouse/GetloadingAndUnloadingDropDown',
@@ -646,6 +649,9 @@ function LoadingVendorDropDown() {
         noCache: true,
         ajaxSettings: {
             type: "POST"
+        },
+        params: {
+            type: "loading"
         },
         onSelect: function (suggestion) {
             $("#hfLoadingVendor").val(suggestion.data);
@@ -656,10 +662,6 @@ function LoadingVendorDropDown() {
                 $input.focus();
             }, 10);
         },
-        /*onSearchStart: function () {
-            *//*$spinner.addClass("input-group");
-            $loader.show();*//*
-        },*/
         transformResult: function (response) {
             var json;
             try {
@@ -679,6 +681,6 @@ function LoadingVendorDropDown() {
 
             };
         },
-       
+
     });
 }

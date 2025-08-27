@@ -14,7 +14,7 @@ $(document).ready(function () {
     }
     if (UrlVars["CustomerName"] != undefined) {
         CustomerName = UrlVars["CustomerName"];
-        CustomerName = CustomerName.replace("%20", " ");
+        CustomerName = CustomerName.replaceAll("%20", " ");
         $('#lblCustomer').text(CustomerName);
     }
     if (UrlVars["PlanYear"] != undefined) {

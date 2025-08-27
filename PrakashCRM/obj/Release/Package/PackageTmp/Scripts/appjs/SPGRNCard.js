@@ -1,4 +1,4 @@
-﻿var apiUrl = $('#getServiceApiUrl').val() + 'SPGRN/';
+﻿﻿var apiUrl = $('#getServiceApiUrl').val() + 'SPGRN/';
 
 $(document).ready(function () {
 
@@ -243,120 +243,223 @@ function validateForm() {
     return true;
 }
 
-function ShowItemTracking(lineNo, itemno) {
-    debugger;
-    var documentType, documentNo;
-    documentType = $('#lblDocumentType')[0].innerText;
-    documentNo = $('#lblDocumentNo')[0].innerText;
 
-    if (documentType != "" && documentNo != "") {
-        $.ajax(
-            {
-                url: '/SPGRN/GetGRNLineItemTrackingForPopup?DocumentType=' + documentType + '&DocumentNo=' + documentNo + '&LineNo=' + lineNo,
-                type: 'GET',
-                contentType: 'application/json',
-                success: function (data) {
-                    var rowData = "";
-                    $('#tbItemTrackingLines').empty();
-                    if (documentType == "Transfer Order" || documentType == "Sales Return") {
-                        if (data != null && data != "" && data.length > 0) {
-                            $.each(data, function (index, item) {
-                                rowData = "<tr class='itemtrackingtr'><td style='display: none;'>" + item.Entry_No + "</td><td>" + lineNo + "</td><td>" + item.Item_No + "</td><td><input type='text' name='txtLotNo_" + (index + 1) + "' value='" + item.Lot_No + "' class='form-control' disabled /></td><td><input type='text' name='txtQtyToHandle_" + (index + 1) + "' value='" + item.Qty_to_Handle_Base + "' class='form-control' /></td><td><input type='text' name='txtExpDate_" + (index + 1) + "' value='" + item.Expiration_Date + "' class='form-control' disabled /></td><td>" + item.Quantity + "</td><td></td></tr>";
-                                $('#tbItemTrackingLines').append(rowData);
-                            });
-                        }
-                        else {
-                            rowData = "<tr><td colspan=8>No Records Found</td></tr>";
-                            $('#tbItemTrackingLines').append(rowData);
-                        }
-                    }
-                    else if (documentType == "Purchase Order") {
+var deletedEntries = [];
+function DeleteItemTrackingInGrid(button) {
+    var entryNo = $(button).closest('tr').find('td').eq(0).text().trim();
 
-                        rowData = "<tr><td style='display: none;'>0</td><td>" + lineNo + "</td><td>" + itemno + "</td><td><input type='text' name='txtLotNo_0' value='' class='form-control'/></td><td><input type='text' name='txtQtyToHandle_0' value='0' class='form-control' /></td><td><input type='text' name='txtExpDate_0' value='' class='form-control datepicker'/></td><td>0</td><td><button type='button' class='btn btn-primary btn-sm radius-30 px-4' onclick='AddItemTrackingInGrid();'>Add</button></td></tr>";
-                        $('#tbItemTrackingLines').append(rowData);
+    if (entryNo !== '0') {
+        var deletePayload = {
+            entryno: entryNo,
+            positive: true
+        };
 
-                        if (data != null && data != "" && data.length > 0) {
-                            $.each(data, function (index, item) {
-                                rowData = "<tr class='itemtrackingtr'><td style='display: none;'>" + item.Entry_No + "</td><td>" + lineNo + "</td><td>" + item.Item_No + "</td><td><input type='text' name='txtLotNo_" + (index + 1) + "' value='" + item.Lot_No + "' class='form-control'/></td><td><input type='text' name='txtQtyToHandle_" + (index + 1) + "' value='" + item.Qty_to_Handle_Base + "' class='form-control' /></td><td><input type='text' name='txtExpDate_" + (index + 1) + "' value='" + item.Expiration_Date + "' class='form-control datepicker' /></td><td>" + item.Quantity + "</td><td><button type='button' class='btn btn-primary btn-sm radius-30 px-4' onclick='DeleteItemTrackingInGrid();'>Delete</button></td></tr>";
-                                $('#tbItemTrackingLines').append(rowData);
-                            });
-                        }
-                        else {
-                            rowData = "<tr><td colspan=8>No Records Found</td></tr>";
-                            $('#tbItemTrackingLines').append(rowData);
-                        }
-                    }
-                    else {
-                        rowData = "<tr><td colspan=8>No Records Found</td></tr>";
-                        $('#tbItemTrackingLines').append(rowData);
-                    }
-
-                    $('.datepicker').pickadate({
-                        selectMonths: true,
-                        selectYears: true,
-                        format: 'dd-mm-yyyy'
-                    });
-
-                    $('#modalItemTracking').css('display', 'block');
-                    $('.modal-title').text('Item Tracking Lines');
-                    $('#dvItemTracking').css('display', 'block');
-                },
-                error: function () {
-                    alert("error");
+        $.ajax({
+            type: "POST",
+            url: '/SPGRN/DeleteGRNLineItemTracking',
+            data: JSON.stringify(deletePayload),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data && data !== "") {
+                } else {
+                    ShowErrMsg("Error deleting Item Tracking line.");
                 }
+            },
+            error: function (xhr) {
+                ShowErrMsg("Error in DeleteGRNLineItemTracking API. " + xhr.responseText);
             }
-        );
+        });
+    }
+    $(button).closest('tr').remove();
+    UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
+
+    if ($('#tbItemTrackingLines .itemtrackingtr').length === 0) {
+        $('#tbItemTrackingLines').append("<tr><td colspan=8>No Records Found</td></tr>");
     }
 }
 
-function SaveGRNItemTracking() {
+function ShowItemTracking(lineNo, itemno) {
+    SaveGRNItemTracking
+    var documentType = $('#lblDocumentType').text().trim();
+    var documentNo = $('#lblDocumentNo').text().trim();
+
+    let qtyToReceive = parseFloat($(`input[name='txtQtyToReceive_${lineNo}']`).val()) || 0;
+
+    $('#txtbalanceQty').data('original', qtyToReceive);
+    $('#txtbalanceQty').val(qtyToReceive.toFixed(2));
+    $('#txttotalQty').val('0.00');
+
+    if (documentType != "" && documentNo != "") {
+        $.ajax({
+            url: '/SPGRN/GetGRNLineItemTrackingForPopup?DocumentType=' + documentType + '&DocumentNo=' + documentNo + '&LineNo=' + lineNo,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                var rowData = "";
+                $('#tbItemTrackingLines').empty();
+
+                if (deletedEntries.length > 0) {
+                    data = data.filter(item => !deletedEntries.includes(item.Entry_No.toString()));
+                }
+
+                if (documentType == "Transfer Order" || documentType == "Sales Return") {
+                    if (data && data.length > 0) {
+                        $.each(data, function (index, item) {
+                            rowData = `<tr class='itemtrackingtr'>
+                                <td style='display: none;'>${item.Entry_No}</td>
+                                <td>${lineNo}</td>
+                                <td>${item.Item_No}</td>
+                                <td><input type='text' name='txtLotNo_${index + 1}' value='${item.Lot_No}' class='form-control' disabled /></td>
+                                <td><input type='text' name='txtQtyToHandle_${index + 1}' value='${item.Qty_to_Handle_Base}' class='form-control' /></td>
+                                <td><input type='text' name='txtExpDate_${index + 1}' value='${item.Expiration_Date}' class='form-control' disabled /></td>
+                                <td>${item.Quantity}</td>
+                                <td></td>
+                            </tr>`;
+                            $('#tbItemTrackingLines').append(rowData);
+                        });
+                    } else {
+                        rowData = "<tr><td colspan=8>No Records Found</td></tr>";
+                        $('#tbItemTrackingLines').append(rowData);
+                    }
+                } else if (documentType == "Purchase Order") {
+                    rowData = `<tr class='itemtrackingtr'>
+                        <td style='display: none;'>0</td>
+                        <td>${lineNo}</td>
+                        <td>${itemno}</td>
+                        <td><input type='text' name='txtLotNo_0' value='' class='form-control'/></td>
+                        <td><input type='text' name='txtQtyToHandle_0' value='0' class='form-control' /></td>
+                        <td><input type='text' name='txtExpDate_0' value='' class='form-control datepicker'/></td>
+                        <td>0</td>
+                        <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="AddItemTrackingInGrid();">Add</button></td>
+                    </tr>`;
+                    $('#tbItemTrackingLines').append(rowData);
+
+                    if (data && data.length > 0) {
+                        $.each(data, function (index, item) {
+                            rowData = `<tr class='itemtrackingtr'>
+                                <td style='display: none;'>${item.Entry_No}</td>
+                                <td>${lineNo}</td>
+                                <td>${item.Item_No}</td>
+                                <td><input type='text' name='txtLotNo_${index + 1}' value='${item.Lot_No}' class='form-control'/></td>
+                                <td><input type='text' name='txtQtyToHandle_${index + 1}' value='${item.Qty_to_Handle_Base}' class='form-control' /></td>
+                                <td><input type='text' name='txtExpDate_${index + 1}' value='${item.Expiration_Date}' class='form-control datepicker' /></td>
+                                <td>${item.Quantity}</td>
+                                <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4" onclick="DeleteItemTrackingInGrid(this)">Delete</button></td>
+                            </tr>`;
+                            $('#tbItemTrackingLines').append(rowData);
+                        });
+                    }
+                } else {
+                    rowData = "<tr><td colspan=8>No Records Found</td></tr>";
+                    $('#tbItemTrackingLines').append(rowData);
+                }
+
+                $('.datepicker').pickadate({
+                    selectMonths: true,
+                    selectYears: true,
+                    format: 'dd-mm-yyyy'
+                });
+
+                $('#modalItemTracking').css('display', 'block');
+                $('.modal-title').text('Item Tracking Lines');
+                $('#dvItemTracking').css('display', 'block');
+
+                UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
+
+                // Event for live updates
+                $(document).off('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]').on('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]', function () {
+                    UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
+                });
+            },
+            error: function () {
+                ShowErrMsg("Error loading item tracking data. Please try again.");
+            }
+        });
+    }
+}
+
+function UpdateItemTrackingTotals(originalBalance) {
+    let total = 0;
 
     $('#lblItemTrackMsg').html('');
 
-    var documenttype = $('#lblDocumentType')[0].innerText;
-    var orderno = $('#lblDocumentNo')[0].innerText;
-    var locationcode = $('#lblLocationCode')[0].innerText;
+    $('#tbItemTrackingLines input[name^="txtQtyToHandle"]').each(function () {
+        let val = parseFloat($(this).val()) || 0;
+
+        $(this).removeClass('is-invalid');
+        total += val;
+    });
+
+    $('#txttotalQty').val(total.toFixed(2));
+    $('#txtbalanceQty').val((originalBalance - total).toFixed(2));
+}
+
+function SaveGRNItemTracking() {
+    $('#lblItemTrackMsg').html('');
+
+    let originalBalance = parseFloat($('#txtbalanceQty').data('original')) || 0;
+    let total = parseFloat($('#txttotalQty').val()) || 0;
+
+    if (total >= originalBalance) {
+        $('#lblItemTrackMsg').html('<span style="color: red;"></span>');
+        return false;
+    }
+
+    var documenttype = $('#lblDocumentType').text().trim();
+    var orderno = $('#lblDocumentNo').text().trim();
+    var locationcode = $('#lblLocationCode').text().trim();
 
     var reservationEntryforGRN = [];
 
     $('#tbItemTrackingLines .itemtrackingtr').each(function () {
         var $tds = $(this).find('td');
 
-        var entryno = $tds.eq(0).text().trim();
+        var entryno = $tds.eq(0).text().trim() || "0";
         var lineno = $tds.eq(1).text().trim();
         var itemno = $tds.eq(2).text().trim();
-        var lotno = $tds.eq(3).find('input').val();
-        var qtytohandle = $tds.eq(4).find('input').val();
-        var expdate = $tds.eq(5).find('input').val();
+        var lotno = $tds.eq(3).find('input').val() || "";
+        var qtytohandle = parseFloat($tds.eq(4).find('input').val()) || 0;
+        var expdate = $tds.eq(5).find('input').val() || "";
 
-        var reservationEntryforGRNObject = {};
+        if (qtytohandle > 0) {
+            var reservationEntryforGRNObject = {};
 
-        reservationEntryforGRNObject.DocumentType = documenttype;
-        reservationEntryforGRNObject.OrderNo = orderno;
-        reservationEntryforGRNObject.LocationCode = locationcode;
+            reservationEntryforGRNObject.DocumentType = documenttype;
+            reservationEntryforGRNObject.OrderNo = orderno;
+            reservationEntryforGRNObject.LocationCode = locationcode;
+            reservationEntryforGRNObject.LineNo = lineno;
+            reservationEntryforGRNObject.ItemNo = itemno;
+            reservationEntryforGRNObject.LotNo = lotno;
+            reservationEntryforGRNObject.Qty = qtytohandle;
+            reservationEntryforGRNObject.ExpirationDate = expdate;
+            reservationEntryforGRNObject.EntryNo = entryno;
 
-        reservationEntryforGRNObject.LineNo = lineno;
-        reservationEntryforGRNObject.ItemNo = itemno;
-        reservationEntryforGRNObject.LotNo = lotno;
-        reservationEntryforGRNObject.Qty = qtytohandle;
-        reservationEntryforGRNObject.ExpirationDate = expdate;
-        reservationEntryforGRNObject.EntryNo = entryno;
-
-        reservationEntryforGRN.push(reservationEntryforGRNObject);
+            reservationEntryforGRN.push(reservationEntryforGRNObject);
+        }
     });
 
-    var apiUrl = '/SPGRN/SaveGRNLineItemTracking';
+    if (reservationEntryforGRN.length === 0) {
+        $('#lblItemTrackMsg').html('<span style="color: red;">No valid item tracking lines to save.</span>');
+        return false;
+    }
 
     $.ajax({
         type: "POST",
-        url: apiUrl,
+        url: '/SPGRN/SaveGRNLineItemTracking',
         data: JSON.stringify(reservationEntryforGRN),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            if (data)
-                $('#modalItemTracking').css('display', 'none');
-            else
-                $('#lblItemTrackMsg').html('Error In Saving Data...');
+            if (data) {
+                $('#modalItemTracking').hide();
+                ShowActionMsg("Item Tracking lines saved successfully.");
+                $('#txttotalQty').val('0.00');
+                $('#txtbalanceQty').val($('#txtbalanceQty').data('original').toFixed(2));
+            } else {
+                $('#lblItemTrackMsg').html('<span style="color: red;">Error saving Item Tracking data.</span>');
+            }
+        },
+        error: function (xhr) {
+            ShowErrMsg("Error in SaveGRNLineItemTracking API. " + xhr.responseText);
         }
     });
 }
@@ -365,6 +468,13 @@ function AddItemTrackingInGrid() {
     $('#tbItemTrackingLines tr:contains("No Records Found")').remove();
     var firstRow = $('#tbItemTrackingLines tr').first();
     var entryno = firstRow.find('td').eq(0).text().trim()
+    let originalBalance = parseFloat($('#txtbalanceQty').data('original')) || 0;
+    let totalQty = parseFloat($('#txttotalQty').val()) || 0;
+
+    if (totalQty >= originalBalance) {
+        ShowActionMsg("Total quantity cannot exceed Balance Quantity. Cannot add more Qty.");
+        return false;
+    }
     var lineno = firstRow.find('td').eq(1).text().trim();
     var itemNo = firstRow.find('td').eq(2).text().trim();
     var lotNo = firstRow.find('input[name^="txtLotNo"]').val();
@@ -389,10 +499,13 @@ function AddItemTrackingInGrid() {
         format: 'dd-mm-yyyy'
     });
     firstRow.find('input[type="text"]').val('');
+    UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
+
+    $(document).off('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]').on('input', '#tbItemTrackingLines input[name^="txtQtyToHandle"]', function () {
+        UpdateItemTrackingTotals($('#txtbalanceQty').data('original'));
+    });
 }
-function DeleteItemTrackingInGrid() {
-    alert("Development under process..");
-}
+
 // Create Make/Mgf function 
 function ManufacturerAutocompleteAPI(LineDetailsLineNo) {
     if (typeof ($.fn.autocomplete) === 'undefined') return;

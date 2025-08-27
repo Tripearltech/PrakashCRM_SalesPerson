@@ -531,10 +531,6 @@ C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\b
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\roslyn\VBCSCompiler.exe
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\roslyn\VBCSCompiler.exe.config
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Antlr3.Runtime.dll
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.AspNetCore.Http.Abstractions.dll
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.AspNetCore.Http.Features.dll
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.AspNetCore.Mvc.Abstractions.dll
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Bcl.AsyncInterfaces.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Extensions.Configuration.Abstractions.dll
@@ -543,7 +539,6 @@ C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\b
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Extensions.Logging.Abstractions.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Extensions.Options.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Extensions.Primitives.dll
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Net.Http.Headers.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Web.Infrastructure.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Newtonsoft.Json.Bson.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Newtonsoft.Json.dll
@@ -569,10 +564,6 @@ C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\b
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\WebGrease.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Xipton.Razor.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\PrakashCRM.Data.pdb
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.AspNetCore.Http.Abstractions.xml
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.AspNetCore.Http.Features.xml
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.AspNetCore.Mvc.Abstractions.xml
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Bcl.AsyncInterfaces.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Extensions.Configuration.Abstractions.xml
@@ -581,7 +572,6 @@ C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\b
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Extensions.Logging.Abstractions.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Extensions.Options.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Extensions.Primitives.xml
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Microsoft.Net.Http.Headers.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Newtonsoft.Json.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Newtonsoft.Json.Bson.pdb
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Newtonsoft.Json.Bson.xml
