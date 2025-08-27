@@ -435,7 +435,7 @@ namespace PrakashCRM.Controllers
             else
                 return View(new SPWarehouseCard());
         }
-       
+
         public async Task<SPWarehouseCard> GetWarehouseFromNo(string No, string DocumentType)
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPWarehouse/";
@@ -564,7 +564,7 @@ namespace PrakashCRM.Controllers
         {
             return View();
         }
-        
+
         public async Task<JsonResult> GetWarehouseClosedTaskAll(int orderBy, string orderDir, string filter, string documenttype = "")
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPWarehouse/";
@@ -634,7 +634,7 @@ namespace PrakashCRM.Controllers
         {
             string baseUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString();
             string apiUrl = baseUrl + "SPWarehouse/GetloadingAndUnloadingDropDown?" + "prefix=" + HttpUtility.UrlEncode(prefix);
-           
+
 
             HttpClient client = new HttpClient();
             List<UnloadingAndLoading> unloadingAndloading = new List<UnloadingAndLoading>();

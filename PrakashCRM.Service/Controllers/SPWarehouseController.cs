@@ -357,8 +357,7 @@ namespace PrakashCRM.Service.Controllers
                     FromLocation = salesLine.Location_Code,
                     FromArea = salesLine.PCPL_Area_Location,
                     ToArea = salesLine.PCPL_Ship_to_Area,
-                   /* ARNNo = salesLine.ARN_No,
-                    GSTRegistration_No = salesLine.GST_Registration_No,*/
+
 
 
                 });
@@ -394,8 +393,7 @@ namespace PrakashCRM.Service.Controllers
                     ToLocation = purchaseLine.LocationCode,
                     FromArea = purchaseLine.PCPLBuyfromArea,
                     ToArea = (string)purchaseLine.PCPL_Ship_to_Area,
-                   /* ARNNo = purchaseLine.ARN_No,
-                    GSTRegistration_No = purchaseLine.GST_Registration_No*/
+
                 });
             }
 
@@ -430,8 +428,7 @@ namespace PrakashCRM.Service.Controllers
                     ToLocation = transferLine.TransfertoCode,
                     /*FromArea = transferLine.PCPLFromArea,*/
                     ToArea = (string)transferLine.PCPLToArea,
-                   /* ARNNo = transferLine.ARN_No,
-                    GSTRegistration_No = transferLine.GST_Registration_No*/
+
                 });
             }
 
@@ -503,8 +500,10 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_Mobile_No_ = salesLine.PCPL_Driver_Mobile_No_;
                             sPWarehouseCard.PCPL_Driver_License_No_ = salesLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = salesLine.PCPL_Remarks;
-                            sPWarehouseCard.PCPL_UnLoading_Vendor = salesLine.PCPL_UnLoading_Vendor;
-                            sPWarehouseCard.PCPL_Loading_Vendor = salesLine.PCPL_Loading_Vendor;
+                            //sPWarehouseCard.PCPL_UnLoading_Vendor = salesLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_UnLoading_Vendor_Name = salesLine.PCPL_UnLoading_Vendor_Name;
+                            //sPWarehouseCard.PCPL_Loading_Vendor = salesLine.PCPL_Loading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor_Name = salesLine.PCPL_Loading_Vendor_Name;
 
                         }
                         warehouseCardLine.Add(new WarehouseCardLine
@@ -563,8 +562,8 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Transporter_Name = purchaseLine.PCPL_Transporter_Name;
                             sPWarehouseCard.PCPL_Transport_Amount = purchaseLine.PCPL_Transport_Amount;
                             sPWarehouseCard.LR_RR_No_ = purchaseLine.PCPL_LR_RR_No_;
-                           sPWarehouseCard.FromArea = purchaseLine.PCPLBuyfromArea;
-                           sPWarehouseCard.ToArea = purchaseLine.PCPL_Ship_to_Area;
+                            sPWarehouseCard.FromArea = purchaseLine.PCPLBuyfromArea;
+                            sPWarehouseCard.ToArea = purchaseLine.PCPL_Ship_to_Area;
 
                             if (purchaseLine.LR_RR_Date != "0001-01-01")
                             {
@@ -583,9 +582,12 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_Mobile_No_ = purchaseLine.PCPL_Driver_Mobile_No_;
                             sPWarehouseCard.PCPL_Driver_License_No_ = purchaseLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = purchaseLine.PCPL_Remarks;
-                            sPWarehouseCard.PCPL_UnLoading_Vendor = purchaseLine.PCPL_UnLoading_Vendor;
-                            sPWarehouseCard.PCPL_Loading_Vendor = purchaseLine.PCPL_Loading_Vendor;
-                          
+                            //sPWarehouseCard.PCPL_UnLoading_Vendor = purchaseLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_UnLoading_Vendor_Name = purchaseLine.PCPL_UnLoading_Vendor_Name;
+                            //sPWarehouseCard.PCPL_Loading_Vendor = purchaseLine.PCPL_Loading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor_Name = purchaseLine.PCPL_Loading_Vendor_Name;
+                            //sPWarehouseCard.PCPL_Packing_UOM = purchaseLine.PCPL_Packing_UOM;
+
                         }
                         warehouseCardLine.Add(new WarehouseCardLine
                         {
@@ -663,8 +665,10 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_License_No_ = transferLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = transferLine.PCPL_Remarks;
                             sPWarehouseCard.PackingQty = transferLine.PCPL_Packing_Qty_;
-                            sPWarehouseCard.PCPL_UnLoading_Vendor = transferLine.PCPL_UnLoading_Vendor;
-                            sPWarehouseCard.PCPL_Loading_Vendor = transferLine.PCPL_Loading_Vendor;
+                            //sPWarehouseCard.PCPL_UnLoading_Vendor = transferLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_UnLoading_Vendor_Name = transferLine.PCPL_UnLoading_Vendor_Name;
+                            //sPWarehouseCard.PCPL_Loading_Vendor = transferLine.PCPL_Loading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor_Name = transferLine.PCPL_Loading_Vendor_Name;
 
                         }
                         warehouseCardLine.Add(new WarehouseCardLine
@@ -719,7 +723,7 @@ namespace PrakashCRM.Service.Controllers
 
             if (string.IsNullOrEmpty(TransporterNo))
             {
-                filter+= $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and {latestRateFilter}";
+                filter += $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and {latestRateFilter}";
             }
 
             var result = ac.GetData1<TransporterRateCard>("Transporter_Rate_Details", filter, 0, 0, "Rate_Effective_Date desc");
@@ -761,7 +765,7 @@ namespace PrakashCRM.Service.Controllers
 
         [HttpPost]
         [Route("ClosedTaskOfWarehouse")]
-        public bool ClosedTaskOfWarehouse(string doctype, string transporterCode, string systemids, string lrno, string lrdate, string drivername, string driverlicenseno, string drivermobileno, string vehicleno, decimal loadingcharges, decimal unloadingcharges, decimal transporteramount, string remarks, bool isclosed, bool selectedExisting, string vendorcompanyNo)
+        public bool ClosedTaskOfWarehouse(string doctype, string transporterCode, string systemids, string lrno, string lrdate, string drivername, string driverlicenseno, string drivermobileno, string vehicleno, decimal loadingcharges, decimal unloadingcharges, decimal transporteramount, string remarks, bool isclosed, bool selectedExisting, string vendorcompanyNo, string loadingvendorname, string unloadingvendorname)
         {
             bool flag = false;
 
@@ -788,7 +792,10 @@ namespace PrakashCRM.Service.Controllers
                 unloadingcharges = unloadingcharges,
                 transporteramount = transporteramount,
                 remarks = remarks,
-                isclosed = isclosed
+                isclosed = isclosed,
+                loadingvendorname = loadingvendorname,
+                unloadingvendorname = unloadingvendorname
+
             };
             var resWarehouse = new SPWarehouseSalesAcceptResponse();
             dynamic result = null;
@@ -1118,14 +1125,14 @@ namespace PrakashCRM.Service.Controllers
         }
 
         [Route("GetloadingAndUnloadingDropDown")]
-        public List<UnloadingAndLoading> GetloadingAndUnloadingDropDown(string prefix/*, bool Transporter*/)
+        public List<UnloadingAndLoading> GetloadingAndUnloadingDropDown(string prefix)
         {
             API ac = new API();
             List<UnloadingAndLoading> unloadingAndloading = new List<UnloadingAndLoading>();
-            string filter = "startswith(Name,'" + prefix + "')";
+            string filter = "startswith(Name,'" + prefix.ToUpper() + "')";
 
-                filter += " and Transporter eq true"; 
-           
+            filter += " and Transporter eq true";
+
 
             var result = ac.GetData<UnloadingAndLoading>("VendorDotNetAPI", filter);
 

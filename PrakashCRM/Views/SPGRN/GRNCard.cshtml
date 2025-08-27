@@ -307,13 +307,13 @@
                                                             <td>
                                                                 @if (line.TrackingCode != "" && line.TrackingCode != null)
                                                                 {
-                                                                    <a style="cursor:pointer;" onclick="ShowItemTracking (@line.LineNo,'@line.ItemNo')"><i class="bx bx-show"></i></a>
+                                                                    <a style="cursor:pointer;" onclick="ShowItemTracking(@line.LineNo,'@line.ItemNo')"><i class="bx bx-show"></i></a>
                                                                 }
                                                             </td>
                                                             <td>@line.Description</td>
-                                                            <td>@line.Quantity</td>
+                                                            <td id="qty_@line.LineNo">@line.Quantity</td>
                                                             <td>@line.UOMCode</td>
-                                                            <td><input type="text" name="txtQtyToReceive_@line.LineNo" value="@line.QtyToReceive" class="form-control" style="width:110px;" /></td>
+                                                            <td><input type="text" id="txtQtyToReceive_@line.LineNo" name="txtQtyToReceive_@line.LineNo" value="@line.QtyToReceive" class="form-control" style="width:110px;" /></td>
                                                             <td>@line.QuantityReceived</td>
                                                             @if (Model.DocumentType == "Purchase Order")
                                                             {
@@ -324,7 +324,6 @@
                                                                     </select>
                                                                 </td>
                                                             }
-
                                                             <td><input type="text" name="txtRejectQC_@line.LineNo" value="@line.RejectQC" class="form-control" style="width:110px;" /></td>
                                                             @if (Model.DocumentType != "Transfer Order")
                                                             {
@@ -352,7 +351,7 @@
                                                                         </span>
                                                                         <input type="text" id="txtManufacturer_@line.LineNo" onkeyup="ManufacturerAutocompleteAPI('txtManufacturer_' + @line.LineNo)" class="form-control" data-lineno="@line.LineNo" placeholder="Type Manufacturer Name" value="@line.MfgName" />
                                                                     </div>
-                                                                        <input type="hidden" id="hdnManufacturerNo_@line.LineNo" name="hdnManufacturerNo_@line.LineNo" value="@line.MakeMfgCode|@line.MfgName" />
+                                                                    <input type="hidden" id="hdnManufacturerNo_@line.LineNo" name="hdnManufacturerNo_@line.LineNo" value="@line.MakeMfgCode|@line.MfgName" />
                                                                 </td>
                                                             }
                                                             <td>@line.HSNSACCode</td>
