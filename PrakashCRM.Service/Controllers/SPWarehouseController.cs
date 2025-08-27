@@ -500,9 +500,9 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_Mobile_No_ = salesLine.PCPL_Driver_Mobile_No_;
                             sPWarehouseCard.PCPL_Driver_License_No_ = salesLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = salesLine.PCPL_Remarks;
-                            //sPWarehouseCard.PCPL_UnLoading_Vendor = salesLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor = salesLine.PCPL_Loading_Vendor;
+                            sPWarehouseCard.PCPL_UnLoading_Vendor = salesLine.PCPL_UnLoading_Vendor;
                             sPWarehouseCard.PCPL_UnLoading_Vendor_Name = salesLine.PCPL_UnLoading_Vendor_Name;
-                            //sPWarehouseCard.PCPL_Loading_Vendor = salesLine.PCPL_Loading_Vendor;
                             sPWarehouseCard.PCPL_Loading_Vendor_Name = salesLine.PCPL_Loading_Vendor_Name;
 
                         }
@@ -582,9 +582,9 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_Mobile_No_ = purchaseLine.PCPL_Driver_Mobile_No_;
                             sPWarehouseCard.PCPL_Driver_License_No_ = purchaseLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = purchaseLine.PCPL_Remarks;
-                            //sPWarehouseCard.PCPL_UnLoading_Vendor = purchaseLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor = purchaseLine.PCPL_Loading_Vendor;
+                            sPWarehouseCard.PCPL_UnLoading_Vendor = purchaseLine.PCPL_UnLoading_Vendor;
                             sPWarehouseCard.PCPL_UnLoading_Vendor_Name = purchaseLine.PCPL_UnLoading_Vendor_Name;
-                            //sPWarehouseCard.PCPL_Loading_Vendor = purchaseLine.PCPL_Loading_Vendor;
                             sPWarehouseCard.PCPL_Loading_Vendor_Name = purchaseLine.PCPL_Loading_Vendor_Name;
                             //sPWarehouseCard.PCPL_Packing_UOM = purchaseLine.PCPL_Packing_UOM;
 
@@ -665,9 +665,9 @@ namespace PrakashCRM.Service.Controllers
                             sPWarehouseCard.PCPL_Driver_License_No_ = transferLine.PCPL_Driver_License_No_;
                             sPWarehouseCard.PCPL_Remarks = transferLine.PCPL_Remarks;
                             sPWarehouseCard.PackingQty = transferLine.PCPL_Packing_Qty_;
-                            //sPWarehouseCard.PCPL_UnLoading_Vendor = transferLine.PCPL_UnLoading_Vendor;
+                            sPWarehouseCard.PCPL_Loading_Vendor = transferLine.PCPL_Loading_Vendor;
+                            sPWarehouseCard.PCPL_UnLoading_Vendor = transferLine.PCPL_UnLoading_Vendor;
                             sPWarehouseCard.PCPL_UnLoading_Vendor_Name = transferLine.PCPL_UnLoading_Vendor_Name;
-                            //sPWarehouseCard.PCPL_Loading_Vendor = transferLine.PCPL_Loading_Vendor;
                             sPWarehouseCard.PCPL_Loading_Vendor_Name = transferLine.PCPL_Loading_Vendor_Name;
 
                         }
@@ -765,7 +765,7 @@ namespace PrakashCRM.Service.Controllers
 
         [HttpPost]
         [Route("ClosedTaskOfWarehouse")]
-        public bool ClosedTaskOfWarehouse(string doctype, string transporterCode, string systemids, string lrno, string lrdate, string drivername, string driverlicenseno, string drivermobileno, string vehicleno, decimal loadingcharges, decimal unloadingcharges, decimal transporteramount, string remarks, bool isclosed, bool selectedExisting, string vendorcompanyNo, string loadingvendorname, string unloadingvendorname)
+        public bool ClosedTaskOfWarehouse(string doctype, string transporterCode, string systemids, string lrno, string lrdate, string drivername, string driverlicenseno, string drivermobileno, string vehicleno, decimal loadingcharges, decimal unloadingcharges, decimal transporteramount, string remarks, bool isclosed, bool selectedExisting, string vendorcompanyNo, string loadingvendor, string unloadingvendor)
         {
             bool flag = false;
 
@@ -793,8 +793,10 @@ namespace PrakashCRM.Service.Controllers
                 transporteramount = transporteramount,
                 remarks = remarks,
                 isclosed = isclosed,
-                loadingvendorname = loadingvendorname,
-                unloadingvendorname = unloadingvendorname
+                loadingvendor = loadingvendor,
+                unloadingvendor = unloadingvendor
+                //loadingvendorname = loadingvendorname,
+                //unloadingvendorname = unloadingvendorname
 
             };
             var resWarehouse = new SPWarehouseSalesAcceptResponse();

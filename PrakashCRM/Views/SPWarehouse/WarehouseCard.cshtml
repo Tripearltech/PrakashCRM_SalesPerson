@@ -229,7 +229,8 @@
                                             <label class="col-sm-3 col-form-label">Loading Vendor : </label>
                                             <div class="col-sm-9">
                                                 <input type="text" id="txtLoadingVendor" class="form-control" placeholder="" value="@Model.PCPL_Loading_Vendor_Name" />
-                                                <input type="hidden" id="hftxtLoadingVendor" name="hftxtLoadingVendor" value="@Model.PCPL_Loading_Vendor" style="display:none" />
+                                                @*<input type="hidden" id="hfLoadingVendor" name="hftxtLoadingVendor" value="@Model.PCPL_Loading_Vendor" />*@
+                                                @Html.ValidationMessageFor(model => model.PCPL_Loading_Vendor, null, new { style = "color:red" })
                                             </div>
                                         </div>
                                     </div>
@@ -249,7 +250,9 @@
                                             <label class="col-sm-3 col-form-label">Unloading Vendor : </label>
                                             <div class="col-sm-9">
                                                 <input type="text" id="txtUnLoadingVendor" class="form-control" placeholder="" value="@Model.PCPL_UnLoading_Vendor_Name" />
-                                                <input type="hidden" id="hfUnLoadingVendor" name="hfUnLoadingVendor" value="@Model.PCPL_UnLoading_Vendor" style="display:none"  />
+                                                @*<input type="hidden" id="hfUnLoadingVendor" name="hfUnLoadingVendor" value="@Model.PCPL_UnLoading_Vendor"/>*@
+                                                @Html.ValidationMessageFor(model => model.PCPL_Loading_Vendor, null, new { style = "color:red" })
+
                                             </div>
                                         </div>
                                     </div>
@@ -379,8 +382,8 @@
                                 <input id="hfToLocationCode" value="@Model.ToLocation" style="display:none" />
                                 <input id="hfSystemId" value="@Model.SystemId" style="display:none" />
                                 <input id="hfDriverflag" value="false" style="display:none" />
-                                @*<input id="hfUnLoadingVendorNo" value="@Model.PCPL_UnLoading_Vendor" style="display:none" />*@
-                                @*             <input id="hfLoadingVendorNo" value="@Model.PCPL_Loading_Vendor" style="display:none" />*@
+                                <input id="hfUnLoadingVendorNo" value="@Model.PCPL_UnLoading_Vendor" style="display:none" />@**@
+                                <input id="hfLoadingVendorNo" value="@Model.PCPL_Loading_Vendor" style="display:none" />@**@
 
                                 <button id="btnSaveSpinner" class="btn btn-primary" type="button" disabled style="display:none">
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
