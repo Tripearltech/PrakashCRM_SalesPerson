@@ -230,7 +230,7 @@
 
                     //var pass = encodeURIComponent($('#pass').val());
 
-                    $.get("/Account/CheckLoginAndSendOTP?email=" + $('#email').val() + "&pass=" + $('#pass').val() + " &adminContactNo=" + $('#hfAdminContactNo').val(), function (data) {
+                    $.get("/Account/CheckLoginAndSendOTP?email=" + $('#email').val() + "&pass=" + $('#pass').val() + "&adminContactNo=" + $('#hfAdminContactNo').val(), function (data) {
 
                         if (data.No != null) {
 

@@ -43,3 +43,12 @@ C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Data\obj\
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Data\obj\Release\PrakashC.3DFDDAF9.Up2Date
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.pdb
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\PrakashCRM.Data.dll
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\PrakashCRM.Data.pdb
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\Newtonsoft.Json.dll
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Release\Newtonsoft.Json.xml
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.AssemblyReference.cache
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.csproj.CoreCompileInputs.cache
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashC.3DFDDAF9.Up2Date
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.dll
+C:\PrakashCRM_SalesPerson\Github-Code\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Release\PrakashCRM.Data.pdb
