@@ -98,7 +98,7 @@ $(document).ready(function () {
     LoadingVendorDropDown();
 
     //  vendor fields based on doctype on page load/reopen
-    var doctype = $('#lblDocumentType').text();
+    /*var doctype = $('#lblDocumentType').text();
     if (doctype === "Sales Order") {
         $('#hfUnLoadingVendorNo').val("");
         $('#txtUnLoadingVendor').val("");
@@ -116,7 +116,7 @@ $(document).ready(function () {
         $('#txtLoadingCharges').val("0");
         $('#txtLoadingVendor').prop('disabled', false);
     } else if (doctype === "Transfer Order") {
-    }
+    }*/
 });
 var dtable;
 
