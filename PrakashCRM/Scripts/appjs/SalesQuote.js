@@ -519,6 +519,18 @@ $(document).ready(function () {
         var salesDiscount = $('#txtSalesDiscount').val();
         var commissionPercent = $('#txtCommissionPercent').val();
 
+        // Inco Terms nad PaymentTerms Validation
+        if ($('#ddlIncoTerms').val() == "-1") {
+            var errMsg = "Please select Inco Terms";
+            ShowErrMsg(errMsg);
+            return; 
+        }
+        if ($('#ddlPaymentTerms').val() == "-1") {
+            var errMsg = "Please select Payment Terms";
+            ShowErrMsg(errMsg);
+            return; 
+        }
+
         if ($('#dvLiquidProdFields').css('display') == "none" && ($('#txtProductName').val() == "" || $('#txtProdQty').val() == "" || $('#ddlPackingStyle').val() == "-1" || $('#txtSalesPrice').val() == "" ||
             $('#txtDeliveryDate').val() == "")) {
 
@@ -3100,31 +3112,34 @@ function EditSQProd(ProdTR) {
     var isLiquidProd = $("#" + ProdTR).find("TD").eq(30).html();
     if ($("#" + ProdTR).find("TD").eq(17).html() != "") {
 
-        if (isLiquidProd == "true") {
-            $('#chkIsCommission').prop('checked', false);
-            $('#txtSalesPrice').prop('readonly', true);
-            $('#txtCommissionAmt').val($("#" + ProdTR).find("TD").eq(19).html());
-            $('#txtCommissionAmt').prop('disabled', false);
-            $('#ddlCommissionPayable').prop('disabled', false);
-        }
-        else {
-            $('#txtSalesPrice').prop('readonly', false);
-            $('#chkIsCommission').prop('checked', true);
-            $('#chkIsCommission').change();
-            $('#ddlCommissionPerUnitPercent').val($("#" + ProdTR).find("TD").eq(17).html());
-            $('#txtCommissionPercent').val($("#" + ProdTR).find("TD").eq(18).html());
-            $('#txtCommissionAmt').val($("#" + ProdTR).find("TD").eq(19).html());
-        }
+        if (isChkCommissionChecked == false) {
 
-        var commissionPayable = $("#" + ProdTR).find("TD").eq(24).html();
-        if (commissionPayable != "") {
-            $('#ddlCommissionPayable').val(commissionPayable);
-        }
-        else {
-            $('#ddlCommissionPayable').val('-1');
-        }
+            if (isLiquidProd == "true") {
+                $('#chkIsCommission').prop('checked', false);
+                $('#txtSalesPrice').prop('readonly', true);
+                $('#txtCommissionAmt').val($("#" + ProdTR).find("TD").eq(19).html());
+                $('#txtCommissionAmt').prop('disabled', false);
+                $('#ddlCommissionPayable').prop('disabled', false);
+            }
+            else {
+                $('#txtSalesPrice').prop('readonly', false);
+                $('#chkIsCommission').prop('checked', true);
+                $('#chkIsCommission').change();
+                $('#ddlCommissionPerUnitPercent').val($("#" + ProdTR).find("TD").eq(17).html());
+                $('#txtCommissionPercent').val($("#" + ProdTR).find("TD").eq(18).html());
+                $('#txtCommissionAmt').val($("#" + ProdTR).find("TD").eq(19).html());
+            }
+
+            var commissionPayable = $("#" + ProdTR).find("TD").eq(24).html();
+            if (commissionPayable != "") {
+                $('#ddlCommissionPayable').val(commissionPayable);
+            }
+            else {
+                $('#ddlCommissionPayable').val('-1');
+            }
         
-    }
+        }
+     }
 
     $('#txtCreditDays').val($("#" + ProdTR).find("TD").eq(20).html());
     $('#txtMargin').val($("#" + ProdTR).find("TD").eq(11).html());
