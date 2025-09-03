@@ -314,7 +314,7 @@
                                                             <td id="qty_@line.LineNo">@line.Quantity</td>
                                                             <td>@line.UOMCode</td>
                                                             <td><input type="text" id="txtQtyToReceive_@line.LineNo" name="txtQtyToReceive_@line.LineNo" value="@line.QtyToReceive" class="form-control" style="width:110px;" /></td>
-                                                            <td>@line.QuantityReceived</td>
+                                                            <td id="qtyrec_@line.LineNo">@line.QuantityReceived</td>
                                                             @if (Model.DocumentType == "Purchase Order")
                                                             {
                                                                 <td>
