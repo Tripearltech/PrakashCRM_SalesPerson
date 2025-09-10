@@ -1224,7 +1224,7 @@ namespace PrakashCRM.Data.Models
         public List<SPSQShiptoAddressRes> ShiptoAddress { get; set; }
 
         public List<SPSQJobtoAddressRes> JobtoAddress { get; set; }
-
+        public object PcplClass { get; set; }
     }
 
     public class SPSQInquiryNos
@@ -1673,6 +1673,6 @@ namespace PrakashCRM.Data.Models
 
     public class SPSQCompanyIndustry
     {
-        public string Industry { get; set; }
+        public string Business_Type { get; set; }
     }
 }

@@ -57,5 +57,6 @@ namespace PrakashCRM.Data.Models
         public string Bill_to_Customer_No { get; set; }
 
         public string P_A_N_No { get; set; }
+        public object PCPL_Class { get; set; }
     }
 }
