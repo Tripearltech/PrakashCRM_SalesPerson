@@ -23,6 +23,7 @@ using System.Runtime.Remoting.Messaging;
 using Microsoft.SqlServer.Server;
 using System.IO.Compression;
 using Microsoft.Ajax.Utilities;
+using Xipton.Razor.Extension;
 
 namespace PrakashCRM.Service.Controllers
 {
@@ -1495,6 +1496,7 @@ namespace PrakashCRM.Service.Controllers
                     creditlimitcustdetails.City = resultCustomer.Result.Item1.value[0].City;
                     creditlimitcustdetails.Post_Code = resultCustomer.Result.Item1.value[0].Post_Code;
                     creditlimitcustdetails.PANNo = resultCustomer.Result.Item1.value[0].P_A_N_No;
+                    creditlimitcustdetails.PcplClass = resultCustomer.Result.Item1.value[0].PCPL_Class;
 
                     SPSQShiptoAddress requestShiptoAddress = new SPSQShiptoAddress();
                     List<SPSQShiptoAddressRes> responseShiptoAddress = new List<SPSQShiptoAddressRes>();

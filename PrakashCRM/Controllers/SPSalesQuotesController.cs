@@ -94,36 +94,7 @@ namespace PrakashCRM.Controllers
             string apiUrl1, apiUrl2;
             apiUrl1 = apiUrl2 = "";
 
-            //if (!Convert.ToBoolean(salesquoteheader.IsSQEdit))
-            //{
-            //    //string NoSeriesCode = Request.Form["hfNoSeriesCode"].ToString();
-            //    string NoSeriesCode = salesquoteheader.NoSeriesCode;
-            //    Session["savedNoSeriesCode"] = NoSeriesCode;
-
-            //    apiUrl1 = apiUrl + "GetGeneratedSQNo?NoSeriesCode=" + NoSeriesCode;
-
-            //    HttpClient client = new HttpClient();
-            //    string generatedSQNo = "";
-
-            //    client.BaseAddress = new Uri(apiUrl1);
-            //    client.DefaultRequestHeaders.Accept.Clear();
-            //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-            //    HttpResponseMessage response = await client.GetAsync(apiUrl1);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        generatedSQNo = await response.Content.ReadAsStringAsync();
-            //    }
-
-            //    generatedSQNo = generatedSQNo.Replace("\"", "");
-
-            //    //salesQuotePost.No = generatedSQNo;
-
-            //    salesquoteheader.QuoteNo = generatedSQNo;
-
-            //}
-
-            DateTime quoteDate = Convert.ToDateTime(salesquoteheader.OrderDate);
+           DateTime quoteDate = Convert.ToDateTime(salesquoteheader.OrderDate);
             salesquoteheader.OrderDate = quoteDate.ToString("yyyy-MM-dd");
 
             DateTime validUntillDate = Convert.ToDateTime(salesquoteheader.ValidUntillDate);
@@ -190,17 +161,6 @@ namespace PrakashCRM.Controllers
                 }
                 else
                     Session["SalesQuoteActionErr"] = responseSQ.errorDetails.message;
-
-                //if (Convert.ToBoolean(Session["isInquiryEdit"]) == true)// && responseInquiry.No != null
-                //{
-                //    Session["InquiryAction"] = "Updated";
-                //}
-                //else if (Convert.ToBoolean(Session["isInquiryEdit"]) == false)// && responseInquiry.No != null
-                //{
-                //    Session["InquiryAction"] = "Created";
-                //}
-                //else
-                //    Session["InquiryAction"] = "Error";
             }
 
             return SQNoLineNoDetails;
@@ -259,107 +219,8 @@ namespace PrakashCRM.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SalesQuote(SPSQHeaderDetails salesQuote)
+        public ActionResult SalesQuote(SPSQHeaderDetails salesQuote)
         {
-            //string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/";
-            //string apiUrl1, apiUrl2;
-            //apiUrl1 = apiUrl2 = "";
-
-            //string NoSeriesCode = Request.Form["hfNoSeriesCode"].ToString();
-
-            //apiUrl1 = apiUrl + "GetGeneratedSQNo?NoSeriesCode=" + NoSeriesCode;
-
-            //HttpClient client = new HttpClient();
-            //string generatedSQNo = "";
-
-            //client.BaseAddress = new Uri(apiUrl1);
-            //client.DefaultRequestHeaders.Accept.Clear();
-            //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-            //HttpResponseMessage response = await client.GetAsync(apiUrl1);
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    generatedSQNo = await response.Content.ReadAsStringAsync();
-            //}
-
-            //SPSQHeaderPost salesQuotePost = new SPSQHeaderPost();
-
-            //generatedSQNo = generatedSQNo.Replace("\"", "");
-
-            //salesQuotePost.No = generatedSQNo;
-
-            //apiUrl2 = apiUrl + "SalesQuote";
-
-            //DateTime quoteDate = Convert.ToDateTime(salesQuote.QuoteDate);
-            //salesQuote.QuoteDate = quoteDate.ToString("yyyy-MM-dd");
-
-            ////consignee address
-            ////data.CustName + "," + data.Address + " " + data.City + "-" + data.Post_Code;
-
-            //string[] custAddDetails = Request.Form["hfConsigneeAdd"].ToString().Split(',');
-            ////string[] custAdd = custAddDetails[1].ToString().Split(',');
-            //string[] custPostcode = custAddDetails[2].ToString().Split('-');
-            //string[] custAddress = new string[3];
-
-            //custAddress[0] = custAddDetails[1];
-            //custAddress[1] = custPostcode[0];
-            //custAddress[2] = custPostcode[1];
-
-            //salesQuotePost.Location_Code = Request.Form["hfLocationCode"].ToString();
-            //salesQuotePost.Sell_to_Address = custAddress[0];
-            //salesQuotePost.Sell_to_City = custAddress[1];
-            //salesQuotePost.Sell_to_Post_Code = custAddress[2];
-            //salesQuotePost.Salesperson_Code = Session["loggedInUserNo"].ToString();
-            ////salesQuote.Line_Amount = salesQuotePostPost.Unit_Price * salesQuote.Quantity;
-            //salesQuotePost.Sell_to_Customer_No = Request.Form["hfCustomerNo"].ToString();
-            //salesQuotePost.Sell_to_Contact = salesQuote.ContactName;
-            ////salesQuote.Prod_No = Request.Form["hfProdNo"].ToString();
-            ////salesQuote.Unit_of_Measure_Code = Request.Form["hfUOM"].ToString();
-            //salesQuotePost.Order_Date = salesQuote.QuoteDate;
-            //salesQuotePost.Payment_Terms_Code = salesQuote.PaymentTermsCode;
-            //salesQuotePost.Shipment_Method_Code = salesQuote.ShipmentMethodCode;
-            //salesQuotePost.Ship_to_Code = salesQuote.ShiptoCode;
-            //salesQuotePost.PCPL_Job_to_Code = salesQuote.JobtoCode;
-
-            //HttpClient client1 = new HttpClient();
-            //SPSQHeader responseSQHeader = new SPSQHeader();
-
-            //client1.BaseAddress = new Uri(apiUrl2);
-            //client1.DefaultRequestHeaders.Accept.Clear();
-            //client1.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-            //string UserObjString = JsonConvert.SerializeObject(salesQuotePost);
-            //var content = new StringContent(UserObjString, Encoding.UTF8, "application/json");
-
-            //HttpRequestMessage request = new HttpRequestMessage
-            //{
-            //    Method = HttpMethod.Post,
-            //    RequestUri = new Uri(apiUrl2),
-            //    Content = content
-            //};
-
-            //HttpResponseMessage response1 = await client1.SendAsync(request);
-            //if (response1.IsSuccessStatusCode)
-            //{
-            //    var data = await response1.Content.ReadAsStringAsync();
-            //    responseSQHeader = Newtonsoft.Json.JsonConvert.DeserializeObject<SPSQHeader>(data);
-            //}
-
-            //Session["SalesQuoteAction"] = "Created";
-
-            //if (responseSQHeader.No == null || responseSQHeader.No == "")
-            //{
-            //    Session["SQHeaderObj"] = null;
-            //    //SPSQHeaderDetailsRes salesQuoteBlank = new SPSQHeaderDetailsRes();
-            //    //return RedirectToAction("SalesQuote", "SPSalesQuotes", salesQuoteBlank);
-            //}
-            //else
-            //{
-            //    salesQuote.QuoteNo = generatedSQNo;
-            //    Session["SQHeaderObj"] = salesQuote;
-            //    //SPSQHeaderDetails temp = (SPSQHeaderDetails)Session["SQHeaderObj"];
-            //    //return RedirectToAction("SalesQuote", "SPSalesQuotes", salesQuote);
-            //}
 
             return RedirectToAction("SalesQuote");
 
@@ -429,57 +290,10 @@ namespace PrakashCRM.Controllers
                 responseSQLines = Newtonsoft.Json.JsonConvert.DeserializeObject<SPSQLines>(data);
                 flag = true;
             }
-
-            //if (Session["SQHeaderObj"] != null)
-            //{
-            //    SPSQHeaderDetails returnSQHeaderObj = (SPSQHeaderDetails)Session["SQHeaderObj"];
-            //    return RedirectToAction("SalesQuote","SPSalesQuotes",returnSQHeaderObj);
-            //}
-            //else
-            //{
-            //    SPSQHeaderDetails returnSQHeaderBlank = new SPSQHeaderDetails();
-            //    return RedirectToAction("SalesQuote", "SPSalesQuotes",returnSQHeaderBlank);
-            //}
+            
             return flag;
 
         }
-
-        //[HttpPost]
-        //public async Task<bool> AddNewIncoTerm(SPSQIncoTerm incoTerm)
-        //{
-        //    string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/";
-
-        //    apiUrl += "AddNewIncoTerm";
-
-        //    bool flag = false;
-
-        //    HttpClient client = new HttpClient();
-        //    SPSQIncoTerm incoTermRes = new SPSQIncoTerm();
-
-        //    client.BaseAddress = new Uri(apiUrl);
-        //    client.DefaultRequestHeaders.Accept.Clear();
-        //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    string UserObjString = JsonConvert.SerializeObject(incoTerm);
-        //    var content = new StringContent(UserObjString, Encoding.UTF8, "application/json");
-
-        //    HttpRequestMessage request = new HttpRequestMessage
-        //    {
-        //        Method = HttpMethod.Post,
-        //        RequestUri = new Uri(apiUrl),
-        //        Content = content
-        //    };
-
-        //    HttpResponseMessage response = await client.SendAsync(request);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var data = await response.Content.ReadAsStringAsync();
-        //        incoTermRes = Newtonsoft.Json.JsonConvert.DeserializeObject<SPSQIncoTerm>(data);
-        //        flag = true;
-        //    }
-
-        //    return flag;
-        //}
 
         public async Task<JsonResult> GetAllSQLinesOfSQ(string QuoteNo, string SQLinesFor)
         {
@@ -578,13 +392,9 @@ namespace PrakashCRM.Controllers
                 string SPCode = Session["loggedInUserSPCode"].ToString() + "," + Session["SPCodesOfReportingPersonUser"].ToString();
                 apiUrl = apiUrl + "GetAllSalesQuotes?LoggedInUserRole=" + LoggedInUserRole + "&SPCode=" + SPCode + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
             }
-                
-            //apiUrl = apiUrl + "GetAllSalesQuotes?SPCode=" + Session["loggedInUserSPCode"].ToString() + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
 
             HttpClient client = new HttpClient();
             List<SPSalesQuotesList> salesquotes = new List<SPSalesQuotesList>();
-            //List<SPSalesQuotesListWithQuantites> salesquotewithquantities = new List<SPSalesQuotesListWithQuantites>();
-            //SPSQQuantities SQQuantities = new SPSQQuantities();
 
             client.BaseAddress = new Uri(apiUrl);
             client.DefaultRequestHeaders.Accept.Clear();
@@ -596,29 +406,7 @@ namespace PrakashCRM.Controllers
                 var data = await response.Content.ReadAsStringAsync();
                 salesquotes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPSalesQuotesList>>(data);
 
-                //for(int a = 0; a < salesquotes.Count; a++)
-                //{
-                //    Task<SPSQQuantities> task = Task.Run<SPSQQuantities>(async () => await GetSalesQuoteQuantities(salesquotes[a].No));
-                //    SQQuantities = task.Result;
-
-                //    salesquotewithquantities.Add(new SPSalesQuotesListWithQuantites()
-                //    {
-                //        No = salesquotes[a].No,
-                //        Sell_to_Customer_Name = salesquotes[a].Sell_to_Customer_Name,
-                //        Order_Date = salesquotes[a].Order_Date,
-                //        Due_Date = salesquotes[a].Due_Date,
-                //        Payment_Method_Code = salesquotes[a].Payment_Method_Code,
-                //        TotalQuoteQty = SQQuantities.Quantity,
-                //        TotalScheduledQty = SQQuantities.TPTPL_Qty_to_Order,
-                //        TotalInvoicedQty = 0,
-                //        TotalInProcessQty = SQQuantities.Outstanding_Quantity,
-
-                //    });
-
-                //}
             }
-
-            //return Json(salesquotewithquantities, JsonRequestBehavior.AllowGet);
             return Json(salesquotes, JsonRequestBehavior.AllowGet);
         }
 
@@ -671,43 +459,6 @@ namespace PrakashCRM.Controllers
 
             return Json(sqList, JsonRequestBehavior.AllowGet);
         }
-
-        //public async Task<SPSQQuantities> GetSalesQuoteQuantities(string SQNo)
-        //{
-        //    string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/";
-
-        //    apiUrl = apiUrl + "GetAllSQLinesOfSQ?QuoteNo=" + SQNo;
-
-        //    HttpClient client = new HttpClient();
-        //    List<SPSQLines> SQLines = new List<SPSQLines>();
-        //    SPSQQuantities SQQuantities = new SPSQQuantities();
-
-        //    client.BaseAddress = new Uri(apiUrl);
-        //    client.DefaultRequestHeaders.Accept.Clear();
-        //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    HttpResponseMessage response = await client.GetAsync(apiUrl);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var data = await response.Content.ReadAsStringAsync();
-        //        SQLines = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPSQLines>>(data);
-
-        //        double TotalQuoteQty = 0, TotalScheduledQty = 0, TotalInProcessQty = 0;
-
-        //        for(int a = 0; a < SQLines.Count; a++)
-        //        {
-        //            TotalQuoteQty += SQLines[a].Quantity;
-        //            TotalScheduledQty += SQLines[a].TPTPL_Qty_to_Order;
-        //            TotalInProcessQty += SQLines[a].Outstanding_Quantity;
-        //        }
-
-        //        SQQuantities.Quantity = TotalQuoteQty;
-        //        SQQuantities.TPTPL_Qty_to_Order = TotalScheduledQty;
-        //        SQQuantities.Outstanding_Quantity = TotalInProcessQty;
-        //    }
-
-        //    return SQQuantities;
-        //}
 
         public async Task<JsonResult> GetSalesLineItems(string DocumentNo)
         {
@@ -1823,7 +1574,7 @@ namespace PrakashCRM.Controllers
                 companyIndustry = Newtonsoft.Json.JsonConvert.DeserializeObject<SPSQCompanyIndustry>(data);
             }
 
-            string companyIndustry_ = companyIndustry.Industry == null || companyIndustry.Industry == "" ? "" : companyIndustry.Industry;
+            string companyIndustry_ = companyIndustry.Business_Type == null || companyIndustry.Business_Type == "" ? "" : companyIndustry.Business_Type;
 
             return companyIndustry_;
         }
