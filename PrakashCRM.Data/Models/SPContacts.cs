@@ -209,6 +209,7 @@ namespace PrakashCRM.Data.Models
         public string E_Mail { get; set; }
 
         public int Credit_Limit { get; set; }
+        public string Mobile_Phone_No { get; set; }
     }
 
     public class SPCompanyResponse

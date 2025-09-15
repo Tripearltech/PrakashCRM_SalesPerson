@@ -97,26 +97,26 @@ $(document).ready(function () {
     UnloadingVendorDropDown();
     LoadingVendorDropDown();
 
-    // Force clear vendor fields based on doctype on page load/reopen
-    var doctype = $('#lblDocumentType').text();
+    //  vendor fields based on doctype on page load/reopen
+    /*var doctype = $('#lblDocumentType').text();
     if (doctype === "Sales Order") {
         $('#hfUnLoadingVendorNo').val("");
         $('#txtUnLoadingVendor').val("");
-        $('#txtUnloadingCharges').val("0"); // Also clear related charges if applicable
-        $('#txtUnLoadingVendor').prop('disabled', true); // Disable to prevent input
+        $('#txtUnloadingCharges').val("0"); 
+        // Disable input
+        $('#txtUnLoadingVendor').prop('disabled', false); 
     } else if (doctype === "Sales Return") {
         $('#hfLoadingVendorNo').val("");
         $('#txtLoadingVendor').val("");
         $('#txtLoadingCharges').val("0");
-        $('#txtLoadingVendor').prop('disabled', true);
+        $('#txtLoadingVendor').prop('disabled', false);
     } else if (doctype === "Purchase Order") {
         $('#hfLoadingVendorNo').val("");
         $('#txtLoadingVendor').val("");
         $('#txtLoadingCharges').val("0");
-        $('#txtLoadingVendor').prop('disabled', true);
+        $('#txtLoadingVendor').prop('disabled', false);
     } else if (doctype === "Transfer Order") {
-        // Both allowed, no clearing
-    }
+    }*/
 });
 var dtable;
 
@@ -744,39 +744,3 @@ function LoadingVendorDropDown() {
 
     });
 }
-/*function BindTransporterData(data) {
-    var doctype = $('#lblDocumentType').text();
-
-    if (doctype === "Sales Order") {
-        // केवल loading vendor bind होगा
-        $('#hfLoadingVendorNo').val(data.loadingVendor || "");
-        $('#txtLoadingVendor').val(data.loadingVendorName || "");
-
-        $('#hfUnLoadingVendorNo').val("");
-        $('#txtUnLoadingVendor').val("");
-    }
-    else if (doctype === "Sales Return") {
-        // केवल unloading vendor bind होगा
-        $('#hfUnLoadingVendorNo').val(data.unloadingVendor || "");
-        $('#txtUnLoadingVendor').val(data.unloadingVendorName || "");
-
-        $('#hfLoadingVendorNo').val("");
-        $('#txtLoadingVendor').val("");
-    }
-    else if (doctype === "Transfer Order") {
-        // दोनों bind होंगे
-        $('#hfLoadingVendorNo').val(data.loadingVendor || "");
-        $('#txtLoadingVendor').val(data.loadingVendorName || "");
-
-        $('#hfUnLoadingVendorNo').val(data.unloadingVendor || "");
-        $('#txtUnLoadingVendor').val(data.unloadingVendorName || "");
-    }
-    else if (doctype === "Purchase Order") {
-        // केवल unloading vendor bind होगा
-        $('#hfUnLoadingVendorNo').val(data.unloadingVendor || "");
-        $('#txtUnLoadingVendor').val(data.unloadingVendorName || "");
-
-        $('#hfLoadingVendorNo').val("");
-        $('#txtLoadingVendor').val("");
-    }
-}*/

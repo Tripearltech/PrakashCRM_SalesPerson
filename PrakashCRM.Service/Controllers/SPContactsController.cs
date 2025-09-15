@@ -31,12 +31,12 @@ namespace PrakashCRM.Service.Controllers
             List<SPCompanyList> company2 = new List<SPCompanyList>();
             string filter2 = "";
 
-            if (filter == "" || filter == null)
+            if (string.IsNullOrEmpty(filter))
                 filter = "Type eq 'Company' and Salesperson_Code eq '" + SPCode + "'";
             else
                 filter = filter + " and Type eq 'Company' and Salesperson_Code eq '" + SPCode + "'";
 
-            if (filter2 == "" || filter2 == null)
+            if (string.IsNullOrEmpty(filter2))
                 filter2 = "PCPL_Secondary_SP_Code eq '" + SPCode + "' and Salesperson_Code ne '" + SPCode + "' and Type eq 'Company'";
             else
                 filter2 = filter2 + " and PCPL_Secondary_SP_Code eq '" + SPCode + "' and Salesperson_Code ne '" + SPCode + "' and Type eq 'Company'";
@@ -46,30 +46,56 @@ namespace PrakashCRM.Service.Controllers
 
             if (isExport)
             {
-                result = ac.GetData<SPCompanyList>("ContactDotNetAPI", filter); // and Contact_Business_Relation eq 'Customer'
-                
+                result = ac.GetData<SPCompanyList>("ContactDotNetAPI", filter);
                 result2 = ac.GetData<SPCompanyList>("ContactDotNetAPI", filter2);
-
-            }   
+            }
             else
             {
-                result = ac.GetData1<SPCompanyList>("ContactDotNetAPI", filter, skip, top, orderby); // and Contact_Business_Relation eq 'Customer'
-
+                result = ac.GetData1<SPCompanyList>("ContactDotNetAPI", filter, skip, top, orderby);
                 result2 = ac.GetData1<SPCompanyList>("ContactDotNetAPI", filter2, skip, top, orderby);
             }
-            
+
             if (result.Result.Item1.value.Count > 0)
                 Companies = result.Result.Item1.value;
 
             if (result2 != null && result2.Result.Item1.value.Count > 0)
             {
                 company2 = result2.Result.Item1.value;
-
                 Companies.AddRange(company2);
+            }
+
+            // ✅ Add Mobile, Name, Email from Primary Contact
+            foreach (var company in Companies)
+            {
+                try
+                {
+                    // Updated filter as per your requirement
+                    var contactResult = ac.GetData<SPContact>(
+                        "ContactDotNetAPI",
+                        $"(Type eq 'Person' or Type eq 'Company') and Company_No eq '{company.No}' and Is_Primary eq true"
+                    );
+
+                    if (contactResult?.Result.Item1?.value?.Count > 0)
+                    {
+                        var contact = contactResult.Result.Item1.value[0];
+
+                        company.Mobile_Phone_No = contact.Mobile_Phone_No;
+                        company.PCPL_Primary_Contact_Name = contact.Name;
+                        company.PCPL_Primary_Contact_Email = contact.E_Mail;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Optional: Handle or log error
+                    company.Mobile_Phone_No = "";
+                    company.PCPL_Primary_Contact_Name = "";
+                    company.PCPL_Primary_Contact_Email = "";
+                }
             }
 
             return Companies;
         }
+
 
         [Route("GetAllContacts")]
         public List<SPContactList> GetAllContacts(string SPCode, int skip, int top, string orderby, string filter, bool isExport = false)
@@ -170,6 +196,7 @@ namespace PrakashCRM.Service.Controllers
             requestCompany.Assessee_Code = companycontact.Assessee_Code == null ? "" : companycontact.Assessee_Code;
             requestCompany.Source_Of_Contact_No = companycontact.Source_Of_Contact_No == "-1" ? "" : companycontact.Source_Of_Contact_No;
             requestCompany.Phone_No = companycontact.Phone_No == null ? "" : companycontact.Phone_No;
+            requestCompany.Mobile_Phone_No = companycontact.Mobile_Phone_No == null ? "" : companycontact.Mobile_Phone_No;
             requestCompany.E_Mail = companycontact.E_Mail;
             requestCompany.Credit_Limit = companycontact.Credit_Limit;
             requestCompany.Type = "Company";

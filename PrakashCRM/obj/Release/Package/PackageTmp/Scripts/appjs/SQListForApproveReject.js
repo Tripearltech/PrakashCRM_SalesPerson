@@ -298,7 +298,7 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                             rowData += "<td></td>";
                         }
                         
-                        rowData += "<td><a style='cursor:pointer' onclick='ShowSQProduct(\"" + item.No + "\",\"" + item.PCPL_Status + "\")'><i class='bx bx-show'></i></a></td><td><a onclick='RedirectToSQCard(\"" + item.No + "\",\"" + item.TPTPL_Schedule_status + "\",\"" + item.PCPL_Status + "\",SQFor=\"ApproveReject\",LoggedInUserRole=\"" + $('#hdnLoggedInUserRole').val() + "\")' href='#'>" + item.No + "</a></td><td>" +
+                        rowData += "<td><a style='cursor:pointer' onclick='ShowSQProduct(\"" + item.No + "\",\"" + item.PCPL_Status + "\")'></a></td><td><a onclick='RedirectToSQCard(\"" + item.No + "\",\"" + item.TPTPL_Schedule_status + "\",\"" + item.PCPL_Status + "\",SQFor=\"ApproveReject\",LoggedInUserRole=\"" + $('#hdnLoggedInUserRole').val() + "\")' href='#'>" + item.No + "</a></td><td>" +
                             item.Order_Date + "</td><td>" + item.Sell_to_Customer_Name + "</td><td>" + item.Payment_Terms_Code + "</td><td hidden>" + item.PCPL_ApprovalFor + "</td>";
 
                         if (item.PCPL_Status == "Approval pending from HOD" || item.PCPL_Status == "Approval pending from finance") {
