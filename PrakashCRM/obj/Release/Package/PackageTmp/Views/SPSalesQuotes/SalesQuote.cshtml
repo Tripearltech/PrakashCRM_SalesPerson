@@ -813,8 +813,6 @@
                                                     <th>Inco Terms</th>
                                                     <th>Transport Method</th>
                                                     <th>Transport Cost</th>
-                                                    @*<th>Sales Disc.(%/Per Unit)</th>
-                                    <th>Sales Disc Percent</th>*@
                                                     <th>Sales Discount</th>
                                                     <th>Commission(%/Per Unit)</th>
                                                     <th>Commission Percent</th>
@@ -824,72 +822,18 @@
                                                     <th>Drop Shipment</th>
                                                     <th hidden></th>
                                                     <th hidden></th>
+                                                    <th>Margin Percent</th>
                                                     <th>Commission Payable</th>
                                                     <th hidden></th>
-                                                    <th>Drop Shipment Vendor</th>
-                                                    <th hidden></th>
-                                                    <th>Margin Percent</th>
-                                                    <th hidden>IsLiquid Prod</th> @*30*@
-                                                    <th hidden>Concentrate%</th> @*31*@
-                                                    <th hidden>NetWeight</th> @*32*@
-                                                    <th hidden>LiquidRate</th> @*33*@
+                                                    <th>IsLiquid Prod</th> @*30*@
+                                                    <th>Concentrate%</th> @*31*@
+                                                    <th>NetWeight</th> @*32*@
+                                                    <th>LiquidRate</th> @*33*@
+                                                    <th>Drop Shipment Vendor</th>                                               
                                                 </tr>
                                             </thead>
                                             <tbody id="tblProducts">
-
-                                                @*@foreach (PrakashCRM.Data.Models.SPSQLines SQLines in ViewBag.SQLines)
-                                {
-                                    <tr>
-                                        <td>@SQLines.No</td>
-                                        <td>@SQLines.Description</td>
-                                        <td>@SQLines.Unit_Price</td>
-                                        <td>@SQLines.Quantity</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>@SQLines.GST_Place_Of_Supply</td>
-                                        <td>@SQLines.Unit_Price</td>
-                                        <td></td>
-                                        <td>@SQLines.PCPL_Sales_Discount</td>
-                                        <td></td>
-                                        <td>@SQLines.PCPL_Commission_Amount</td>
-                                        <td>@SQLines.PCPL_Transport_Method</td>
-                                        <td>@SQLines.PCPL_Transport_Amount</td>
-                                        <td>@SQLines.PCPL_Credit_Days</td>
-                                        <td>@SQLines.PCPL_Interest</td>
-                                        <td>@SQLines.PCPL_Margin</td>
-                                        <td></td>
-                                        <td>@SQLines.PCPL_Sales_Price</td>
-                                    </tr>
-                                }*@
                                             </tbody>
-                                            @*<tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>Product Code</th>
-                                    <th>Product Name</th>
-                                    <th>MRP</th>
-                                    <th>Qty</th>
-                                    <th>GST Place of Supply</th>
-                                    <th>Basic Price</th>
-                                    <th>Sales Disc.(%/Per Unit)</th>
-                                    <th>Sales Disc.</th>
-                                    <th>Commission(%/Per Unit)</th>
-                                    <th>Commission</th>
-                                    <th>Transport Method</th>
-                                    <th>Transport Cost</th>
-                                    <th>Credit Days</th>
-                                    <th>Interest</th>
-                                    <th>Margin</th>
-                                    <th>Pur Trade Disc.</th>
-                                    <th>Pur Qty Disc.</th>
-                                    <th>Pur Consig.Disc.</th>
-                                    <th>Pur Distance Disc.</th>
-                                    <th>Total Cost</th>
-                                    <th>Sales Price</th>
-                                </tr>
-                            </tfoot>*@
                                         </table>
                                     </div>
                                 </div>
@@ -2119,243 +2063,151 @@
     });
 
     function SaveSalesQuote() {
+        $('#divImage').show();
+        $('#btnConfirmSaveSQSpinner').show();
 
-        //var errMsg = CheckFieldValues();
-        //if (errMsg != "") {
+        var salesquoteheader = {};
+        var productDetails_ = [];
 
-        //    ShowErrMsg(errMsg);
-        //}
-        //else {
+        // Header Info
+        salesquoteheader.IsSQEdit = $('#hfSQEdit').val();
+        salesquoteheader.QuoteNo = $('#hfSalesQuoteNo').val();
+        salesquoteheader.NoSeriesCode = $('#hfNoSeriesCode').val();
+        salesquoteheader.InquiryNo = $('#txtInqNo').val();
+        salesquoteheader.LocationCode = $('#ddlLocations').val();
+        salesquoteheader.OrderDate = $('#txtSalesQuoteDate').val();
+        salesquoteheader.ContactCompanyNo = $('#hfContactCompanyNo').val();
+        salesquoteheader.ContactCompanyName = $('#txtCustomerName').val();
+        salesquoteheader.ContactPersonNo = $('#ddlContactName').val();
+        salesquoteheader.ContactPersonName = $('#ddlContactName option:selected').text();
+        salesquoteheader.CustomerNo = $('#hfCustomerNo').val();
+        salesquoteheader.TotalCreditLimit = $('#txtTotalCreditLimit').val();
+        salesquoteheader.UsedCreditLimit = $('#hfUsedCreditLimit').val();
+        salesquoteheader.AvailableCreditLimit = $('#txtAvailableCreditLimit').val();
+        salesquoteheader.OutstandingDue = $('#txtOutstandingDue').val();
+        salesquoteheader.PaymentMethodCode = $('#ddlPaymentMethods').val();
+        salesquoteheader.TransportMethodCode = $('#ddlTransportMethod').val();
 
-            $('#divImage').show();
-            $('#btnConfirmSaveSQSpinner').show();
-            var salesquoteheader = {};
-            var productDetails_ = new Array();
+        const PaymentTermsDetails = $('#ddlPaymentTerms').val().split('_');
+        salesquoteheader.PaymentTermsCode = PaymentTermsDetails[0];
+        salesquoteheader.ShipmentMethodCode = $('#ddlIncoTerms').val();
+        salesquoteheader.ConsigneeAddress = $('#ddlConsigneeAddress').val();
+        salesquoteheader.ShiptoCode = $('#ddlBillTo').val();
+        salesquoteheader.JobtoCode = $('#ddlDeliveryTo').val();
+        salesquoteheader.JobtoAddress = $('#ddlDeliveryTo option:selected').text();
+        salesquoteheader.CustomerTemplateCode = $('#hfCustomerTemplateCode').val();
+        salesquoteheader.JustificationFor = $('#JustificationTitle').text();
+        salesquoteheader.JustificationDetails = $('#txtJustification').val();
+        salesquoteheader.ApprovalFor = $('#hfApprovalFor').val();
+        salesquoteheader.TargetDate = $('#txtTargetDate').val();
+        salesquoteheader.ValidUntillDate = $('#txtSQValidUntillDate').val();
 
-            salesquoteheader.IsSQEdit = $('#hfSQEdit').val();
-            salesquoteheader.QuoteNo = $('#hfSalesQuoteNo').val();
-            salesquoteheader.NoSeriesCode = $('#hfNoSeriesCode').val();
-            salesquoteheader.InquiryNo = $('#txtInqNo').val();
-            //salesquoteheader.LocationCode = $('#hfLocationCode').val();
-            salesquoteheader.LocationCode = $('#ddlLocations').val();
-            salesquoteheader.OrderDate = $('#txtSalesQuoteDate').val();
-            salesquoteheader.ContactCompanyNo = $('#hfContactCompanyNo').val();
-            salesquoteheader.ContactCompanyName = $('#txtCustomerName').val();
-            salesquoteheader.ContactPersonNo = $('#ddlContactName').val();
-            salesquoteheader.ContactPersonName = $('#ddlContactName option:selected').text();
-            salesquoteheader.CustomerNo = $('#hfCustomerNo').val();
-            //salesquoteheader.CustomerName = $('#txtCustomerName').val();
-            //salesquoteheader.ContactName = $('#ddlContactName').val();
-            salesquoteheader.TotalCreditLimit = $('#txtTotalCreditLimit').val();
-            salesquoteheader.UsedCreditLimit = $('#hfUsedCreditLimit').val();
-            salesquoteheader.AvailableCreditLimit = $('#txtAvailableCreditLimit').val();
-            salesquoteheader.OutstandingDue = $('#txtOutstandingDue').val();
-            salesquoteheader.PaymentMethodCode = $('#ddlPaymentMethods').val();
-            salesquoteheader.TransportMethodCode = $('#ddlTransportMethod').val();
-            const PaymentTermsDetails = $('#ddlPaymentTerms').val().split('_');
-            salesquoteheader.PaymentTermsCode = PaymentTermsDetails[0];
-            salesquoteheader.ShipmentMethodCode = $('#ddlIncoTerms').val();
-            salesquoteheader.ConsigneeAddress = $('#ddlConsigneeAddress').val();
-            salesquoteheader.ShiptoCode = $('#ddlBillTo').val();
-            salesquoteheader.JobtoCode = $('#ddlDeliveryTo').val();
-            salesquoteheader.JobtoAddress = $('#ddlDeliveryTo option:selected').text();
-            salesquoteheader.CustomerTemplateCode = $('#hfCustomerTemplateCode').val();
-            salesquoteheader.JustificationFor = $('#JustificationTitle').text();
-            salesquoteheader.JustificationDetails = $('#txtJustification').val();
-            salesquoteheader.ApprovalFor = $('#hfApprovalFor').val();
-            salesquoteheader.TargetDate = $('#txtTargetDate').val();
-            salesquoteheader.ValidUntillDate = $('#txtSQValidUntillDate').val();
+        // Product Details
+        $("#tblProducts TR[id^='ProdTR_']").each(function () {
+            var productDetails = {};
 
-            $("#tblProducts TR[id^='ProdTR_']").each(function () {
-                var productDetails = {};
-                /*var invQtyDetails_ = new Array();*/
-                var isLiquidProd = JSON.parse($(this).find("TD").eq(30).html());
+            // Safely parse boolean for liquid product
+            var tdVal = $(this).find("TD").eq(30).html();
+            var isLiquidProd = (tdVal && tdVal.toLowerCase() === "true");
 
-                productDetails.No = $(this).find("TD").eq(2).html();
-                productDetails.ProductName = $(this).find("TD").eq(3).html();
-                productDetails.Quantity = parseFloat($(this).find("TD").eq(4).html());
-                productDetails.Unit_Price = parseFloat($(this).find("TD").eq(8).html());
+            productDetails.No = $(this).find("TD").eq(2).html();
+            productDetails.ProductName = $(this).find("TD").eq(3).html();
+            productDetails.Quantity = parseFloat($(this).find("TD").eq(4).html()) || 0;
+            productDetails.Unit_Price = parseFloat($(this).find("TD").eq(8).html()) || 0;
 
-                //if (!isLiquidProd) {
-                //    productDetails.Quantity = parseFloat($(this).find("TD").eq(4).html());
-                //    productDetails.Unit_Price = parseFloat($(this).find("TD").eq(8).html());
-                //}
-                //else {
-                //    productDetails.Quantity = parseFloat("-1");
-                //    productDetails.Unit_Price = parseFloat($(this).find("TD").eq(8).html());
-                //}
+            // Use Packing Style CODE (value) instead of text
+            productDetails.PCPL_Packing_Style_Code = $(this).find("TD").eq(6).attr("data-code") || $(this).find("TD").eq(6).html();
+            productDetails.PCPL_MRP = $(this).find("TD").eq(7).html();
+            productDetails.Delivery_Date = $(this).find("TD").eq(9).html();
+            productDetails.PCPL_Total_Cost = $(this).find("TD").eq(10).html();
+            productDetails.PCPL_Margin = $(this).find("TD").eq(11).html();
+            productDetails.PCPL_Transport_Method = $(this).find("TD").eq(14).html();
+            productDetails.PCPL_Transport_Cost = $(this).find("TD").eq(15).html();
+            productDetails.PCPL_Sales_Discount = $(this).find("TD").eq(16).html();
 
-                productDetails.PCPL_Packing_Style_Code = $(this).find("TD").eq(6).html();
-                productDetails.PCPL_MRP = $(this).find("TD").eq(7).html();
-                //productDetails.PCPL_Basic_Price = $(this).find("TD").eq(8).html();
+            productDetails.PCPL_Commission_Type = $(this).find("TD").eq(17).html() || "";
+            productDetails.PCPL_Commission = parseFloat($(this).find("TD").eq(18).html()) || 0;
+            productDetails.PCPL_Commission_Amount = parseFloat($(this).find("TD").eq(19).html()) || 0;
+            productDetails.PCPL_Credit_Days = parseFloat($(this).find("TD").eq(20).html()) || 0;
+            productDetails.PCPL_Interest = parseFloat($(this).find("TD").eq(21).html()) || 0;
 
-                productDetails.Delivery_Date = $(this).find("TD").eq(9).html();
-                productDetails.PCPL_Total_Cost = $(this).find("TD").eq(10).html();
-                productDetails.PCPL_Margin = $(this).find("TD").eq(11).html();
-                productDetails.PCPL_Transport_Method = $(this).find("TD").eq(14).html();
-                productDetails.PCPL_Transport_Cost = $(this).find("TD").eq(15).html();
-                productDetails.PCPL_Sales_Discount = $(this).find("TD").eq(16).html();
+            var prodNo = productDetails.No;
+            var dropShipHtml = $("#" + prodNo + "_DropShipment").html();
+            if (dropShipHtml === "Yes") {
+                productDetails.Drop_Shipment = true;
+                productDetails.PCPL_Vendor_No = $(this).find("TD").eq(26).html();
+                if (productDetails.PCPL_Vendor_No == "-1") productDetails.PCPL_Vendor_No = "";
+            } else {
+                productDetails.Drop_Shipment = false;
+                productDetails.PCPL_Vendor_No = "";
+            }
 
-                //if ($(this).find("TD").eq(16).html() == "") {
-                //    productDetails.PCPL_Discount_Type = "";
-                //}
-                //else {
+            productDetails.PCPL_Commission_Payable = ($(this).find("TD").eq(24).html() === "-1") ? "" : $(this).find("TD").eq(24).html();
 
-                //    productDetails.PCPL_Discount_Type = $(this).find("TD").eq(16).html();
-                //}
+            if ($('#ddlInquiries').val() != "-1") {
+                productDetails.InqProdLineNo = $("#" + prodNo + "_InqProdLineNo").html();
+            }
 
-                //if ($(this).find("TD").eq(17).html() == "") {
-                //    productDetails.PCPL_Discount = "";
-                //}
-                //else {
-                //    productDetails.PCPL_Discount = parseFloat($(this).find("TD").eq(17).html());
-                //}
+            if ($('#hfSQEdit').val() === "true") {
+                productDetails.Line_No = $("#" + prodNo + "_SQLineNo").html();
+            }
 
-                //if ($(this).find("TD").eq(18).html() == "") {
-                //    productDetails.PCPL_Sales_Discount = "";
-                //}
-                //else {
-                //    productDetails.PCPL_Sales_Discount = parseFloat($(this).find("TD").eq(18).html());
-                //}
+            var marginPercent = $("#" + prodNo + "_MarginPercent").html() || "0%";
+            marginPercent = marginPercent.replace('%', '');
+            productDetails.PCPL_Margin_Percent = parseFloat(marginPercent) || 0;
 
-                if ($(this).find("TD").eq(17).html() == "") {
-                    productDetails.PCPL_Commission_Type = "";
+            // Liquid Product Details
+            productDetails.IsLiquidProd = isLiquidProd;
+            if (isLiquidProd) {
+                productDetails.PCPL_Concentration_Rate_Percent = parseFloat($(this).find("TD").eq(31).html()) || 0;
+                productDetails.Net_Weight = parseFloat($(this).find("TD").eq(32).html()) || 0;
+                productDetails.PCPL_Liquid_Rate = parseFloat($(this).find("TD").eq(33).html()) || 0;
+            } else {
+                productDetails.PCPL_Concentration_Rate_Percent = -1;
+                productDetails.Net_Weight = -1;
+                productDetails.PCPL_Liquid_Rate = -1;
+            }
+
+            productDetails_.push(productDetails);
+        });
+
+        salesquoteheader.Products = productDetails_;
+
+        // AJAX POST
+        $.ajax({
+            type: "POST",
+            url: "/SPSalesQuotes/PostSalesQuote",
+            data: JSON.stringify(salesquoteheader),
+            contentType: "application/json; charset=utf-8",
+            success: function (responseMsg) {
+                $('#divImage').hide();
+                $('#hfSalesQuoteResDetails').val(responseMsg);
+
+                const responseMsg_ = responseMsg.split(',');
+                if ($('#hfSalesQuoteResDetails').val() != "") {
+                    var actionMsg = ($('#hfSQEdit').val() === "true")
+                        ? responseMsg_[0] + " - Sales Quote Updated Successfully"
+                        : responseMsg_[0] + " - Sales Quote Created Successfully";
+
+                    $('#modalJustification').hide();
+                    $('#btnConfirmSaveSQSpinner').hide();
+                    $('#hfSQEdit').val("false");
+                    $('#modalSQMsg').show();
+                    $('#lblSQMsg').text(actionMsg);
+                } else {
+                    location.reload(false);
                 }
-                else {
-                    productDetails.PCPL_Commission_Type = $(this).find("TD").eq(17).html();
-                }
-
-                if ($(this).find("TD").eq(18).html() == "") {
-                    productDetails.PCPL_Commission = parseFloat(0);
-                }
-                else {
-                    productDetails.PCPL_Commission = parseFloat($(this).find("TD").eq(18).html());
-                }
-
-                if ($(this).find("TD").eq(19).html() == "") {
-                    productDetails.PCPL_Commission_Amount = parseFloat(0);
-                }
-                else {
-                    productDetails.PCPL_Commission_Amount = parseFloat($(this).find("TD").eq(19).html());
-                }
-
-                productDetails.PCPL_Credit_Days = parseFloat($(this).find("TD").eq(20).html());
-                productDetails.PCPL_Interest = parseFloat($(this).find("TD").eq(21).html());
-
-                var prodNo = $(this).find("TD").eq(2).html();
-                if ($("#" + prodNo + "_DropShipment").html() == "Yes") {
-                    productDetails.Drop_Shipment = true;
-                    productDetails.PCPL_Vendor_No = $(this).find("TD").eq(26).html();
-                    if (productDetails.PCPL_Vendor_No == "-1") {
-                        productDetails.PCPL_Vendor_No = "";
-                    }
-                }
-                else {
-                    productDetails.Drop_Shipment = false;
-                    productDetails.PCPL_Vendor_No = "";
-                }
-
-                if ($(this).find("TD").eq(24).html() == "-1") {
-                    productDetails.PCPL_Commission_Payable = "";
-                }
-                else {
-                    productDetails.PCPL_Commission_Payable = $(this).find("TD").eq(24).html();
-                }
-
-                //if ($("#" + productDetails.No + "_InvDetails").html() != "") {
-
-                //    $("#" + productDetails.No + "_InvDetails tr").each(function () {
-
-                //        var invQtyDetails = {};
-
-                //        invQtyDetails.QuoteNo = "";
-                //        invQtyDetails.LineNo = 0;
-                //        invQtyDetails.ItemNo = $(this).find("TD").eq(2).html();
-                //        invQtyDetails.LotNo = $(this).find("TD").eq(3).html();
-                //        invQtyDetails.Qty = $(this).find("TD").eq(4).html();
-                //        invQtyDetails.LocationCode = $(this).find("TD").eq(5).html();
-
-                //        invQtyDetails_.push(invQtyDetails);
-                //    });
-
-                //    productDetails.InvQuantities = invQtyDetails_;
-
-                //}
-
-                if ($('#ddlInquiries').val() != "-1") {
-
-                    productDetails.InqProdLineNo = $("#" + prodNo + "_InqProdLineNo").html();
-
-                }
-
-                if ($('#hfSQEdit').val() == "true") {
-                    productDetails.Line_No = $("#" + prodNo + "_SQLineNo").html();
-                }
-
-                var marginPercent = $("#" + prodNo + "_MarginPercent").html();
-                marginPercent = marginPercent.substring(0, marginPercent.length - 2);
-
-                productDetails.PCPL_Margin_Percent = marginPercent;
-
-                productDetails.IsLiquidProd = $(this).find("TD").eq(30).html();
-
-                if (!isLiquidProd) {
-                    productDetails.PCPL_Concentration_Rate_Percent = parseFloat("-1");
-                    productDetails.Net_Weight = parseFloat("-1");
-                    productDetails.PCPL_Liquid_Rate = parseFloat("-1");
-                }
-                else {
-                    productDetails.PCPL_Concentration_Rate_Percent = parseFloat($(this).find("TD").eq(31).html());
-                    productDetails.Net_Weight = parseFloat($(this).find("TD").eq(32).html());
-                    productDetails.PCPL_Liquid_Rate = parseFloat($(this).find("TD").eq(33).html());
-                }
-
-                productDetails_.push(productDetails);
-
-            });
-
-            salesquoteheader.Products = productDetails_;
-
-            //
-
-            $.ajax({
-                type: "POST",
-                url: "/SPSalesQuotes/PostSalesQuote",
-                data: JSON.stringify(salesquoteheader),
-                contentType: "application/json; charset=utf-8",
-                success: function (responseMsg) {
-                    $('#divImage').hide();
-                    $('#hfSalesQuoteResDetails').val(responseMsg);
-                    const responseMsg_ = responseMsg.split(',');
-                    if ($('#hfSalesQuoteResDetails').val() != "") {
-
-                        var actionMsg = "";
-                        $('#modalJustification').css('display', 'none');
-                        if ($('#hfSQEdit').val() == "true") {
-                            actionMsg = responseMsg_[0] + " - Sales Quote Updated Successfully";
-                        }
-                        else {
-                            actionMsg = responseMsg_[0] + " - Sales Quote Created Successfully";
-                        }
-
-                        //location.reload(true);
-                        $('#btnConfirmSaveSQSpinner').hide();
-                        //ShowActionMsg(actionMsg);
-                        $('#hfSQEdit').val("false");
-                        $('#modalSQMsg').css('display', 'block');
-                        $('#lblSQMsg').text(actionMsg);
-                    }
-                    else {
-                        location.reload(true);
-                    }
-                }
-            });
-
-            //
-
-        /*}*/
-
+            },
+            error: function (err) {
+                $('#divImage').hide();
+                $('#btnConfirmSaveSQSpinner').hide();
+                console.error("Error saving Sales Quote:", err);
+                alert("Failed to save Sales Quote. Check console for details.");
+            }
+        });
     }
+
+
 
     function RedirectToSQApproval() {
         window.location.replace('@Url.Action("SalesQuoteStatus", "SPSalesQuotes")');

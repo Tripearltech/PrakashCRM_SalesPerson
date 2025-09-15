@@ -829,7 +829,10 @@ namespace PrakashCRM.Service.Controllers
                         myString = myString.Replace("##ShippingHeader##", "ShippingDetails");
 
                         string[] CustJobtoAddress = salesQuoteDetails.JobtoAddress.Split(',');
-                        string CustJobtoAddress_ = CustName + "<br />" + CustJobtoAddress[0] + ",<br />" + CustJobtoAddress[1] + ",<br />" + CustJobtoAddress[2];
+
+
+                        string CustJobtoAddress_ = string.Join(",<br />", CustJobtoAddress);
+                         //CustJobtoAddress_ = CustName + "<br />" + CustJobtoAddress[0] + ",<br />" + CustJobtoAddress[1] + ",<br />" + CustJobtoAddress[2];
 
                         myString = myString.Replace("##ShippingDetail##", CustJobtoAddress_);
                     }
@@ -1315,12 +1318,12 @@ namespace PrakashCRM.Service.Controllers
 
             var result = ac.GetData<SPSQUser>("EmployeesDotNetAPI", "");
 
-            if (result.Result.Item1.value.Count > 0)
+            if (result.Result.Item1 != null && result.Result.Item1.value != null && result.Result.Item1.value.Count > 0)
             {
                 users = result.Result.Item1.value;
                 users = users.OrderBy(a => a.First_Name).ToList();
             }
-            
+
             return users;
         }
 

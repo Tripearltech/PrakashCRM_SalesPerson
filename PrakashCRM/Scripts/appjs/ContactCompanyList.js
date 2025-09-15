@@ -655,7 +655,7 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                 $.each(data, function (index, item) {
                     var rowData = "<tr><td></td><td><input type='checkbox' class='form-check-input' /></td><td><a href='/SPContacts/CompanyContactCard?No=" + item.No + "'><i class='bx bxs-edit'></i></a></td><td align='center'><a class='ViewContactCls' onclick='ViewContactPerson(\"" + item.No +
                         "\",\"" + item.Name + "\")'><i class='bx bx-show'></i></a></td><td>" + item.No + "</td><td>" + item.Name + "</td><td>" + item.Industry + "</td><td>" + item.Source_of_Contact + "</td><td>" + item.Business_Type + "</td><td>" + item.City + "</td><td>" + item.Area + "</td><td>" + item.Post_Code +
-                        "</td><td>" + item.Phone_No + "</td><td>" + item.E_Mail + "</td><td>" + item.PCPL_Primary_Contact_Name + "</td><td>" + item.Mobile_Phone_No + "</td><td>" + item.Salesperson_Code + "</td><td>" + item.Credit_Limit +
+                        "</td><td>" + item.Phone_No + "</td><td>" + item.E_Mail + "</td><td>" + item.PCPL_Primary_Contact_Name + "</td><td>" + (item.Mobile_Phone_No || "N/A") + "</td><td>" + item.Salesperson_Code + "</td><td>" + item.Credit_Limit +
                         "</td><td>" + item.GST_Registration_No + "</td><td>" + item.P_A_N_No + "</td>";
 
                     if (item.PCPL_Feedback_Status == "Not Initiated") {
