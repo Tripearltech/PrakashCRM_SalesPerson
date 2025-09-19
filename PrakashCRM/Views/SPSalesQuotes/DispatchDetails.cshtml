@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "DispatchDetails";
+    Layout = "~/Views/Shared/_SalespersonMasterLayout.cshtml";
+}
+
+<div class="page-content">
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="/SPDashboard/Index"><i class="bx bx-tachometer"></i>&nbsp;Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/SPSalesQuotes/SalesQuoteList"> Dispatch Details </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Sales Quote
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <hr />
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <div class="row">
+                    <div>
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <input id="getServiceApiUrl" value="@System.Configuration.ConfigurationManager.AppSettings["ServiceApiUrl"].ToString()" style="display:none" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <table class="table mb-0 table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">Invoice No</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Customer No</th>
+                                            <th scope="col">Customer Name</th>
+                                            <th scope="col">Vehicle No</th>
+                                            <th scope="col">LRNo</th>
+                                            <th scope="col">SalesQuoteNo</th>
+                                            <th scope="col">OrderDetails</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>1</td>
+                                            <td>2023-09-01</td>
+                                            <td>1001</td>
+                                            <td>ABC Corp</td>
+                                            <td>KA01AB1234</td>
+                                            <td>LR001</td>
+                                            <td>Q001</td>
+                                            <td>32452</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>2</td>
+                                            <td>2023-09-05</td>
+                                            <td>1002</td>
+                                            <td>XYZ Pvt Ltd</td>
+                                            <td>KA05CD5678</td>
+                                            <td>LR002</td>
+                                            <td>Q002</td>
+                                            <td>345</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/appjs/SalesQtDispatchDetails.js"></script>

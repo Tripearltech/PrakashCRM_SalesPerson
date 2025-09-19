@@ -58,5 +58,6 @@ namespace PrakashCRM.Data.Models
 
         public string P_A_N_No { get; set; }
         public object PCPL_Class { get; set; }
+        public object PCPL_ADD_Average_Delay_Days { get; set; }
     }
 }

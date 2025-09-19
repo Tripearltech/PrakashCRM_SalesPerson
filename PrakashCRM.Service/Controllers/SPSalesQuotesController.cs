@@ -237,11 +237,10 @@ namespace PrakashCRM.Service.Controllers
         }
 
         [Route("SalesQuote")]
-        public SPSQHeader SalesQuote(SPSQHeaderDetails salesQuoteDetails, string LoggedInSPUserEmail, string SPName) //string ApprovalFormatFile
+        public SPSQHeader SalesQuote(SPSQHeaderDetails salesQuoteDetails, string LoggedInSPUserEmail, string SPName)
         {
             SPSQHeaderPost requestSQHeader = new SPSQHeaderPost();
-            SPSQHeaderPostWithCustTemplateCode reqSQHeaderWithCustTemplateCode =
-                new SPSQHeaderPostWithCustTemplateCode();
+            SPSQHeaderPostWithCustTemplateCode reqSQHeaderWithCustTemplateCode =new SPSQHeaderPostWithCustTemplateCode();
             SPSQHeaderUpdate requestSQHeaderUpdate = new SPSQHeaderUpdate();
             SPSQHeader responseSQHeader = new SPSQHeader();
             string LocationCode = "", CustomerName="";
@@ -250,55 +249,59 @@ namespace PrakashCRM.Service.Controllers
             string ApprovalFormatFile = Unzip(salesQuoteDetails.zipApprovalFormatFile);
             int QuoteValidityDays = 0;
 
+            // Initialize finance and reporting person details
             SPFinanceUserDetails financeUserDetails = new SPFinanceUserDetails();
             financeUserDetails.No = "";
-
             var resFinanceUserDetails = ac.GetData<SPFinanceUserDetails>("EmployeesDotNetAPI", "Role eq 'Finance'");
-
-            if (resFinanceUserDetails != null && resFinanceUserDetails.Result.Item1.value.Count > 0)
+            if (resFinanceUserDetails?.Result.Item1.value.Count > 0)
                 financeUserDetails = resFinanceUserDetails.Result.Item1.value[0];
-
-            //financeUserDetails.Company_E_Mail = "mihir.s@tripearltech.com";
+            else
+            {
+                responseSQHeader.errorDetails = new errorDetails { isSuccess = false, message = "Failed to retrieve finance user details." };
+                return responseSQHeader;
+            }
 
             SPUserReportingPersonDetails reportingPersonDetails = new SPUserReportingPersonDetails();
             reportingPersonDetails.Reporting_Person_No = "";
-            string StatusForUrl = "";
-
             var resultUserDetails = ac.GetData<SPUserReportingPersonDetails>("EmployeesDotNetAPI", "Salespers_Purch_Code eq '" + salesQuoteDetails.SalespersonCode + "'");
-
-            if (resultUserDetails != null && resultUserDetails.Result.Item1.value.Count > 0)
+            if (resultUserDetails?.Result.Item1.value.Count > 0)
                 reportingPersonDetails = resultUserDetails.Result.Item1.value[0];
+            else
+            {
+                responseSQHeader.errorDetails = new errorDetails { isSuccess = false, message = "Failed to retrieve reporting person details." };
+                return responseSQHeader;
+            }
 
             var result = (dynamic)null;
 
             if (!Convert.ToBoolean(salesQuoteDetails.IsSQEdit))
             {
+                // New Sales Quote
                 if (salesQuoteDetails.CustomerNo != null)
                 {
-                    //requestSQHeader.No = salesQuoteDetails.QuoteNo;
+                    // Populate requestSQHeader
                     requestSQHeader.Order_Date = salesQuoteDetails.OrderDate;
                     requestSQHeader.Quote_Valid_Until_Date = salesQuoteDetails.ValidUntillDate;
-                    requestSQHeader.PCPL_Inquiry_No = salesQuoteDetails.InquiryNo == "" || salesQuoteDetails.InquiryNo == null ? "" : salesQuoteDetails.InquiryNo;
+                    requestSQHeader.PCPL_Inquiry_No = string.IsNullOrEmpty(salesQuoteDetails.InquiryNo) ? "" : salesQuoteDetails.InquiryNo;
                     requestSQHeader.Sell_to_Contact_No = salesQuoteDetails.ContactCompanyNo;
                     requestSQHeader.Sell_to_Contact = salesQuoteDetails.ContactCompanyName;
                     requestSQHeader.PCPL_Contact_Person = salesQuoteDetails.ContactPersonNo;
                     requestSQHeader.Sell_to_Customer_No = salesQuoteDetails.CustomerNo;
                     requestSQHeader.Salesperson_Code = salesQuoteDetails.SalespersonCode;
-                    //requestSQHeader.Payment_Method_Code = salesQuoteDetails.PaymentMethodCode;
                     requestSQHeader.Payment_Terms_Code = salesQuoteDetails.PaymentTermsCode;
                     requestSQHeader.Shipment_Method_Code = salesQuoteDetails.ShipmentMethodCode;
                     requestSQHeader.Location_Code = salesQuoteDetails.LocationCode;
                     requestSQHeader.Ship_to_Code = salesQuoteDetails.ShiptoCode == "-1" ? "" : salesQuoteDetails.ShiptoCode;
                     requestSQHeader.PCPL_Job_to_Code = salesQuoteDetails.JobtoCode == "-1" ? "" : salesQuoteDetails.JobtoCode;
                     requestSQHeader.PCPL_IsInquiry = false;
-                    requestSQHeader.WorkDescription = salesQuoteDetails.JustificationDetails == "" ? "" : salesQuoteDetails.JustificationDetails;
-                    requestSQHeader.PCPL_Target_Date = salesQuoteDetails.TargetDate == null || salesQuoteDetails.TargetDate == "" ? "1900-01-01" : salesQuoteDetails.TargetDate;
+                    requestSQHeader.WorkDescription = string.IsNullOrEmpty(salesQuoteDetails.JustificationDetails) ? "" : salesQuoteDetails.JustificationDetails;
+                    requestSQHeader.PCPL_Target_Date = string.IsNullOrEmpty(salesQuoteDetails.TargetDate) ? "1900-01-01" : salesQuoteDetails.TargetDate;
 
-                    //if(Convert.ToDouble(salesQuoteDetails.AvailableCreditLimit) <= 0)
+                    // Set approval status
                     if (salesQuoteDetails.ApprovalFor == "Negative Credit Limit")
                     {
                         requestSQHeader.PCPL_Approver = financeUserDetails.No;
-                        requestSQHeader.PCPL_Status = StatusForUrl =  "Approval pending from finance";
+                        requestSQHeader.PCPL_Status = "Approval pending from finance";
                         requestSQHeader.PCPL_ApprovalFor = "Credit Limit";
                         requestSQHeader.PCPL_Submitted_On = DateTime.Now.ToString("yyyy-MM-dd");
                         requestSQHeader.PCPL_ApproverHOD = "";
@@ -306,7 +309,7 @@ namespace PrakashCRM.Service.Controllers
                     else if (salesQuoteDetails.ApprovalFor == "Negative Margin")
                     {
                         requestSQHeader.PCPL_ApproverHOD = reportingPersonDetails.Reporting_Person_No;
-                        requestSQHeader.PCPL_Status = StatusForUrl = "Approval pending from HOD";
+                        requestSQHeader.PCPL_Status = "Approval pending from HOD";
                         requestSQHeader.PCPL_ApprovalFor = "Margin";
                         requestSQHeader.PCPL_Submitted_On = DateTime.Now.ToString("yyyy-MM-dd");
                         requestSQHeader.PCPL_Approver = "";
@@ -314,7 +317,7 @@ namespace PrakashCRM.Service.Controllers
                     else if (salesQuoteDetails.ApprovalFor == "Both")
                     {
                         requestSQHeader.PCPL_Approver = financeUserDetails.No;
-                        requestSQHeader.PCPL_Status = StatusForUrl = "Approval pending from finance";
+                        requestSQHeader.PCPL_Status = "Approval pending from finance";
                         requestSQHeader.PCPL_ApprovalFor = "Both";
                         requestSQHeader.PCPL_Submitted_On = DateTime.Now.ToString("yyyy-MM-dd");
                         requestSQHeader.PCPL_ApproverHOD = reportingPersonDetails.Reporting_Person_No;
@@ -327,23 +330,20 @@ namespace PrakashCRM.Service.Controllers
                         requestSQHeader.PCPL_Submitted_On = "1900-01-01";
                         requestSQHeader.PCPL_ApproverHOD = "";
                     }
-                    //requestSQHeader.PCPL_Status = Convert.ToDouble(salesQuoteDetails.AvailableCreditLimit) < 0 ? "Pending For Approval" : "";
 
                     result = PostItemSQ("SalesQuoteDotNetAPI", requestSQHeader, responseSQHeader);
                 }
                 else
                 {
-                    //reqSQHeaderWithCustTemplateCode.No = salesQuoteDetails.QuoteNo;
+                    // Populate reqSQHeaderWithCustTemplateCode
                     reqSQHeaderWithCustTemplateCode.Order_Date = salesQuoteDetails.OrderDate;
                     reqSQHeaderWithCustTemplateCode.Quote_Valid_Until_Date = salesQuoteDetails.ValidUntillDate;
-                    reqSQHeaderWithCustTemplateCode.PCPL_Inquiry_No = salesQuoteDetails.InquiryNo == "" || salesQuoteDetails.InquiryNo == null ? "" : salesQuoteDetails.InquiryNo;
+                    reqSQHeaderWithCustTemplateCode.PCPL_Inquiry_No = string.IsNullOrEmpty(salesQuoteDetails.InquiryNo) ? "" : salesQuoteDetails.InquiryNo;
                     reqSQHeaderWithCustTemplateCode.Sell_to_Contact_No = salesQuoteDetails.ContactCompanyNo;
                     reqSQHeaderWithCustTemplateCode.Sell_to_Contact = salesQuoteDetails.ContactCompanyName;
                     reqSQHeaderWithCustTemplateCode.PCPL_Contact_Person = salesQuoteDetails.ContactPersonNo;
-                    reqSQHeaderWithCustTemplateCode.Sell_to_Customer_No = salesQuoteDetails.CustomerNo == null ? "" : salesQuoteDetails.CustomerNo;
+                    reqSQHeaderWithCustTemplateCode.Sell_to_Customer_No = string.IsNullOrEmpty(salesQuoteDetails.CustomerNo) ? "" : salesQuoteDetails.CustomerNo;
                     reqSQHeaderWithCustTemplateCode.Salesperson_Code = salesQuoteDetails.SalespersonCode;
-                    //reqSQHeaderWithCustTemplateCode.Payment_Method_Code = salesQuoteDetails.PaymentMethodCode;
-                    //reqSQHeaderWithCustTemplateCode.Transport_Method = salesQuoteDetails.TransportMethodCode;
                     reqSQHeaderWithCustTemplateCode.Payment_Terms_Code = salesQuoteDetails.PaymentTermsCode;
                     reqSQHeaderWithCustTemplateCode.Shipment_Method_Code = salesQuoteDetails.ShipmentMethodCode;
                     reqSQHeaderWithCustTemplateCode.Location_Code = salesQuoteDetails.LocationCode;
@@ -351,20 +351,10 @@ namespace PrakashCRM.Service.Controllers
                     reqSQHeaderWithCustTemplateCode.PCPL_Job_to_Code = salesQuoteDetails.JobtoCode == "-1" ? "" : salesQuoteDetails.JobtoCode;
                     reqSQHeaderWithCustTemplateCode.PCPL_IsInquiry = false;
                     reqSQHeaderWithCustTemplateCode.Sell_to_Customer_Templ_Code = salesQuoteDetails.CustomerTemplateCode;
-                    reqSQHeaderWithCustTemplateCode.WorkDescription = salesQuoteDetails.JustificationDetails == "" ? "" : salesQuoteDetails.JustificationDetails;
-                    reqSQHeaderWithCustTemplateCode.PCPL_Target_Date = salesQuoteDetails.TargetDate == null || salesQuoteDetails.TargetDate == "" ? "1900-01-01" : salesQuoteDetails.TargetDate;
+                    reqSQHeaderWithCustTemplateCode.WorkDescription = string.IsNullOrEmpty(salesQuoteDetails.JustificationDetails) ? "" : salesQuoteDetails.JustificationDetails;
+                    reqSQHeaderWithCustTemplateCode.PCPL_Target_Date = string.IsNullOrEmpty(salesQuoteDetails.TargetDate) ? "1900-01-01" : salesQuoteDetails.TargetDate;
 
-                    //if (Convert.ToDouble(salesQuoteDetails.AvailableCreditLimit) <= 0)
-                    //{
-                    //    reqSQHeaderWithCustTemplateCode.PCPL_Status = "Approval pending from finance";
-                    //    reqSQHeaderWithCustTemplateCode.PCPL_Submitted_On = DateTime.Now.ToString("yyyy-MM-dd");
-                    //}
-                    //else
-                    //{
-                    //    reqSQHeaderWithCustTemplateCode.PCPL_Status = "";
-                    //    reqSQHeaderWithCustTemplateCode.PCPL_Submitted_On = "1900-01-01";
-                    //}
-
+                    // Set approval status
                     if (salesQuoteDetails.ApprovalFor == "Negative Credit Limit")
                     {
                         reqSQHeaderWithCustTemplateCode.PCPL_Approver = financeUserDetails.No;
@@ -398,442 +388,201 @@ namespace PrakashCRM.Service.Controllers
                         reqSQHeaderWithCustTemplateCode.PCPL_ApproverHOD = "";
                     }
 
-                    //reqSQHeaderWithCustTemplateCode.PCPL_Status = Convert.ToDouble(salesQuoteDetails.AvailableCreditLimit) < 0 ? "Pending For Approval" : "";
-
                     result = PostItemSQWithCustTemplateCode("SalesQuoteDotNetAPI", reqSQHeaderWithCustTemplateCode, responseSQHeader);
                 }
 
-                //
-
-                if (result.Result.Item1 != null)
+                // Check if header creation was successful
+                if (result?.Result.Item1 == null || !result.Result.Item2.isSuccess)
                 {
-                    responseSQHeader = result.Result.Item1;
-                    ed = result.Result.Item2;
-                    responseSQHeader.errorDetails = ed;
+                    responseSQHeader.errorDetails = result?.Result.Item2 ?? new errorDetails { isSuccess = false, message = "Failed to create sales quote header." };
+                    return responseSQHeader;
                 }
 
-                //
-
-            }
-            else
-            {
-                requestSQHeaderUpdate.Quote_Valid_Until_Date = salesQuoteDetails.ValidUntillDate;
-                requestSQHeaderUpdate.PCPL_Contact_Person = salesQuoteDetails.ContactPersonNo;
-                //requestSQHeaderUpdate.Payment_Method_Code = salesQuoteDetails.PaymentMethodCode;
-                //requestSQHeaderUpdate.Transport_Method = salesQuoteDetails.TransportMethodCode;
-                requestSQHeaderUpdate.Payment_Terms_Code = salesQuoteDetails.PaymentTermsCode;
-                requestSQHeaderUpdate.Shipment_Method_Code = salesQuoteDetails.ShipmentMethodCode;
-                requestSQHeaderUpdate.Ship_to_Code = salesQuoteDetails.ShiptoCode == "-1" ? "" : salesQuoteDetails.ShiptoCode;
-                requestSQHeaderUpdate.PCPL_Job_to_Code = salesQuoteDetails.JobtoCode == "-1" ? "" : salesQuoteDetails.JobtoCode;
-
-                result = PatchItemSQ("SalesQuoteDotNetAPI", requestSQHeaderUpdate, responseSQHeader, "Document_Type='Quote',No='" + salesQuoteDetails.QuoteNo + "'");
-
-                if (result.Result.Item1 != null)
-                {
-                    responseSQHeader = result.Result.Item1;
-                    ed = result.Result.Item2;
-                    responseSQHeader.errorDetails = ed;
-                }
-            }
-
-            if (responseSQHeader.Sell_to_Customer_Name != null || responseSQHeader.Sell_to_Customer_Name != "")
-                CustomerName = responseSQHeader.Sell_to_Customer_Name;
-
-            LocationCode = salesQuoteDetails.LocationCode;
-
-            if (result.Result.Item1.No != null)
-            {
                 responseSQHeader = result.Result.Item1;
-                responseSQHeader.ItemLineNo = "";
+                ed = result.Result.Item2;
+                responseSQHeader.errorDetails = ed;
+                CustomerName = responseSQHeader.Sell_to_Customer_Name ?? "";
+                LocationCode = salesQuoteDetails.LocationCode;
 
+                // Process line items
                 SPSQLinesPost reqSQLine = new SPSQLinesPost();
                 SPSQLiquidLinesPost reqSQLiquidLine = new SPSQLiquidLinesPost();
-                SPSQLinesUpdate reqSQLineUpdate = new SPSQLinesUpdate();
-                SPSQLiquidLinesUpdate reqSQLiquidLineUpdate = new SPSQLiquidLinesUpdate();
                 SPSQLines resSQLine = new SPSQLines();
                 errorDetails ed1 = new errorDetails();
 
                 for (int a = 0; a < salesQuoteDetails.Products.Count; a++)
                 {
-                    if (salesQuoteDetails.InquiryNo != null)
-                    {
+                    var product = salesQuoteDetails.Products[a];
 
+                    // Update inquiry to quote if applicable
+                    if (!string.IsNullOrEmpty(salesQuoteDetails.InquiryNo))
+                    {
                         SPSQUpdateInqToQuote inqToQuoteReq = new SPSQUpdateInqToQuote();
                         SPInqLines inqToQuoteRes = new SPInqLines();
                         errorDetails edInqToQuote = new errorDetails();
-
                         inqToQuoteReq.PCPL_Convert_Quote = true;
 
-                        var resultInqToQuote = PatchItemInqToQuote("InquiryProductsDotNetAPI", inqToQuoteReq, inqToQuoteRes, "Document_Type='Quote',Document_No='" + salesQuoteDetails.InquiryNo + "',Line_No=" + Convert.ToInt32(salesQuoteDetails.Products[a].InqProdLineNo));
+                        var resultInqToQuote = PatchItemInqToQuote("InquiryProductsDotNetAPI", inqToQuoteReq, inqToQuoteRes, $"Document_Type='Quote',Document_No='{salesQuoteDetails.InquiryNo}',Line_No={Convert.ToInt32(product.InqProdLineNo)}");
 
-                        if (resultInqToQuote.Result.Item1 != null)
-                            inqToQuoteRes = resultInqToQuote.Result.Item1;
-
-                        if (resultInqToQuote.Result.Item2.message != null)
-                            edInqToQuote = result.Result.Item2;
-
+                        if (resultInqToQuote?.Result.Item1 == null || !resultInqToQuote.Result.Item2.isSuccess)
+                        {
+                            responseSQHeader.errorDetails = resultInqToQuote?.Result.Item2 ?? new errorDetails { isSuccess = false, message = "Failed to update inquiry to quote." };
+                            return responseSQHeader; // Abort if inquiry update fails
+                        }
                     }
 
+                    // Create line item
                     var result1 = (dynamic)null;
-                    if (!Convert.ToBoolean(salesQuoteDetails.IsSQEdit))
+                    if (!Convert.ToBoolean(product.IsLiquidProd))
                     {
-                        if (!Convert.ToBoolean(salesQuoteDetails.Products[a].IsLiquidProd))
-                        {
-                            reqSQLine.Document_No = responseSQHeader.No;
-                            reqSQLine.No = salesQuoteDetails.Products[a].No;
-                            reqSQLine.Type = "Item";
-                            reqSQLine.PCPL_MRP = salesQuoteDetails.Products[a].PCPL_MRP;
-                            //reqSQLine.PCPL_Basic_Price = salesQuoteDetails.Products[a].PCPL_Basic_Price;
-                            reqSQLine.Location_Code = LocationCode;
-                            reqSQLine.Quantity = salesQuoteDetails.Products[a].Quantity;
-                            reqSQLine.Unit_Price = salesQuoteDetails.Products[a].Unit_Price;
-                            reqSQLine.PCPL_Packing_Style_Code = salesQuoteDetails.Products[a].PCPL_Packing_Style_Code;
-                            //reqSQLine.PCPL_Transport_Method = salesQuoteDetails.Products[a].PCPL_Transport_Method;
-                            reqSQLine.PCPL_Transport_Method = salesQuoteDetails.Products[a].PCPL_Transport_Method;
-                            reqSQLine.PCPL_Transport_Cost = salesQuoteDetails.Products[a].PCPL_Transport_Cost;
-                            reqSQLine.PCPL_Commission_Payable = salesQuoteDetails.Products[a].PCPL_Commission_Payable == null ? "" : salesQuoteDetails.Products[a].PCPL_Commission_Payable;
-                            reqSQLine.PCPL_Commission_Type = salesQuoteDetails.Products[a].PCPL_Commission_Type == null ? "" : salesQuoteDetails.Products[a].PCPL_Commission_Type;
-                            reqSQLine.PCPL_Commission = salesQuoteDetails.Products[a].PCPL_Commission;
-                            reqSQLine.PCPL_Commission_Amount = salesQuoteDetails.Products[a].PCPL_Commission_Amount;
-                            //reqSQLine.PCPL_Discount_Type = salesQuoteDetails.Products[a].PCPL_Discount_Type;
-                            //reqSQLine.PCPL_Discount = salesQuoteDetails.Products[a].PCPL_Discount;
-                            reqSQLine.PCPL_Sales_Discount = salesQuoteDetails.Products[a].PCPL_Sales_Discount;
-                            reqSQLine.PCPL_Credit_Days = salesQuoteDetails.Products[a].PCPL_Credit_Days;
-                            reqSQLine.PCPL_Margin = salesQuoteDetails.Products[a].PCPL_Margin;
-                            reqSQLine.PCPL_Margin_Percent = salesQuoteDetails.Products[a].PCPL_Margin_Percent;
-                            reqSQLine.PCPL_Interest = salesQuoteDetails.Products[a].PCPL_Interest;
-                            reqSQLine.PCPL_Interest_Rate = salesQuoteDetails.Products[a].PCPL_Interest_Rate;
-                            reqSQLine.PCPL_Total_Cost = salesQuoteDetails.Products[a].PCPL_Total_Cost;
-                            reqSQLine.Delivery_Date = salesQuoteDetails.Products[a].Delivery_Date;
-                            reqSQLine.Drop_Shipment = salesQuoteDetails.Products[a].Drop_Shipment;
-                            reqSQLine.PCPL_Vendor_No = salesQuoteDetails.Products[a].PCPL_Vendor_No == null ? "" : salesQuoteDetails.Products[a].PCPL_Vendor_No;
+                        reqSQLine.Document_No = responseSQHeader.No;
+                        reqSQLine.No = product.No;
+                        reqSQLine.Type = "Item";
+                        reqSQLine.PCPL_MRP = product.PCPL_MRP;
+                        reqSQLine.Location_Code = LocationCode;
+                        reqSQLine.Quantity = product.Quantity;
+                        reqSQLine.Unit_Price = product.Unit_Price;
+                        reqSQLine.PCPL_Packing_Style_Code = product.PCPL_Packing_Style_Code;
+                        reqSQLine.PCPL_Transport_Method = product.PCPL_Transport_Method;
+                        reqSQLine.PCPL_Transport_Cost = product.PCPL_Transport_Cost;
+                        reqSQLine.PCPL_Commission_Payable = product.PCPL_Commission_Payable ?? "";
+                        reqSQLine.PCPL_Commission_Type = product.PCPL_Commission_Type ?? "";
+                        reqSQLine.PCPL_Commission = product.PCPL_Commission;
+                        reqSQLine.PCPL_Commission_Amount = product.PCPL_Commission_Amount;
+                        reqSQLine.PCPL_Sales_Discount = product.PCPL_Sales_Discount;
+                        reqSQLine.PCPL_Credit_Days = product.PCPL_Credit_Days;
+                        reqSQLine.PCPL_Margin = product.PCPL_Margin;
+                        reqSQLine.PCPL_Margin_Percent = product.PCPL_Margin_Percent;
+                        reqSQLine.PCPL_Interest = product.PCPL_Interest;
+                        reqSQLine.PCPL_Interest_Rate = product.PCPL_Interest_Rate;
+                        reqSQLine.PCPL_Total_Cost = product.PCPL_Total_Cost;
+                        reqSQLine.Delivery_Date = product.Delivery_Date;
+                        reqSQLine.Drop_Shipment = product.Drop_Shipment;
+                        reqSQLine.PCPL_Vendor_No = product.PCPL_Vendor_No ?? "";
+                        reqSQLine.GST_Place_Of_Supply = salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1" ? "Bill-to Address" : "Ship-to Address";
+                        reqSQLine.PCPL_Inquiry_No = string.IsNullOrEmpty(salesQuoteDetails.InquiryNo) ? "" : salesQuoteDetails.InquiryNo;
+                        reqSQLine.PCPL_Inquiry_Line_No = string.IsNullOrEmpty(product.InqProdLineNo) ? 0 : Convert.ToInt32(product.InqProdLineNo);
 
-                            if(salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1")
-                                reqSQLine.GST_Place_Of_Supply = "Bill-to Address";
-                            else if (salesQuoteDetails.ShiptoCode != "-1" && salesQuoteDetails.JobtoCode != "-1")
-                                reqSQLine.GST_Place_Of_Supply = "Ship-to Address";
-                            else if (salesQuoteDetails.ShiptoCode != "-1")
-                                reqSQLine.GST_Place_Of_Supply = "Ship-to Address";
-
-                            reqSQLine.PCPL_Inquiry_No = salesQuoteDetails.InquiryNo == null || salesQuoteDetails.InquiryNo == "" ? "" : salesQuoteDetails.InquiryNo;
-                            reqSQLine.PCPL_Inquiry_Line_No = salesQuoteDetails.Products[a].InqProdLineNo == null || salesQuoteDetails.Products[a].InqProdLineNo == "" ? 0 :
-                               Convert.ToInt32(salesQuoteDetails.Products[a].InqProdLineNo);
-
-                            result1 = PostItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLine", reqSQLine, reqSQLiquidLine, resSQLine);
-                        }
-                        else
-                        {
-                            reqSQLiquidLine.Document_No = responseSQHeader.No;
-                            reqSQLiquidLine.No = salesQuoteDetails.Products[a].No;
-                            reqSQLiquidLine.Type = "Item";
-                            reqSQLiquidLine.PCPL_MRP = salesQuoteDetails.Products[a].PCPL_MRP;
-                            //reqSQLine.PCPL_Basic_Price = salesQuoteDetails.Products[a].PCPL_Basic_Price;
-                            reqSQLiquidLine.Location_Code = LocationCode;
-                            reqSQLiquidLine.PCPL_Concentration_Rate_Percent = salesQuoteDetails.Products[a].PCPL_Concentration_Rate_Percent;
-                            reqSQLiquidLine.Net_Weight = salesQuoteDetails.Products[a].Net_Weight;
-                            reqSQLiquidLine.PCPL_Liquid_Rate = salesQuoteDetails.Products[a].PCPL_Liquid_Rate;
-                            reqSQLiquidLine.PCPL_Liquid = salesQuoteDetails.Products[a].IsLiquidProd;
-                            //reqSQLiquidLine.Quantity = salesQuoteDetails.Products[a].Quantity;
-                            //reqSQLiquidLine.Unit_Price = salesQuoteDetails.Products[a].Unit_Price;
-                            reqSQLiquidLine.PCPL_Packing_Style_Code = salesQuoteDetails.Products[a].PCPL_Packing_Style_Code;
-                            //reqSQLine.PCPL_Transport_Method = salesQuoteDetails.Products[a].PCPL_Transport_Method;
-                            reqSQLiquidLine.PCPL_Transport_Method = salesQuoteDetails.Products[a].PCPL_Transport_Method;
-                            reqSQLiquidLine.PCPL_Transport_Cost = salesQuoteDetails.Products[a].PCPL_Transport_Cost;
-                            reqSQLiquidLine.PCPL_Commission_Payable = salesQuoteDetails.Products[a].PCPL_Commission_Payable == null ? "" : salesQuoteDetails.Products[a].PCPL_Commission_Payable;
-                            reqSQLiquidLine.PCPL_Commission_Type = salesQuoteDetails.Products[a].PCPL_Commission_Type == null ? "" : salesQuoteDetails.Products[a].PCPL_Commission_Type;
-                            reqSQLiquidLine.PCPL_Commission = salesQuoteDetails.Products[a].PCPL_Commission;
-                            reqSQLiquidLine.PCPL_Commission_Amount = salesQuoteDetails.Products[a].PCPL_Commission_Amount;
-                            //reqSQLine.PCPL_Discount_Type = salesQuoteDetails.Products[a].PCPL_Discount_Type;
-                            //reqSQLine.PCPL_Discount = salesQuoteDetails.Products[a].PCPL_Discount;
-                            reqSQLiquidLine.PCPL_Sales_Discount = salesQuoteDetails.Products[a].PCPL_Sales_Discount;
-                            reqSQLiquidLine.PCPL_Credit_Days = salesQuoteDetails.Products[a].PCPL_Credit_Days;
-                            reqSQLiquidLine.PCPL_Margin = salesQuoteDetails.Products[a].PCPL_Margin;
-                            reqSQLiquidLine.PCPL_Margin_Percent = salesQuoteDetails.Products[a].PCPL_Margin_Percent;
-                            reqSQLiquidLine.PCPL_Interest = salesQuoteDetails.Products[a].PCPL_Interest;
-                            reqSQLiquidLine.PCPL_Interest_Rate = salesQuoteDetails.Products[a].PCPL_Interest_Rate;
-                            reqSQLiquidLine.PCPL_Total_Cost = salesQuoteDetails.Products[a].PCPL_Total_Cost;
-                            reqSQLiquidLine.Delivery_Date = salesQuoteDetails.Products[a].Delivery_Date;
-                            reqSQLiquidLine.Drop_Shipment = salesQuoteDetails.Products[a].Drop_Shipment;
-
-                            if (salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1")
-                                reqSQLiquidLine.GST_Place_Of_Supply = "Bill-to Address";
-                            else if (salesQuoteDetails.ShiptoCode != "-1" && salesQuoteDetails.JobtoCode != "-1")
-                                reqSQLiquidLine.GST_Place_Of_Supply = "Ship-to Address";
-                            else if (salesQuoteDetails.ShiptoCode != "-1")
-                                reqSQLiquidLine.GST_Place_Of_Supply = "Ship-to Address";
-
-                            reqSQLiquidLine.PCPL_Vendor_No = salesQuoteDetails.Products[a].PCPL_Vendor_No == null ? "" : salesQuoteDetails.Products[a].PCPL_Vendor_No;
-                            reqSQLiquidLine.PCPL_Inquiry_No = salesQuoteDetails.InquiryNo == null || salesQuoteDetails.InquiryNo == "" ? "" : salesQuoteDetails.InquiryNo;
-                            reqSQLiquidLine.PCPL_Inquiry_Line_No = salesQuoteDetails.Products[a].InqProdLineNo == null || salesQuoteDetails.Products[a].InqProdLineNo == "" ? 0 :
-                               Convert.ToInt32(salesQuoteDetails.Products[a].InqProdLineNo);
-
-                            result1 = PostItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLiquidLine", reqSQLine, reqSQLiquidLine, resSQLine);
-                        }
-
+                        result1 = PostItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLine", reqSQLine, reqSQLiquidLine, resSQLine);
                     }
                     else
                     {
-                        if (!Convert.ToBoolean(salesQuoteDetails.Products[a].IsLiquidProd))
-                        {
-                            //reqSQLineUpdate.Quantity = salesQuoteDetails.Products[a].Quantity;
-                            //reqSQLineUpdate.Unit_Price = salesQuoteDetails.Products[a].Unit_Price;
-                            //reqSQLineUpdate.PCPL_Packing_Style_Code = salesQuoteDetails.Products[a].PCPL_Packing_Style_Code;
-                            //reqSQLineUpdate.Delivery_Date = salesQuoteDetails.Products[a].Delivery_Date;
-                            //reqSQLineUpdate.Drop_Shipment = salesQuoteDetails.Products[a].Drop_Shipment;
-                            //reqSQLineUpdate.PCPL_Vendor_No = salesQuoteDetails.Products[a].PCPL_Vendor_No == null ? "" : salesQuoteDetails.Products[a].PCPL_Vendor_No;
+                        reqSQLiquidLine.Document_No = responseSQHeader.No;
+                        reqSQLiquidLine.No = product.No;
+                        reqSQLiquidLine.Type = "Item";
+                        reqSQLiquidLine.PCPL_MRP = product.PCPL_MRP;
+                        reqSQLiquidLine.Location_Code = LocationCode;
+                        reqSQLiquidLine.PCPL_Concentration_Rate_Percent = product.PCPL_Concentration_Rate_Percent;
+                        reqSQLiquidLine.Net_Weight = product.Net_Weight;
+                        reqSQLiquidLine.PCPL_Liquid_Rate = product.PCPL_Liquid_Rate;
+                        reqSQLiquidLine.PCPL_Liquid = product.IsLiquidProd;
+                        reqSQLiquidLine.PCPL_Packing_Style_Code = product.PCPL_Packing_Style_Code;
+                        reqSQLiquidLine.PCPL_Transport_Method = product.PCPL_Transport_Method;
+                        reqSQLiquidLine.PCPL_Transport_Cost = product.PCPL_Transport_Cost;
+                        reqSQLiquidLine.PCPL_Commission_Payable = product.PCPL_Commission_Payable ?? "";
+                        reqSQLiquidLine.PCPL_Commission_Type = product.PCPL_Commission_Type ?? "";
+                        reqSQLiquidLine.PCPL_Commission = product.PCPL_Commission;
+                        reqSQLiquidLine.PCPL_Commission_Amount = product.PCPL_Commission_Amount;
+                        reqSQLiquidLine.PCPL_Sales_Discount = product.PCPL_Sales_Discount;
+                        reqSQLiquidLine.PCPL_Credit_Days = product.PCPL_Credit_Days;
+                        reqSQLiquidLine.PCPL_Margin = product.PCPL_Margin;
+                        reqSQLiquidLine.PCPL_Margin_Percent = product.PCPL_Margin_Percent;
+                        reqSQLiquidLine.PCPL_Interest = product.PCPL_Interest;
+                        reqSQLiquidLine.PCPL_Interest_Rate = product.PCPL_Interest_Rate;
+                        reqSQLiquidLine.PCPL_Total_Cost = product.PCPL_Total_Cost;
+                        reqSQLiquidLine.Delivery_Date = product.Delivery_Date;
+                        reqSQLiquidLine.Drop_Shipment = product.Drop_Shipment;
+                        reqSQLiquidLine.PCPL_Vendor_No = product.PCPL_Vendor_No ?? "";
+                        reqSQLiquidLine.GST_Place_Of_Supply = salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1" ? "Bill-to Address" : "Ship-to Address";
+                        reqSQLiquidLine.PCPL_Inquiry_No = string.IsNullOrEmpty(salesQuoteDetails.InquiryNo) ? "" : salesQuoteDetails.InquiryNo;
+                        reqSQLiquidLine.PCPL_Inquiry_Line_No = string.IsNullOrEmpty(product.InqProdLineNo) ? 0 : Convert.ToInt32(product.InqProdLineNo);
 
-                            //
-
-                            reqSQLineUpdate.PCPL_MRP = salesQuoteDetails.Products[a].PCPL_MRP;
-                            //reqSQLine.PCPL_Basic_Price = salesQuoteDetails.Products[a].PCPL_Basic_Price;
-                            reqSQLineUpdate.Location_Code = LocationCode;
-                            reqSQLineUpdate.Quantity = salesQuoteDetails.Products[a].Quantity;
-                            reqSQLineUpdate.Unit_Price = salesQuoteDetails.Products[a].Unit_Price;
-                            reqSQLineUpdate.PCPL_Packing_Style_Code = salesQuoteDetails.Products[a].PCPL_Packing_Style_Code;
-                            //reqSQLineUpdate.PCPL_Transport_Method = salesQuoteDetails.Products[a].PCPL_Transport_Method;
-                            reqSQLineUpdate.PCPL_Transport_Method = salesQuoteDetails.Products[a].PCPL_Transport_Method;
-                            reqSQLineUpdate.PCPL_Transport_Cost = salesQuoteDetails.Products[a].PCPL_Transport_Cost;
-                            reqSQLineUpdate.PCPL_Commission_Payable = salesQuoteDetails.Products[a].PCPL_Commission_Payable == null ? "" : salesQuoteDetails.Products[a].PCPL_Commission_Payable;
-                            reqSQLineUpdate.PCPL_Commission_Type = salesQuoteDetails.Products[a].PCPL_Commission_Type == null ? "" : salesQuoteDetails.Products[a].PCPL_Commission_Type;
-                            reqSQLineUpdate.PCPL_Commission = salesQuoteDetails.Products[a].PCPL_Commission;
-                            reqSQLineUpdate.PCPL_Commission_Amount = salesQuoteDetails.Products[a].PCPL_Commission_Amount;
-                            //reqSQLineUpdate.PCPL_Discount_Type = salesQuoteDetails.Products[a].PCPL_Discount_Type;
-                            //reqSQLineUpdate.PCPL_Discount = salesQuoteDetails.Products[a].PCPL_Discount;
-                            reqSQLineUpdate.PCPL_Sales_Discount = salesQuoteDetails.Products[a].PCPL_Sales_Discount;
-                            reqSQLineUpdate.PCPL_Credit_Days = salesQuoteDetails.Products[a].PCPL_Credit_Days;
-                            reqSQLineUpdate.PCPL_Margin = salesQuoteDetails.Products[a].PCPL_Margin;
-                            reqSQLineUpdate.PCPL_Margin_Percent = salesQuoteDetails.Products[a].PCPL_Margin_Percent;
-                            reqSQLineUpdate.PCPL_Interest = salesQuoteDetails.Products[a].PCPL_Interest;
-                            reqSQLineUpdate.PCPL_Interest_Rate = salesQuoteDetails.Products[a].PCPL_Interest_Rate;
-                            reqSQLineUpdate.PCPL_Total_Cost = salesQuoteDetails.Products[a].PCPL_Total_Cost;
-                            reqSQLineUpdate.Delivery_Date = salesQuoteDetails.Products[a].Delivery_Date;
-                            reqSQLineUpdate.Drop_Shipment = salesQuoteDetails.Products[a].Drop_Shipment;
-                            reqSQLineUpdate.PCPL_Vendor_No = salesQuoteDetails.Products[a].PCPL_Vendor_No == null ? "" : salesQuoteDetails.Products[a].PCPL_Vendor_No;
-
-                            if (salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1")
-                                reqSQLineUpdate.GST_Place_Of_Supply = "Bill-to Address";
-                            else if (salesQuoteDetails.ShiptoCode != "-1" && salesQuoteDetails.JobtoCode != "-1")
-                                reqSQLineUpdate.GST_Place_Of_Supply = "Ship-to Address";
-                            else if (salesQuoteDetails.ShiptoCode != "-1")
-                                reqSQLineUpdate.GST_Place_Of_Supply = "Ship-to Address";
-
-                            //
-
-                            int SQLineNo = Convert.ToInt32(salesQuoteDetails.Products[a].Line_No);
-                            result1 = PatchItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLine", reqSQLineUpdate, reqSQLiquidLineUpdate, resSQLine, "Document_Type='Quote',Document_No='" + responseSQHeader.No + "',Line_No=" + SQLineNo);
-                        }
-                        else
-                        {
-                            //reqSQLiquidLineUpdate.PCPL_Concentration_Rate_Percent = salesQuoteDetails.Products[a].PCPL_Concentration_Rate_Percent;
-                            //reqSQLiquidLineUpdate.Net_Weight = salesQuoteDetails.Products[a].Net_Weight;
-                            //reqSQLiquidLineUpdate.PCPL_Liquid_Rate = salesQuoteDetails.Products[a].PCPL_Liquid_Rate;
-                            ////reqSQLiquidLineUpdate.Quantity = salesQuoteDetails.Products[a].Quantity;
-                            ////reqSQLiquidLineUpdate.Unit_Price = salesQuoteDetails.Products[a].Unit_Price;
-                            //reqSQLiquidLineUpdate.PCPL_Packing_Style_Code = salesQuoteDetails.Products[a].PCPL_Packing_Style_Code;
-                            //reqSQLiquidLineUpdate.Delivery_Date = salesQuoteDetails.Products[a].Delivery_Date;
-                            //reqSQLiquidLineUpdate.Drop_Shipment = salesQuoteDetails.Products[a].Drop_Shipment;
-                            //reqSQLiquidLineUpdate.PCPL_Vendor_No = salesQuoteDetails.Products[a].PCPL_Vendor_No == null ? "" : salesQuoteDetails.Products[a].PCPL_Vendor_No;
-
-                            //
-
-                            reqSQLiquidLineUpdate.PCPL_MRP = salesQuoteDetails.Products[a].PCPL_MRP;
-                            //reqSQLiquidLineUpdate.PCPL_Basic_Price = salesQuoteDetails.Products[a].PCPL_Basic_Price;
-                            reqSQLiquidLineUpdate.Location_Code = LocationCode;
-                            reqSQLiquidLineUpdate.PCPL_Concentration_Rate_Percent = salesQuoteDetails.Products[a].PCPL_Concentration_Rate_Percent;
-                            reqSQLiquidLineUpdate.Net_Weight = salesQuoteDetails.Products[a].Net_Weight;
-                            reqSQLiquidLineUpdate.PCPL_Liquid_Rate = salesQuoteDetails.Products[a].PCPL_Liquid_Rate;
-                            reqSQLiquidLineUpdate.PCPL_Liquid = salesQuoteDetails.Products[a].IsLiquidProd;
-                            //reqSQLiquidLineUpdate.Quantity = salesQuoteDetails.Products[a].Quantity;
-                            //reqSQLiquidLineUpdate.Unit_Price = salesQuoteDetails.Products[a].Unit_Price;
-                            reqSQLiquidLineUpdate.PCPL_Packing_Style_Code = salesQuoteDetails.Products[a].PCPL_Packing_Style_Code;
-                            //reqSQLiquidLineUpdate.PCPL_Transport_Method = salesQuoteDetails.Products[a].PCPL_Transport_Method;
-                            reqSQLiquidLineUpdate.PCPL_Transport_Method = salesQuoteDetails.Products[a].PCPL_Transport_Method;
-                            reqSQLiquidLineUpdate.PCPL_Transport_Cost = salesQuoteDetails.Products[a].PCPL_Transport_Cost;
-                            reqSQLiquidLineUpdate.PCPL_Commission_Payable = salesQuoteDetails.Products[a].PCPL_Commission_Payable == null ? "" : salesQuoteDetails.Products[a].PCPL_Commission_Payable;
-                            reqSQLiquidLineUpdate.PCPL_Commission_Type = salesQuoteDetails.Products[a].PCPL_Commission_Type == null ? "" : salesQuoteDetails.Products[a].PCPL_Commission_Type;
-                            reqSQLiquidLineUpdate.PCPL_Commission = salesQuoteDetails.Products[a].PCPL_Commission;
-                            reqSQLiquidLineUpdate.PCPL_Commission_Amount = salesQuoteDetails.Products[a].PCPL_Commission_Amount;
-                            //reqSQLiquidLineUpdate.PCPL_Discount_Type = salesQuoteDetails.Products[a].PCPL_Discount_Type;
-                            //reqSQLiquidLineUpdate.PCPL_Discount = salesQuoteDetails.Products[a].PCPL_Discount;
-                            reqSQLiquidLineUpdate.PCPL_Sales_Discount = salesQuoteDetails.Products[a].PCPL_Sales_Discount;
-                            reqSQLiquidLineUpdate.PCPL_Credit_Days = salesQuoteDetails.Products[a].PCPL_Credit_Days;
-                            reqSQLiquidLineUpdate.PCPL_Margin = salesQuoteDetails.Products[a].PCPL_Margin;
-                            reqSQLiquidLineUpdate.PCPL_Margin_Percent = salesQuoteDetails.Products[a].PCPL_Margin_Percent;
-                            reqSQLiquidLineUpdate.PCPL_Interest = salesQuoteDetails.Products[a].PCPL_Interest;
-                            reqSQLiquidLineUpdate.PCPL_Interest_Rate = salesQuoteDetails.Products[a].PCPL_Interest_Rate;
-                            reqSQLiquidLineUpdate.PCPL_Total_Cost = salesQuoteDetails.Products[a].PCPL_Total_Cost;
-                            reqSQLiquidLineUpdate.Delivery_Date = salesQuoteDetails.Products[a].Delivery_Date;
-                            reqSQLiquidLineUpdate.Drop_Shipment = salesQuoteDetails.Products[a].Drop_Shipment;
-                            reqSQLiquidLineUpdate.PCPL_Vendor_No = salesQuoteDetails.Products[a].PCPL_Vendor_No == null ? "" : salesQuoteDetails.Products[a].PCPL_Vendor_No;
-
-                            if (salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1")
-                                reqSQLiquidLineUpdate.GST_Place_Of_Supply = "Bill-to Address";
-                            else if (salesQuoteDetails.ShiptoCode != "-1" && salesQuoteDetails.JobtoCode != "-1")
-                                reqSQLiquidLineUpdate.GST_Place_Of_Supply = "Ship-to Address";
-                            else if (salesQuoteDetails.ShiptoCode != "-1")
-                                reqSQLiquidLineUpdate.GST_Place_Of_Supply = "Ship-to Address";
-
-                            //
-
-                            int SQLineNo = Convert.ToInt32(salesQuoteDetails.Products[a].Line_No);
-                            result1 = PatchItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLiquidLine", reqSQLineUpdate, reqSQLiquidLineUpdate, resSQLine, "Document_Type='Quote',Document_No='" + responseSQHeader.No + "',Line_No=" + SQLineNo);
-                        }
-
+                        result1 = PostItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLiquidLine", reqSQLine, reqSQLiquidLine, resSQLine);
                     }
 
-
-                    if (result1.Result.Item1 != null)
+                    // Check if line item creation was successful
+                    if (result1?.Result.Item1 == null || !result1.Result.Item2.isSuccess)
                     {
-                        resSQLine = result1.Result.Item1;
-                        ed1 = result1.Result.Item2;
-                        responseSQHeader.errorDetails = ed1;
-
-                        responseSQHeader.ItemLineNo += resSQLine.No + "_" + resSQLine.Line_No + ",";
-
-                        //if (salesQuoteDetails.Products[a].InvQuantities != null && salesQuoteDetails.Products[a].InvQuantities.Count > 0)
-                        //{
-                        //    SPSQInvQtyReserveOData invQtyReserveOData = new SPSQInvQtyReserveOData();
-                        //    List<SPSQInvQtyReserve> invQtyReserve = new List<SPSQInvQtyReserve>();
-                        //    errorDetails ed2 = new errorDetails();
-
-                        //    for (int b = 0; b < salesQuoteDetails.Products[a].InvQuantities.Count; b++)
-                        //    {
-                        //        invQtyReserve.Add(new SPSQInvQtyReserve()
-                        //        {
-                        //            QuoteNo = responseSQHeader.No,
-                        //            LineNo = Convert.ToInt32(resSQLine.Line_No),
-                        //            ItemNo = salesQuoteDetails.Products[a].InvQuantities[b].ItemNo,
-                        //            LotNo = salesQuoteDetails.Products[a].InvQuantities[b].LotNo,
-                        //            Qty = salesQuoteDetails.Products[a].InvQuantities[b].Qty,
-                        //            LocationCode = salesQuoteDetails.Products[a].InvQuantities[b].LocationCode
-
-                        //        });
-
-                        //    }
-
-                        //    var result2 = PostItemInvQtyReserve<SPSQInvQtyReserveOData>("", invQtyReserve, invQtyReserveOData);
-                        //    invQtyReserveOData = result2.Result.Item1;
-
-                        //    if (result2.Result.Item2.message != null)
-                        //        ed2 = result1.Result.Item2;
-
-                        //}
-
-                        //
-
-                        //
-
+                        responseSQHeader.errorDetails = result1?.Result.Item2 ?? new errorDetails { isSuccess = false, message = "Failed to create sales quote line item." };
+                        return responseSQHeader; // Abort if line item creation fails
                     }
 
-                    //if (result1.Result.Item2.message != null)
-                    //    ed1 = result1.Result.Item2;
-
+                    resSQLine = result1.Result.Item1;
+                    ed1 = result1.Result.Item2;
+                    responseSQHeader.errorDetails = ed1;
+                    responseSQHeader.ItemLineNo += $"{resSQLine.No}_{resSQLine.Line_No},";
                 }
 
-                if (salesQuoteDetails.InquiryNo != "" && salesQuoteDetails.InquiryNo != null)
+                // Update inquiry status if applicable
+                if (!string.IsNullOrEmpty(salesQuoteDetails.InquiryNo))
                 {
                     SPSQUpdateInqStatus updateInqStatus = new SPSQUpdateInqStatus();
                     SPSQUpdateInqStatusOData updateInqStatusOData = new SPSQUpdateInqStatusOData();
-                    //SPInqLines inqToQuoteRes = new SPInqLines();
                     errorDetails edUpdateInqStatus = new errorDetails();
-
                     updateInqStatus.salesquoteno = responseSQHeader.No;
 
-                    //inqToQuoteReq.PCPL_Convert_Quote = true;
-
                     var result2 = PostItemForUpdateInqStatus<SPSQUpdateInqStatusOData>("", updateInqStatus, updateInqStatusOData);
+                    if (result2?.Result.Item1 == null || !result2.Result.Item2.isSuccess)
+                    {
+                        responseSQHeader.errorDetails = result2?.Result.Item2 ?? new errorDetails { isSuccess = false, message = "Failed to update inquiry status." };
+                        return responseSQHeader; // Abort if inquiry status update fails
+                    }
                     updateInqStatusOData = result2.Result.Item1;
                     edUpdateInqStatus = result2.Result.Item2;
                     responseSQHeader.errorDetails = edUpdateInqStatus;
-
-                    //var resultInqToQuote = PatchItemInqToQuote("InquiryProductsDotNetAPI", inqToQuoteReq, inqToQuoteRes, "Document_Type='Quote',Document_No='" + salesQuoteDetails.InquiryNo + "',Line_No=" + Convert.ToInt32(salesQuoteDetails.Products[a].InqProdLineNo));
-
-                    //if (resultInqToQuote.Result.Item1 != null)
-                    //    inqToQuoteRes = resultInqToQuote.Result.Item1;
-
-                    //if (result2.Result.Item2.message != null)
-                    //    edUpdateInqStatus = result.Result.Item2;
-
                 }
 
-                string toEmail = "";
-                string ccEmail = LoggedInSPUserEmail;
-
-                if (salesQuoteDetails.ApprovalFor == "Negative Credit Limit")
-                    toEmail = financeUserDetails.Company_E_Mail;
-
-                if (salesQuoteDetails.ApprovalFor == "Negative Margin")
-                    toEmail = reportingPersonDetails.PCPL_Reporting_Person_Email;
-
-                if (salesQuoteDetails.ApprovalFor == "Both")
-                    toEmail = financeUserDetails.Company_E_Mail + "," + reportingPersonDetails.PCPL_Reporting_Person_Email;
-
-                string ApprovalForText = salesQuoteDetails.ApprovalFor == "Both" ? "Negative Credit Limit And Margin" : salesQuoteDetails.ApprovalFor;
-
-                //if(Convert.ToDouble(salesQuoteDetails.AvailableCreditLimit) < 0)
+                // Send email only if all operations succeeded and approval is required
                 if (salesQuoteDetails.ApprovalFor != null)
                 {
+                    string toEmail = "";
+                    string ccEmail = LoggedInSPUserEmail;
+                    if (salesQuoteDetails.ApprovalFor == "Negative Credit Limit")
+                        toEmail = financeUserDetails.Company_E_Mail;
+                    else if (salesQuoteDetails.ApprovalFor == "Negative Margin")
+                        toEmail = reportingPersonDetails.PCPL_Reporting_Person_Email;
+                    else if (salesQuoteDetails.ApprovalFor == "Both")
+                        toEmail = $"{financeUserDetails.Company_E_Mail},{reportingPersonDetails.PCPL_Reporting_Person_Email}";
 
-                    //
+                    string ApprovalForText = salesQuoteDetails.ApprovalFor == "Both" ? "Negative Credit Limit And Margin" : salesQuoteDetails.ApprovalFor;
 
                     DateTime quoteDate = Convert.ToDateTime(salesQuoteDetails.OrderDate);
                     DateTime quoteValidUntilDate = Convert.ToDateTime(salesQuoteDetails.ValidUntillDate);
-
                     QuoteValidityDays = (quoteValidUntilDate - quoteDate).Days;
 
                     string myString = ApprovalFormatFile;
-                    string type = "";
-
                     if (salesQuoteDetails.ApprovalFor == "Negative Credit Limit")
                     {
                         myString = myString.Replace("##pageheading##", " CREDIT LIMIT EXCEEDED ");
-                        myString = myString.Replace("##heading##", "The user '" + SPName + "' was trying to create the quote, but the Credit limit is exceeded.");
-                        type = "CL";
+                        myString = myString.Replace("##heading##", $"The user '{SPName}' was trying to create the quote, but the Credit limit is exceeded.");
                     }
                     else if (salesQuoteDetails.ApprovalFor == "Negative Margin")
                     {
                         myString = myString.Replace("##pageheading##", " MARGIN IS LESS THAN ZERO ");
-                        myString = myString.Replace("##heading##", "The user '" + SPName + "' was trying to create the quote, but the Margin is less than zero.");
-                        type = "MARGIN";
+                        myString = myString.Replace("##heading##", $"The user '{SPName}' was trying to create the quote, but the Margin is less than zero.");
                     }
                     else if (salesQuoteDetails.ApprovalFor == "Both")
                     {
                         myString = myString.Replace("##pageheading##", " CREDIT LIMIT EXCEEDED & MARGIN LESS THAN ZERO");
-                        myString = myString.Replace("##heading##", "The user '" + SPName + "' was trying to create the quote, but the Credit limit is exceeded and Margin is less than Zero.");
-                        type = "BOTH";
+                        myString = myString.Replace("##heading##", $"The user '{SPName}' was trying to create the quote, but the Credit limit is exceeded and Margin is less than Zero.");
                     }
 
-                    salesQuoteDetails.SQApprovalFormURL = salesQuoteDetails.SQApprovalFormURL + "?SQNo=" + responseSQHeader.No + "&ScheduleStatus=''&SQStatus=" + StatusForUrl +
-                        "&SQFor=ApproveReject&LoggedInUserRole=";
-
-                    //myString = myString.Replace("##SRN##", lblSalesQuoteNo.Text);
+                    salesQuoteDetails.SQApprovalFormURL += $"?SQNo={responseSQHeader.No}&ScheduleStatus=''&SQStatus={responseSQHeader.PCPL_Status}&SQFor=ApproveReject&LoggedInUserRole=";
                     myString = myString.Replace("##SalesQuoteNo##", responseSQHeader.No);
                     myString = myString.Replace("##SalesQuoteDate##", responseSQHeader.Order_Date);
 
                     string[] CustSellToAddress = salesQuoteDetails.ConsigneeAddress.Split('_');
                     string CustName = CustSellToAddress[0];
-                    string CustSellToAddress_ = CustName + "<br />" + CustSellToAddress[1] + ",<br />" + CustSellToAddress[2] + ",<br />" + CustSellToAddress[3] + "-" + CustSellToAddress[4];
-
+                    string CustSellToAddress_ = $"{CustName}<br />{CustSellToAddress[1]},<br />{CustSellToAddress[2]},<br />{CustSellToAddress[3]}-{CustSellToAddress[4]}";
                     myString = myString.Replace("##CustomerDetail##", CustSellToAddress_);
                     myString = myString.Replace("##ContactName##", salesQuoteDetails.ContactPersonName);
-
-                    //myString = myString.Replace("##TaxGroupDetails##", ds.Tables[0].Rows[0]["TaxGroupDetails"].ToString());
                     myString = myString.Replace("##FooterDetails##", "");
-
-                    // myString = myString.Replace("##msg##", message);
-                    //myString = myString.Replace("##page##", ConfigurationManager.AppSettings["approval"].ToString());
-                    myString = myString.Replace("##heading##", "The user '" + SPName + "' was trying to create the quote, but the Credit limit is exceeded or Margin is less than zero.");
 
                     if (salesQuoteDetails.JobtoCode != "-1")
                     {
                         myString = myString.Replace("##ShippingHeader##", "ShippingDetails");
-
                         string[] CustJobtoAddress = salesQuoteDetails.JobtoAddress.Split(',');
-
-
                         string CustJobtoAddress_ = string.Join(",<br />", CustJobtoAddress);
-                         //CustJobtoAddress_ = CustName + "<br />" + CustJobtoAddress[0] + ",<br />" + CustJobtoAddress[1] + ",<br />" + CustJobtoAddress[2];
-
                         myString = myString.Replace("##ShippingDetail##", CustJobtoAddress_);
                     }
                     else
@@ -842,72 +591,31 @@ namespace PrakashCRM.Service.Controllers
                         myString = myString.Replace("##ShippingDetail##", "");
                     }
 
-                    string str_lineTable = "";
-                    /*string SalesLineQuery = @"select ProductName,	PackagingStyle,(CAST(ISNULL(RequiredQty,0) AS DECIMAL(18,3))) AS RequiredQty,	ISNULL((SELECT TOP 1 ISNULL([Description],'') FROM [PCAPL200715].[dbo].[Prakash Chemicals$Shipment Method] WHERE Code COLLATE SQL_Latin1_General_CP1_CI_AS = IncoTerms),'') AS IncoTerms,SUBSTRING(PaymentTerms,0,CHARINDEX('~',PaymentTerms)) as PaymentTerms,			 CAST((CAST(ISNULL(SalesPrice,0) AS DECIMAL(18,4)))/NULLIF(CONVERT(NVARCHAR(50),(SELECT (CAST(ISNULL(RequiredQty,0) AS DECIMAL(18,4))))),'') AS DECIMAL(18,2)) 
-                     AS SalesPrice from SalesQuoteDetail SQD     WHERE SQD.SalesQuoteNo = '" + ds.Tables[0].Rows[0]["SalesQuoteNo"].ToString() + "' order By          ProductName";
-                    Getconnection c12 = new Getconnection();
-                    DataTable dt = Dataacess.GetDataTable(SalesLineQuery, CommandType.Text, null);
+                    string str_lineTable = "<table cellpadding=\"0\" cellspacing=\"1\" border=\"1\" width=\"100%\" align=\"left\" style=\"border:1px solid #BEBEBE\">";
+                    str_lineTable += "<tr style=\"background:#ccc;font-weight:bold !important;text-transform:capitalize;font-size:12\">";
+                    str_lineTable += "<td width =\"5%\" align=\"left\">SR.NO.</td>";
+                    str_lineTable += "<td width =\"10%\" align=\"left\">Product</td>";
+                    str_lineTable += "<td width =\"10%\" align=\"left\">Packaging Style</td>";
+                    str_lineTable += "<td width =\"5%\" align=\"right\">Qty(MT)</td>";
+                    str_lineTable += "<td width =\"5%\" align=\"right\">Sales Price(Rs.)</td>";
+                    str_lineTable += "<td width =\"5%\" align=\"right\">IncoTerms</td>";
+                    str_lineTable += "</tr>";
+                    int counter = 1;
 
-
-                    if (dt.Rows.Count > 0)
-                    {*/
-                        myString = myString.Replace("##PaymentTermsHeader##", "Payment Terms : ");
-                        myString = myString.Replace("##PaymentTerms##", salesQuoteDetails.PaymentTermsCode);
-                        // lbl_paymentTerm.Text = "Payment Terms : " + Convert.ToString(dt_salesLine.Rows[0]["PaymentTerms"]);
-
-
-                        /*string q_deliveryDate = @"select DeliveryDate from SalesQuoteMaster where SalesQuoteNo = '" + ds.Tables[0].Rows[0]["SalesQuoteNo"].ToString() + "'";
-
-                        Getconnection c122 = new Getconnection();
-                        SqlDataAdapter sda_deliveryDate = new SqlDataAdapter(q_deliveryDate, c122.getconnection());
-                        DataTable dt_deliveryDate = new DataTable();
-                        sda_deliveryDate.Fill(dt_deliveryDate);*/
-
-                        /*if (dt_deliveryDate.Rows.Count > 0)
-                        {*/
-                            //myString = myString.Replace("##ScheduleHeader##", "Schedule : ");
-                            //myString = myString.Replace("##Schedule##", Convert.ToString(dt_deliveryDate.Rows[0][0]));
-                            //lbl_Schedule.Text = "Schedule : " + Convert.ToString(dt_deliveryDate.Rows[0][0]);
-                        /*}*/
-
-                        str_lineTable = "<table cellpadding=\"0\" cellspacing=\"1\" border=\"1\" width=\"100%\" align=\"left\" style=\"border:1px solid #BEBEBE\">";
-                        str_lineTable += "<tr style=\"background:#ccc;font-weight:bold !important;text-transform:capitalize;font-size:12\">";
-                        str_lineTable += "<td width =\"5%\" align=\"left\">SR.NO.</td>";
-                        str_lineTable += "<td width =\"10%\" align=\"left\">Product</td>";
-                        str_lineTable += "<td width =\"10%\" align=\"left\">Packaging Style</td>";
-                        str_lineTable += "<td width =\"5%\" align=\"right\">Qty(MT)</td>";
-                        str_lineTable += "<td width =\"5%\" align=\"right\">Sales Price(Rs.)</td>";
-                        str_lineTable += "<td width =\"5%\" align=\"right\">IncoTerms</td>";
-
-
-                        //str_lineTable += "<td width=\"5%\" align=\"center\">Total Amt per unit</td>";
+                    for (int a = 0; a < salesQuoteDetails.Products.Count; a++)
+                    {
+                        str_lineTable += "<tr style=\"font-size:10\">";
+                        str_lineTable += $"<td align=\"left\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">{counter}</td>";
+                        str_lineTable += $"<td align=\"left\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">{salesQuoteDetails.Products[a].ProductName}</td>";
+                        str_lineTable += $"<td align=\"left\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">{salesQuoteDetails.Products[a].PCPL_Packing_Style_Code}</td>";
+                        str_lineTable += $"<td align=\"right\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">{salesQuoteDetails.Products[a].Quantity}</td>";
+                        str_lineTable += $"<td align=\"right\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">{salesQuoteDetails.Products[a].Unit_Price}</td>";
+                        str_lineTable += $"<td align=\"right\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">{salesQuoteDetails.ShipmentMethodCode}</td>";
                         str_lineTable += "</tr>";
-                        int counter = 1;
+                        counter++;
+                    }
 
-                        for (int a = 0; a < salesQuoteDetails.Products.Count; a++)
-                        {
-                            str_lineTable += "<tr style=\"font-size:10\">";
-
-                            str_lineTable += "<td align=\"left\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">" + counter + "</td>";
-                            str_lineTable += "<td align=\"left\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">" + salesQuoteDetails.Products[a].ProductName + " </td>";
-                            str_lineTable += "<td align=\"left\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">" + salesQuoteDetails.Products[a].PCPL_Packing_Style_Code + " </td>";
-                            str_lineTable += "<td align=\"right\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">" + salesQuoteDetails.Products[a].Quantity + " </td>";
-                            str_lineTable += "<td align=\"right\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">" + salesQuoteDetails.Products[a].Unit_Price + " </td>";
-                            str_lineTable += "<td align=\"right\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">" + salesQuoteDetails.ShipmentMethodCode + " </td>";
-
-                            //str_lineTable += "<td align=\"right\" valign=\"top\" bgcolor=\"#FFFFFF\" width=\"5%\">" + (Convert.ToDecimal(Convert.ToString(dr["SalesPrice"])) + GSTAmount) + " </td>";
-                            str_lineTable += "</tr>";
-
-                            counter++;
-                        }
-                    /*}*/
-
-                    /*Getconnection c = new Getconnection();
-                    string getcustno = "select No_ from [dbo].[Prakash Chemicals$Customer] where Name='" + txtCustomerName.Text.Trim() + "'";
-                    // DataTable dt = Dataacess.GetDataTable(consillor, CommandType.Text, null);
-                    SqlCommand daconsillor = new SqlCommand(getcustno, c.getNavconnection());
-                    string custno = Convert.ToString(daconsillor.ExecuteScalar());*/
-
+                    str_lineTable += "</table>";
                     myString = myString.Replace("##PaymentTermsHeader##", "");
                     myString = myString.Replace("##PaymentTerms##", "");
                     myString = myString.Replace("##ScheduleHeader##", "");
@@ -917,54 +625,138 @@ namespace PrakashCRM.Service.Controllers
                     myString = myString.Replace("##availablecreditlimit##", salesQuoteDetails.AvailableCreditLimit);
                     myString = myString.Replace("##custno##", salesQuoteDetails.CustomerNo);
                     myString = myString.Replace("##custname##", salesQuoteDetails.ContactCompanyName);
-
-                    if (QuoteValidityDays <= 1)
-                        myString = myString.Replace("##QuoteValidityDays##", QuoteValidityDays + " Day");
-                    else if (QuoteValidityDays >= 1)
-                        myString = myString.Replace("##QuoteValidityDays##", QuoteValidityDays + " Days");
-
-                    //GSTTable += "</table>    </ td >    </ tr > ";
-
-                    str_lineTable += "</table>";
-                
+                    myString = myString.Replace("##QuoteValidityDays##", QuoteValidityDays <= 1 ? $"{QuoteValidityDays} Day" : $"{QuoteValidityDays} Days");
                     myString = myString.Replace("##GSTAPPLICABLE##", "GST: As Applicable");
-
-                    myString = myString.Replace("##LineDetails##", str_lineTable); /*.Replace("<td width=\"5%\" align=\"center\">GST</td>", ""));*/
-
+                    myString = myString.Replace("##LineDetails##", str_lineTable);
                     myString = myString.Replace("##SalesQuoteApprovalFormURL##", salesQuoteDetails.SQApprovalFormURL);
 
-                    string emailSubject = "Sales Quote Approval - " + responseSQHeader.No + " - " + CustomerName + " - " + DateTime.Now.ToString("dd/MM/yyyy") + " - " + ApprovalForText;
+                    string emailSubject = $"Sales Quote Approval - {responseSQHeader.No} - {CustomerName} - {DateTime.Now:dd/MM/yyyy} - {ApprovalForText}";
 
                     EmailService emailService = new EmailService();
                     StringBuilder sbMailBody = new StringBuilder();
-                    sbMailBody.Append("");
-                    /*sbMailBody.Append("<p>Hi,</p>");
-                    sbMailBody.Append("<p>Welcome to the <strong>Prakash CRM Portal</strong>.</p>");
-                    sbMailBody.Append("<p>Approval Request For Sales Quote - " + responseSQHeader.No + "</p>");
-                    sbMailBody.Append("<p>Justification For - " + salesQuoteDetails.JustificationFor + "</p>");
-                    sbMailBody.Append("<p>Justification - " + salesQuoteDetails.JustificationDetails + "</p>");*/
                     sbMailBody.Append(myString);
-                    /*sbMailBody.Append("<p>&nbsp;</p>");
-                    sbMailBody.Append("<p>Warm Regards,</p>");
-                    sbMailBody.Append("<p>Support Team</p>");*/
 
-
-
-                    //emailService.SendEmail(toEmail, ccEmail, "Approval Request For Sales Quote " + responseSQHeader.No + " - PrakashCRM", sbMailBody.ToString());
-                    //emailService.SendEmail(toEmail, ccEmail, emailSubject, sbMailBody.ToString());
-                    //emailService.SendEmail(toEmail, ccEmail, emailSubject, myString);
-                    emailService.SendEmailWithHTMLBody(toEmail, ccEmail, "", emailSubject, myString);
-
-                    //
+                    try
+                    {
+                        emailService.SendEmailWithHTMLBody(toEmail, ccEmail, "", emailSubject, sbMailBody.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        responseSQHeader.errorDetails = new errorDetails { isSuccess = false, message = $"Failed to send email: {ex.Message}" };
+                        return responseSQHeader; // Abort if email sending fails
+                    }
                 }
 
+                return responseSQHeader;
             }
+            else
+            {
+                // Update existing Sales Quote
+                requestSQHeaderUpdate.Quote_Valid_Until_Date = salesQuoteDetails.ValidUntillDate;
+                requestSQHeaderUpdate.PCPL_Contact_Person = salesQuoteDetails.ContactPersonNo;
+                requestSQHeaderUpdate.Payment_Terms_Code = salesQuoteDetails.PaymentTermsCode;
+                requestSQHeaderUpdate.Shipment_Method_Code = salesQuoteDetails.ShipmentMethodCode;
+                requestSQHeaderUpdate.Ship_to_Code = salesQuoteDetails.ShiptoCode == "-1" ? "" : salesQuoteDetails.ShiptoCode;
+                requestSQHeaderUpdate.PCPL_Job_to_Code = salesQuoteDetails.JobtoCode == "-1" ? "" : salesQuoteDetails.JobtoCode;
 
-            //if (result.Result.Item2.message != null)
-            //    ed = result.Result.Item2;
+                result = PatchItemSQ("SalesQuoteDotNetAPI", requestSQHeaderUpdate, responseSQHeader, $"Document_Type='Quote',No='{salesQuoteDetails.QuoteNo}'");
 
-            return responseSQHeader;
+                if (result?.Result.Item1 == null || !result.Result.Item2.isSuccess)
+                {
+                    responseSQHeader.errorDetails = result?.Result.Item2 ?? new errorDetails { isSuccess = false, message = "Failed to update sales quote header." };
+                    return responseSQHeader;
+                }
 
+                responseSQHeader = result.Result.Item1;
+                ed = result.Result.Item2;
+                responseSQHeader.errorDetails = ed;
+                CustomerName = responseSQHeader.Sell_to_Customer_Name ?? "";
+                LocationCode = salesQuoteDetails.LocationCode;
+
+                // Process line items for update
+                SPSQLinesUpdate reqSQLineUpdate = new SPSQLinesUpdate();
+                SPSQLiquidLinesUpdate reqSQLiquidLineUpdate = new SPSQLiquidLinesUpdate();
+                SPSQLines resSQLine = new SPSQLines();
+                errorDetails ed1 = new errorDetails();
+
+                for (int a = 0; a < salesQuoteDetails.Products.Count; a++)
+                {
+                    var product = salesQuoteDetails.Products[a];
+                    var result1 = (dynamic)null;
+
+                    if (!Convert.ToBoolean(product.IsLiquidProd))
+                    {
+                        reqSQLineUpdate.PCPL_MRP = product.PCPL_MRP;
+                        reqSQLineUpdate.Location_Code = LocationCode;
+                        reqSQLineUpdate.Quantity = product.Quantity;
+                        reqSQLineUpdate.Unit_Price = product.Unit_Price;
+                        reqSQLineUpdate.PCPL_Packing_Style_Code = product.PCPL_Packing_Style_Code;
+                        reqSQLineUpdate.PCPL_Transport_Method = product.PCPL_Transport_Method;
+                        reqSQLineUpdate.PCPL_Transport_Cost = product.PCPL_Transport_Cost;
+                        reqSQLineUpdate.PCPL_Commission_Payable = product.PCPL_Commission_Payable ?? "";
+                        reqSQLineUpdate.PCPL_Commission_Type = product.PCPL_Commission_Type ?? "";
+                        reqSQLineUpdate.PCPL_Commission = product.PCPL_Commission;
+                        reqSQLineUpdate.PCPL_Commission_Amount = product.PCPL_Commission_Amount;
+                        reqSQLineUpdate.PCPL_Sales_Discount = product.PCPL_Sales_Discount;
+                        reqSQLineUpdate.PCPL_Credit_Days = product.PCPL_Credit_Days;
+                        reqSQLineUpdate.PCPL_Margin = product.PCPL_Margin;
+                        reqSQLineUpdate.PCPL_Margin_Percent = product.PCPL_Margin_Percent;
+                        reqSQLineUpdate.PCPL_Interest = product.PCPL_Interest;
+                        reqSQLineUpdate.PCPL_Interest_Rate = product.PCPL_Interest_Rate;
+                        reqSQLineUpdate.PCPL_Total_Cost = product.PCPL_Total_Cost;
+                        reqSQLineUpdate.Delivery_Date = product.Delivery_Date;
+                        reqSQLineUpdate.Drop_Shipment = product.Drop_Shipment;
+                        reqSQLineUpdate.PCPL_Vendor_No = product.PCPL_Vendor_No ?? "";
+                        reqSQLineUpdate.GST_Place_Of_Supply = salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1" ? "Bill-to Address" : "Ship-to Address";
+
+                        int SQLineNo = Convert.ToInt32(product.Line_No);
+                        result1 = PatchItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLine", reqSQLineUpdate, reqSQLiquidLineUpdate, resSQLine, $"Document_Type='Quote',Document_No='{responseSQHeader.No}',Line_No={SQLineNo}");
+                    }
+                    else
+                    {
+                        reqSQLiquidLineUpdate.PCPL_MRP = product.PCPL_MRP;
+                        reqSQLiquidLineUpdate.Location_Code = LocationCode;
+                        reqSQLiquidLineUpdate.PCPL_Concentration_Rate_Percent = product.PCPL_Concentration_Rate_Percent;
+                        reqSQLiquidLineUpdate.Net_Weight = product.Net_Weight;
+                        reqSQLiquidLineUpdate.PCPL_Liquid_Rate = product.PCPL_Liquid_Rate;
+                        reqSQLiquidLineUpdate.PCPL_Liquid = product.IsLiquidProd;
+                        reqSQLiquidLineUpdate.PCPL_Packing_Style_Code = product.PCPL_Packing_Style_Code;
+                        reqSQLiquidLineUpdate.PCPL_Transport_Method = product.PCPL_Transport_Method;
+                        reqSQLiquidLineUpdate.PCPL_Transport_Cost = product.PCPL_Transport_Cost;
+                        reqSQLiquidLineUpdate.PCPL_Commission_Payable = product.PCPL_Commission_Payable ?? "";
+                        reqSQLiquidLineUpdate.PCPL_Commission_Type = product.PCPL_Commission_Type ?? "";
+                        reqSQLiquidLineUpdate.PCPL_Commission = product.PCPL_Commission;
+                        reqSQLiquidLineUpdate.PCPL_Commission_Amount = product.PCPL_Commission_Amount;
+                        reqSQLiquidLineUpdate.PCPL_Sales_Discount = product.PCPL_Sales_Discount;
+                        reqSQLiquidLineUpdate.PCPL_Credit_Days = product.PCPL_Credit_Days;
+                        reqSQLiquidLineUpdate.PCPL_Margin = product.PCPL_Margin;
+                        reqSQLiquidLineUpdate.PCPL_Margin_Percent = product.PCPL_Margin_Percent;
+                        reqSQLiquidLineUpdate.PCPL_Interest = product.PCPL_Interest;
+                        reqSQLiquidLineUpdate.PCPL_Interest_Rate = product.PCPL_Interest_Rate;
+                        reqSQLiquidLineUpdate.PCPL_Total_Cost = product.PCPL_Total_Cost;
+                        reqSQLiquidLineUpdate.Delivery_Date = product.Delivery_Date;
+                        reqSQLiquidLineUpdate.Drop_Shipment = product.Drop_Shipment;
+                        reqSQLiquidLineUpdate.PCPL_Vendor_No = product.PCPL_Vendor_No ?? "";
+                        reqSQLiquidLineUpdate.GST_Place_Of_Supply = salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1" ? "Bill-to Address" : "Ship-to Address";
+
+                        int SQLineNo = Convert.ToInt32(product.Line_No);
+                        result1 = PatchItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLiquidLine", reqSQLineUpdate, reqSQLiquidLineUpdate, resSQLine, $"Document_Type='Quote',Document_No='{responseSQHeader.No}',Line_No={SQLineNo}");
+                    }
+
+                    if (result1?.Result.Item1 == null || !result1.Result.Item2.isSuccess)
+                    {
+                        responseSQHeader.errorDetails = result1?.Result.Item2 ?? new errorDetails { isSuccess = false, message = "Failed to update sales quote line item." };
+                        return responseSQHeader;
+                    }
+
+                    resSQLine = result1.Result.Item1;
+                    ed1 = result1.Result.Item2;
+                    responseSQHeader.errorDetails = ed1;
+                    responseSQHeader.ItemLineNo += $"{resSQLine.No}_{resSQLine.Line_No},";
+                }
+
+                return responseSQHeader;
+            }
         }
 
         [Route("GetSQListDataForApproveReject")]
@@ -1500,6 +1292,7 @@ namespace PrakashCRM.Service.Controllers
                     creditlimitcustdetails.Post_Code = resultCustomer.Result.Item1.value[0].Post_Code;
                     creditlimitcustdetails.PANNo = resultCustomer.Result.Item1.value[0].P_A_N_No;
                     creditlimitcustdetails.PcplClass = resultCustomer.Result.Item1.value[0].PCPL_Class;
+                    creditlimitcustdetails.AverageDelayDays = resultCustomer.Result.Item1.value[0].PCPL_ADD_Average_Delay_Days;
 
                     SPSQShiptoAddress requestShiptoAddress = new SPSQShiptoAddress();
                     List<SPSQShiptoAddressRes> responseShiptoAddress = new List<SPSQShiptoAddressRes>();

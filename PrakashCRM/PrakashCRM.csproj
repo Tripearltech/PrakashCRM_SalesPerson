@@ -1158,6 +1158,7 @@
     <Content Include="Scripts\appjs\DailyVisitExpenseReport.js" />
     <Content Include="Scripts\appjs\DailyVisitList.js" />
     <Content Include="Scripts\appjs\Dashboard.js" />
+    <Content Include="Scripts\appjs\SalesQtDispatchDetails.js" />
     <Content Include="Scripts\appjs\ForgotPassword.js" />
     <Content Include="Scripts\appjs\Inquiry.js" />
     <Content Include="Scripts\appjs\InquiryList.js" />
@@ -1274,8 +1275,10 @@
     <Content Include="Scripts\ng-table.js" />
     <Content Include="Scripts\ng-table.min.js" />
     <Content Include="Scripts\reportjs\CustomerLedgerEntry.js" />
+    <Content Include="Scripts\reportjs\CustomerOutsatnding.js" />
     <Content Include="Scripts\reportjs\InventoryView.js" />
     <Content Include="SPProfileImages\UserProfileImage.png" />
+    <Content Include="Views\SPSalesQuotes\DispatchDetails.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1356,6 +1359,8 @@
     <Content Include="Views\SPSalesQuotes\SalesQuoteStatus.cshtml" />
     <Content Include="Views\SPBusinessPlan\BusinessPlanStatusSPWise.cshtml" />
     <Content Include="Views\SPReports\InventoryView.cshtml" />
+    <Content Include="Views\SPReports\CustomerLedgerEntry.cshtml" />
+    <Content Include="Views\SPReports\CustomerOutsatnding.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

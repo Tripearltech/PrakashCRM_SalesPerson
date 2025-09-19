@@ -213,5 +213,110 @@ namespace PrakashCRM.Controllers
             return Json(dailyVisitData, JsonRequestBehavior.AllowGet);
         }
 
+        // Non Performing Customers list
+        public async Task<JsonResult> GetNonPerfomingCuslist()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetNonPerfomingCuslist";
+
+            HttpClient client = new HttpClient();
+            List<SPNonPerfomingCuslist> nonperfoming = new List<SPNonPerfomingCuslist>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                nonperfoming = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPNonPerfomingCuslist>>(data);
+            }
+
+            return Json(nonperfoming, JsonRequestBehavior.AllowGet);
+        }
+        // Taeget vs Sales list
+        //    public async Task<JsonResult> GetSalespersonData()
+        //    {
+        //        string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetSalespersonData";
+
+        //        HttpClient client = new HttpClient();
+        //        List<SPSelaspersonlist> salespersonlist = new List<SPSelaspersonlist>();
+
+        //        client.BaseAddress = new Uri(apiUrl);
+        //        client.DefaultRequestHeaders.Accept.Clear();
+        //        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+        //        HttpResponseMessage response = await client.GetAsync(apiUrl);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var data = await response.Content.ReadAsStringAsync();
+        //            salespersonlist = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPSelaspersonlist>>(data);
+        //        }
+
+        //        return Json(salespersonlist, JsonRequestBehavior.AllowGet);
+        //    }
+        //    public async Task<JsonResult> GetSupportSP()
+        //    {
+        //        string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetSupportSP";
+
+        //        HttpClient client = new HttpClient();
+        //        List<SPSupportSPlist> supportsp = new List<SPSupportSPlist>();
+
+        //        client.BaseAddress = new Uri(apiUrl);
+        //        client.DefaultRequestHeaders.Accept.Clear();
+        //        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+        //        HttpResponseMessage response = await client.GetAsync(apiUrl);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var data = await response.Content.ReadAsStringAsync();
+        //            supportsp = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPSupportSPlist>>(data);
+        //        }
+
+        //        return Json(supportsp, JsonRequestBehavior.AllowGet);
+        //    }
+        //    public async Task<JsonResult> GetProductData()
+        //    {
+        //        string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetProductData";
+
+        //        HttpClient client = new HttpClient();
+        //        List<SPProductlist> productlists = new List<SPProductlist>();
+
+        //        client.BaseAddress = new Uri(apiUrl);
+        //        client.DefaultRequestHeaders.Accept.Clear();
+        //        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+        //        HttpResponseMessage response = await client.GetAsync(apiUrl);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var data = await response.Content.ReadAsStringAsync();
+        //            productlists = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPProductlist>>(data);
+        //        }
+
+        //        return Json(productlists, JsonRequestBehavior.AllowGet);
+        //    }
+
+        public async Task<JsonResult> GetCombinedSalesData()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetCombinedSalesData";
+
+            HttpClient client = new HttpClient();
+            CombinedSalesData combinedData = new CombinedSalesData();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                combinedData = Newtonsoft.Json.JsonConvert.DeserializeObject<CombinedSalesData>(data);
+            }
+
+            return Json(combinedData, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

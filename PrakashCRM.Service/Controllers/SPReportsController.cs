@@ -376,5 +376,114 @@ namespace PrakashCRM.Service.Controllers
 
         }
 
+        // Generate Outstanding Report
+
+        [HttpPost]
+        [Route("GenerateOutstandingList")]
+        public string GenerateOutstandingList(string FromDate, string ToDate)
+        {
+            bool response = false;
+            SPIOutStandinglistPost outGeneratereq = new SPIOutStandinglistPost();
+            SPIOutStandinglistOData outGenerateres = new SPIOutStandinglistOData();
+            errorDetails ed = new errorDetails();
+
+            outGeneratereq.fromdate = FromDate;
+            outGeneratereq.todate = ToDate;
+
+            var result = PostlocationwiseOutStadinglist<SPIOutStandinglistOData>("", outGeneratereq, outGenerateres);
+
+            if (result?.Result != null)
+            {
+                response = result.Result.Item1?.value ?? false;
+                ed = result.Result.Item2;
+                outGenerateres.errorDetails = ed;
+            }
+            else
+            {
+                response = true;
+            }
+            return response.ToString().ToLower();
+        }
+
+        public async Task<(SPIOutStandinglistOData, errorDetails)> PostlocationwiseOutStadinglist<SPIOutStandinglistOData>(string apiendpoint, SPIOutStandinglistPost requestModel, SPIOutStandinglistOData responseModel)
+        {
+            string _baseURL = System.Configuration.ConfigurationManager.AppSettings["BaseURL"];
+            string _tenantId = System.Configuration.ConfigurationManager.AppSettings["TenantID"];
+            string _environment = System.Configuration.ConfigurationManager.AppSettings["Environment"];
+            string _companyName = System.Configuration.ConfigurationManager.AppSettings["CompanyName"];
+
+            API ac = new API();
+            var accessToken = await ac.GetAccessToken();
+
+            HttpClient _httpClient = new HttpClient();
+            string encodeurl = Uri.EscapeUriString("https://api.businesscentral.dynamics.com/v2.0/e55ad508-ef1a-489f-afe3-ae21f856e440/Sandbox/ODataV4/CollectionRepSummaryMgmt_GenerateCustCollectionReportData?company=\'Prakash Company\'");
+            Uri baseuri = new Uri(encodeurl);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken.Token);
+
+
+            string ItemCardObjString = JsonConvert.SerializeObject(requestModel);
+            var content = new StringContent(ItemCardObjString, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = null;
+            try
+            {
+                response = _httpClient.PostAsync(baseuri, content).Result;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            errorDetails errordetail = new errorDetails();
+            errordetail.isSuccess = response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                var JsonData = response.Content.ReadAsStringAsync().Result;
+                try
+                {
+                    JObject res = JObject.Parse(JsonData);
+                    //SPSQScheduleOrderOData scheduleOrderOData = res.ToObject<SPSQScheduleOrderOData>();
+                    responseModel = res.ToObject<SPIOutStandinglistOData>();
+
+                    //string scheduleOrderData = "{\"value\":" + scheduleOrderOData.value + "}";
+                    //responseModel = JsonConvert.DeserializeObject<SPSQScheduleOrder>(scheduleOrderData);
+
+                    errordetail.code = response.StatusCode.ToString();
+                    errordetail.message = response.ReasonPhrase;
+                }
+                catch (Exception ex1)
+                {
+                }
+            }
+            else
+            {
+                var JsonData = response.Content.ReadAsStringAsync().Result;
+
+                try
+                {
+                    JObject res = JObject.Parse(JsonData);
+                    errorMaster<errorDetails> emd = res.ToObject<errorMaster<errorDetails>>();
+                    errordetail = emd.error;
+                }
+                catch (Exception ex1)
+                {
+                }
+            }
+            return (responseModel, errordetail);
+        }
+        // Get Outstanding Report
+        [HttpGet]
+        [Route("GetOutstandingList")]
+        public List<CollectionDataModel> GetOutstandingList()
+        {
+            API ac = new API();
+            List<CollectionDataModel> outstanding = new List<CollectionDataModel>();
+
+            var result = ac.GetData<CollectionDataModel>("CollectionSummaryView", "");
+
+            if (result.Result.Item1.value.Count > 0)
+                outstanding = result.Result.Item1.value;
+
+            return outstanding;
+        }
     }
+
 }

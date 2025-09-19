@@ -418,45 +418,6 @@ $(document).ready(function () {
 
     });
 
-    //$('#btnShowInvQty').click(function () {
-
-    //    alert("Inv Qty");
-    //    $('#modalSQ').css('display', 'none');
-    //    $('#dvSQScheOrder').css('display', 'none');
-    //    $('.modal-title').text("Lot No. Wise Qty");
-    //    $('#modalInvQty').css('display', 'block');
-
-    //    //url: '/SPSalesQuotes/GetInventoryDetails?ProdNo=' + $('#hfProdNo').val() + '&LocCode=' + $('#hfProdLocCode').val(),
-        
-    //    $.ajax(
-    //        {
-    //            url: '/SPSalesQuotes/GetInventoryDetails?ProdNo=' + $('#hfProdNo').val() + '&LocCode=' + $('#hfProdLocCode').val(),
-    //            type: 'GET',
-    //            contentType: 'application/json',
-    //            success: function (data) {
-
-    //                $('#tblInvDetails').empty();
-
-    //                var invDetailsTR = "";
-
-    //                for (var i = 0; i < data.length; i++) {
-
-    //                    invDetailsTR += "<tr><td hidden>" + data[i].ItemNo + "</td><td>" + data[i].ManufactureCode + "</td><td>" + data[i].LotNo + "</td><td>" + data[i].AvailableQty + "</td><td>" + data[i].RequestedQty + "</td><td><input id='" + data[i].LotNo + "_ReqQty' value='0' type='text' width='40%' /></td>" +
-    //                        "<td>" + data[i].UnitCost + "</td></tr>";
-
-    //                }
-
-    //                $('#tblInvDetails').append(invDetailsTR);
-
-    //            },
-    //            error: function () {
-    //                //alert("error");
-    //            }
-    //        }
-    //    );
-
-    //});
-
     $('#btnAddQty').click(function () {
 
         var errMsg = "";
@@ -1065,15 +1026,8 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                         rowData += "<td></td>";
                     }
 
-                    rowData += "<td>" + item.TPTPL_Short_Closed_Qty + "</td>";
-
-                    //if (item.PCPL_Rejected_Reason == null || item.PCPL_Rejected_Reason == "") {
-                    //    rowData += "<td></td>";
-                    //}
-                    //else {
-                    //    rowData += "<td>" + item.PCPL_Rejected_Reason + "</td>";
-                    //}
-    
+                    rowData += "<td>" + item.TPTPL_Short_Closed_Qty + "</td>" + "<td>" + item.TPTPL_Balance_Qty + "</td>";
+                        
                     rowData += "</tr>";
 
                     $('#tableBody').append(rowData);

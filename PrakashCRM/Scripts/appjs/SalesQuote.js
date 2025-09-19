@@ -1519,6 +1519,8 @@ function GetCreditLimitAndCustDetails(companyName) {
                     $('#hdnCustBalanceLCY').val(data.AccountBalance);
                     $('#tdClassCustomer').text(data.PcplClass); // Set the text content of tdClassCustomer
                     $('#tdClassCustomer').val(data.PcplClass);
+                    $('#tdAvgDelayDays').text(data.AverageDelayDays); // Set the text content of td AverageDelayDays
+                    $('#tdAvgDelayDays').val(data.AverageDelayDays);
 
                     if (SQFor == "ApproveReject") {
                         $('#tdOverdue').text($('#txtOutstandingDue').val());
@@ -1927,7 +1929,6 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
 
             $('#dataList').css('display', 'block');
             var itemLineNo = "";
-            // Initialize DataTable
             var dtable = $('#dataList').DataTable({
                 retrieve: true,
                 searching: false,
@@ -1936,16 +1937,12 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                 responsive: true,
                 ordering: false,
                 columnDefs: [
-                    // Hide internal/extra columns (MRP, Unit Price, Delivery Date, etc.)
                     { targets: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], visible: false },
-                    { className: 'dtr-control', targets: 0 } // first column as dtr-control
+                    { className: 'dtr-control', targets: 0 }
                 ]
             });
 
-            // Loop through product data
             $.each(data.ProductsRes, function (index, item) {
-
-                // Determine action buttons
                 var actionsHtml = "";
                 if (item.TPTPL_Short_Closed) {
                     actionsHtml = "<span class='badge bg-secondary'>Shortclosed</span>";
@@ -1958,55 +1955,48 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
 
                 // Drop shipment display
                 var dropShipmentOpt = item.Drop_Shipment ? "Yes" : "No";
-
-                // Build the row array
                 var rowArray = [
                     "", // dtr-control
-                    actionsHtml,               // visible action buttons
-                    item.No,                    // Product No
-                    item.Description,           // Product Name
-                    item.Quantity,              // Qty
-                    item.Unit_of_Measure_Code,  // UOM
-                    item.PCPL_Packing_Style_Code, // Packing Style
-                    item.PCPL_MRP,              // hidden
-                    item.Unit_Price,            // hidden
-                    item.Delivery_Date,         // hidden
-                    item.PCPL_Total_Cost,       // hidden
-                    item.PCPL_Margin,           // hidden
-                    data.PaymentTermsCode,      // hidden
-                    data.ShipmentMethodCode,    // hidden
-                    item.PCPL_Transport_Method, // hidden
-                    item.PCPL_Transport_Cost,   // hidden
-                    item.PCPL_Sales_Discount,   // hidden
-                    item.PCPL_Commission_Type,  // hidden
-                    item.PCPL_Commission,       // hidden
-                    item.PCPL_Commission_Amount,// hidden
-                    item.PCPL_Credit_Days,      // hidden
-                    item.PCPL_Interest,         // hidden
-                    `<label id="${item.No}_DropShipment">${dropShipmentOpt}</label>`, // hidden
-                    item.PCPL_Commission_Payable,// hidden
-                    item.PCPL_Commission_Payable_Name,// hidden
-                    item.PCPL_Vendor_No,        // hidden
-                    item.PCPL_Vendor_Name,      // hidden
-                    `<label id="${item.No}_SQLineNo" style='display:none'>${item.Line_No}</label>`, // hidden
-                    `<label id="${item.No}_MarginPercent">${item.PCPL_Margin_Percent} %</label>`, // hidden
-                    item.PCPL_Liquid,           // hidden
-                    item.PCPL_Concentration_Rate_Percent,// hidden
-                    item.Net_Weight,            // hidden
-                    item.PCPL_Liquid_Rate       // hidden
+                    actionsHtml,              
+                    item.No,                    
+                    item.Description,           
+                    item.Quantity,              
+                    item.Unit_of_Measure_Code,  
+                    item.PCPL_Packing_Style_Code,
+                    item.PCPL_MRP,              
+                    item.Unit_Price,            
+                    item.Delivery_Date,         
+                    item.PCPL_Total_Cost,       
+                    item.PCPL_Margin,           
+                    data.PaymentTermsCode,      
+                    data.ShipmentMethodCode,    
+                    item.PCPL_Transport_Method, 
+                    item.PCPL_Transport_Cost,   
+                    item.PCPL_Sales_Discount,   
+                    item.PCPL_Commission_Type,  
+                    item.PCPL_Commission,       
+                    item.PCPL_Commission_Amount,
+                    item.PCPL_Credit_Days,      
+                    item.PCPL_Interest,         
+                    `<label id="${item.No}_DropShipment">${dropShipmentOpt}</label>`, 
+                    item.PCPL_Commission_Payable,
+                    item.PCPL_Commission_Payable_Name,
+                    item.PCPL_Vendor_No,        
+                    item.PCPL_Vendor_Name,      
+                    `<label id="${item.No}_SQLineNo" style='display:none'>${item.Line_No}</label>`, 
+                    `<label id="${item.No}_MarginPercent">${item.PCPL_Margin_Percent} %</label>`, 
+                    item.PCPL_Liquid,          
+                    item.PCPL_Concentration_Rate_Percent,
+                    item.Net_Weight,            
+                    item.PCPL_Liquid_Rate       
                 ];
-
-                // Ensure rowArray length matches number of <th> columns
                 var colCount = $('#dataList thead th').length;
                 while (rowArray.length < colCount) rowArray.push('');
 
-                // Add row to DataTable
                 var newNode = dtable.row.add(rowArray).draw(false).node();
                 $(newNode).attr('id', 'ProdTR_' + item.No);
                 $(newNode).find("td").eq(0).addClass("dtr-control");
             });
-
-            // Recalculate responsive layout
             dtable.responsive.recalc();
 
             /*
