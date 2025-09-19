@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.Ajax.Utilities;
 
 namespace PrakashCRM.Service.Controllers
 {
@@ -325,5 +326,113 @@ namespace PrakashCRM.Service.Controllers
 
             return (responseModel, errordetail);
         }
+        // Non Performing Customers list
+        [Route("GetNonPerfomingCuslist")]
+        public List<SPNonPerfomingCuslist> GetNonPerfomingCuslist()
+        {
+            API ac = new API();
+            List<SPNonPerfomingCuslist> nonperfoming= new List<SPNonPerfomingCuslist>();
+
+            var result = ac.GetData<SPNonPerfomingCuslist>("NonPerformingCustomer", "");
+
+            if (result.Result.Item1.value.Count > 0)
+                nonperfoming = result.Result.Item1.value;
+
+            return nonperfoming;
+        }
+
+        // Taeget vs Sales list
+        //    [Route("GetSalespersonData")]
+        //    public List<SPSelaspersonlist> GetSalespersonData()
+        //    {
+        //        API ac = new API();
+        //        List<SPSelaspersonlist> salespersonlist = new List<SPSelaspersonlist>();
+
+        //        string filter = "IsSalesPerson eq true";
+        //        var result = ac.GetData<SPSelaspersonlist>("TargetvsSalesReport", filter);
+
+        //        if (result.Result.Item1.value.Count > 0)
+        //            salespersonlist = result.Result.Item1.value;
+        //        salespersonlist = salespersonlist.DistinctBy(a => a.SalesPerson_Name).ToList();
+
+        //        return salespersonlist;
+        //    }
+
+
+        //    [HttpGet]
+        //    [Route("GetSupportSP")]
+        //    public List<SPSupportSPlist> GetSupportSP()
+        //    {
+        //        API ac = new API();
+        //        List<SPSupportSPlist> supportsp = new List<SPSupportSPlist>();
+
+        //        var result = ac.GetData<SPSupportSPlist>("TargetvsSalesReport", "");
+
+        //        if (result.Result.Item1.value.Count > 0)
+        //            supportsp = result.Result.Item1.value;
+        //            supportsp = supportsp.DistinctBy(a => a.SalesPerson).ToList();
+
+        //        return supportsp;
+        //    }
+        //    [HttpGet]
+        //    [Route("GetProductData")]
+        //    public List<SPProductlist> GetProductData()
+        //    {
+        //        API ac = new API();
+        //        List<SPProductlist> productlists = new List<SPProductlist>();
+
+        //        string filter = "IsSalesPerson eq true and IsProduct eq true and IsIncludeTop10Product eq true";
+
+        //        var result = ac.GetData<SPProductlist>("TargetvsSalesReport", filter);
+
+        //        if (result.Result.Item1.value.Count > 0)
+        //            productlists = result.Result.Item1.value;
+
+        //        return productlists;
+        //    }
+
+        [HttpGet]
+        [Route("GetCombinedSalesData")]
+        public CombinedSalesData GetCombinedSalesData()
+        {
+            API ac = new API();
+
+            CombinedSalesData combinedData = new CombinedSalesData();
+
+            // Salespersons
+            //string salespersonFilter = "IsSalesPerson eq true";
+            string Filter = "IsSalesPerson eq true and IsProduct eq true and IsIncludTop10Product eq true";
+            var salespersonResult = ac.GetData<SPSelaspersonlist>("TargetvsSalesReport", Filter);
+            List<SPSelaspersonlist> salespersons = new List<SPSelaspersonlist>();
+            if (salespersonResult.Result.Item1.value.Count > 0)
+            {
+                salespersons = salespersonResult.Result.Item1.value.DistinctBy(a => a.SalesPerson_Name).ToList();
+            }
+
+            // SupportSPs
+            var supportResult = ac.GetData<SPSupportSPlist>("TargetvsSalesReport", "");
+            List<SPSupportSPlist> supportSPs = new List<SPSupportSPlist>();
+            if (supportResult.Result.Item1.value.Count > 0)
+            {
+                supportSPs = supportResult.Result.Item1.value.DistinctBy(a => a.SalesPerson).ToList();
+            }
+
+            //  Products
+            string productFilter = "IsSalesPerson eq true and IsProduct eq true and IsIncludTop10Product eq true";
+            var productResult = ac.GetData<SPProductlist>("TargetvsSalesReport", productFilter);
+            List<SPProductlist> products = new List<SPProductlist>();
+            if (productResult.Result.Item1.value.Count > 0)
+            {
+                products = productResult.Result.Item1.value;
+            }
+
+            // Combined Model
+            combinedData.Salespersons = salespersons;
+            combinedData.SupportSPs = supportSPs;
+            combinedData.Products = products;
+
+            return combinedData;
+        }
+
     }
 }

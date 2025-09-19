@@ -414,6 +414,10 @@ namespace PrakashCRM.Controllers
         {
             return View();
         }
+        public ActionResult DispatchDetails()
+        {
+            return View();
+        }
 
         public async Task<JsonResult> GetSQListDataForApproveReject(string UserRoleORReportingPerson, int orderBy, string orderDir, string filter, int skip, int top)
         {

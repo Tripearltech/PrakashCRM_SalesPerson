@@ -19,6 +19,7 @@ $(document).ready(function () {
     BindMarketUpdate();
     BindWarehouseSalesAcceptTask();
     BindWarehousePurchaseAcceptTask();
+    BindNonPerformingList();
 
     SetCurrentDate();
 
@@ -154,13 +155,13 @@ function BindMarketUpdate() {
 }
 
 function SetCurrentDate() {
-
     var today = new Date();
-    var day = ('0' + today.getDate()).slice(-2); // Ensures two-digit day
-    var month = ('0' + (today.getMonth() + 1)).slice(-2); // Ensures two-digit month
+    var day = ('0' + today.getDate()).slice(-2);
+    var month = ('0' + (today.getMonth() + 1)).slice(-2);
     var year = today.getFullYear();
 
-    $('#txtMUDate').val(`${day}-${month}-${year}`);
+    // yyyy-MM-dd format (safe for C# DateTime)
+    $('#txtMUDate').val(`${year}-${month}-${day}`);
 }
 
 function AddMarketUpdate() {
@@ -168,26 +169,25 @@ function AddMarketUpdate() {
     var entryno, updateDate, update, salesPerson;
 
     entryno = $('#hfEntryNo')[0].value;
-    updateDate = $('#txtMUDate')[0].value;
+    updateDate = $('#txtMUDate')[0].value;  // yyyy-MM-dd aa raha hai
     update = $('#txtMarketUpdate')[0].value;
     salesPerson = $('#getLoggedInUserNo')[0].value;
 
     if (updateDate != "" && update != "") {
-
         $.post(
-            apiUrl + 'AddMarketUpdate?Entry_No=' + entryno + '&Update=' + update + '&Update_Date=' + updateDate + '&Employee_Code=' + salesPerson,
+            apiUrl + 'AddMarketUpdate?Entry_No=' + entryno +
+            '&Update=' + encodeURIComponent(update) +        // safe for special chars
+            '&Update_Date=' + updateDate +
+            '&Employee_Code=' + salesPerson,
 
             function (data) {
-
                 if (data) {
                     $('#modalMarketUpdate').css('display', 'none');
 
-                    if (entryno == 0) {
-                        var actionMsg = "Market Update Added Successfully.";
-                    }
-                    else {
-                        var actionMsg = "Market Updation Updated Successfully.";
-                    }
+                    var actionMsg = (entryno == 0)
+                        ? "Market Update Added Successfully."
+                        : "Market Update Updated Successfully.";
+
                     ShowActionMsg(actionMsg);
                     BindMarketUpdate();
                 }
@@ -195,11 +195,10 @@ function AddMarketUpdate() {
         );
     }
     else {
-        var msg = "Please Fill data.";
-        ShowErrMsg(msg);
-
+        ShowErrMsg("Please Fill data.");
     }
 }
+
 
 function EditMarketUpdate(entryNo, rowobj) {
     //debugger;
@@ -399,4 +398,30 @@ function ShowPurchaseLines(Document_No) {
             }
         }
     );
+}
+// Non Performing Customers list
+function BindNonPerformingList() {
+    $.ajax({
+        url: '/SPDashboard/GetNonPerfomingCuslist',
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
+            $('#tblNonPerforminglist').empty();
+            var rowData = "";
+
+            if (data.length > 0) {
+                $.each(data, function (index, item) {
+                    rowData += "<tr><td>" + item.Customer_No + "</td><td>" + item.Customer_Name + "</td><td>" + item.Salesperson_Code + "</td></tr>";
+                });
+            } else {
+                rowData = "<tr><td colspan='5' style='text-align:left;'>No Records Found</td></tr>";
+            }
+
+            $('#tblNonPerforminglist').append(rowData);
+        },
+        error: function (xhr, status, error) {
+            alert("Error fetching data: " + xhr.responseText);
+        }
+    });
 }

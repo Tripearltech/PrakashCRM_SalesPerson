@@ -28,6 +28,10 @@ namespace PrakashCRM.Controllers
         {
             return View();
         }
+        public ActionResult CustomerOutsatnding()
+        {
+            return View();
+        }
 
         public ActionResult InventoryView()
         {
@@ -246,6 +250,28 @@ namespace PrakashCRM.Controllers
             }
 
             return Json(customerReports, JsonRequestBehavior.AllowGet);
+        }
+
+        // Outstanding List report
+        public async Task<JsonResult> GetOutstandingList()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPReports/GetOutstandingList";
+
+            HttpClient client = new HttpClient();
+            List<CollectionDataModel> outstanding = new List<CollectionDataModel>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                outstanding = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CollectionDataModel>>(data);
+            }
+
+            return Json(outstanding, JsonRequestBehavior.AllowGet);
         }
 
     }

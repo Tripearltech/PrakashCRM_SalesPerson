@@ -165,21 +165,9 @@
                                     <th scope="col">Sales Percentage(Qty)</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Mayur Sant</td>
-                                    <td><a id="demandQtyAmt"><u>200.00</u></a></td>
-                                    <td><a href="#"><u>200.00</u></a></td>
-                                    <td><a href="#"><u>248.400</u></a></td>
-                                    <td><a href="#"><u>124.00%</u></a></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Total</b></td>
-                                    <td><b>200.00</b></td>
-                                    <td><b>200.00</b></td>
-                                    <td><b>248.400</b></td>
-                                    <td></td>
-                                </tr>
+
+                            <tbody id="tblSalesperson">
+                                
                             </tbody>
                         </table>
                         <br />
@@ -192,22 +180,9 @@
                                     <th scope="col">Sales Qty</th>
                                     <th scope="col">Sales Percentage(Qty)</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Mayur Sant</td>
-                                    <td><a id="demandQtyAmt"><u>200.00</u></a></td>
-                                    <td><a href="#"><u>200.00</u></a></td>
-                                    <td><a href="#"><u>248.400</u></a></td>
-                                    <td><a href="#"><u>124.00%</u></a></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Total</b></td>
-                                    <td><b>200.00</b></td>
-                                    <td><b>200.00</b></td>
-                                    <td><b>248.400</b></td>
-                                    <td></td>
-                                </tr>
+                            
+                            <tbody id="tblSupportSP">
+                               
                             </tbody>
                         </table>
                         <br />
@@ -221,33 +196,10 @@
                                     <th scope="col">Sales Percentage(Qty)</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Ethyl Acetate</td>
-                                    <td><a href="#"><u>0.000</u></a></td>
-                                    <td><a href="#"><u>125.570</u></a></td>
-                                    <td><a href="#"><u>0%</u></a></td>
-                                </tr>
-                                <tr>
-                                    <td>Acetic Acid (Glacial)-Carboy</td>
-                                    <td><a href="#"><u>0.000</u></a></td>
-                                    <td><a href="#"><u>24.330</u></a></td>
-                                    <td><a href="#"><u>0%</u></a></td>
-                                </tr>
-                                <tr>
-                                    <td>Ethyl Acetate - 185 Kgs</td>
-                                    <td><a href="#"><u>200.000</u></a></td>
-                                    <td><a href="#"><u>20.720</u></a></td>
-                                    <td><a href="#"><u>10.36%</u></a></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Total</b></td>
-                                    <td><b>200.00</b></td>
-                                    <td>
-                                        <b>172.62</b>
-                                    </td>
-                                    <td></td>
-                                </tr>
+
+
+                            <tbody id="tblProductsalesqty">
+                                
                             </tbody>
                         </table>
                     </div>
@@ -280,138 +232,6 @@
                         <button id="btnCreateDV" type="button" class="btn btn-primary px-5">Create Daily Visit</button>
                         @*&nbsp;
                         <button id="btnInvReport" type="button" class="btn btn-primary px-5">Item Wise Inventory Report</button>*@
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--end row-->
-
-    <div class="row">
-        <div class="col">
-            <div class="card radius-10 mb-0 verticalScroll">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <h6 class="mb-1 logo-text" style="font-size:18px">Customer Outstanding</h6>
-                        </div>
-                    </div>
-                    <div>
-                        <table class="table mb-0 table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th></th>
-                                    <th scope="col">SP Branch</th>
-                                    <th scope="col">Col. Upto MTD-1 Date</th>
-                                    <th scope="col">Date on Title - TD</th>
-                                    <th scope="col">Total Collection</th>
-                                    <th scope="col">Overdue CM-1</th>
-                                    <th scope="col">1st-10th Due Cur. Month</th>
-                                    <th scope="col">11th-20th Due Cur. Month</th>
-                                    <th scope="col">21st-30th Due Cur. Month</th>
-                                    <th scope="col">Total Due Cur. Month</th>
-                                    <th scope="col">Achievement in %</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td><a id="Branch1Rec" class="clsPointer"><i class="bx bx-plus-circle"></i></a></td>
-                                    <td>AHMEDABAD</td>
-                                    <td>10</td>
-                                    <td>5</td>
-                                    <td>15</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>135</td>
-                                    <td>11%</td>
-                                </tr>
-                                <tr id="Branch1SPRecs" style="display:none">
-                                    <td></td>
-                                    <td></td>
-                                    <td>Salesperson</td>
-                                    <td>10</td>
-                                    <td>5</td>
-                                    <td>15</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>135</td>
-                                    <td>11%</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td><a id="Branch2Rec" class="clsPointer"><i class="bx bx-plus-circle"></i></a></td>
-                                    <td>BARODA</td>
-                                    <td>15</td>
-                                    <td>10</td>
-                                    <td>25</td>
-                                    <td>20</td>
-                                    <td>10</td>
-                                    <td>30</td>
-                                    <td>40</td>
-                                    <td>125</td>
-                                    <td>20%</td>
-                                </tr>
-                                <tr id="Branch2SPRecs" style="display:none">
-                                    <td></td>
-                                    <td></td>
-                                    <td>Salesperson</td>
-                                    <td>15</td>
-                                    <td>10</td>
-                                    <td>25</td>
-                                    <td>20</td>
-                                    <td>10</td>
-                                    <td>30</td>
-                                    <td>40</td>
-                                    <td>125</td>
-                                    <td>20%</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td><a id="Branch3Rec" class="clsPointer"><i class="bx bx-plus-circle"></i></a></td>
-                                    <td>SURAT</td>
-                                    <td>5</td>
-                                    <td>3</td>
-                                    <td>8</td>
-                                    <td>50</td>
-                                    <td>20</td>
-                                    <td>10</td>
-                                    <td>25</td>
-                                    <td>113</td>
-                                    <td>7%</td>
-                                </tr>
-                                <tr id="Branch3SPRecs" style="display:none">
-                                    <td></td>
-                                    <td></td>
-                                    <td>Salesperson</td>
-                                    <td>5</td>
-                                    <td>3</td>
-                                    <td>8</td>
-                                    <td>50</td>
-                                    <td>20</td>
-                                    <td>10</td>
-                                    <td>25</td>
-                                    <td>113</td>
-                                    <td>7%</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><b>Grand Total</b></td>
-                                    <td><b>30</b></td>
-                                    <td><b>18</b></td>
-                                    <td><b>48</b></td>
-                                    <td><b>100</b></td>
-                                    <td><b>60</b></td>
-                                    <td><b>70</b></td>
-                                    <td><b>95</b></td>
-                                    <td><b>373</b></td>
-                                    <td><b>13%</b></td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -467,11 +287,13 @@
                                     <th scope="col">Salesperson</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tblNonPerforminglist">
+                            </tbody>
+                            @*<tbody>
                                 <tr>
                                     <td colspan="3"><center>No Records Found</center></td>
                                 </tr>
-                            </tbody>
+                            </tbody>*@
                         </table>
                     </div>
                 </div>

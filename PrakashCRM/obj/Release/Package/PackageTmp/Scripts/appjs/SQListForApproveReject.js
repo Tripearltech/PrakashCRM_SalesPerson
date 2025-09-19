@@ -1,7 +1,7 @@
 ﻿/* start pagination filter code */
 var filter = "";
 var orderBy = 3;
-var orderDir = "asc";
+var orderDir = "desc";
 var apiUrl = $('#getServiceApiUrl').val() + 'SPSalesQuotes/';
 
 $(document).ready(function () {

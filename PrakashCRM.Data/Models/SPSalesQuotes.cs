@@ -52,6 +52,9 @@ namespace PrakashCRM.Data.Models
         public string PCPL_Rejected_Reason { get; set; }
 
         public string PCPL_Rejected_Reason_HOD { get; set; }
+
+        public int TPTPL_Balance_Qty { get; set; }
+
     }
 
 
@@ -1225,6 +1228,7 @@ namespace PrakashCRM.Data.Models
 
         public List<SPSQJobtoAddressRes> JobtoAddress { get; set; }
         public object PcplClass { get; set; }
+        public object AverageDelayDays { get; set; }
     }
 
     public class SPSQInquiryNos
