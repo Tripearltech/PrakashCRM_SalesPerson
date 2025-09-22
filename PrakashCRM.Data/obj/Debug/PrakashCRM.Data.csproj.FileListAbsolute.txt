@@ -106,3 +106,12 @@ C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Data\obj\
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Data\obj\Debug\PrakashC.3DFDDAF9.Up2Date
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.dll
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\PrakashCRM.Data.pdb
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.dll
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\bin\Debug\Newtonsoft.Json.xml
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.AssemblyReference.cache
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.csproj.CoreCompileInputs.cache
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashC.3DFDDAF9.Up2Date
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.dll
+D:\TripearlTech\PrakashCRM_SalesPerson\PrakashCRM.Data\obj\Debug\PrakashCRM.Data.pdb
