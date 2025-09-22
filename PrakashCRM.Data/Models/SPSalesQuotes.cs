@@ -1679,4 +1679,22 @@ namespace PrakashCRM.Data.Models
     {
         public string Business_Type { get; set; }
     }
+
+    public class SPDispacthDetails
+    {
+        public string No { get; set; }
+        public string Posting_Date { get; set; }
+        public string Customer_No { get; set; }
+        public string Customer_Name { get; set; }
+        public string Vehicle_No { get; set; }
+        public string LRNo { get; set; }
+        public string Quote_No { get; set; }
+        public string Order_No { get; set; }
+        public string Item_No { get; set; }
+        public string Invoice_Qty { get; set; }
+        public string Total_Qty { get; set; }
+        public string Price { get; set; }
+    }
+
+
 }
