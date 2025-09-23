@@ -489,7 +489,7 @@ $(document).ready(function () {
         dataTableFunction();
         ResetQuoteLineDetails();
     });
-    
+
     $('#btnClear').click(function () {
 
         ResetQuoteLineDetails();
@@ -1937,7 +1937,7 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                 responsive: true,
                 ordering: false,
                 columnDefs: [
-                    { targets: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], visible: false },
+
                     { className: 'dtr-control', targets: 0 }
                 ]
             });
@@ -1953,51 +1953,57 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                     }
                 }
 
-                // Drop shipment display
-                var dropShipmentOpt = item.Drop_Shipment ? "Yes" : "No";
+                var dropShipmentLabel = item.Drop_Shipment ? "Yes" : "No";
+                var isLiquid = item.PCPL_Liquid ? "Yes" : "No";
+                //var isPCPLCommission = item.item.PCPL_Commission ? "Yes" : "No";
+
                 var rowArray = [
-                    "", // dtr-control
-                    actionsHtml,              
-                    item.No,                    
-                    item.Description,           
-                    item.Quantity,              
-                    item.Unit_of_Measure_Code,  
+                    "", //0
+                    actionsHtml,
+                    item.No,
+                    item.Description,
+                    item.Quantity,
+                    item.Unit_of_Measure_Code,
                     item.PCPL_Packing_Style_Code,
-                    item.PCPL_MRP,              
-                    item.Unit_Price,            
-                    item.Delivery_Date,         
-                    item.PCPL_Total_Cost,       
-                    item.PCPL_Margin,           
-                    data.PaymentTermsCode,      
-                    data.ShipmentMethodCode,    
-                    item.PCPL_Transport_Method, 
-                    item.PCPL_Transport_Cost,   
-                    item.PCPL_Sales_Discount,   
-                    item.PCPL_Commission_Type,  
-                    item.PCPL_Commission,       
-                    item.PCPL_Commission_Amount,
-                    item.PCPL_Credit_Days,      
-                    item.PCPL_Interest,         
-                    `<label id="${item.No}_DropShipment">${dropShipmentOpt}</label>`, 
-                    item.PCPL_Commission_Payable,
-                    item.PCPL_Commission_Payable_Name,
-                    item.PCPL_Vendor_No,        
-                    item.PCPL_Vendor_Name,      
-                    `<label id="${item.No}_SQLineNo" style='display:none'>${item.Line_No}</label>`, 
-                    `<label id="${item.No}_MarginPercent">${item.PCPL_Margin_Percent} %</label>`, 
-                    item.PCPL_Liquid,          
-                    item.PCPL_Concentration_Rate_Percent,
-                    item.Net_Weight,            
-                    item.PCPL_Liquid_Rate       
+                    item.PCPL_MRP,
+                    item.Unit_Price,
+                    item.Delivery_Date,
+                    item.PCPL_Total_Cost,
+                    item.PCPL_Margin, //11
+                    data.PaymentTermsCode, //12
+                    item.PCPL_Transport_Method, //13
+                    item.PCPL_Transport_Cost, //14
+                    item.PCPL_Sales_Discount, //15
+                    item.PCPL_Commission_Type, //16
+                    item.PCPL_Commission,//17
+                    item.PCPL_Commission_Amount, //18
+                    item.PCPL_Credit_Days, //19
+                    item.PCPL_Interest, //20
+                    `<label id="${item.No}_DropShipment">${dropShipmentLabel}</label>`, //21
+                    "",
+                    "",
+                    item.PCPL_Commission_Payable, //22
+                    item.PCPL_Commission_Payable_Name, //23
+                    item.PCPL_Vendor_No, //24
+                    item.PCPL_Vendor_Name, //25
+                    `<label id="${item.No}_SQLineNo" style='display:none'>${item.Line_No}</label>`, //26
+                    `<label id="${item.No}_MarginPercent">${item.PCPL_Margin_Percent}</label>`, //27
+                    isLiquid, //28
+                    item.PCPL_Concentration_Rate_Percent, //29
+                    item.Net_Weight, //30
+                    item.PCPL_Liquid_Rate //31
                 ];
+
                 var colCount = $('#dataList thead th').length;
                 while (rowArray.length < colCount) rowArray.push('');
 
                 var newNode = dtable.row.add(rowArray).draw(false).node();
                 $(newNode).attr('id', 'ProdTR_' + item.No);
                 $(newNode).find("td").eq(0).addClass("dtr-control");
-            });
-            dtable.responsive.recalc();
+            }); // ✅ only ONE $.each
+
+            dtable.responsive.recalc(); // ✅ no trailing comma here
+
 
             /*
             $.each(data.ProductsRes, function (index, item) {
@@ -2075,6 +2081,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                     if (LoggedInUserRole == "Finance") {
                         $('#dvSQAprJustificationDetails').css('display', 'block');
                         $('#dvAprDetailsFinanceUser').css('display', 'block');
+                        $('#lblOutstandingValue').css('display', 'block');
+                        $('#dvcustomerOutStanding').css('display', 'block');
                         $('#lblJustificationTitle').text("Last 10 Sales Quote Justification Details");
 
                         $('#AprDetailsCustName').text(data.ContactCompanyName);
@@ -2087,6 +2095,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                     else {
                         $('#dvSQAprJustificationDetails').css('display', 'none');
                         $('#dvAprDetailsFinanceUser').css('display', 'none');
+                        $('#lblOutstandingValue').css('display', 'none');
+                        $('#dvcustomerOutStanding').css('display', 'none');
                         $('#lblJustificationTitle').text("Last 3 Sales Quote Justification Details");
                     }
 
@@ -2100,6 +2110,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                 $('#dvSQApproveRejectBtn').css('display', 'none');
                 $('#dvSQAprJustificationDetails').css('display', 'none');
                 $('#dvAprDetailsFinanceUser').css('display', 'none');
+                $('#lblOutstandingValue').css('display', 'none');
+                $('#dvcustomerOutStanding').css('display', 'none');
                 $('#dvSQJustificationDetails').css('display', 'none');
                 $('#lblJustificationTitle').text("");
 
@@ -2283,7 +2295,7 @@ function DeleteSQProd(ProdTR) {
 }
 
 function CalculateFormula() {
-    if($('#txtProductName').val() == "") {
+    if ($('#txtProductName').val() == "") {
     }
     else {
         var CostPrice = 0, Interest = 0, BasicPurchaseCost = 0, SalesPrice = 0;
@@ -2345,7 +2357,7 @@ function CalculateFormula() {
                 CostPrice = BasicPurchaseCost + parseFloat($('#txtSalesDiscount').val()) + parseFloat($('#txtCommissionAmt').val()) + parseFloat(Interest); //  - parseFloat($('#txtPurDiscount').val())  + parseFloat($('#txtInsurance').val());
 
             }
-            else if ($('#ddlTransportMethod').val() == "PAID"){
+            else if ($('#ddlTransportMethod').val() == "PAID") {
 
                 CostPrice = BasicPurchaseCost + parseFloat($('#txtSalesDiscount').val()) + parseFloat($('#txtCommissionAmt').val()) + parseFloat($('#txtTransportCost').val()) + parseFloat(Interest); //  - parseFloat($('#txtPurDiscount').val()) + parseFloat($('#txtInsurance').val());
 
@@ -2776,8 +2788,7 @@ function CheckNewDeliverytoAddressValues() {
     return errMsg;
 }
 
-function ResetQuoteLineDetails()
-{
+function ResetQuoteLineDetails() {
     if ($('#tblProducts tr').length > 0) {
         $('#ddlIncoTerms').prop('disabled', true);
         $('#ddlPaymentTerms').prop('disabled', true);

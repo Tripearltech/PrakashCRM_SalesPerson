@@ -1190,8 +1190,8 @@ namespace PrakashCRM.Service.Controllers
                 return response;
             }
 
-            if(Err == "") 
-            { 
+            if (Err == "")
+            {
                 scheduleOrderReq.quoteNo = scheduleOrderDetails.QuoteNo;
                 scheduleOrderReq.scheduledate = scheduleOrderDetails.ScheduleDate;
                 scheduleOrderReq.externaldocumentno = scheduleOrderDetails.ExternalDocNo;
@@ -2152,45 +2152,6 @@ namespace PrakashCRM.Service.Controllers
 
             return shortCloseReasons;
         }
-
-        [Route("GetDispatchDetails")]
-
-        public List<SPDispacthDetails> GetDispatchDetails(string FromDate, string ToDate, string Search)
-        {
-            API ac = new API();
-            List<SPDispacthDetails> dispacthDetails = new List<SPDispacthDetails>();
-
-            var filter = "";
-            if(FromDate != null && ToDate != null)
-            {
-            filter = "Posting_Date ge " + FromDate + " and Posting_Date le " + ToDate+ "";
-               
-            }
-            else if(Search != null)
-            {
-                filter = "No eq '"+ Search +"'";
-            }
-            else
-            {
-                filter = "";
-            }
-            
-            //var result = ac.GetData<SPDispacthDetails>("DispatchDetailsDotNetAPI", "");
-            var result = (dynamic)null;
-            if (FromDate != "" && ToDate != "")
-            {
-                result = ac.GetData<SPDispacthDetails>("DispatchDetailsDotNetAPI", filter);
-            }
-            else
-            {
-                result = ac.GetData<SPDispacthDetails>("DispatchDetailsDotNetAPI", "");
-            }
-
-            if (result != null && result.Result.Item1.value.Count > 0)
-                dispacthDetails = result.Result.Item1.value;
-            return dispacthDetails;
-        }
-
 
         [Route("GetSalesQuoteJustificationDetails")]
         public List<SPSQJustificationDetails> GetSalesQuoteJustificationDetails(int skip, int top, string orderby, string filter)
@@ -3812,6 +3773,32 @@ namespace PrakashCRM.Service.Controllers
             {
                 dest.Write(bytes, 0, cnt);
             }
+        }
+        // Dispatch Details list 
+
+        [Route("GetDispatchDetails")]
+        public List<SPDispacthDetails> GetDispatchDetails(string FromDate, string ToDate, string Search)
+        {
+            API ac = new API();
+            List<SPDispacthDetails> dispatchDetails = new List<SPDispacthDetails>();
+
+            string filter = string.Empty;
+            if (!string.IsNullOrEmpty(FromDate) && !string.IsNullOrEmpty(ToDate))
+            {
+                filter = $"Posting_Date ge {FromDate} and Posting_Date le {ToDate}";
+            }
+            else if (!string.IsNullOrEmpty(Search))
+            {
+                filter = $"No eq '{Search}'";
+            }
+            var result = ac.GetData<SPDispacthDetails>("DispatchDetailsDotNetAPI", filter);
+
+            if (result != null && result.Result.Item1.value != null && result.Result.Item1.value.Count > 0)
+            {
+                dispatchDetails = result.Result.Item1.value;
+            }
+
+            return dispatchDetails;
         }
     }
 }

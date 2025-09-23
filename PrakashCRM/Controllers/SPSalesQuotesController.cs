@@ -1464,27 +1464,6 @@ namespace PrakashCRM.Controllers
             return Json(shortclosereasons, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetDispatchDetails(string FromDate, string ToDate, string Search)
-        {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/GetDispatchDetails?FromDate=" + FromDate + "&FromDate=" + "&ToDate=" + ToDate + "&Search="+ Search;
-            
-            HttpClient client = new HttpClient();
-            List<SPDispacthDetails> dispacthDetails = new List<SPDispacthDetails>();
-
-            client.BaseAddress = new Uri(apiUrl);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = await client.GetAsync(apiUrl);
-            if(response.IsSuccessStatusCode)
-            {
-                var data = await response.Content.ReadAsStringAsync();
-                dispacthDetails = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPDispacthDetails>>(data);
-            }
-            return Json(dispacthDetails, JsonRequestBehavior.AllowGet);
-        }
-
-
         public async Task<JsonResult> GetSalesQuoteJustificationDetails(string LoggedInUserRole, string CCompanyNo)
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/";
@@ -1626,6 +1605,25 @@ namespace PrakashCRM.Controllers
             System.IO.File.WriteAllBytes(filePath, pdfBytes);
 
             return $"{fileNameWithoutExtension}.pdf";
+        }
+        public async Task<JsonResult> GetDispatchDetails(string FromDate, string ToDate, string Search)
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/GetDispatchDetails?FromDate=" + FromDate + "&FromDate=" + "&ToDate=" + ToDate + "&Search=" + Search;
+
+            HttpClient client = new HttpClient();
+            List<SPDispacthDetails> dispacthDetails = new List<SPDispacthDetails>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                dispacthDetails = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPDispacthDetails>>(data);
+            }
+            return Json(dispacthDetails, JsonRequestBehavior.AllowGet);
         }
 
     }

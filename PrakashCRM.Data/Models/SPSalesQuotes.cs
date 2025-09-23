@@ -53,7 +53,7 @@ namespace PrakashCRM.Data.Models
 
         public string PCPL_Rejected_Reason_HOD { get; set; }
 
-        public int TPTPL_Balance_Qty { get; set; }
+        public double TPTPL_Balance_Qty { get; set; }
 
     }
 
@@ -1679,7 +1679,6 @@ namespace PrakashCRM.Data.Models
     {
         public string Business_Type { get; set; }
     }
-
     public class SPDispacthDetails
     {
         public string No { get; set; }
@@ -1695,6 +1694,4 @@ namespace PrakashCRM.Data.Models
         public string Total_Qty { get; set; }
         public string Price { get; set; }
     }
-
-
 }

@@ -32,6 +32,11 @@ namespace PrakashCRM.Controllers
         {
             return View();
         }
+        public ActionResult FeedBackQuestion()
+        {
+            return View();
+        }
+
 
         public ActionResult InventoryView()
         {
@@ -252,27 +257,68 @@ namespace PrakashCRM.Controllers
             return Json(customerReports, JsonRequestBehavior.AllowGet);
         }
 
-        // Outstanding List report
-        public async Task<JsonResult> GetOutstandingList()
+        // FeedBack Question report
+        public async Task<JsonResult> GetFeedBackQuestionList()
         {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPReports/GetOutstandingList";
-
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPReports/GetFeedBackQuestionList";
             HttpClient client = new HttpClient();
-            List<CollectionDataModel> outstanding = new List<CollectionDataModel>();
+            List<FeedBackQuestion> FeedBackQuestions = new List<FeedBackQuestion>();
 
             client.BaseAddress = new Uri(apiUrl);
             client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             HttpResponseMessage response = await client.GetAsync(apiUrl);
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
-                outstanding = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CollectionDataModel>>(data);
-            }
+                FeedBackQuestions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FeedBackQuestion>>(data);
 
-            return Json(outstanding, JsonRequestBehavior.AllowGet);
+            }
+            return Json(FeedBackQuestions, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> GetFeedBackQuestionLineList(string FeedbackId)
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPReports/GetFeedBackQuestionLineList?FeedbackId=" + FeedbackId;
+            HttpClient client = new HttpClient();
+            List<FeedbBackLines> feedbBackLines = new List<FeedbBackLines>();
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                feedbBackLines = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FeedbBackLines>>(data);
+            }
+            return Json(feedbBackLines, JsonRequestBehavior.AllowGet);
+        }
+
+        // Outstanding List report
+        /* public async Task<JsonResult> GetOutstandingList()
+         {
+             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPReports/GetOutstandingList";
+
+             HttpClient client = new HttpClient();
+             List<CollectionDataModel> outstanding = new List<CollectionDataModel>();
+
+             client.BaseAddress = new Uri(apiUrl);
+             client.DefaultRequestHeaders.Accept.Clear();
+             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+             HttpResponseMessage response = await client.GetAsync(apiUrl);
+             if (response.IsSuccessStatusCode)
+             {
+                 var data = await response.Content.ReadAsStringAsync();
+                 outstanding = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CollectionDataModel>>(data);
+             }
+
+             return Json(outstanding, JsonRequestBehavior.AllowGet);
+         }*/
 
     }
 }
