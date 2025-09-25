@@ -4,7 +4,7 @@ var InqNo = "", SQNo = "", ScheduleStatus = "", SQStatus = "", SQFor = "", Logge
 $(document).ready(function () {
 
     GetInterestRate();
-
+    BindCSOutstandingDuelist();
     var UrlVars = getUrlVars();
 
     if (UrlVars["CompanyNo"] != undefined && UrlVars["CompanyName"] != undefined) {
@@ -351,12 +351,11 @@ $(document).ready(function () {
             $('#dataList td.dataTables_empty').remove(); // row hata diya
         }
     });
-
     $('#btnSaveProd').click(function () {
         var isLiquidProd = $('#chkIsLiquidProd').prop('checked') ? 'true' : 'false';
         var isCommission = $('#chkIsCommission').prop('checked');
 
-        // Validations
+        // Validations (unchanged)
         if ($('#txtProductName').val() === "" || $('#txtProductName').val() === null) {
             ShowErrMsg("Please select a Product Name before saving.");
             $('#txtProductName').focus();
@@ -377,14 +376,12 @@ $(document).ready(function () {
             $('#txtBasicPurchaseCost').focus();
             return;
         }
-        // Enhanced validation for Inco Terms
         if ($('#ddlIncoTerms').val() === "" || $('#ddlIncoTerms').val() === null || $('#ddlIncoTerms').val() === "-1") {
             ShowErrMsg("Please select Inco Terms before saving.");
             $('#ddlIncoTerms').focus();
             console.log("Inco Terms validation failed: ", $('#ddlIncoTerms').val());
             return;
         }
-        // Enhanced validation for Payment Terms
         if ($('#ddlPaymentTerms').val() === "" || $('#ddlPaymentTerms').val() === null || $('#ddlPaymentTerms').val() === "-1") {
             ShowErrMsg("Please select Payment Terms before saving.");
             $('#ddlPaymentTerms').focus();
@@ -406,8 +403,9 @@ $(document).ready(function () {
         var prodOpts = $('#hfProdNo').val();
         var prodOptsTR = $('#hfProdNoEdit').val();
         var dropShipmentOpt = $('#chkDropShipment').is(':checked') ? 'Yes' : 'No';
+        var inqProdLineNo = $('#hfProdLineNo').val() || ''; // Capture InqProdLineNo
 
-        var actionsHtml = `<a class='SQLineCls' onclick='EditSQProd("ProdTR_${prodOpts}")'><i class='bx bxs-edit'></i></a>`;
+        var actionsHtml = `<a class='SQLineCls' onclick='EditSQProd(${inqProdLineNo || 0},"ProdTR_${prodOpts}")'><i class='bx bxs-edit'></i></a>`;
         actionsHtml += `&nbsp;<a class='SQLineCls' onclick='DeleteSQProd(this)'><i class='bx bxs-trash'></i></a>`;
 
         var commissionPerUnit = isCommission ? $('#ddlCommissionPerUnitPercent').val() : "";
@@ -442,7 +440,9 @@ $(document).ready(function () {
             "", // 24 → hidden
             `<label id="${prodOpts}_MarginPercent">${$('#spnMarginPercent').text()}</label>`,
             commissionPayable,
-            "",
+            "", // 27 → Vendor No
+            "", // 28 → Vendor Name
+            `<label id="${prodOpts}_InqProdLineNo">${inqProdLineNo}</label>`, // Add InqProdLineNo
             isLiquidProd,
             (isLiquidProd === 'true' ? $('#txtConcentratePercent').val() : ""),
             (isLiquidProd === 'true' ? $('#txtNetWeight').val() : ""),
@@ -457,7 +457,7 @@ $(document).ready(function () {
         } else if (prodOptsArray.length > colCount) {
             prodOptsArray = prodOptsArray.slice(0, colCount);
         }
-        debugger;
+
         if (prodOptsTR) {
             var rowIdSelector = '#ProdTR_' + prodOptsTR;
             var rowApi = dtable.row(rowIdSelector);
@@ -489,7 +489,7 @@ $(document).ready(function () {
         dataTableFunction();
         ResetQuoteLineDetails();
     });
-    
+
     $('#btnClear').click(function () {
 
         ResetQuoteLineDetails();
@@ -1199,30 +1199,25 @@ function getUrlVars() {
 }
 
 function BindInquiryLineDetails(InqNo) {
-
     var apiUrl = $('#getServiceApiUrl').val() + 'SPSalesQuotes/';
 
     $.get(apiUrl + 'GetInquiryProdDetails?InqNo=' + InqNo, function (data) {
-
         var ProdTR = "";
         $.each(data, function (index, item) {
-
             ProdTR += "<tr><td hidden>" + item.Line_No + "</td><td hidden>" + item.Product_No + "</td><td>" + item.Product_Name + "</td><td>" +
                 item.Quantity + "</td><td>" + item.PCPL_Packing_Style_Code + "</td><td>" + item.Unit_of_Measure + "</td><td>" + item.Delivery_Date + "</td><td>" + item.PCPL_Payment_Terms + "</td>" +
                 "<td><a class='InqProdCls' onclick='FillInqProdDetails(\"" + item.Line_No + "\",\"" + item.Product_No + "\",\"" + item.Product_Name + "\"," +
-                item.Quantity + ",\"" + item.PCPL_Packing_Style_Code + "\",\"" + item.Delivery_Date + "\")'><i class='bx bx-edit'></i></a></td></tr>";
-
+                item.Quantity + ",\"" + item.PCPL_Packing_Style_Code + "\",\"" + item.Delivery_Date + "\")'><i class='bx bx-edit'></i></a></td>" +
+                "<td hidden><label id='InqProdLineNo_" + item.Product_No + "'>" + item.Line_No + "</label></td></tr>";
         });
 
         $('#tblInqProdDetails').append(ProdTR);
     });
-
 }
 
 function FillInqProdDetails(ProdLineNo, ProductNo, ProductName, Quantity, PackingStyleCode, DeliveryDate) {
-
     ResetQuoteLineDetails();
-    $('#hfProdLineNo').val(ProdLineNo);
+    $('#hfProdLineNo').val(ProdLineNo); // Store InqProdLineNo
     $('#hfProdNo').val(ProductNo);
     $('#hfInqProdPackingStyle').val(PackingStyleCode);
     $('#txtProductName').val(ProductName);
@@ -1937,7 +1932,7 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                 responsive: true,
                 ordering: false,
                 columnDefs: [
-                    { targets: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], visible: false },
+
                     { className: 'dtr-control', targets: 0 }
                 ]
             });
@@ -1947,123 +1942,61 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                 if (item.TPTPL_Short_Closed) {
                     actionsHtml = "<span class='badge bg-secondary'>Shortclosed</span>";
                 } else {
-                    actionsHtml = `<a class='SQLineCls' onclick='EditSQProd("ProdTR_${item.No}")'><i class='bx bxs-edit'></i></a>`;
+                    actionsHtml = `<a class='SQLineCls' onclick='EditSQProd(${item.Line_No},"ProdTR_${item.No}")'><i class='bx bxs-edit'></i></a>`;
                     if (!(ScheduleStatus === "Completed" || data.ShortcloseStatus === true)) {
                         actionsHtml += `&nbsp;<a class='SQLineCls' title='Click to shortclose' onclick='ShortcloseSQProd("${item.Line_No}")'><i class='bx bx-message-rounded-x'></i></a>`;
                     }
                 }
 
-                // Drop shipment display
-                var dropShipmentOpt = item.Drop_Shipment ? "Yes" : "No";
+                var dropShipmentLabel = item.Drop_Shipment ? "Yes" : "No";
+                var isLiquid = item.PCPL_Liquid ? "Yes" : "No";
+
                 var rowArray = [
-                    "", // dtr-control
-                    actionsHtml,              
-                    item.No,                    
-                    item.Description,           
-                    item.Quantity,              
-                    item.Unit_of_Measure_Code,  
+                    "",
+                    actionsHtml,
+                    item.No,
+                    item.Description,
+                    item.Quantity,
+                    item.Unit_of_Measure_Code,
                     item.PCPL_Packing_Style_Code,
-                    item.PCPL_MRP,              
-                    item.Unit_Price,            
-                    item.Delivery_Date,         
-                    item.PCPL_Total_Cost,       
-                    item.PCPL_Margin,           
-                    data.PaymentTermsCode,      
-                    data.ShipmentMethodCode,    
-                    item.PCPL_Transport_Method, 
-                    item.PCPL_Transport_Cost,   
-                    item.PCPL_Sales_Discount,   
-                    item.PCPL_Commission_Type,  
-                    item.PCPL_Commission,       
-                    item.PCPL_Commission_Amount,
-                    item.PCPL_Credit_Days,      
-                    item.PCPL_Interest,         
-                    `<label id="${item.No}_DropShipment">${dropShipmentOpt}</label>`, 
+                    item.PCPL_MRP,
+                    item.Unit_Price,
+                    item.Delivery_Date,
+                    item.PCPL_Total_Cost,
+                    item.PCPL_Margin, 
+                    data.PaymentTermsCode, 
+                    item.PCPL_Transport_Method,
+                    item.PCPL_Transport_Cost,
+                    item.PCPL_Sales_Discount,
+                    item.PCPL_Commission_Type, 
+                    item.PCPL_Commission,
+                    item.PCPL_Commission_Amount, 
+                    item.PCPL_Credit_Days,
+                    item.PCPL_Interest, 
+                    `<label id="${item.No}_DropShipment">${dropShipmentLabel}</label>`, 
+                    "",
+                    "",
                     item.PCPL_Commission_Payable,
-                    item.PCPL_Commission_Payable_Name,
-                    item.PCPL_Vendor_No,        
-                    item.PCPL_Vendor_Name,      
+                    item.PCPL_Commission_Payable_Name, 
+                    item.PCPL_Vendor_No, 
+                    item.PCPL_Vendor_Name, 
                     `<label id="${item.No}_SQLineNo" style='display:none'>${item.Line_No}</label>`, 
-                    `<label id="${item.No}_MarginPercent">${item.PCPL_Margin_Percent} %</label>`, 
-                    item.PCPL_Liquid,          
+                    `<label id="${item.No}_MarginPercent">${item.PCPL_Margin_Percent}</label>`, 
+                    isLiquid, 
                     item.PCPL_Concentration_Rate_Percent,
-                    item.Net_Weight,            
-                    item.PCPL_Liquid_Rate       
+                    item.Net_Weight,
+                    item.PCPL_Liquid_Rate 
                 ];
+
                 var colCount = $('#dataList thead th').length;
                 while (rowArray.length < colCount) rowArray.push('');
 
                 var newNode = dtable.row.add(rowArray).draw(false).node();
                 $(newNode).attr('id', 'ProdTR_' + item.No);
                 $(newNode).find("td").eq(0).addClass("dtr-control");
-            });
-            dtable.responsive.recalc();
+            }); 
 
-            /*
-            $.each(data.ProductsRes, function (index, item) {
-
-                var prodOpts = "", prodOptsTR = "";
-                itemLineNo += item.No + "_" + item.Line_No + ",";
-
-                prodOpts = "<tr id=\"ProdTR_" + item.No + "\"><td></td>";
-
-                if (item.TPTPL_Short_Closed) {
-                    prodOpts += "<td><span class='badge bg-secondary'>Shortclosed</span></td>";
-                }
-                else {
-
-                    if (ScheduleStatus == "Completed" || data.ShortcloseStatus == true) {
-                        prodOpts += "<td><a class='SQLineCls' onclick='EditSQProd(\"ProdTR_" + item.No + "\")'><i class='bx bxs-edit'></i></a></td>";
-                    }
-                    else {
-                        prodOpts += "<td><a class='SQLineCls' onclick='EditSQProd(\"ProdTR_" + item.No + "\")'><i class='bx bxs-edit'></i></a>&nbsp;" +
-                            "<a class='SQLineCls' title='Click to shortclose' onclick='ShortcloseSQProd(\"" + item.Line_No + "\")'><i class='bx bx-message-rounded-x'></i></a></td>";
-                    }
-
-                }
-
-                prodOpts += "<td>" + item.No + "</td><td>" + item.Description + "</td><td>" + item.Quantity + "</td><td>" + item.Unit_of_Measure_Code + "</td><td>" + item.PCPL_Packing_Style_Code + "</td><td>" + item.PCPL_MRP + "</td><td>" + item.Unit_Price +
-                    "</td><td>" + item.Delivery_Date + "</td><td>" + item.PCPL_Total_Cost + "</td><td>" + item.PCPL_Margin + "</td><td>" + data.PaymentTermsCode + "</td><td>" +
-                    data.ShipmentMethodCode + "</td><td>" + item.PCPL_Transport_Method + "</td><td>" + item.PCPL_Transport_Cost + "</td><td>" + item.PCPL_Sales_Discount + "</td><td>" +
-                    item.PCPL_Commission_Type + "</td><td>" + item.PCPL_Commission + "</td><td>" + item.PCPL_Commission_Amount + "</td><td>" + item.PCPL_Credit_Days + "</td><td>" +
-                    item.PCPL_Interest + "</td>";
-
-                var dropShipmentOpt;
-                if (item.Drop_Shipment == true) {
-                    dropShipmentOpt = "Yes";
-                }
-                else {
-                    dropShipmentOpt = "No";
-                }
-
-                //
-
-                prodOpts += "<td><label id=\"" + item.No + "_DropShipment\">" + dropShipmentOpt + "</lable></td>";
-
-                prodOpts += "<td hidden></td>";
-
-                //}
-
-                prodOpts += "<td hidden>" + item.PCPL_Commission_Payable + "</td><td>" + item.PCPL_Commission_Payable_Name + "</td>" +
-                    "<td hidden>" + item.PCPL_Vendor_No + "</td><td>" + item.PCPL_Vendor_Name + "</td>" +
-                    "<td hidden><label id=\"" + item.No + "_SQLineNo\" style='display:none'>" + item.Line_No + "</label></td>" +
-                    "<td><label id=\"" + item.No + "_MarginPercent\">" + item.PCPL_Margin_Percent + " %</label></td><td>" + item.PCPL_Liquid + "</td><td>" +
-                    item.PCPL_Concentration_Rate_Percent + "</td><td>" + item.Net_Weight + "</td><td>" + item.PCPL_Liquid_Rate + "</td>";
-
-                if ($('#hfProdNoEdit').val() != "") {
-
-                    $("#ProdTR_" + $('#hfProdNoEdit').val()).append(prodOpts);
-
-                }
-                else {
-                    prodOptsTR += prodOpts + "</tr>";
-                    $('#tblProducts').append(prodOptsTR);
-                }
-                dataTableFunction();
-                
-                
-            });
-            */
+            dtable.responsive.recalc(); 
             itemLineNo = data.QuoteNo + "," + itemLineNo;
             $('#hfSalesQuoteResDetails').val(itemLineNo);
 
@@ -2075,6 +2008,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                     if (LoggedInUserRole == "Finance") {
                         $('#dvSQAprJustificationDetails').css('display', 'block');
                         $('#dvAprDetailsFinanceUser').css('display', 'block');
+                        $('#lblOutstandingValue').css('display', 'block');
+                        $('#dvcustomerOutStanding').css('display', 'block');
                         $('#lblJustificationTitle').text("Last 10 Sales Quote Justification Details");
 
                         $('#AprDetailsCustName').text(data.ContactCompanyName);
@@ -2087,6 +2022,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                     else {
                         $('#dvSQAprJustificationDetails').css('display', 'none');
                         $('#dvAprDetailsFinanceUser').css('display', 'none');
+                        $('#lblOutstandingValue').css('display', 'none');
+                        $('#dvcustomerOutStanding').css('display', 'none');
                         $('#lblJustificationTitle').text("Last 3 Sales Quote Justification Details");
                     }
 
@@ -2100,6 +2037,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                 $('#dvSQApproveRejectBtn').css('display', 'none');
                 $('#dvSQAprJustificationDetails').css('display', 'none');
                 $('#dvAprDetailsFinanceUser').css('display', 'none');
+                $('#lblOutstandingValue').css('display', 'none');
+                $('#dvcustomerOutStanding').css('display', 'none');
                 $('#dvSQJustificationDetails').css('display', 'none');
                 $('#lblJustificationTitle').text("");
 
@@ -2187,15 +2126,13 @@ function GetProductDetails(productName) {
 
 }
 
-function EditSQProd(ProdTR) {
+function EditSQProd(Line_No, ProdTR) {
     ResetQuoteLineDetails();
     var prodNo = $("#" + ProdTR).find("TD").eq(2).html();
     $('#hfProdNo').val(prodNo);
     $('#hfProdNoEdit').val(prodNo);
     $('#hfSavedPackingStyle').val($("#" + ProdTR).find("TD").eq(6).html());
     $('#txtProductName').val($("#" + ProdTR).find("TD").eq(3).html());
-    //$('#txtProductName').blur(); // This should trigger the autocomplete and show buttons
-
     $('#hfSQProdLineNo').val($("#" + prodNo + "_SQLineNo").text());
     $('#txtProdQty').val($("#" + ProdTR).find("TD").eq(4).html());
     $('#txtProdMRP').val($("#" + ProdTR).find("TD").eq(7).html());
@@ -2207,17 +2144,15 @@ function EditSQProd(ProdTR) {
 
     var isLiquidProd = $("#" + ProdTR).find("TD").eq(30).html();
     if ($("#" + ProdTR).find("TD").eq(17).html() != "") {
-
-        if (isChkCommissionChecked == false) {
-
+        var isChkCommissionChecked = $('#chkIsCommission').prop('checked');
+        if (!isChkCommissionChecked) {
             if (isLiquidProd == "true") {
                 $('#chkIsCommission').prop('checked', false);
                 $('#txtSalesPrice').prop('readonly', true);
                 $('#txtCommissionAmt').val($("#" + ProdTR).find("TD").eq(19).html());
                 $('#txtCommissionAmt').prop('disabled', false);
                 $('#ddlCommissionPayable').prop('disabled', false);
-            }
-            else {
+            } else {
                 $('#txtSalesPrice').prop('readonly', false);
                 $('#chkIsCommission').prop('checked', true);
                 $('#chkIsCommission').change();
@@ -2229,11 +2164,9 @@ function EditSQProd(ProdTR) {
             var commissionPayable = $("#" + ProdTR).find("TD").eq(24).html();
             if (commissionPayable != "") {
                 $('#ddlCommissionPayable').val(commissionPayable);
-            }
-            else {
+            } else {
                 $('#ddlCommissionPayable').val('-1');
             }
-
         }
     }
 
@@ -2242,38 +2175,30 @@ function EditSQProd(ProdTR) {
     $('#spnMarginPercent').text($("#" + prodNo + "_MarginPercent").text());
     $('#txtInterest').val($("#" + ProdTR).find("TD").eq(21).html());
 
-    //if ($('#txtProductName').val() !== "") {
-    //    $('#btnSaveProd').css('display', 'block');
-    //    $('#btnSave').css('display', 'block');
-    //}
+    // Set InqProdLineNo from DataTable
+    var inqProdLineNo = $("#" + prodNo + "_InqProdLineNo").text();
+    $('#hfProdLineNo').val(inqProdLineNo || Line_No);
+
     if ($("#" + prodNo + "_DropShipment").text() == "Yes") {
         $('#chkDropShipment').prop('checked', true);
         $('#hfSavedItemVendorNo').val($("#" + ProdTR).find("TD").eq(26).html());
         $('#chkDropShipment').change();
-    }
-    else {
+    } else {
         $('#chkDropShipment').prop('checked', false);
     }
 
     $('#txtTotalCost').val($("#" + ProdTR).find("TD").eq(10).html());
-    if ($("#" + prodNo + "_InqProdLineNo").val() != "") {
-        $('#hfProdLineNo').val($("#" + prodNo + "_InqProdLineNo").val());
-    }
-
 
     if (isLiquidProd == "true") {
         $('#dvLiquidProdFields').css('display', 'block');
         $('#chkIsLiquidProd').prop('checked', true);
-
         $('#hfIsLiquidProd').val($("#" + ProdTR).find("TD").eq(30).html());
         $('#txtConcentratePercent').val($("#" + ProdTR).find("TD").eq(31).html());
         $('#txtNetWeight').val($("#" + ProdTR).find("TD").eq(32).html());
         $('#txtLiquidRate').val($("#" + ProdTR).find("TD").eq(33).html());
-    }
-    else {
+    } else {
         $('#chkIsLiquidProd').prop('checked', false);
     }
-
 }
 
 function DeleteSQProd(ProdTR) {
@@ -2283,7 +2208,7 @@ function DeleteSQProd(ProdTR) {
 }
 
 function CalculateFormula() {
-    if($('#txtProductName').val() == "") {
+    if ($('#txtProductName').val() == "") {
     }
     else {
         var CostPrice = 0, Interest = 0, BasicPurchaseCost = 0, SalesPrice = 0;
@@ -2345,7 +2270,7 @@ function CalculateFormula() {
                 CostPrice = BasicPurchaseCost + parseFloat($('#txtSalesDiscount').val()) + parseFloat($('#txtCommissionAmt').val()) + parseFloat(Interest); //  - parseFloat($('#txtPurDiscount').val())  + parseFloat($('#txtInsurance').val());
 
             }
-            else if ($('#ddlTransportMethod').val() == "PAID"){
+            else if ($('#ddlTransportMethod').val() == "PAID") {
 
                 CostPrice = BasicPurchaseCost + parseFloat($('#txtSalesDiscount').val()) + parseFloat($('#txtCommissionAmt').val()) + parseFloat($('#txtTransportCost').val()) + parseFloat(Interest); //  - parseFloat($('#txtPurDiscount').val()) + parseFloat($('#txtInsurance').val());
 
@@ -2776,8 +2701,7 @@ function CheckNewDeliverytoAddressValues() {
     return errMsg;
 }
 
-function ResetQuoteLineDetails()
-{
+function ResetQuoteLineDetails() {
     if ($('#tblProducts tr').length > 0) {
         $('#ddlIncoTerms').prop('disabled', true);
         $('#ddlPaymentTerms').prop('disabled', true);
@@ -3297,5 +3221,41 @@ function ShowErrMsg(errMsg) {
         position: 'top right',
         msg: errMsg
     });
+
+}
+
+function BindCSOutstandingDuelist() {
+
+    $.ajax(
+        {
+            url: '/SPSalesQuotes/GetCSOutstandingDuelist',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                $("#tblCSOutstandingDuelist").empty();
+                var TROpts = "";
+
+                $.each(data, function (index, item) {
+                    TROpts += "<tr>"
+                        + "<td>" + item.Document_Type + "</td>"
+                        + "<td>" + item.Bill_No + "</td>"
+                        + "<td>" + item.Bill_Date + "</td>"
+                        + "<td>" + item.Product_Name + "</td>"
+                        + "<td>" + item.Terms + "</td>"
+                        + "<td>" + item.Due_Date + "</td>"
+                        + "<td>" + item.Remain_Amount + "</td>"
+                        + "<td>" + item.Total_Days + "</td>"
+                        + "<td>" + item.Overdue_Days + "</td>"
+                        + "</tr>";
+                });
+
+                $('#tblCSOutstandingDuelist').append(TROpts);
+
+            },
+            error: function () {
+                alert("error");
+            }
+        }
+    );
 
 }

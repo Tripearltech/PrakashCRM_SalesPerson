@@ -195,18 +195,19 @@ namespace PrakashCRM.Service.Controllers
         }
 
         [Route("GetOrderedQtyDetails")]
-        public SPSQOrderedQtyDetails GetOrderedQtyDetails(string SQNo)
+        public List<SPSQOrderedQtyDetails> GetOrderedQtyDetails(string SQNo)
         {
             API ac = new API();
-            SPSQOrderedQtyDetails orderedQtyDetails = new SPSQOrderedQtyDetails();
+            List<SPSQOrderedQtyDetails> orderedQtyDetails = new List<SPSQOrderedQtyDetails>();
 
-            var result = ac.GetData<SPSQOrderedQtyDetails>("OrderedQty", "No__FilterOnly eq '" + SQNo + "'"); // and Contact_Business_Relation eq 'Customer'
+            var result = ac.GetData<SPSQOrderedQtyDetails>("OrderedQty", "No__FilterOnly eq '" + SQNo + "'");
 
             if (result.Result.Item1.value.Count > 0)
-                orderedQtyDetails = result.Result.Item1.value[0];
+                orderedQtyDetails = result.Result.Item1.value;
 
             return orderedQtyDetails;
         }
+
 
         [Route("GetInvoicedQtyDetails")]
         public List<SPSQInvoicedQtyDetails> GetInvoicedQtyDetails(string SQNo)
@@ -422,7 +423,7 @@ namespace PrakashCRM.Service.Controllers
                         errorDetails edInqToQuote = new errorDetails();
                         inqToQuoteReq.PCPL_Convert_Quote = true;
 
-                        var resultInqToQuote = PatchItemInqToQuote("InquiryProductsDotNetAPI", inqToQuoteReq, inqToQuoteRes, $"Document_Type='Quote',Document_No='{salesQuoteDetails.InquiryNo}',Line_No={Convert.ToInt32(product.InqProdLineNo)}");
+                        var resultInqToQuote = PatchItemInqToQuote("InquiryProductsDotNetAPI", inqToQuoteReq, inqToQuoteRes, $"Document_Type='Quote',Document_No='{salesQuoteDetails.InquiryNo}',Line_No={Convert.ToInt32(!string.IsNullOrWhiteSpace(product.InqProdLineNo)? product.InqProdLineNo :product.Line_No.ToString())}");
 
                         if (resultInqToQuote?.Result.Item1 == null || !resultInqToQuote.Result.Item2.isSuccess)
                         {
@@ -462,6 +463,7 @@ namespace PrakashCRM.Service.Controllers
                         reqSQLine.GST_Place_Of_Supply = salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1" ? "Bill-to Address" : "Ship-to Address";
                         reqSQLine.PCPL_Inquiry_No = string.IsNullOrEmpty(salesQuoteDetails.InquiryNo) ? "" : salesQuoteDetails.InquiryNo;
                         reqSQLine.PCPL_Inquiry_Line_No = string.IsNullOrEmpty(product.InqProdLineNo) ? 0 : Convert.ToInt32(product.InqProdLineNo);
+                        reqSQLine.Line_No = product.Line_No;
 
                         result1 = PostItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLine", reqSQLine, reqSQLiquidLine, resSQLine);
                     }
@@ -496,6 +498,7 @@ namespace PrakashCRM.Service.Controllers
                         reqSQLiquidLine.GST_Place_Of_Supply = salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1" ? "Bill-to Address" : "Ship-to Address";
                         reqSQLiquidLine.PCPL_Inquiry_No = string.IsNullOrEmpty(salesQuoteDetails.InquiryNo) ? "" : salesQuoteDetails.InquiryNo;
                         reqSQLiquidLine.PCPL_Inquiry_Line_No = string.IsNullOrEmpty(product.InqProdLineNo) ? 0 : Convert.ToInt32(product.InqProdLineNo);
+                        reqSQLiquidLine.Line_No = product.Line_No;
 
                         result1 = PostItemSQLines("SalesQuoteSubFormDotNetAPI", "SQLiquidLine", reqSQLine, reqSQLiquidLine, resSQLine);
                     }
@@ -1190,8 +1193,8 @@ namespace PrakashCRM.Service.Controllers
                 return response;
             }
 
-            if(Err == "") 
-            { 
+            if (Err == "")
+            {
                 scheduleOrderReq.quoteNo = scheduleOrderDetails.QuoteNo;
                 scheduleOrderReq.scheduledate = scheduleOrderDetails.ScheduleDate;
                 scheduleOrderReq.externaldocumentno = scheduleOrderDetails.ExternalDocNo;
@@ -3773,6 +3776,46 @@ namespace PrakashCRM.Service.Controllers
             {
                 dest.Write(bytes, 0, cnt);
             }
+        }
+        // Dispatch Details list 
+
+        [Route("GetDispatchDetails")]
+        public List<SPDispacthDetails> GetDispatchDetails(string FromDate, string ToDate, string Search)
+        {
+            API ac = new API();
+            List<SPDispacthDetails> dispatchDetails = new List<SPDispacthDetails>();
+
+            string filter = string.Empty;
+            if (!string.IsNullOrEmpty(FromDate) && !string.IsNullOrEmpty(ToDate))
+            {
+                filter = $"Posting_Date ge {FromDate} and Posting_Date le {ToDate}";
+            }
+            else if (!string.IsNullOrEmpty(Search))
+            {
+                filter = $"No eq '{Search}'";
+            }
+            var result = ac.GetData<SPDispacthDetails>("DispatchDetailsDotNetAPI", filter);
+
+            if (result != null && result.Result.Item1.value != null && result.Result.Item1.value.Count > 0)
+            {
+                dispatchDetails = result.Result.Item1.value;
+            }
+
+            return dispatchDetails;
+        }
+        [HttpGet]
+        [Route("GetCSOutstandingDuelist")]
+
+        public List<CSOutstandingDuelist> GetCSOutstandingDuelist()
+        {
+            API ac = new API();
+            List<CSOutstandingDuelist> csutstandingDuelist = new List<CSOutstandingDuelist>();
+            var result = ac.GetData<CSOutstandingDuelist>("CustomerOverDueDotNetAPI", "");
+            if (result != null && result.Result.Item1.value.Count > 0)
+            {
+                csutstandingDuelist = result.Result.Item1.value;
+            }
+            return csutstandingDuelist;
         }
     }
 }

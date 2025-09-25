@@ -12,10 +12,10 @@
                         <a href="/SPDashboard/Index"><i class="bx bx-tachometer"></i>&nbsp;Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="/SPSalesQuotes/SalesQuoteList"> Dispatch Details </a>
+                        <a href="/SPSalesQuotes/DispatchDetails"> SalesQuotes</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Sales Quote
+                        Dispatch Details
                     </li>
                 </ol>
             </nav>
@@ -25,6 +25,30 @@
 
     <div class="card">
         <div class="card-body">
+            <div class="row">
+                <div>
+                    <div class="row g-3">
+                        <div class="col-md-2">
+                            <input type="date" id="FromDate" class="form-control" placeholder="From Date" />
+                            <p id="Fdatevalidate" style="color:red"></p>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="date" id="ToDate" class="form-control" placeholder="To Date" />
+                            <p id="Tdatevalidate" style="color:red"></p>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="TxtSearch" placeholder="Document no" />
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" id="SearchBtn" class="btn btn-primary">Search</button>
+                            <button id="btnClearFilter" class="btn btn-primary" type="button">
+                                <i class="bx bx-rotate-right "></i>Refresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="table-responsive">
                 <div class="row">
                     <div>
@@ -43,7 +67,6 @@
                                 <table class="table mb-0 table-striped">
                                     <thead>
                                         <tr>
-                                            <th></th>
                                             <th scope="col">Invoice No</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Customer No</th>
@@ -54,29 +77,7 @@
                                             <th scope="col">OrderDetails</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td>1</td>
-                                            <td>2023-09-01</td>
-                                            <td>1001</td>
-                                            <td>ABC Corp</td>
-                                            <td>KA01AB1234</td>
-                                            <td>LR001</td>
-                                            <td>Q001</td>
-                                            <td>32452</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>2</td>
-                                            <td>2023-09-05</td>
-                                            <td>1002</td>
-                                            <td>XYZ Pvt Ltd</td>
-                                            <td>KA05CD5678</td>
-                                            <td>LR002</td>
-                                            <td>Q002</td>
-                                            <td>345</td>
-                                        </tr>
+                                    <tbody id="tblDispatchDetails">
                                     </tbody>
                                 </table>
                             </div>
@@ -87,6 +88,30 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="DetailsModal" tableindex="-1" aria-labelledby="DetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Order Details</h5>
+            </div>
+            <div class="modal-body" style="max-height:450px; overflow-y:auto;">
+                <table class="table mb-0 table-striped">
+                    <thead class="sticky-top bg-white" style="top: -20px;">
+                        <tr>
+                            <th scope="col">Itemno</th>
+                            <th scope="col">Invoice Qty</th>
+                            <th scope="col">Total Qty</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbleOrderDetails"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/appjs/SalesQtDispatchDetails.js"></script>

@@ -30,9 +30,9 @@ namespace PrakashCRM.Service.Controllers
             else
                 result = ac.GetData1<SPCustomersList>("CustomerCardDotNetAPI", filter, skip, top, orderby);
 
-            if (result.Result.Item1.value.Count > 0)
+            if (result.Result.Item1.value != null && result.Result.Item1.value.Count > 0)
                 customers = result.Result.Item1.value;
-            
+
             return customers;
         }
 

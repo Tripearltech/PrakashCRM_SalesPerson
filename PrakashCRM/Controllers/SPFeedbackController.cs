@@ -25,6 +25,11 @@ namespace PrakashCRM.Controllers
         {
             return View();
         }
+        public ActionResult FeedBackQuestion()
+        {
+            return View();
+        }
+
 
         #region FeedbackList
         public ActionResult FeedbackList()
@@ -359,5 +364,46 @@ namespace PrakashCRM.Controllers
         }
 
         #endregion
+
+        public async Task<JsonResult> GetFeedBackQuestionList()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPFeedback/GetFeedBackQuestionList";
+            HttpClient client = new HttpClient();
+            List<FeedBackQuestion> FeedBackQuestions = new List<FeedBackQuestion>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                FeedBackQuestions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FeedBackQuestion>>(data);
+
+            }
+            return Json(FeedBackQuestions, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetFeedBackQuestionLineList(string FeedbackId)
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPFeedback/GetFeedBackQuestionLineList?FeedbackId=" + FeedbackId;
+            HttpClient client = new HttpClient();
+            List<FeedbBackLines> feedbBackLines = new List<FeedbBackLines>();
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                feedbBackLines = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FeedbBackLines>>(data);
+            }
+            return Json(feedbBackLines, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

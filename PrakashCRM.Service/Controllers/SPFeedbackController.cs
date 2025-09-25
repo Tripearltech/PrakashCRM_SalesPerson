@@ -256,5 +256,40 @@ namespace PrakashCRM.Service.Controllers
         }
 
         #endregion
+
+        // feedback report
+        [HttpGet]
+        [Route("GetFeedBackQuestionList")]
+
+        public List<FeedBackQuestion> GetFeedBackQuestionList()
+        {
+            API ac = new API();
+            List<FeedBackQuestion> feedBackQuestions = new List<FeedBackQuestion>();
+            var result = ac.GetData<FeedBackQuestion>("FeedbackHeadersListDotNetAPI", "");
+            if (result != null && result.Result.Item1.value.Count > 0)
+            {
+                feedBackQuestions = result.Result.Item1.value;
+            }
+            return feedBackQuestions;
+        }
+
+        [HttpGet]
+        [Route("GetFeedBackQuestionLineList")]
+
+        public List<FeedbBackLines> GetFeedBackQuestionLineList(string FeedbackId)
+        {
+            API ac = new API();
+            List<FeedbBackLines> feedBackQuestions = new List<FeedbBackLines>();
+            var result = (dynamic)null;
+            var filter = "";
+            filter += "Feedback_Header_No eq '" + FeedbackId + "'";
+            result = ac.GetData<FeedbBackLines>("FeedbackLinesListDotNetAPI", filter);
+            if (result != null && result.Result.Item1.value.Count > 0)
+            {
+                feedBackQuestions = result.Result.Item1.value;
+            }
+            return feedBackQuestions;
+        }
+
     }
 }

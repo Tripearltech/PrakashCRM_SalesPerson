@@ -29,6 +29,8 @@ namespace PrakashCRM.Data.Models
         public double Balance_Due_LCY { get; set; }
 
         public bool IsActive { get; set; }
+        public string PCPL_Secondary_SP_Code { get; set; }
+        public string PCPL_Class { get; set; }
     }
     public class SPCustomer
     {

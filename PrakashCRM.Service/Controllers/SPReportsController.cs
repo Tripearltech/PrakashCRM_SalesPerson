@@ -375,10 +375,10 @@ namespace PrakashCRM.Service.Controllers
             return customerReports;
 
         }
-
+      
         // Generate Outstanding Report
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("GenerateOutstandingList")]
         public string GenerateOutstandingList(string FromDate, string ToDate)
         {
@@ -483,7 +483,7 @@ namespace PrakashCRM.Service.Controllers
                 outstanding = result.Result.Item1.value;
 
             return outstanding;
-        }
+        }*/
     }
 
 }

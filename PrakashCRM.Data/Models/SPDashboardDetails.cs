@@ -123,7 +123,7 @@ namespace PrakashCRM.Data.Models
     }
 
 
-    public class CollectionDataModel
+   /* public class CollectionDataModel
     {
         public string Location_Code { get; set; }
         public string Salesperson_Code { get; set; }
@@ -160,7 +160,7 @@ namespace PrakashCRM.Data.Models
     {
         public string fromdate { get; set; }
         public string todate { get; set; }
-    }
+    }*/
 
     public class SPSelaspersonlist
     {
@@ -196,6 +196,5 @@ namespace PrakashCRM.Data.Models
         public List<SPSupportSPlist> SupportSPs { get; set; }
         public List<SPProductlist> Products { get; set; }
     }
-
-
+   
 }

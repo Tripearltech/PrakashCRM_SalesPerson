@@ -53,7 +53,7 @@ namespace PrakashCRM.Data.Models
 
         public string PCPL_Rejected_Reason_HOD { get; set; }
 
-        public int TPTPL_Balance_Qty { get; set; }
+        public double TPTPL_Balance_Qty { get; set; }
 
     }
 
@@ -694,7 +694,7 @@ namespace PrakashCRM.Data.Models
 
         public string Document_No { get; set; }
 
-        public string Line_No { get; set; }
+        public string ItemLineNo { get; set; }
 
         //Product No
         public string No { get; set; }
@@ -764,7 +764,7 @@ namespace PrakashCRM.Data.Models
         public string InqProdLineNo { get; set; }
 
         public List<SPSQInvQtyReserve> InvQuantities { get; set; }
-
+        public int Line_No { get; set; }
     }
 
     public class SPSQLinesPost
@@ -773,6 +773,7 @@ namespace PrakashCRM.Data.Models
 
         //Product No
         public string No { get; set; }
+        public int Line_No { get; set; }
 
         public string Location_Code { get; set; }
 
@@ -837,6 +838,7 @@ namespace PrakashCRM.Data.Models
         public string Document_No { get; set; }
 
         //Product No
+        public int Line_No { get; set; }
         public string No { get; set; }
 
         public string Location_Code { get; set; }
@@ -1267,6 +1269,7 @@ namespace PrakashCRM.Data.Models
         public string No { get; set; }
 
         public string Name { get; set; }
+        public string PCPL_Broker { get; set; }
     }
 
     public class SPSQItemVendors
@@ -1678,5 +1681,34 @@ namespace PrakashCRM.Data.Models
     public class SPSQCompanyIndustry
     {
         public string Business_Type { get; set; }
+    }
+    public class SPDispacthDetails
+    {
+        public string No { get; set; }
+        public string Posting_Date { get; set; }
+        public string Customer_No { get; set; }
+        public string Customer_Name { get; set; }
+        public string Vehicle_No { get; set; }
+        public string LRNo { get; set; }
+        public string Quote_No { get; set; }
+        public string Order_No { get; set; }
+        public string Item_No { get; set; }
+        public string Invoice_Qty { get; set; }
+        public string Total_Qty { get; set; }
+        public string Price { get; set; }
+    }
+
+     public class CSOutstandingDuelist
+     {
+        public string Document_Type { get; set; }
+        public string Bill_No { get; set; }
+        public string Bill_Date { get; set; }
+        public string Product_Name { get; set; }
+        public string Terms { get; set; }
+        public string Due_Date { get; set; }
+        public decimal Invoice_Amount { get; set; }
+        public double Remain_Amount { get; set; }
+        public double Total_Days { get; set; }
+        public double Overdue_Days { get; set; }
     }
 }

@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\PrakashCRM_SalesPerson\Smarter_Publish_File\CRM_WebApplication</_PublishTargetUrl>
-    <History>True|2025-08-26T11:07:54.4458804Z||;True|2024-04-05T18:30:05.3968595+05:30||;</History>
+    <History>False|2025-09-23T13:25:51.8454744Z||;False|2025-09-23T18:55:37.8765344+05:30||;False|2025-09-23T18:55:24.8529040+05:30||;False|2025-09-23T18:55:00.5568944+05:30||;False|2025-09-23T18:53:52.1076256+05:30||;False|2025-09-23T18:53:12.0481651+05:30||;False|2025-09-23T18:49:36.4536736+05:30||;False|2025-09-23T18:48:44.1881849+05:30||;False|2025-09-23T18:48:17.6594871+05:30||;False|2025-09-23T18:43:39.0122729+05:30||;False|2025-09-23T18:42:49.8199979+05:30||;True|2025-08-26T16:37:54.4458804+05:30||;True|2024-04-05T18:30:05.3968595+05:30||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>

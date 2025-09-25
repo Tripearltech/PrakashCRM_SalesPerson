@@ -490,11 +490,10 @@ namespace PrakashCRM.Controllers
         public async Task<JsonResult> GetOrderedQtyDetails(string SQNo)
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/";
-
             apiUrl = apiUrl + "GetOrderedQtyDetails?SQNo=" + SQNo;
 
             HttpClient client = new HttpClient();
-            SPSQOrderedQtyDetails orderedQtyDetails = new SPSQOrderedQtyDetails();
+            List<SPSQOrderedQtyDetails> orderedQtyDetailsList = new List<SPSQOrderedQtyDetails>();
 
             client.BaseAddress = new Uri(apiUrl);
             client.DefaultRequestHeaders.Accept.Clear();
@@ -504,11 +503,12 @@ namespace PrakashCRM.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
-                orderedQtyDetails = Newtonsoft.Json.JsonConvert.DeserializeObject<SPSQOrderedQtyDetails>(data);
+                orderedQtyDetailsList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPSQOrderedQtyDetails>>(data);
             }
 
-            return Json(orderedQtyDetails, JsonRequestBehavior.AllowGet);
+            return Json(orderedQtyDetailsList, JsonRequestBehavior.AllowGet);
         }
+
 
         public async Task<JsonResult> GetInvoicedQtyDetails(string SQNo)
         {
@@ -1606,6 +1606,26 @@ namespace PrakashCRM.Controllers
 
             return $"{fileNameWithoutExtension}.pdf";
         }
+        public async Task<JsonResult> GetCSOutstandingDuelist()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPSalesQuotes/GetCSOutstandingDuelist";
+
+            HttpClient client = new HttpClient();
+            List<CSOutstandingDuelist> csutstandingDuelist = new List<CSOutstandingDuelist>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                csutstandingDuelist = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CSOutstandingDuelist>>(data);
+            }
+            return Json(csutstandingDuelist, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

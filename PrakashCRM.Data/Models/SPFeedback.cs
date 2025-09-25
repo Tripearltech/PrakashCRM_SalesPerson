@@ -148,4 +148,24 @@ namespace PrakashCRM.Data.Models
         public string Submitted_On_Filter_FilterOnly { get; set; }
 
     }
+    public class FeedBackQuestion
+    {
+        public string No { get; set; }
+        public string Contact_No { get; set; }
+        public string Contact_Person { get; set; }
+        public string Products { get; set; }
+        public string Overall_Rating { get; set; }
+        public string Overall_Rating_Comments { get; set; }
+        public string Suggestion { get; set; }
+        public string Employee_Name { get; set; }
+
+    }
+    public class FeedbBackLines
+    {
+        public string Feedback_Header_No { get; set; }
+        public string Feedback_Question_No { get; set; }
+        public string Feedback_Question { get; set; }
+        public string Rating { get; set; }
+        public string Comments { get; set; }
+    }
 }

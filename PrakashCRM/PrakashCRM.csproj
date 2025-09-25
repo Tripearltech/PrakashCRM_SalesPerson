@@ -1276,6 +1276,7 @@
     <Content Include="Scripts\ng-table.min.js" />
     <Content Include="Scripts\reportjs\CustomerLedgerEntry.js" />
     <Content Include="Scripts\reportjs\CustomerOutsatnding.js" />
+    <Content Include="Scripts\appjs\FeedBackQuestion.js" />
     <Content Include="Scripts\reportjs\InventoryView.js" />
     <Content Include="SPProfileImages\UserProfileImage.png" />
     <Content Include="Views\SPSalesQuotes\DispatchDetails.cshtml" />
@@ -1361,6 +1362,7 @@
     <Content Include="Views\SPReports\InventoryView.cshtml" />
     <Content Include="Views\SPReports\CustomerLedgerEntry.cshtml" />
     <Content Include="Views\SPReports\CustomerOutsatnding.cshtml" />
+    <Content Include="Views\SPFeedback\FeedBackQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
