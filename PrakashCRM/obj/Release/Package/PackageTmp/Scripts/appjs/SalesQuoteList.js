@@ -61,9 +61,6 @@ $(document).ready(function () {
         }
         else {
 
-            //if ($('#ddlField').val() == "---Select---" || $('#ddlOperator').val() == "---Select---" || $('#txtSearch').val() == "") {
-            //    flag = false;
-            //}
 
             if ($('#ddlField').val() != "-1" && ($('#ddlOperator').val() == "-1" || $('#txtSearch').val() == "")) {
                 flag = false;
@@ -95,12 +92,6 @@ $(document).ready(function () {
                             filter = $('#ddlField').val() + ' eq ' + '\'' + $('#txtSearch').val() + '\'';
                         }
 
-                        //if ($('#ddlField').val() != "Amount") {
-                        //    filter = $('#ddlField').val() + ' eq ' + '\'' + $('#txtSearch').val() + '\'';
-                        //}
-                        //else {
-                        //    filter = $('#ddlField').val() + ' eq ' + $('#txtSearch').val();
-                        //}
 
                         break;
                     case 'Not Equal':
@@ -252,32 +243,6 @@ $(document).ready(function () {
 
     $('#btnCloseModalSQ').click(function () {
 
-        //if ($('#hfIsScheduleOrder').val() == "true") {
-
-        //    if ($('#tblSchOrderProds').html().trim() != "") {
-
-        //        $('#tblSchOrderProds tr').each(function () {
-
-        //            var row = $(this)[0];
-        //            const prodDetails = row.cells[0].innerHTML.split('_');
-
-        //            $.post(apiUrl + 'UpdateScheduleQty?QuoteNo=' + $('#hfQuoteNo').val() + '&ProdLineNo=' + prodDetails[0] +
-        //                '&ScheduleQty=' + parseFloat(prodDetails[2]), function (data) {
-
-        //            });
-
-        //        });
-
-        //        $('#tblSchOrderProds').empty();
-        //        $('#tblSchOrderDetails').css('display', 'none');
-        //        $('.modal-footer').css('display', 'none');
-        //        $('#hfIsScheduleOrder').val("false");
-        //        $('#txtBalQty').prop('disabled', false);
-        //        $('#txtBalQty').val("");
-        //    }
-
-        //}
-
         $('#modalSQ').css('display', 'none');
         $('#dvSQScheOrder').css('display', 'none');
         $('#dvSQLineItems').css('display', 'none');
@@ -380,13 +345,6 @@ $(document).ready(function () {
                         '&ScheduleQty=' + parseFloat($('#txtScheduleQty').val()), function (data) {
 
                     });
-                /*}
-                else {
-
-                    $('#lblSchOrderErrMsg').css('display', 'block');
-                    $('#lblSchOrderErrMsg').text("Add All Products Either With Drop Shipment OR Without Drop Shipment");
-                    
-                }*/
 
             }
             
@@ -447,21 +405,6 @@ $(document).ready(function () {
                 var row = $(this)[0];
                 if (parseInt($("#" + row.cells[2].innerHTML + "_ReqQty").val()) > 0) {
 
-                    //var ItemNo = row.cells[0].innerHTML;
-                    //var LotNo = row.cells[2].innerHTML;
-                    //var ReqQty = parseInt($("#" + row.cells[2].innerHTML + "_ReqQty").val());
-                    //var LocCode = prodDetails_[4];
-                    //var LocCode = $('#hfLocCode').val();
-
-                    //var TROpts = "<tr><td></td><td></td><td>" + ItemNo + "</td><td>" + LotNo + "</td><td>" + ReqQty + "</td><td>" + LocCode + "</td></tr>";
-
-                    //
-
-                    
-                    
-                    //$('#tblLotNoWiseQtyDetails tr').each(function () {
-
-                        //var row = $(this)[0];
                         var ItemNo = row.cells[0].innerHTML;
                         var LotNo = row.cells[2].innerHTML;
                         var ReqQty = parseInt($("#" + row.cells[2].innerHTML + "_ReqQty").val());
@@ -515,26 +458,6 @@ $(document).ready(function () {
 
     $('#btnScheduleOrder').click(function () {
 
-        /*var responseMsg = "Error : The sales Line is short Closed.";
-
-        var responseMsg = "SDOM00163";
-
-        if (responseMsg.includes("Error : ")) {
-
-            const errDetails = responseMsg.split(':');
-            $('#resMsg').text(errDetails[1].trim());
-            $('#resIcon').attr('src', '../Layout/assets/images/appImages/Icon-2.png');
-            $("#resOrderNo").text("");
-        }
-        else {
-
-            $("#resOrderNo").text("Order No : " + responseMsg);
-            $('#resMsg').text("Order Scheduled Successfully");
-            $('#resIcon').attr('src', '../Layout/assets/images/appImages/Icon-1.png');
-        }
-
-        $('#modalSchOrderMsg').css('display', 'block');*/
-
         if ($('#txtScheduleDate').val() == "" || $('#txtExternalDocNo').val() == "") {
 
             $('#lblErrMsgDateDocNo').text("Please Fill Details");
@@ -553,234 +476,122 @@ $(document).ready(function () {
             var Err = "";
             var Cnt = 0;
 
-            $('#tblProdsForSchOrdr tr').each(function () {
+            var productDetails_ = [];
+            var invQtyDetails_ = [];
 
-                var prodDetails = $(this).find("TD").eq(0).html();
-                const prodDetails_ = prodDetails.split('_');
-                var prodNo = prodDetails_[1];
-                //
-                var balanceQty = $(this).find("TD").eq(4).html();
-                //
+            if ($('#tblProdsForSchOrdr tr').length > Cnt) {
 
-                if (parseFloat($("#" + prodNo + "_ScheduleQty").val()) <= 0) {
-
-                    Err = "Error";
-                    Cnt += 1;
-                }
-
-                if (parseFloat($("#" + prodNo + "_ScheduleQty").val()) > parseFloat(balanceQty)) {
-
-                    Err = "SchQtyGreaterErr";
-                    return false;
-                }
-
-            });
-
-            var productDetails_ = new Array();
-
-            if ($('#tblProdsForSchOrdr tr').length > Cnt)
-            {
-
-                if (Err == "SchQtyGreaterErr") {
-
-                    $('#lblSchOrdrMsg').text("Schedule qty should be less than or equal to balance qty");
-                    $('#lblSchOrdrMsg').css('color', 'red').css('display', 'block');
-
-                }
-                else {
-
-                    $('#lblSchOrdrMsg').text("");
-                    $('#lblSchOrdrMsg').css('display', 'none');
+                if (Err === "SchQtyGreaterErr") {
+                    $('#lblSchOrdrMsg').text("Schedule qty should be less than or equal to balance qty")
+                        .css({ color: 'red', display: 'block' });
+                } else {
+                    $('#lblSchOrdrMsg').text("").hide();
                     $('#btnSchOrderSpinner').show();
+
+                    // Prepare schedule order object
                     scheduleorder.QuoteNo = $('#hfQuoteNo').val();
                     scheduleorder.ScheduleDate = $('#txtScheduleDate').val();
                     scheduleorder.ExternalDocNo = $('#txtExternalDocNo').val();
-                    if ($('#ddlUsers').val() == "-1") {
-                        scheduleorder.AssignTo = "";
-                    }
-                    else {
-                        const userDetails = $('#ddlUsers').val().split('_');
-                        scheduleorder.AssignTo = userDetails[0];
-                    }
-                    
+                    scheduleorder.AssignTo = $('#ddlUsers').val() === "-1" ? "" : $('#ddlUsers').val().split('_')[0];
+
+                    // Iterate over table rows
                     $('#tblProdsForSchOrdr tr').each(function () {
+                        var $row = $(this);
+                        var prodDetails = $row.find("TD").eq(0).html();
+                        if (!prodDetails) return; // Skip empty rows
 
-                        var productDetails = {};
-                        var prodDetails = $(this).find("TD").eq(0).html();
-                        const prodDetails_ = prodDetails.split('_');
-                        var prodNo = prodDetails_[1];
-                        var prodLineNo = parseInt(prodDetails_[0]);
+                        const prodDetailsSplit = prodDetails.split('_');
+                        var prodLineNo = parseInt(prodDetailsSplit[0]);
+                        var prodNo = prodDetailsSplit[1];
 
-                        if ($(this).prop('id').includes("TRSQProd_") && parseFloat($("#" + prodNo + "_ScheduleQty").val()) > 0) {
+                        var scheduleQty = parseFloat($("#" + prodNo + "_ScheduleQty").val());
 
-                            /*if (parseFloat($("#" + prodNo + "_ScheduleQty").val()) > 0) {*/
-
-                            //UpdateScheduleQty($('#hfQuoteNo').val(), prodLineNo, parseFloat($("#" + prodNo + "_ScheduleQty").val()));
-                            //$.post(apiUrl + 'UpdateScheduleQty?QuoteNo=' + $('#hfQuoteNo').val() + '&ProdLineNo=' + prodLineNo +
-                            //    '&ScheduleQty=' + parseFloat($("#" + prodNo + "_ScheduleQty").val()), function (data) {
-
-                            //    });
-                            productDetails.QuoteNo = $('#hfQuoteNo').val();
-                            productDetails.ProdLineNo = parseInt(prodDetails_[0]);
-                            productDetails.ScheduleQty = parseFloat($("#" + prodNo + "_ScheduleQty").val());
-                            productDetails_.push(productDetails);
-                            /*}*/
-
-                        }
-
-                        if ($("#" + prodNo + "_InvDetails").html() != "") {
-
-                            $("#" + prodNo + "_InvDetails tr").each(function () {
-
-                                var invQtyDetails = {};
-
-                                invQtyDetails.QuoteNo = $('#hfQuoteNo').val();
-                                invQtyDetails.LineNo = prodLineNo;
-                                invQtyDetails.ItemNo = $(this).find("TD").eq(2).html();
-                                invQtyDetails.LotNo = $(this).find("TD").eq(3).html();
-                                invQtyDetails.Qty = $(this).find("TD").eq(4).html();
-                                invQtyDetails.LocationCode = $(this).find("TD").eq(5).html();
-
-                                invQtyDetails_.push(invQtyDetails);
+                        // Only process rows where ScheduleQty > 0
+                        if ($row.prop('id').includes("TRSQProd_") && scheduleQty > 0) {
+                            // Add product details
+                            productDetails_.push({
+                                QuoteNo: scheduleorder.QuoteNo,
+                                ProdLineNo: prodLineNo,
+                                ScheduleQty: scheduleQty
                             });
 
-                            scheduleorder.InvQuantities = invQtyDetails_;
-
+                            // Include inventory details only for this row
+                            var $invTable = $("#" + prodNo + "_InvDetails");
+                            if ($invTable.html() !== "") {
+                                $invTable.find("tr").each(function () {
+                                    var $invRow = $(this);
+                                    invQtyDetails_.push({
+                                        QuoteNo: scheduleorder.QuoteNo,
+                                        LineNo: prodLineNo,
+                                        ItemNo: $invRow.find("TD").eq(2).html(),
+                                        LotNo: $invRow.find("TD").eq(3).html(),
+                                        Qty: $invRow.find("TD").eq(4).html(),
+                                        LocationCode: $invRow.find("TD").eq(5).html()
+                                    });
+                                });
+                            }
                         }
-
                     });
 
+                    // If no rows have ScheduleQty > 0, show message and exit
+                    if (productDetails_.length === 0) {
+                        $('#lblSchOrdrMsg').text("Please fill schedule qty in products for schedule order")
+                            .css({ color: 'red', display: 'block' });
+                        $('#btnSchOrderSpinner').hide();
+                        return;
+                    }
+
+                    // Assign final arrays to scheduleorder
                     scheduleorder.SchQtyProds = productDetails_;
+                    scheduleorder.InvQuantities = invQtyDetails_;
 
-                    //$('#tblSchOrderProds tr').each(function () {
-
-                    //    var prodDetails = $(this).find("TD").eq(0).html();
-                    //    const prodDetails_ = prodDetails.split('_');
-                    //    var prodNo = prodDetails_[1];
-                    //    var prodLineNo = parseInt(prodDetails_[0]);
-
-                    //    if ($("#" + prodNo + "_InvDetails").html() != "") {
-
-                    //        $("#" + prodNo + "_InvDetails tr").each(function () {
-
-                    //            var invQtyDetails = {};
-
-                    //            invQtyDetails.QuoteNo = $('#hfQuoteNo').val();
-                    //            invQtyDetails.LineNo = prodLineNo;
-                    //            invQtyDetails.ItemNo = $(this).find("TD").eq(2).html();
-                    //            invQtyDetails.LotNo = $(this).find("TD").eq(3).html();
-                    //            invQtyDetails.Qty = $(this).find("TD").eq(4).html();
-                    //            invQtyDetails.LocationCode = $(this).find("TD").eq(5).html();
-
-                    //            invQtyDetails_.push(invQtyDetails);
-                    //        });
-
-                    //        scheduleorder.InvQuantities = invQtyDetails_;
-
-                    //    }
-
-                    //});
-
+                    // Send data to server
                     $.ajax({
                         type: "POST",
                         url: "/SPSalesQuotes/ScheduleOrder",
                         data: JSON.stringify(scheduleorder),
                         contentType: "application/json; charset=utf-8",
                         success: function (data) {
-
                             $('#btnSchOrderSpinner').hide();
-                            //$('#divImage').hide();
-                            var responseMsg = data;
 
-                            if (responseMsg.includes("Error_:")) {
+                            if (!data) {
+                                $('#lblSchOrdrMsg').text("Error")
+                                    .css({ color: 'red', display: 'block' });
+                                return;
+                            }
 
-                                const responseMsgDetails = responseMsg.split(':');
-                                $('#btnSchOrderSpinner').hide();
-                                $('#dvSQScheOrder').css('display', 'none');
-                                $('#modalSQ').css('display', 'none');
-                                $('#modalErrMsg').css('display', 'block');
+                            if (data.includes("Error_:")) {
+                                const responseMsgDetails = data.split(':');
+                                $('#dvSQScheOrder, #modalSQ').hide();
+                                $('#modalErrMsg').show();
                                 $('#modalErrDetails').text(responseMsgDetails[1]);
-
-                            }
-                            else if (responseMsg.includes("Error : ")) {
-
-                                //const errDetails = responseMsg.split(':');
-                                //$('#resMsg').text(errDetails[1].trim());
-                                //$('#resIcon').attr('src', '../Layout/assets/images/appImages/Icon-2.png');
-                                //$("#resOrderNo").text("");
-
-                                $('#lblSchOrdrMsg').text(errDetails[1].trim());
-                                $('#lblSchOrdrMsg').css('color', 'red').css('display', 'block');
-                            }
-                            else if (responseMsg == null) {
-
-                                $('#lblSchOrdrMsg').text("Error");
-                                $('#lblSchOrdrMsg').css('color', 'red').css('display', 'block');
-
-                            }
-                            else {
-
-                                //$("#resOrderNo").text("Order No : " + responseMsg);
-                                //$('#resMsg').text("Order Scheduled Successfully");
-                                //$('#resIcon').attr('src', '../Layout/assets/images/appImages/Icon-1.png');
-
-                                $('#lblSchOrdrMsg').text("Order No : " + responseMsg + " - Order Scheduled Successfully");
-                                $('#lblSchOrdrMsg').css('color', 'green').css('display', 'block');
+                            } else if (data.includes("Error : ")) {
+                                const errDetails = data.split(':');
+                                $('#lblSchOrdrMsg').text(errDetails[1].trim())
+                                    .css({ color: 'red', display: 'block' });
+                            } else {
+                                $('#lblSchOrdrMsg').text("Order No : " + data + " - Order Scheduled Successfully")
+                                    .css({ color: 'green', display: 'block' });
                             }
 
-                            //$('#dvSQScheOrder').css('display', 'none');
-                            //$('#modalSQ').css('display', 'none');
-                            //$('#modalSchOrderMsg').css('display', 'block');
+                            // Reset UI and reload products
                             $('.modal-title').text('Schedule The Order');
-                            $('#lblErrMsgDateDocNo').text("");
-                            $('#lblErrMsgDateDocNo').css('display', 'none');
-
+                            $('#lblErrMsgDateDocNo').text("").hide();
                             ResetSchOrdrDetails();
-                            BindSQProds($('#hfQuoteNo').val());
-
+                            BindSQProds(scheduleorder.QuoteNo);
+                        },
+                        error: function (xhr, status, error) {
+                            $('#btnSchOrderSpinner').hide();
+                            $('#lblSchOrdrMsg').text("Error while saving schedule order: " + error)
+                                .css({ color: 'red', display: 'block' });
                         }
-
                     });
-
                 }
-                
+
+            } else {
+                $('#lblSchOrdrMsg').text("Please fill schedule qty in products for schedule order")
+                    .css({ color: 'red', display: 'block' });
             }
-            else {
-
-                $('#lblSchOrdrMsg').text("Please fill schedule qty in products for schedule order");
-                $('#lblSchOrdrMsg').css('color', 'red').css('display', 'block');
-
-            }
-
-            //
-
-            //$.post(apiUrl + 'ScheduleOrder?QuoteNo=' + $('#hfQuoteNo').val() + '&ScheduleDate=' + $('#txtScheduleDate').val() + '&ExternalDocNo=' +
-            //    $('#txtExternalDocNo').val(), function (data) {
-
-            //    var responseMsg = data;
-
-            //    if (responseMsg.includes("Error : ")) {
-
-            //        const errDetails = responseMsg.split(':');
-            //        $('#resMsg').text(errDetails[1].trim());
-            //        $('#resIcon').attr('src', '../Layout/assets/images/appImages/Icon-2.png');
-            //        $("#resOrderNo").text("");
-            //    }
-            //    else {
-
-            //        $("#resOrderNo").text("Order No : " + responseMsg);
-            //        $('#resMsg').text("Order Scheduled Successfully");
-            //        $('#resIcon').attr('src', '../Layout/assets/images/appImages/Icon-1.png');
-            //    }
-
-            //    $('#dvSQScheOrder').css('display', 'none');
-            //    $('#modalSQ').css('display', 'none');
-            //    $('#modalSchOrderMsg').css('display', 'block');
-            //    $('#lblErrMsgDateDocNo').text("");
-            //    $('#lblErrMsgDateDocNo').css('display', 'none');
-   
-            //});
-
         }
 
     });
@@ -1026,7 +837,7 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                         rowData += "<td></td>";
                     }
 
-                    rowData += "<td>" + item.TPTPL_Short_Closed_Qty + "</td>" + "<td>" + item.TPTPL_Qty_to_Order + "</td>";
+                    rowData += "<td>" + item.TPTPL_Short_Closed_Qty + "</td>" + "<td>" + item.TPTPL_Balance_Qty + "</td>";
 
                     //if (item.PCPL_Rejected_Reason == null || item.PCPL_Rejected_Reason == "") {
                     //    rowData += "<td></td>";
@@ -1064,26 +875,6 @@ function commaSeparateNumber(val) {
     }
     return val;
 }
-
-//function UpdateScheduleQty(QuoteNo, ProdLineNo, ScheduleQty) {
-
-//    var apiUrl = $('#getServiceApiUrl').val() + 'SPSalesQuotes/';
-
-//    $.ajax({
-//        type: "POST",
-//        url: apiUrl + "UpdateScheduleQty?QuoteNo=" + QuoteNo + "&ProdLineNo=" + ProdLineNo +
-//            "&ScheduleQty=" + ScheduleQty,
-//        contentType: "application/json; charset=utf-8",
-//        success: function (data) {
-
-            
-
-//        }
-
-//    });
-
-//}
-
 function ScheduleOrder(QuoteNo, LocCode, SQStatus) {
 
     if (SQStatus == "Approval pending from finance" || SQStatus == "Approval pending from HOD") {
@@ -1283,49 +1074,42 @@ function ShowOrderedQtyDetails(SQNo, QtyCount) {
     $('#lblQtyDetailsTitle').text("Ordered Qty Details");
     $('#lblSQProdSQNo').text(SQNo);
 
+    $('#tblOrderedQtyDetails').empty();
+
     if (QtyCount > 0) {
 
-        $.ajax(
-            {
-                url: '/SPSalesQuotes/GetOrderedQtyDetails?SQNo=' + SQNo,
-                type: 'GET',
-                contentType: 'application/json',
-                success: function (data) {
+        $.ajax({
+            url: '/SPSalesQuotes/GetOrderedQtyDetails?SQNo=' + SQNo,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
 
-                    $('#tblOrderedQtyDetails').empty();
-                    var rowData = "";
+                var rowData = "";
 
-                    if (data != null && data != "") {
+                if (data != null && data.length > 0) {
 
-                        const OrderDate = data.OrderDate.split('-');
-                        var OrderDate_ = OrderDate[2] + "-" + OrderDate[1] + "-" + OrderDate[0];
+                    $.each(data, function (index, item) {
+                        let OrderDate_ = formatDate(item.OrderDate);
+                        let ScheduledDate_ = formatDate(item.ScheduledDate);
 
-                        const ScheduledDate = data.ScheduledDate.split('-');
-                        var ScheduledDate_ = ScheduledDate[2] + "-" + ScheduledDate[1] + "-" + ScheduledDate[0];
+                        rowData += "<tr>" + "<td>" + item.orderNo + "</td>" + "<td>" + OrderDate_ + "</td>" + "<td>" + item.Quantity + "</td>" + "<td>" + item.ScheduleQty + "</td>" + "<td>" + ScheduledDate_ + "</td>" + "<td>" + item.PCPL_Remarks + "</td>" + "<td>" + item.TPTPL_Assign_to + "</td>" + "</tr>";
+                    });
 
-                        rowData = "<tr><td>" + data.orderNo + "</td><td>" + OrderDate_ + "</td><td>" + data.Quantity + "</td><td>" + data.ScheduleQty + "</td>" +
-                            "<td>" + ScheduledDate_ + "</td><td>" + data.PCPL_Remarks + "</td><td>" + data.TPTPL_Assign_to + "</td></tr>";
-
-                        $('#tblOrderedQtyDetails').append(rowData);
-                    }
-                    else {
-                        rowData = "<tr><td colspan=7>No Records Found</td></tr>";
-                        $('#tblOrderedQtyDetails').append(rowData);
-                    }
-
-                },
-                error: function () {
-                    alert("error");
+                    $('#tblOrderedQtyDetails').append(rowData);
+                } else {
+                    rowData = "<tr><td colspan=7>No Records Found</td></tr>";
+                    $('#tblOrderedQtyDetails').append(rowData);
                 }
+
+            },
+            error: function () {
+                alert("error");
             }
-        );
+        });
 
-    }
-    else {
-
+    } else {
         var rowData = "<tr><td colspan=7>No Records Found</td></tr>";
         $('#tblOrderedQtyDetails').append(rowData);
-
     }
 
     $('#modalQtyDetails').css('display', 'block');
@@ -1333,6 +1117,12 @@ function ShowOrderedQtyDetails(SQNo, QtyCount) {
     $('#dvOrderedQtyDetails').css('display', 'block');
     $('#dvInvoicedQtyDetails').css('display', 'none');
     $('#dvInProcessQtyDetails').css('display', 'none');
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const parts = dateStr.split('-');
+    return parts.length === 3 ? (parts[2] + "-" + parts[1] + "-" + parts[0]) : dateStr;
 }
 
 function ShowInvoicedQtyDetails(SQNo, QtyCount) {
@@ -1397,7 +1187,7 @@ function ShowInProcessQtyDetails(SQNo, QtyCount) {
 
     var apiUrl = $('#getServiceApiUrl').val() + 'SPSalesQuotes/';
     $('#lblQtyDetailsTitle').text("In Process Qty Details");
-    $('#lblSQProdSQNo').text(SQNo);
+    //$('#lblSQProdSQNo').text(SQNo);
 
     if (QtyCount > 0)
     {
@@ -1707,16 +1497,6 @@ function SendEmail(SQNo, CustEmail) {
     });
 
 }
-
-//function PrintPreviewSQ(SQNo) {
-
-//    var apiUrl = $('#getServiceApiUrl').val() + 'SPSalesQuotes/';
-//    $.post('/SPSalesQuotes/PrintPreviewSQ?SQNo=' + SQNo, function (data) {
-
-
-//    });
-
-//}
 
 function PrintQuote(SQNo) {
 

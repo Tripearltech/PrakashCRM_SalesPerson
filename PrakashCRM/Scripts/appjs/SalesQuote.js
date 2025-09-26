@@ -4,7 +4,7 @@ var InqNo = "", SQNo = "", ScheduleStatus = "", SQStatus = "", SQFor = "", Logge
 $(document).ready(function () {
 
     GetInterestRate();
-    BindCSOutstandingDuelist();
+    //BindCSOutstandingDuelist();
     var UrlVars = getUrlVars();
 
     if (UrlVars["CompanyNo"] != undefined && UrlVars["CompanyName"] != undefined) {
@@ -2029,6 +2029,7 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
 
                     $('#dvSQJustificationDetails').css('display', 'block');
                     BindJustificationDetails(LoggedInUserRole, data.ContactCompanyNo);
+                    BindCSOutstandingDuelist();
                 }
 
             }
@@ -3243,6 +3244,7 @@ function BindCSOutstandingDuelist() {
                         + "<td>" + item.Product_Name + "</td>"
                         + "<td>" + item.Terms + "</td>"
                         + "<td>" + item.Due_Date + "</td>"
+                        + "<td>" + item.Invoice_Amount + "</td>"
                         + "<td>" + item.Remain_Amount + "</td>"
                         + "<td>" + item.Total_Days + "</td>"
                         + "<td>" + item.Overdue_Days + "</td>"

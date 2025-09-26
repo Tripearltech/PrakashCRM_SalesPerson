@@ -1,4 +1,12 @@
-﻿<!doctype html>
+﻿@{
+    // Session check at layout level
+    if (Session["loggedInUserEmail"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+}
+
+<!doctype html>
 <html>
 
 <head>
@@ -43,13 +51,13 @@
                     </a>
                 </li>
                 @*<li>
-                    <a href="/SPItems/ItemPriceChange">
-                        <div class="parent-icon">
-                            <i class='bx bx-rupee'></i>
-                        </div>
-                        <div class="menu-title">Item Price Change</div>
-                    </a>
-                </li>*@
+            <a href="/SPItems/ItemPriceChange">
+                <div class="parent-icon">
+                    <i class='bx bx-rupee'></i>
+                </div>
+                <div class="menu-title">Item Price Change</div>
+            </a>
+        </li>*@
                 @*<li>
             <a href="/SPActivities/Activities">
                 <div class="parent-icon">
@@ -115,7 +123,7 @@
                             <a href="/SPSalesQuotes/SalesQuoteStatus"><i class="bx bx-right-arrow-alt"></i>Sales Quote Status</a>
                         </li>
                         <li>
-                            <a href="#"><i class="bx bx-right-arrow-alt"></i>Dispatch Details</a>
+                            <a href="/SPSalesQuotes/DispatchDetails"><i class="bx bx-right-arrow-alt"></i>Dispatch Details</a>
                         </li>
                         <li>
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Web SalesQuote List</a>
@@ -300,15 +308,18 @@
                         </div>
                         <div class="menu-title">Reports</div>
                     </a>
-                    @*<ul>
-                        <li><a href="/SPReports/InventoryView"><i class="bx bx-right-arrow-alt"></i>Item Wise Inventory</a></li>
-                    </ul>*@
                     <ul>
                         <li>
                             <a href="/SPReports/InventoryView"><i class="bx bx-right-arrow-alt"></i>Inventory View Report</a>
                         </li>
                         <li>
                             <a href="/SPReports/CustomerLedgerEntry"><i class="bx bx-right-arrow-alt"></i>Customer Ledger Entry</a>
+                        </li>
+                        <li>
+                            <a href="/SPReports/CustomerOutsatnding"><i class="bx bx-right-arrow-alt"></i>Customer Out Satnding</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="bx bx-right-arrow-alt"></i>Feed back Report</a>
                         </li>
                         <li>
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Stock Management</a>
@@ -339,9 +350,6 @@
                         </li>
                         <li>
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Daily Visit Month Wise</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="bx bx-right-arrow-alt"></i>Feed Back Report</a>
                         </li>
                     </ul>
                 </li>
@@ -391,12 +399,20 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="/SPFeedback/FeedbackList">
+                    <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-file-find'></i>
                         </div>
                         <div class="menu-title">Feedback List</div>
                     </a>
+                    <ul>
+                        <li>
+                            <a href="SPFeedback/FeedbackList"><i class="bx bx-right-arrow-alt"></i>Feedback List</a>
+                        </li>
+                        <li>
+                            <a href="/SPFeedback/FeedBackQuestion"><i class="bx bx-right-arrow-alt"></i>Feed Back Question</a>
+                        </li>
+                    </ul>
                 </li>
                 <li style="display:none">
                     @*hide for live Mihir*@
@@ -424,7 +440,8 @@
                         {
                             <input id="hfUserRole" value="@Session["loggedInUserRole"]" style="display:none" />
                         }
-                        else {
+                        else
+                        {
                             <input id="hfUserRole" value="" style="display:none" />
                         }
 
@@ -588,9 +605,9 @@
                                 <img src="@Session["SPProfileImage"].ToString()" class="user-img" alt="user avatar">
                             }
 
-                        <div class="user-info ps-3">
-                            <p class="user-name mb-0">@Session["loggedInUserFName"].ToString() @Session["loggedInUserLName"].ToString()</p>
-                        </div>
+                            <div class="user-info ps-3">
+                                <p class="user-name mb-0">@Session["loggedInUserFName"].ToString() @Session["loggedInUserLName"].ToString()</p>
+                            </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>

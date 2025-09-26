@@ -854,16 +854,16 @@
 
                     <div id="dvcustomerOutStanding" style="display:none">
 
-                        <h6 style="font-weight:bold" width="30%">Customer OutStanding/Over-Due Report</h6>
+                        <h6 id="lblOutstandingValue" style="font-weight:bold" width="30%">Customer OutStanding/Over-Due Report</h6>
                         <hr />
 
-                        <div id="lblOutstandingValue" style="display:none">
+                        @*<div id="tblCSOutstandingDuelist" style="display:none">*@
                             <div class="row g-3">
                                 <div class="col-md-12">
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <table class="table mb-0 table-striped">
-                                                <thead id="tblCSOutstandingDuelist">
+                                                <thead>
                                                     <tr>
                                                         <th scope="col">Document Type</th>
                                                         <th scope="col">Bill No</th>
@@ -877,7 +877,7 @@
                                                         <th scope="col">Overdue Days</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="tblCSOutstandingDuelist">
                                                     <!--<tr>
                                                         <td>Invoice</td>
                                                         <td>PSIBD/2223/5044</td>
@@ -927,7 +927,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @*</div>*@
                     </div>
                     <div id="dvSQJustificationDetails" style="display:none">
 
@@ -2126,15 +2126,16 @@
 
             if ($('#ddlInquiries').val() != "-1") {
                 productDetails.InqProdLineNo = $("#" + prodNo + "_InqProdLineNo").html();
+                productDetails.Line_No = $("#" + prodNo + "_InqProdLineNo").html();
+            } else {
+                productDetails.Line_No = $("#" + prodNo + "_InqProdLineNo").html();
             }
 
             if ($('#hfSQEdit').val() === "true") {
                 productDetails.Line_No = $("#" + prodNo + "_SQLineNo").html();
             }
             // temproary need to check and change the line number
-            if (!productDetails.Line_No) {
-                productDetails.Line_No = $('#hfProdLineNo').val();
-            }
+           
             var marginPercent = $("#" + prodNo + "_MarginPercent").html() || "0%";
             marginPercent = marginPercent.replace('%', '');
             productDetails.PCPL_Margin_Percent = parseFloat(marginPercent) || 0;
