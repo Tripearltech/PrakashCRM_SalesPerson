@@ -58,25 +58,25 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/28/2025 00:27:29</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Data.dll">
-      <publishTime>09/26/2025 14:10:03</publishTime>
+      <publishTime>09/16/2025 21:08:23</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Data.pdb">
-      <publishTime>09/26/2025 14:10:03</publishTime>
+      <publishTime>09/16/2025 21:08:23</publishTime>
     </File>
     <File Include="bin/PrakashCRM.dll">
-      <publishTime>09/26/2025 15:52:37</publishTime>
+      <publishTime>09/16/2025 21:08:26</publishTime>
     </File>
     <File Include="bin/PrakashCRM.pdb">
-      <publishTime>09/26/2025 15:52:37</publishTime>
+      <publishTime>09/16/2025 21:08:26</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Service.dll">
-      <publishTime>09/26/2025 15:52:35</publishTime>
+      <publishTime>09/16/2025 21:08:24</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Service.dll.config">
-      <publishTime>09/25/2025 11:27:16</publishTime>
+      <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="bin/PrakashCRM.Service.pdb">
-      <publishTime>09/26/2025 15:52:35</publishTime>
+      <publishTime>09/16/2025 21:08:24</publishTime>
     </File>
     <File Include="bin/RBush.dll">
       <publishTime>08/28/2025 00:27:29</publishTime>
@@ -2959,7 +2959,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/28/2025 00:27:25</publishTime>
     </File>
     <File Include="Scripts/appjs/CustomerList.js">
-      <publishTime>09/25/2025 19:24:34</publishTime>
+      <publishTime>08/28/2025 00:27:25</publishTime>
     </File>
     <File Include="Scripts/appjs/DailyVisit.js">
       <publishTime>08/28/2025 00:27:25</publishTime>
@@ -2971,10 +2971,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/28/2025 00:27:25</publishTime>
     </File>
     <File Include="Scripts/appjs/Dashboard.js">
-      <publishTime>09/18/2025 16:52:01</publishTime>
-    </File>
-    <File Include="Scripts/appjs/FeedBackQuestion.js">
-      <publishTime>09/25/2025 21:42:07</publishTime>
+      <publishTime>09/16/2025 14:51:13</publishTime>
     </File>
     <File Include="Scripts/appjs/ForgotPassword.js">
       <publishTime>08/28/2025 00:27:25</publishTime>
@@ -2998,7 +2995,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/28/2025 00:27:25</publishTime>
     </File>
     <File Include="Scripts/appjs/MarketUpdate.js">
-      <publishTime>09/26/2025 14:00:17</publishTime>
+      <publishTime>08/28/2025 00:27:25</publishTime>
     </File>
     <File Include="Scripts/appjs/Notification.js">
       <publishTime>08/28/2025 00:27:25</publishTime>
@@ -3027,14 +3024,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Scripts/appjs/SalesPersonList.js">
       <publishTime>08/28/2025 00:27:25</publishTime>
     </File>
-    <File Include="Scripts/appjs/SalesQtDispatchDetails.js">
-      <publishTime>09/23/2025 16:31:35</publishTime>
-    </File>
     <File Include="Scripts/appjs/SalesQuote.js">
-      <publishTime>09/26/2025 14:05:34</publishTime>
+      <publishTime>09/16/2025 15:41:54</publishTime>
     </File>
     <File Include="Scripts/appjs/SalesQuoteList.js">
-      <publishTime>09/25/2025 19:29:50</publishTime>
+      <publishTime>09/16/2025 11:22:52</publishTime>
     </File>
     <File Include="Scripts/appjs/SiteActivityList.js">
       <publishTime>08/28/2025 00:27:25</publishTime>
@@ -3193,13 +3187,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Scripts/reportjs/CustomerLedgerEntry.js">
-      <publishTime>09/25/2025 21:24:40</publishTime>
-    </File>
-    <File Include="Scripts/reportjs/CustomerOutsatnding.js">
-      <publishTime>09/25/2025 21:24:40</publishTime>
+      <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Scripts/reportjs/InventoryView.js">
-      <publishTime>09/25/2025 21:24:40</publishTime>
+      <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="SPProfileImages/UserProfileImage.png">
       <publishTime>08/28/2025 00:27:25</publishTime>
@@ -3271,7 +3262,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Views/Shared/_SalespersonMasterLayout.cshtml">
-      <publishTime>09/25/2025 21:36:40</publishTime>
+      <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Views/Shared/_VendorMasterLayout.cshtml">
       <publishTime>04/05/2024 17:10:41</publishTime>
@@ -3316,10 +3307,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Views/SPCustomers/CustomerList.cshtml">
-      <publishTime>09/25/2025 19:25:43</publishTime>
+      <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Views/SPDashboard/Index.cshtml">
-      <publishTime>09/19/2025 14:29:11</publishTime>
+      <publishTime>09/16/2025 14:48:19</publishTime>
     </File>
     <File Include="Views/SPFeedback/CustomerSatisfaction.cshtml">
       <publishTime>08/28/2025 00:27:26</publishTime>
@@ -3329,9 +3320,6 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/SPFeedback/FeedbackList.cshtml">
       <publishTime>08/28/2025 00:27:26</publishTime>
-    </File>
-    <File Include="Views/SPFeedback/FeedBackQuestion.cshtml">
-      <publishTime>09/25/2025 21:49:17</publishTime>
     </File>
     <File Include="Views/SPGRN/GRNCard.cshtml">
       <publishTime>09/03/2025 15:34:21</publishTime>
@@ -3367,7 +3355,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Views/SPOutstandingPayment/OutstandingDetails.cshtml">
-      <publishTime>09/22/2025 22:24:50</publishTime>
+      <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Views/SPOutstandingPayment/OutstandingPaymentList.cshtml">
       <publishTime>08/28/2025 00:27:26</publishTime>
@@ -3375,14 +3363,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/SPPostedSalesInvoice/PostedSalesInvoiceList.cshtml">
       <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
-    <File Include="Views/SPReports/CustomerLedgerEntry.cshtml">
-      <publishTime>08/28/2025 00:27:18</publishTime>
-    </File>
-    <File Include="Views/SPReports/CustomerOutsatnding.cshtml">
-      <publishTime>09/17/2025 23:47:04</publishTime>
-    </File>
     <File Include="Views/SPReports/InventoryView.cshtml">
-      <publishTime>09/18/2025 12:13:46</publishTime>
+      <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
     <File Include="Views/SPRoleRights/RoleRights.cshtml">
       <publishTime>08/28/2025 00:27:26</publishTime>
@@ -3396,17 +3378,14 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/SPSalesOrders/SalesOrdersList.cshtml">
       <publishTime>08/28/2025 00:27:26</publishTime>
     </File>
-    <File Include="Views/SPSalesQuotes/DispatchDetails.cshtml">
-      <publishTime>09/23/2025 12:55:53</publishTime>
-    </File>
     <File Include="Views/SPSalesQuotes/SalesQuote.cshtml">
-      <publishTime>09/26/2025 15:29:47</publishTime>
+      <publishTime>09/11/2025 15:38:32</publishTime>
     </File>
     <File Include="Views/SPSalesQuotes/SalesQuoteList.cshtml">
       <publishTime>09/16/2025 11:26:05</publishTime>
     </File>
     <File Include="Views/SPSalesQuotes/SalesQuoteStatus.cshtml">
-      <publishTime>09/23/2025 12:51:50</publishTime>
+      <publishTime>09/09/2025 18:13:25</publishTime>
     </File>
     <File Include="Views/SPSiteActivity/SiteActivityList.cshtml">
       <publishTime>08/28/2025 00:27:26</publishTime>

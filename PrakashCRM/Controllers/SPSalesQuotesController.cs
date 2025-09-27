@@ -40,46 +40,6 @@ namespace PrakashCRM.Controllers
 
         public ActionResult SalesQuote()
         {
-            //List<SPSQInvQtyReserve> invQtyReserve = new List<SPSQInvQtyReserve>();
-
-            //invQtyReserve.Add(new SPSQInvQtyReserve()
-            //{
-            //    QuoteNo = "Quote123",
-            //    LineNo = 10000,
-            //    ItemNo = "TRD00032",
-            //    LotNo = "LOT00065",
-            //    Qty = 1,
-            //    LocationCode = "AHM DOM"
-
-            //});
-
-            //invQtyReserve.Add(new SPSQInvQtyReserve()
-            //{
-            //    QuoteNo = "Quote123",
-            //    LineNo = 10000,
-            //    ItemNo = "TRD00032",
-            //    LotNo = "LOT00082",
-            //    Qty = 1,
-            //    LocationCode = "AHM DOM"
-
-            //});
-
-            //SPSQInvQtyReservePost invQtyReservePost = new SPSQInvQtyReservePost();
-            //string ObjString_ = JsonConvert.SerializeObject(invQtyReserve);
-            //string txtString = ObjString_.Replace("\"", "'");
-            //invQtyReservePost.text = txtString;
-            //string txtString_ = JsonConvert.SerializeObject(invQtyReservePost);
-            ////ObjString_ = ObjString_.Replace("\"text\"", '"' + "text" + '"');
-            //var content = new StringContent(txtString_, Encoding.UTF8, "application/json");
-
-            //if (SQNo != "" || Session["SalesQuoteNo"] != null)
-            //{
-            //    if (Session["SalesQuoteNo"] == null)
-            //    {
-            //        Session["SalesQuoteNo"] = SQNo;
-            //        Session["isSalesQuoteEdit"] = "true";
-            //    }
-            //}
 
             return View();
         }

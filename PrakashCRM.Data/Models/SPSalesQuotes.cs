@@ -820,6 +820,7 @@ namespace PrakashCRM.Data.Models
         public double PCPL_MRP { get; set; }
 
         public string Delivery_Date { get; set; }
+        public double Net_Weight { get; set; }
 
         public double PCPL_Total_Cost { get; set; }
 

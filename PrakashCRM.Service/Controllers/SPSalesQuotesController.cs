@@ -459,6 +459,7 @@ namespace PrakashCRM.Service.Controllers
                         reqSQLine.PCPL_Total_Cost = product.PCPL_Total_Cost;
                         reqSQLine.Delivery_Date = product.Delivery_Date;
                         reqSQLine.Drop_Shipment = product.Drop_Shipment;
+                        reqSQLine.Net_Weight = product.Net_Weight;
                         reqSQLine.PCPL_Vendor_No = product.PCPL_Vendor_No ?? "";
                         reqSQLine.GST_Place_Of_Supply = salesQuoteDetails.ShiptoCode == "-1" && salesQuoteDetails.JobtoCode == "-1" ? "Bill-to Address" : "Ship-to Address";
                         reqSQLine.PCPL_Inquiry_No = string.IsNullOrEmpty(salesQuoteDetails.InquiryNo) ? "" : salesQuoteDetails.InquiryNo;
@@ -1710,25 +1711,6 @@ namespace PrakashCRM.Service.Controllers
             return lineitems;
         }
 
-        //[Route("GetSQDetailsForPrintPreview")]
-        //public string GetSQDetailsForPrintPreview(string SQNo)
-        //{
-        //    string response = "";
-        //    API ac = new API();
-
-        //    SPSQDetailsForPrintPost ReqSqDetailsForPrint = new SPSQDetailsForPrintPost();
-        //    SPSQDetailsForPrintOData ResSqDetailsForPrint = new SPSQDetailsForPrintOData();
-
-        //    //ReqSqDetailsForPrint.docno = SQNo;
-        //    ReqSqDetailsForPrint.docno = "POD000002";
-
-        //    var result = PostItemForGetSQDetailsForPrint<SPSQDetailsForPrintOData>("", ReqSqDetailsForPrint, ResSqDetailsForPrint);
-
-        //    response = result.Result.Item1.value;
-
-        //    return response;
-        //}
-
         [HttpGet]
         [Route("PrintQuote")]
         public string PrintQuote(string QuoteNo)
@@ -1981,16 +1963,9 @@ namespace PrakashCRM.Service.Controllers
                 sbMailBody.Append("<p>Welcome to the <strong>Prakash CRM Portal</strong>.</p>");
                 sbMailBody.Append("<p>Sales Quote Details</p>");
                 sbMailBody.Append(emailBody);
-                //sbMailBody.Append("<table width=\"100%\" border=\"1\"><thead><tr style=\"background-color:darkblue;color:white\"><th>Inq No</th><th>Inq Date</th><th>Customer</th><th>Delivery Date</th><th>Payment Terms</th><th>Status</th><th>Consignee Address</th></tr></thead>" +
-                //    "<tbody><tr><td>INQ42</td><td>19-10-2024</td><td>AADINATH AGENCY</td><td>19-10-2024</td><td>01 DAYS RT</td><td>Pending</td><td>Address Details</td></tr><tr><td></td><td colspan=\"6\"><table width=\"50%\"><thead><tr style=\"background-color:darkgrey;color:black\">" +
-                //    "<th>Product Name</th><th>Qty</th><th>UOM</th></tr></thead><tbody><tr><td>CAUSTIC SODA LYE</td><td>4</td><td>MTS</td></tr></tbody></table></td></tr><tr><td>INQ43</td><td>19-10-2024</td><td>AADINATH AGENCY</td><td>19-10-2024</td><td>02 DAYS RT</td><td>Pending</td>" +
-                //    "<td>Address Details</td></tr><tr><td></td><td colspan=\"6\"><table width=\"50%\"><thead><tr style=\"background-color:darkgrey;color:black\"><th>Product Name</th><th>Qty</th><th>UOM</th></tr></thead><tbody><tr><td>BENZYL CHLORIDE</td><td>5</td><td>MTS</td></tr></tbody></table>" +
-                //    "</td></tr></tbody></table>");
                 sbMailBody.Append("<p>&nbsp;</p>");
                 sbMailBody.Append("<p>Warm Regards,</p>");
                 sbMailBody.Append("<p>Support Team</p>");
-
-                //emailService.SendEmailTo(email, sbMailBody.ToString(), "Change Password - PrakashCRM");
                 emailService.SendEmail(custEmail, SPEmail, "Sales Quote Details - PrakashCRM", sbMailBody.ToString());
                 flag = true;
             }

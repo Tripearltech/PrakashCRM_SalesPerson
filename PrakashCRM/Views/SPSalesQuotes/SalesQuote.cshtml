@@ -462,7 +462,7 @@
                                     <label class="col-sm-3 col-form-label">Quantity<span class="required" style="color:red;margin-left:2px">*</span></label>
                                     <div class="col-sm-5">
                                         <input id="txtProdQty" type="text" class="form-control" />
-                                       
+
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="text" id="txtUOM" class="form-control" disabled />
@@ -544,7 +544,7 @@
                             <div class="col-md-6">
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label">Sales Discount</label>
-                                    
+
                                     <div class="col-sm-9">
                                         <input type="text" id="txtSalesDiscount" class="form-control" />
                                         @*@Html.TextBoxFor(model => model.Sales_Discount, new { @id = "txtSalesDiscount", @class = "form-control" })*@
@@ -676,7 +676,7 @@
                                 </div>
                             </div>
                         </div>
-                      
+
                         <div class="row g-3" style="display:none">
                             <div class="col-md-6">
                                 <label class="col-sm-3 col-form-label">GST Place of Supply</label>
@@ -858,75 +858,75 @@
                         <hr />
 
                         @*<div id="tblCSOutstandingDuelist" style="display:none">*@
-                            <div class="row g-3">
-                                <div class="col-md-12">
-                                    <div class="row mb-3">
-                                        <div class="col-sm-12">
-                                            <table class="table mb-0 table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Document Type</th>
-                                                        <th scope="col">Bill No</th>
-                                                        <th scope="col">Bill Date</th>
-                                                        <th scope="col">Product Name</th>
-                                                        <th scope="col">Payment Terms</th>
-                                                        <th scope="col">Due Date</th>
-                                                        <th scope="col">Invoice Amount</th>
-                                                        <th scope="col">Remain Amount</th>
-                                                        <th scope="col">Total Days</th>
-                                                        <th scope="col">Overdue Days</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tblCSOutstandingDuelist">
-                                                    <!--<tr>
-                                                        <td>Invoice</td>
-                                                        <td>PSIBD/2223/5044</td>
-                                                        <td>11-01-2023</td>
-                                                        <td>ETHYL ACETATE - 210 KGS</td>
-                                                        <td>30 DAYS</td>
-                                                        <td>10-02-2023</td>
-                                                        <td class="right-align">2,23,640.00</td>
-                                                        <td class="right-align">2,23,640.00</td>
-                                                        <td>41</td>
-                                                        <td class="overdue-positive">11</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Invoice</td>
-                                                        <td>PSIBD/2223/5204</td>
-                                                        <td>21-01-2023</td>
-                                                        <td>ETHYL ACETATE - 210 KGS</td>
-                                                        <td>30 DAYS</td>
-                                                        <td>20-02-2023</td>
-                                                        <td class="right-align">2,23,640.00</td>
-                                                        <td class="right-align">2,23,640.00</td>
-                                                        <td>31</td>
-                                                        <td class="overdue-positive">1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Invoice</td>
-                                                        <td>PSIBD/2223/5355</td>
-                                                        <td>31-01-2023</td>
-                                                        <td>ETHYL ACETATE - 210 KGS</td>
-                                                        <td>30 DAYS</td>
-                                                        <td>02-03-2023</td>
-                                                        <td class="right-align">2,19,923.00</td>
-                                                        <td class="right-align">2,19,923.00</td>
-                                                        <td>21</td>
-                                                        <td class="overdue-negative">-9</td>
-                                                    </tr>-->
-                                                    <!-- Totals Row -->
-                                                    <!--<tr class="total-row" style="font-weight: bold; background-color: #eee;">
-                                                        <td scope="col" colspan="6" style="text-align: right; ">Total: </td>
-                                                        <td class="right-align">8,95,922.00</td>
-                                                        <td class="right-align">8,95,922.00</td>
-                                                        <td colspan="2"></td>
-                                                    </tr>-->
-                                                </tbody>
-                                            </table>
-                                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <div class="row mb-3">
+                                    <div class="col-sm-12">
+                                        <table class="table mb-0 table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Document Type</th>
+                                                    <th scope="col">Bill No</th>
+                                                    <th scope="col">Bill Date</th>
+                                                    <th scope="col">Product Name</th>
+                                                    <th scope="col">Payment Terms</th>
+                                                    <th scope="col">Due Date</th>
+                                                    <th scope="col">Invoice Amount</th>
+                                                    <th scope="col">Remain Amount</th>
+                                                    <th scope="col">Total Days</th>
+                                                    <th scope="col">Overdue Days</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblCSOutstandingDuelist">
+                                                <!--<tr>
+                                                    <td>Invoice</td>
+                                                    <td>PSIBD/2223/5044</td>
+                                                    <td>11-01-2023</td>
+                                                    <td>ETHYL ACETATE - 210 KGS</td>
+                                                    <td>30 DAYS</td>
+                                                    <td>10-02-2023</td>
+                                                    <td class="right-align">2,23,640.00</td>
+                                                    <td class="right-align">2,23,640.00</td>
+                                                    <td>41</td>
+                                                    <td class="overdue-positive">11</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Invoice</td>
+                                                    <td>PSIBD/2223/5204</td>
+                                                    <td>21-01-2023</td>
+                                                    <td>ETHYL ACETATE - 210 KGS</td>
+                                                    <td>30 DAYS</td>
+                                                    <td>20-02-2023</td>
+                                                    <td class="right-align">2,23,640.00</td>
+                                                    <td class="right-align">2,23,640.00</td>
+                                                    <td>31</td>
+                                                    <td class="overdue-positive">1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Invoice</td>
+                                                    <td>PSIBD/2223/5355</td>
+                                                    <td>31-01-2023</td>
+                                                    <td>ETHYL ACETATE - 210 KGS</td>
+                                                    <td>30 DAYS</td>
+                                                    <td>02-03-2023</td>
+                                                    <td class="right-align">2,19,923.00</td>
+                                                    <td class="right-align">2,19,923.00</td>
+                                                    <td>21</td>
+                                                    <td class="overdue-negative">-9</td>
+                                                </tr>-->
+                                                <!-- Totals Row -->
+                                                <!--<tr class="total-row" style="font-weight: bold; background-color: #eee;">
+                                                    <td scope="col" colspan="6" style="text-align: right; ">Total: </td>
+                                                    <td class="right-align">8,95,922.00</td>
+                                                    <td class="right-align">8,95,922.00</td>
+                                                    <td colspan="2"></td>
+                                                </tr>-->
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         @*</div>*@
                     </div>
                     <div id="dvSQJustificationDetails" style="display:none">
@@ -1263,7 +1263,6 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tblCostSheetDetails">
-                                      
                                     </tbody>
                                 </table>
                             </div>
@@ -2088,7 +2087,8 @@
 
             // Safely parse boolean for liquid product
             var tdVal = $(this).find("TD").eq(30).html();
-            var isLiquidProd = (tdVal && tdVal.toLowerCase() === "true");
+            //var isLiquidProd = (tdVal && tdVal.toLowerCase() === "true");
+            var isLiquidProd = $(this).find("TD").eq(28).html()
 
             productDetails.No = $(this).find("TD").eq(2).html();
             productDetails.ProductName = $(this).find("TD").eq(3).html();
@@ -2110,15 +2110,22 @@
             productDetails.PCPL_Commission_Amount = parseFloat($(this).find("TD").eq(19).html()) || 0;
             productDetails.PCPL_Credit_Days = parseFloat($(this).find("TD").eq(20).html()) || 0;
             productDetails.PCPL_Interest = parseFloat($(this).find("TD").eq(21).html()) || 0;
+            productDetails.PCPL_Commission_Payable = ($(this).find("TD").eq(26).html() === " ") ? "" : $(this).find("TD").eq(26).html();
 
-            var prodNo = productDetails.No;
-            var dropShipHtml = $("#" + prodNo + "_DropShipment").html();
+            productDetails.PCPL_Commission_Payable = $(this).find("TD").eq(26).html();
+            //productDetails.PCPL_Commission_Payable = $(this).find("TD").eq(27).html();
+
+            //productDetails.PCPL_Commission_Payable = $("#ddlCommissionPayable").find("TD").eq(24).html();
+                productDetails.PCPL_Vendor_No = $(this).find("TD").eq(26).html();
+                if (productDetails.PCPL_Vendor_No == "-1") productDetails.PCPL_Vendor_No = "";
+                productDetails.PCPL_Vendor_No = $(this).find("TD").eq(32).html();
+                if (productDetails.PCPL_Vendor_No == " ") productDetails.PCPL_Vendor_No = "";
             if (dropShipHtml === "Yes") {
                 productDetails.Drop_Shipment = true;
                 productDetails.PCPL_Vendor_No = $(this).find("TD").eq(26).html();
                 if (productDetails.PCPL_Vendor_No == "-1") productDetails.PCPL_Vendor_No = "";
             } else {
-                productDetails.Drop_Shipment = false;
+            //productDetails.PCPL_Commission_Payable_Name = ($(this).find("TD").eq(24).html() === "-1") ? "" : $(this).find("TD").eq(24).html();
                 productDetails.PCPL_Vendor_No = "";
             }
 
@@ -2135,16 +2142,16 @@
                 productDetails.Line_No = $("#" + prodNo + "_SQLineNo").html();
             }
             // temproary need to check and change the line number
-           
-            var marginPercent = $("#" + prodNo + "_MarginPercent").html() || "0%";
-            marginPercent = marginPercent.replace('%', '');
-            productDetails.PCPL_Margin_Percent = parseFloat(marginPercent) || 0;
 
-            // Liquid Product Details
-            productDetails.IsLiquidProd = isLiquidProd;
+            var marginPercent = $("#" + prodNo + "_MarginPercent").html() || "0%";
             if (isLiquidProd) {
-                productDetails.PCPL_Concentration_Rate_Percent = parseFloat($(this).find("TD").eq(31).html()) || 0;
-                productDetails.Net_Weight = parseFloat($(this).find("TD").eq(32).html()) || 0;
+                productDetails.PCPL_Concentration_Rate_Percent = parseFloat($(this).find("TD").eq(29).html()) || 0;
+                productDetails.Net_Weight = parseFloat($(this).find("TD").eq(30).html()) || 0;
+                productDetails.PCPL_Liquid_Rate = parseFloat($(this).find("TD").eq(31).html()) || 0;
+            productDetails.IsLiquidProd = isLiquidProd;
+                productDetails.PCPL_Concentration_Rate_Percent = "";
+                productDetails.Net_Weight = 0;
+                productDetails.PCPL_Liquid_Rate = "";
                 productDetails.PCPL_Liquid_Rate = parseFloat($(this).find("TD").eq(33).html()) || 0;
             } else {
                 productDetails.PCPL_Concentration_Rate_Percent = -1;
