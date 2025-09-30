@@ -2112,24 +2112,17 @@
             productDetails.PCPL_Interest = parseFloat($(this).find("TD").eq(21).html()) || 0;
             productDetails.PCPL_Commission_Payable = ($(this).find("TD").eq(26).html() === " ") ? "" : $(this).find("TD").eq(26).html();
 
-            productDetails.PCPL_Commission_Payable = $(this).find("TD").eq(26).html();
-            //productDetails.PCPL_Commission_Payable = $(this).find("TD").eq(27).html();
-
-            //productDetails.PCPL_Commission_Payable = $("#ddlCommissionPayable").find("TD").eq(24).html();
-                productDetails.PCPL_Vendor_No = $(this).find("TD").eq(26).html();
-                if (productDetails.PCPL_Vendor_No == "-1") productDetails.PCPL_Vendor_No = "";
-                productDetails.PCPL_Vendor_No = $(this).find("TD").eq(32).html();
-                if (productDetails.PCPL_Vendor_No == " ") productDetails.PCPL_Vendor_No = "";
+            var prodNo = productDetails.No;
+            var dropShipHtml = $("#" + prodNo + "_DropShipment").html();
             if (dropShipHtml === "Yes") {
                 productDetails.Drop_Shipment = true;
-                productDetails.PCPL_Vendor_No = $(this).find("TD").eq(26).html();
-                if (productDetails.PCPL_Vendor_No == "-1") productDetails.PCPL_Vendor_No = "";
+                productDetails.PCPL_Vendor_No = $(this).find("TD").eq(32).html();
+                if (productDetails.PCPL_Vendor_No == " ") productDetails.PCPL_Vendor_No = "";
             } else {
-            //productDetails.PCPL_Commission_Payable_Name = ($(this).find("TD").eq(24).html() === "-1") ? "" : $(this).find("TD").eq(24).html();
+                productDetails.Drop_Shipment = false;
                 productDetails.PCPL_Vendor_No = "";
             }
 
-            productDetails.PCPL_Commission_Payable = ($(this).find("TD").eq(24).html() === "-1") ? "" : $(this).find("TD").eq(24).html();
 
             if ($('#ddlInquiries').val() != "-1") {
                 productDetails.InqProdLineNo = $("#" + prodNo + "_InqProdLineNo").html();
@@ -2144,19 +2137,19 @@
             // temproary need to check and change the line number
 
             var marginPercent = $("#" + prodNo + "_MarginPercent").html() || "0%";
+            marginPercent = marginPercent.replace('%', '');
+            productDetails.PCPL_Margin_Percent = parseFloat(marginPercent) || 0;
+
+            // Liquid Product Details
+            productDetails.IsLiquidProd = isLiquidProd;
             if (isLiquidProd) {
                 productDetails.PCPL_Concentration_Rate_Percent = parseFloat($(this).find("TD").eq(29).html()) || 0;
                 productDetails.Net_Weight = parseFloat($(this).find("TD").eq(30).html()) || 0;
                 productDetails.PCPL_Liquid_Rate = parseFloat($(this).find("TD").eq(31).html()) || 0;
-            productDetails.IsLiquidProd = isLiquidProd;
+            } else {
                 productDetails.PCPL_Concentration_Rate_Percent = "";
                 productDetails.Net_Weight = 0;
                 productDetails.PCPL_Liquid_Rate = "";
-                productDetails.PCPL_Liquid_Rate = parseFloat($(this).find("TD").eq(33).html()) || 0;
-            } else {
-                productDetails.PCPL_Concentration_Rate_Percent = -1;
-                productDetails.Net_Weight = -1;
-                productDetails.PCPL_Liquid_Rate = -1;
             }
 
             productDetails_.push(productDetails);

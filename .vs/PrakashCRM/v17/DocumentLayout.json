@@ -1,0 +1,523 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|c:\\prakashcrm_salesperson\\github-code\\prakashcrm_salesperson\\prakashcrm\\views\\spsalesquotes\\salesquote.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\spsalesquotes\\salesquote.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\salesquote.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\salesquote.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\controllers\\spfeedbackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\controllers\\spfeedbackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm.service\\controllers\\spfeedbackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|solutionrelative:prakashcrm.service\\controllers\\spfeedbackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\spfeedbacklist.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\spfeedbacklist.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\views\\spfeedback\\feedbacklist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\spfeedback\\feedbacklist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\views\\spfeedback\\feedbackquestion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\spfeedback\\feedbackquestion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\views\\salesperson\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\salesperson\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\feedbackquestion.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\feedbackquestion.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\controllers\\spsiteactivitycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\controllers\\spsiteactivitycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BF410FDF-E32A-4445-8BBE-BDDCD0671C34}|PrakashCRM.Data\\PrakashCRM.Data.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm.data\\models\\salesperson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BF410FDF-E32A-4445-8BBE-BDDCD0671C34}|PrakashCRM.Data\\PrakashCRM.Data.csproj|solutionrelative:prakashcrm.data\\models\\salesperson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\views\\shared\\_salespersonmasterlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\shared\\_salespersonmasterlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm.service\\controllers\\salespersoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|solutionrelative:prakashcrm.service\\controllers\\salespersoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\forgotpassword.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\forgotpassword.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\views\\account\\changepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\account\\changepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\resetforgotpassword.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\resetforgotpassword.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\changepassword.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\changepassword.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\controllers\\salespersoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\controllers\\salespersoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\spprofile.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\spprofile.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\views\\spsiteactivity\\siteactivitylist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\spsiteactivity\\siteactivitylist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm.service\\controllers\\spsiteactivitycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09B6685A-6FB9-4C7A-A77F-1EB12B15CDDE}|PrakashCRM.Service\\PrakashCRM.Service.csproj|solutionrelative:prakashcrm.service\\controllers\\spsiteactivitycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\siteactivitylist.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\siteactivitylist.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\controllers\\spsiteerrorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\controllers\\spsiteerrorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\controllers\\spdashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\controllers\\spdashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BF410FDF-E32A-4445-8BBE-BDDCD0671C34}|PrakashCRM.Data\\PrakashCRM.Data.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm.data\\models\\spnotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BF410FDF-E32A-4445-8BBE-BDDCD0671C34}|PrakashCRM.Data\\PrakashCRM.Data.csproj|solutionrelative:prakashcrm.data\\models\\spnotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\scripts\\appjs\\salespersoncard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\scripts\\appjs\\salespersoncard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\prakashcrm\\views\\spactivities\\activities.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A555291F-813A-48D3-A1BC-F48BCD76928E}|PrakashCRM\\PrakashCRM.csproj|solutionrelative:prakashcrm\\views\\spactivities\\activities.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 178,
+          "SelectedChildIndex": 30,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "SiteActivityList.cshtml",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPSiteActivity\\SiteActivityList.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\SPSiteActivity\\SiteActivityList.cshtml",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPSiteActivity\\SiteActivityList.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\SPSiteActivity\\SiteActivityList.cshtml",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAGYAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-29T06:17:53.732Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "SiteActivityList.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SiteActivityList.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\SiteActivityList.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SiteActivityList.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\SiteActivityList.js",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAhwHIAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-29T06:15:08.418Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SPFeedbackList.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPFeedbackList.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\SPFeedbackList.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPFeedbackList.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\SPFeedbackList.js",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAwCIAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-29T11:15:26.418Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FeedBackQuestion.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\FeedBackQuestion.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\FeedBackQuestion.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\FeedBackQuestion.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\FeedBackQuestion.js",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwAoAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-29T11:15:38.559Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "_SalespersonMasterLayout.cshtml",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\Shared\\_SalespersonMasterLayout.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\Shared\\_SalespersonMasterLayout.cshtml",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\Shared\\_SalespersonMasterLayout.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\Shared\\_SalespersonMasterLayout.cshtml",
+              "ViewState": "AgIAAFICAAAAAAAAAAAAwGECAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-29T11:10:24.997Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "SPNotification.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Data\\Models\\SPNotification.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Data\\Models\\SPNotification.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Data\\Models\\SPNotification.cs",
+              "RelativeToolTip": "PrakashCRM.Data\\Models\\SPNotification.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAIwDIAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T10:25:41.396Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "SalesPersonController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SalesPersonController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM\\Controllers\\SalesPersonController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SalesPersonController.cs",
+              "RelativeToolTip": "PrakashCRM\\Controllers\\SalesPersonController.cs",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAowLQAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:39:50.34Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "SalesPersonCard.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SalesPersonCard.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\SalesPersonCard.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SalesPersonCard.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\SalesPersonCard.js",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAAAI4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-29T07:27:47.435Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ChangePassword.cshtml",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\Account\\ChangePassword.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\Account\\ChangePassword.cshtml",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\Account\\ChangePassword.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\Account\\ChangePassword.cshtml",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAJYAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-29T06:57:06.645Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SalespersonController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SalespersonController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Service\\Controllers\\SalespersonController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SalespersonController.cs",
+              "RelativeToolTip": "PrakashCRM.Service\\Controllers\\SalespersonController.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAwGIAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T06:13:35.582Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ChangePassword.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\ChangePassword.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\ChangePassword.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\ChangePassword.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\ChangePassword.js",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAjwFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-29T06:51:18.484Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "SPSiteActivityController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SPSiteActivityController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Service\\Controllers\\SPSiteActivityController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SPSiteActivityController.cs",
+              "RelativeToolTip": "PrakashCRM.Service\\Controllers\\SPSiteActivityController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T06:45:49.111Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "PrakashCRM\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAHoBAAAAAAAAAIAzwH8BAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T06:52:50.42Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Activities.cshtml",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPActivities\\Activities.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\SPActivities\\Activities.cshtml",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPActivities\\Activities.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\SPActivities\\Activities.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-29T06:51:04.616Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SPSiteActivityController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPSiteActivityController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM\\Controllers\\SPSiteActivityController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPSiteActivityController.cs",
+              "RelativeToolTip": "PrakashCRM\\Controllers\\SPSiteActivityController.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAYwEMAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T06:15:05.957Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SPProfile.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPProfile.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\SPProfile.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SPProfile.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\SPProfile.js",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAwB8AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-29T06:12:06.822Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "SPSiteErrorController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPSiteErrorController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM\\Controllers\\SPSiteErrorController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPSiteErrorController.cs",
+              "RelativeToolTip": "PrakashCRM\\Controllers\\SPSiteErrorController.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAgwBcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T06:03:18.452Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FeedBackQuestion.cshtml",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPFeedback\\FeedBackQuestion.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\SPFeedback\\FeedBackQuestion.cshtml",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPFeedback\\FeedBackQuestion.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\SPFeedback\\FeedBackQuestion.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAQwA8AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-29T11:24:29.117Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "SPDashboardController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPDashboardController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM\\Controllers\\SPDashboardController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPDashboardController.cs",
+              "RelativeToolTip": "PrakashCRM\\Controllers\\SPDashboardController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAwwBYAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T07:16:20.736Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FeedbackList.cshtml",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPFeedback\\FeedbackList.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\SPFeedback\\FeedbackList.cshtml",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPFeedback\\FeedbackList.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\SPFeedback\\FeedbackList.cshtml",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAwEoAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-29T11:24:17.926Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SPFeedbackController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPFeedbackController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM\\Controllers\\SPFeedbackController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Controllers\\SPFeedbackController.cs",
+              "RelativeToolTip": "PrakashCRM\\Controllers\\SPFeedbackController.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAowGkBAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T11:33:51.016Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SPFeedbackController.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SPFeedbackController.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Service\\Controllers\\SPFeedbackController.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Service\\Controllers\\SPFeedbackController.cs",
+              "RelativeToolTip": "PrakashCRM.Service\\Controllers\\SPFeedbackController.cs",
+              "ViewState": "AgIAAAkBAAAAAAAAAAAkwBYBAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T11:34:16.033Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Profile.cshtml",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SalesPerson\\Profile.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\SalesPerson\\Profile.cshtml",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SalesPerson\\Profile.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\SalesPerson\\Profile.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-29T12:46:22.167Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Salesperson.cs",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Data\\Models\\Salesperson.cs",
+              "RelativeDocumentMoniker": "PrakashCRM.Data\\Models\\Salesperson.cs",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM.Data\\Models\\Salesperson.cs",
+              "RelativeToolTip": "PrakashCRM.Data\\Models\\Salesperson.cs",
+              "ViewState": "AgIAAEABAAAAAAAAAAAkwFMBAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T13:25:31.202Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ForgotPassword.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\ForgotPassword.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\ForgotPassword.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\ForgotPassword.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\ForgotPassword.js",
+              "ViewState": "AgIAABIAAAAAAAAAAAAawB8AAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-29T16:23:42.538Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ResetForgotPassword.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\ResetForgotPassword.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\ResetForgotPassword.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\ResetForgotPassword.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\ResetForgotPassword.js",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAawFgAAACBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-29T16:26:20.633Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SalesQuote.cshtml",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPSalesQuotes\\SalesQuote.cshtml",
+              "RelativeDocumentMoniker": "PrakashCRM\\Views\\SPSalesQuotes\\SalesQuote.cshtml",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Views\\SPSalesQuotes\\SalesQuote.cshtml",
+              "RelativeToolTip": "PrakashCRM\\Views\\SPSalesQuotes\\SalesQuote.cshtml",
+              "ViewState": "AgIAAEAIAAAAAAAAAAAAAFQIAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-30T05:10:29.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SalesQuote.js",
+              "DocumentMoniker": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SalesQuote.js",
+              "RelativeDocumentMoniker": "PrakashCRM\\Scripts\\appjs\\SalesQuote.js",
+              "ToolTip": "C:\\PrakashCRM_SalesPerson\\Github-Code\\PrakashCRM_SalesPerson\\PrakashCRM\\Scripts\\appjs\\SalesQuote.js",
+              "RelativeToolTip": "PrakashCRM\\Scripts\\appjs\\SalesQuote.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-30T05:10:27.805Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 222,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:323948898:0:{81164725-9a96-4ece-a4cb-440d8fd285e5}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
