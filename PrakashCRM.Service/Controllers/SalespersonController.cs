@@ -154,6 +154,7 @@ namespace PrakashCRM.Service.Controllers
                 userCustVendor.No = result.Result.Item1.value[0].No;
 
                 userCustVendor.Company_E_Mail = result.Result.Item1.value[0].Company_E_Mail;
+               userCustVendor.Role = result.Result.Item1.value[0].Role;
 
                 userCustVendor.Password = result.Result.Item1.value[0].Password;
             }
@@ -180,7 +181,7 @@ namespace PrakashCRM.Service.Controllers
 
         [HttpGet]
         [Route("ForgotPassword")]
-        public Salesperson ForgotPassword(string email, string userNo, string portalUrl)
+        public Salesperson ForgotPassword(string email, string userNo, string role, string portalUrl)
         {
             string encryptedEmail = EncryptDecryptClass.Encrypt(email, true);
 
@@ -192,7 +193,7 @@ namespace PrakashCRM.Service.Controllers
             sbMailBody.Append("<p>&nbsp;</p>");
             sbMailBody.Append("<p>Welcome to the <strong>Prakash CRM Portal</strong>.</p>");
             sbMailBody.Append("<p>User Email: " + email + "</p>");
-            sbMailBody.Append("<p>User Type: Salesperson</p>");
+            sbMailBody.Append("<p>User Role: " + role + "</p>");
             sbMailBody.Append("<p>&nbsp;</p>");
             //sbMailBody.Append("<p>Reset Password Link : </p><a href='https://localhost:44337/Account/ResetForgotPassword?token=" + encryptedEmail + "'>https://localhost:44337/Account/ResetForgotPassword?token=" + encryptedEmail + "</a>");
             sbMailBody.Append("<p>Reset Password Link : </p><a target='_self' href='" + portalUrl + "Account/ResetForgotPassword?token=" + encryptedEmail + "'>" + portalUrl + "Account/ResetForgotPassword?token=" + encryptedEmail + "</a>");
@@ -211,6 +212,7 @@ namespace PrakashCRM.Service.Controllers
             {
                 No = userNo,
                 Company_E_Mail = email,
+                Role = role,
                 Password = ""
             };
 
@@ -225,9 +227,72 @@ namespace PrakashCRM.Service.Controllers
             return responseUser;
         }
 
+        //[HttpGet]
+        //[Route("ForgotPassword")]
+        //public Salesperson ForgotPassword(string email, string userNo, string portalUrl)
+        //{
+        //    var ac = new API();
+        //    errorDetails ed = new errorDetails();
+        //    Salesperson responseUser = new Salesperson();
+
+        //    // 1️⃣ Generate a unique reset token
+        //    string resetToken = Guid.NewGuid().ToString();
+        //    DateTime expiryTime = DateTime.Now.AddMinutes(30); // Token expiry 30 min
+
+        //    // 2️⃣ Save the token via API (instead of encrypting email)
+        //    PasswordResetToken tokenRequest = new PasswordResetToken()
+        //    {
+        //        UserNo = userNo,
+        //        Email = email,
+        //        Token = resetToken,
+        //        ExpiryTime = expiryTime,
+        //        IsUsed = false
+        //    };
+
+        //    PasswordResetToken tokenResponse = new PasswordResetToken();
+        //    var saveTokenResult = ac.PostItem("PasswordResetTokenAPI", tokenRequest, tokenResponse);
+
+        //    // 3️⃣ Prepare reset link using the token
+        //    string resetUrl = portalUrl + "Account/ResetForgotPassword?token=" + resetToken;
+
+        //    // 4️⃣ Send email
+        //    EmailService emailService = new EmailService();
+        //    StringBuilder sbMailBody = new StringBuilder();
+        //    sbMailBody.Append("<p>Hi,</p>");
+        //    sbMailBody.Append("<p>&nbsp;</p>");
+        //    sbMailBody.Append("<p>Welcome to the <strong>Prakash CRM Portal</strong>.</p>");
+        //    sbMailBody.Append("<p>User Email: " + email + "</p>");
+        //    sbMailBody.Append("<p>User Type: Salesperson</p>");
+        //    sbMailBody.Append("<p>&nbsp;</p>");
+        //    sbMailBody.Append("<p>Reset Password Link : </p><a target='_self' href='" + resetUrl + "'>" + resetUrl + "</a>");
+        //    sbMailBody.Append("<p>&nbsp;</p>");
+        //    sbMailBody.Append("<p>Warm Regards,</p>");
+        //    sbMailBody.Append("<p>Support Team</p>");
+
+        //    emailService.SendEmailTo(email, sbMailBody.ToString(), "Reset Password - PrakashCRM");
+
+        //    // 5️⃣ Optional: Update user info in EmployeesDotNetAPI (if needed)
+        //    Salesperson requestUser = new Salesperson()
+        //    {
+        //        No = userNo,
+        //        Company_E_Mail = email,
+        //        Password = "" // password blank because reset link sent
+        //    };
+
+        //    var result = ac.PatchItem("EmployeesDotNetAPI", requestUser, responseUser, "No='" + userNo + "'");
+
+        //    if (result.Result.Item1.No != null)
+        //        responseUser = result.Result.Item1;
+
+        //    if (result.Result.Item2.message != null)
+        //        ed = result.Result.Item2;
+
+        //    return responseUser;
+        //}
+
         [HttpGet]
         [Route("ChangePassword")]
-        public bool ChangePassword(string email, string userNo, string newPassword)
+        public bool ChangePassword(string email, string userNo, string role, string newPassword)
         {
             bool flag = false;
             var ac = new API();
@@ -239,7 +304,8 @@ namespace PrakashCRM.Service.Controllers
             {
                 No = userNo,
                 Company_E_Mail = email,
-                Password = EncryptDecryptClass.Encrypt(newPassword, true)
+                Password = EncryptDecryptClass.Encrypt(newPassword, true),
+                Role = role
             };
 
             result = ac.PatchItem("EmployeesDotNetAPI", requestUser, responseUser, "No='" + userNo + "'");
@@ -306,8 +372,8 @@ namespace PrakashCRM.Service.Controllers
                 sbMailBody.Append("<p>Hi,</p>");
                 sbMailBody.Append("<p>&nbsp;</p>");
                 sbMailBody.Append("<p>Welcome to the <strong>Prakash CRM Portal</strong>.</p>");
-                sbMailBody.Append("<p>User Email: " + email + "</p>");
-                sbMailBody.Append("<p>User Type: Salesperson</p>");
+                sbMailBody.Append("<p>User Email:"+ role + " " + email + "</p>");
+                sbMailBody.Append("<p>User Role: </p>");
                 sbMailBody.Append("<p>&nbsp;</p>");
                 sbMailBody.Append("<p>You have changed your password</p>");
                 sbMailBody.Append("<p>Now you can login with new password</p>");
@@ -514,7 +580,7 @@ namespace PrakashCRM.Service.Controllers
         }
 
         [Route("ResetForgotPassword")]
-        public bool ResetForgotPassword(string email, string userNo, string newPassword)
+        public bool ResetForgotPassword(string email, string userNo,string role, string newPassword)
         {
             bool flag = false;
             var ac = new API();
@@ -527,6 +593,7 @@ namespace PrakashCRM.Service.Controllers
             {
                 No = userNo,
                 Company_E_Mail = email,
+                Role = role,
                 Password = EncryptDecryptClass.Encrypt(newPassword, true)
             };
 
@@ -682,7 +749,7 @@ namespace PrakashCRM.Service.Controllers
         }
 
         [Route("UpdatePassword")]
-        public bool UpdatePassword(string email, string userNo, string newPassword)
+        public bool UpdatePassword(string email, string userNo, string role, string newPassword)
         {
             bool flag = false;
             var ac = new API();
@@ -694,6 +761,7 @@ namespace PrakashCRM.Service.Controllers
             {
                 No = userNo,
                 Company_E_Mail = email,
+                Role = role,
                 Password = EncryptDecryptClass.Encrypt(newPassword, true)
             };
 

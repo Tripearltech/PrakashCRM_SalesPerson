@@ -259,9 +259,9 @@ namespace PrakashCRM.Service.Controllers
 
         // feedback report
         [HttpGet]
-        [Route("GetFeedBackQuestionList")]
+        [Route("GetFeedBackList")]
 
-        public List<FeedBackQuestion> GetFeedBackQuestionList()
+        public List<FeedBackQuestion> GetFeedBackList()
         {
             API ac = new API();
             List<FeedBackQuestion> feedBackQuestions = new List<FeedBackQuestion>();
@@ -274,9 +274,9 @@ namespace PrakashCRM.Service.Controllers
         }
 
         [HttpGet]
-        [Route("GetFeedBackQuestionLineList")]
+        [Route("GetFeedBackLineList")]
 
-        public List<FeedbBackLines> GetFeedBackQuestionLineList(string FeedbackId)
+        public List<FeedbBackLines> GetFeedBackLineList(string FeedbackId)
         {
             API ac = new API();
             List<FeedbBackLines> feedBackQuestions = new List<FeedbBackLines>();
@@ -284,6 +284,23 @@ namespace PrakashCRM.Service.Controllers
             var filter = "";
             filter += "Feedback_Header_No eq '" + FeedbackId + "'";
             result = ac.GetData<FeedbBackLines>("FeedbackLinesListDotNetAPI", filter);
+            if (result != null && result.Result.Item1.value.Count > 0)
+            {
+                feedBackQuestions = result.Result.Item1.value;
+            }
+            return feedBackQuestions;
+        }
+        [HttpGet]
+        [Route("GetFeedBackQuestionList")]
+
+        public List<FeedbBackLines> GetFeedBackQuestionList()
+        {
+            API ac = new API();
+            List<FeedbBackLines> feedBackQuestions = new List<FeedbBackLines>();
+            var result = (dynamic)null;
+            //var filter = "";
+            //filter += "Feedback_Header_No eq '" + FeedbackId + "'";
+            result = ac.GetData<FeedbBackLines>("FeedbackLinesListDotNetAPI", "");
             if (result != null && result.Result.Item1.value.Count > 0)
             {
                 feedBackQuestions = result.Result.Item1.value;

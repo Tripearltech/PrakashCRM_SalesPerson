@@ -723,7 +723,13 @@ namespace PrakashCRM.Service.Controllers
 
             if (string.IsNullOrEmpty(TransporterNo))
             {
-                filter += $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and {latestRateFilter}";
+                // TransporterNo Empty + Pincode + TransporterNo + LatestRate
+                filter += $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}'";
+            }
+            else
+            {
+                // TransporterNo + Pincode + TransporterNo + LatestRate
+                filter = $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and Transporter_No eq '{TransporterNo}' and {latestRateFilter}";
             }
 
             var result = ac.GetData1<TransporterRateCard>("Transporter_Rate_Details", filter, 0, 0, "Rate_Effective_Date desc");
@@ -951,7 +957,8 @@ namespace PrakashCRM.Service.Controllers
             string posystemids = "";
             string tosystemids = "";
 
-            for (int i = 0; i < systemidwiddocumenttype.Length; i++)
+            for (
+                int i = 0; i < systemidwiddocumenttype.Length; i++)
             {
                 string[] systemidanddoctype = systemidwiddocumenttype[i].Split(',');
                 if (systemidanddoctype.Length == 2)
