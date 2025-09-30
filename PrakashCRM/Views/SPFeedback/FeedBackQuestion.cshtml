@@ -12,12 +12,7 @@
                     <li class="breadcrumb-item">
                         <a href="/SPDashboard/Index"><i class="bx bx-tachometer"></i>&nbsp;Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item">
-                        <a href="/SPFeedback/Feedback Question"> </a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Feed Back Question
-                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Feedback Question</li>
                 </ol>
             </nav>
         </div>
@@ -34,18 +29,14 @@
                                     <thead>
                                         <tr>
 
-                                            <th scope="col">No</th>
-                                            <th scope="col">Contact No.</th>
-                                            <th scope="col">Contact Person</th>
-                                            <th scope="col">Products</th>
-                                            <th scope="col">Overall Rating</th>
+                                            <th scope="col">Feedback Question No.</th>
+                                            <th scope="col">Feedback Question</th>
+                                            <th scope="col">Rating</th>
                                             <th scope="col">Comments</th>
-                                            <th scope="col">Suggestion</th>
-                                            <th scope="col">Sale Person</th>
 
                                         </tr>
                                     </thead>
-                                    <tbody id="tblFeedBackQuestionDetails">
+                                    <tbody id="tblFeedBackQuestionList">
                                     </tbody>
                                 </table>
                             </div>
@@ -57,33 +48,5 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="FeedbackLinesModal" tabindex="-1" aria-labelledby="FeedbackLinesModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Feedback Question</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="max-height: 450px; overflow-y: auto;">
-                <table class="table mb-0 table-striped">
-                    <thead class="sticky-top bg-white" style="top: -20px;">
-                        <tr>
-                            <th scope="col">Feedback Question No.</th>
-                            <th scope="col">Feedback Question</th>
-                            <th scope="col">Rating</th>
-                            <th scope="col">Comments</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tblFeedbackLine"></tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/appjs/FeedBackQuestion.js"></script>

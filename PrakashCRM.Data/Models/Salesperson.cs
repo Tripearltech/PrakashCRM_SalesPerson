@@ -24,7 +24,17 @@ namespace PrakashCRM.Data.Models
         public string Company_E_Mail { get; set; }
 
         public string Password { get; set; }
+        public string Role { get; set; }
     }
+
+    //public class PasswordResetToken
+    //{
+    //    public string UserNo { get; set; }
+    //    public string Email { get; set; }
+    //    public string Token { get; set; }
+    //    public DateTime ExpiryTime { get; set; }
+    //    public bool IsUsed { get; set; }
+    //}
 
     public class SPPass
     {
@@ -364,7 +374,7 @@ namespace PrakashCRM.Data.Models
 
         public string Password { get; set; }
 
-        public string Type { get; set; }
+        public string Role { get; set; }
     }
     public class SPSalespeoplePurchaser
     {

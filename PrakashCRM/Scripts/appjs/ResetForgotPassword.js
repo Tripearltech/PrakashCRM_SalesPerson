@@ -86,7 +86,7 @@
                 if (data != null) {
 
                     $.post(
-                        apiUrl + 'ResetForgotPassword?email=' + data.Company_E_Mail + '&userNo=' + data.No + '&newPassword=' + $('#confirmnewpass').val(),
+                        apiUrl + 'ResetForgotPassword?email=' + data.Company_E_Mail + '&userNo=' + data.No + '&role=' + data.Role + '&newPassword=' + $('#confirmnewpass').val(),
                         function (data) {
 
                             if (data) {

@@ -98,7 +98,7 @@ $(document).ready(function () {
     LoadingVendorDropDown();
 
     //  vendor fields based on doctype on page load/reopen
-    /*var doctype = $('#lblDocumentType').text();
+    var doctype = $('#lblDocumentType').text();
     if (doctype === "Sales Order") {
         $('#hfUnLoadingVendorNo').val("");
         $('#txtUnLoadingVendor').val("");
@@ -116,7 +116,8 @@ $(document).ready(function () {
         $('#txtLoadingCharges').val("0");
         $('#txtLoadingVendor').prop('disabled', false);
     } else if (doctype === "Transfer Order") {
-    }*/
+    }
+    
 });
 var dtable;
 
@@ -450,7 +451,7 @@ function SaveTransporter() {
 
     $('#btnSaveSpinner').show();
 
-    var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, createDriver, loadingVendor, unloadingVendor, vendorcompanyNo;
+    var doctype, transporterCode, lrno, lrdate, drivername, driverlicenseno, drivermobileno, vehicleno, loadingcharges, unloadingcharges, transporteramount, remarks, isclosed, vendorcompanyNo,createDriver, loadingVendor, unloadingVendor, vendorcompanyNo;
 
     var systemId = "";
     doctype = $('#lblDocumentType')[0].innerText;
@@ -596,16 +597,7 @@ function validateForm() {
         $('#txtTransporterNo').focus();
         return false;
     }
-    /*if ($('#hfLoadingVendorNo').val() == "") {
-        $('#lblMsg').html('Select Loading Vendor');
-        $('#txtLoadingVendor').focus();
-        return false;
-    }
-    if ($('#hfUnLoadingVendorNo').val() == "") {
-        $('#lblMsg').html('Select UnLoading Vendor');
-        $('#txtUnLoadingVendor').focus();
-        return false;
-    }*/
+    
     else if ($('#txtFraightCharges').val() == "") {
         $('#lblMsg').html('Enter Fraight Charges');
         $('#txtFraightCharges').focus();
