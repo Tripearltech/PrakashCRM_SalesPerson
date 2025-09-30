@@ -2382,8 +2382,6 @@ function GetProductDetails(productName) {
             }
         );
     }
-
-}
 function EditSQProd(ProdTR) {
     ResetQuoteLineDetails();
 
