@@ -89,6 +89,9 @@ namespace PrakashCRM.Data.Models
         //public string Branch_Code { get; set; }
         //public string Branch { get; set; }
         public string Role_No { get; set; }
+        public string PCPL_Department_Code { get; set; }
+        public string PCPL_Department_Name { get; set; }
+        public string Middle_Name { get; set; }
         public string Role { get; set; }
 
         public string View_Transaction_No { get; set; }
@@ -108,6 +111,7 @@ namespace PrakashCRM.Data.Models
 
         [Required(ErrorMessage = "First Name is required")]
         public string First_Name { get; set; }
+        public string Middle_Name { get; set; }
 
         [Required(ErrorMessage = "Last Name is required")]
         public string Last_Name { get; set; }
@@ -127,6 +131,9 @@ namespace PrakashCRM.Data.Models
         public string Mobile_Phone_No { get; set; }
 
         public string Address_2 { get; set; }
+
+        [Required(ErrorMessage ="Department is required")]
+        public string PCPL_Department_Code { get; set; }
 
         public string Password { get; set; }
 
@@ -338,6 +345,7 @@ namespace PrakashCRM.Data.Models
         public string Role { get; set; }
 
         public string Salespers_Purch_Code { get; set; }
+        public string Status { get; set; }
 
         public bool PCPL_Enable_OTP_On_Login { get; set; }
     }

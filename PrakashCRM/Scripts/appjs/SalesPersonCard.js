@@ -81,7 +81,7 @@ $(document).ready(function () {
     BindViewTransaction();
     BindReportingPerson();
     BindStatus();
-
+    BindDepartment();
     if ($('#hfIsSalespersonEdit').val() == "True") {
         GetDetailsByCode($('#txtPostCode').val());
     }
@@ -185,6 +185,7 @@ function BindCountry() {
     );
 }
 
+
 function BindBranch() {
     $.ajax(
         {
@@ -217,6 +218,38 @@ function BindBranch() {
     );
 }
 
+
+function BindDepartment() {
+    $.ajax({
+        url: '/SalesPerson/GetAllDepartmentForDDL',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (data) {
+            if (data.length > 0) {
+                $('#DDlDepartmentName').append($('<option value="-1">---Select---</option>'));
+                $.each(data, function (i, data) {
+                    $('<option>',
+                        {
+                            value:data.No,
+                            text:data.Department
+                        }).html(data.Department).appendTo('#DDlDepartmentName');
+                });
+               
+                if ($("#hfDepartMent").val() != "") {
+                    $("#DDlDepartmentName").val($("#hfDepartMent").val());
+                }
+                 
+                
+            }
+        },
+        error: function (data1) {
+            alert(data1);
+        }
+    
+    });
+
+}
+
 function BindRole() {
     $.ajax(
         {
@@ -232,7 +265,7 @@ function BindRole() {
                         $('<option>',
                             {
                                 value: data.No,
-                                text: data.Role_Name
+                                text:data.Role_Name
                             }
                         ).html(data.Role_Name).appendTo("#ddlRole");
                     });
@@ -440,7 +473,7 @@ function postCode_autocomplete() {
 };
 
 function CheckSPCardValues() {
-
+    debugger
     $('#btnSaveSpinner').show();
     var flag = true;
 
@@ -460,6 +493,16 @@ function CheckSPCardValues() {
     else {
         $('#lblFNameMsg').text("");
         $('#lblFNameMsg').css('display', 'none');
+    }
+  
+    if ($('#DDlDepartmentName').val() == "-1") {
+        $('#lblDepartmentMsg').text("Please select Department Name");
+        $('#lblDepartmentMsg').css('display', 'block');
+        flag = false;
+    }
+    else {
+        $('#lblDepartmentMsg').text("");
+        $('#lblDepartmentMsg').css('display', 'none');
     }
 
     if ($('#txtLName').val() == "") {

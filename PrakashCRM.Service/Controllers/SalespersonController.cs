@@ -96,6 +96,7 @@ namespace PrakashCRM.Service.Controllers
                 contactNoOTPForLogin.Role = result.Result.Item1.value[0].Role;
                 contactNoOTPForLogin.PCPL_OTP = result.Result.Item1.value[0].PCPL_OTP;
                 contactNoOTPForLogin.PCPL_Enable_OTP_On_Login = result.Result.Item1.value[0].PCPL_Enable_OTP_On_Login;
+                contactNoOTPForLogin.Status = result.Result.Item1.value[0].Status;
             }
 
             return contactNoOTPForLogin;
@@ -667,6 +668,7 @@ namespace PrakashCRM.Service.Controllers
             return reportingperson;
         }
 
+
         [Route("GetAllSalespersonForDDL")]
         public List<SPSalespeoplePurchaser> GetAllSalespersonForDDL()
         {
@@ -997,6 +999,20 @@ namespace PrakashCRM.Service.Controllers
             }
 
             return (responseModel, errordetail);
+        }
+
+        [Route("GetAllDepartmentForDDL")]
+        public List<Departments> GetAllDepartmentForDDL()
+        {
+            API ac = new API();
+            List<Departments> departments = new List<Departments>();
+
+            var result = ac.GetData<Departments>("DepartmentsDotNetAPI", "");
+
+            if (result != null && result.Result.Item1.value.Count > 0)
+                departments = result.Result.Item1.value;
+
+            return departments;
         }
 
     }
