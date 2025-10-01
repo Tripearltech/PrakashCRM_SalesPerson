@@ -30,8 +30,6 @@ namespace PrakashCRM.Controllers
             return View();
         }
 
-
-        #region FeedbackList
         public ActionResult FeedbackList()
         {
             return View();
@@ -39,7 +37,7 @@ namespace PrakashCRM.Controllers
 
         public async Task<JsonResult> GetFeedbackListData(int orderBy, string orderDir, string filter, int skip, int top)
         {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPFeedback/";
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "Feedback/";
 
             string orderByField = "";
 
@@ -219,8 +217,6 @@ namespace PrakashCRM.Controllers
             return Json(feedbackLineList, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
-
         #region FeedbackBarChart
         public ActionResult FeedbackChart()
         {
@@ -365,9 +361,9 @@ namespace PrakashCRM.Controllers
 
         #endregion
 
-        public async Task<JsonResult> GetFeedBackQuestionList()
+        public async Task<JsonResult> GetFeedBackList()
         {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPFeedback/GetFeedBackQuestionList";
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPFeedback/GetFeedBackList";
             HttpClient client = new HttpClient();
             List<FeedBackQuestion> FeedBackQuestions = new List<FeedBackQuestion>();
 
@@ -386,9 +382,28 @@ namespace PrakashCRM.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetFeedBackQuestionLineList(string FeedbackId)
+        public async Task<JsonResult> GetFeedBackLineList(string FeedbackId)
         {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPFeedback/GetFeedBackQuestionLineList?FeedbackId=" + FeedbackId;
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPFeedback/GetFeedBackLineList?FeedbackId=" + FeedbackId;
+            HttpClient client = new HttpClient();
+            List<FeedbBackLines> feedbBackLines = new List<FeedbBackLines>();
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                feedbBackLines = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FeedbBackLines>>(data);
+            }
+            return Json(feedbBackLines, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetFeedBackQuestionList()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPFeedback/GetFeedBackQuestionList";
             HttpClient client = new HttpClient();
             List<FeedbBackLines> feedbBackLines = new List<FeedbBackLines>();
             client.BaseAddress = new Uri(apiUrl);

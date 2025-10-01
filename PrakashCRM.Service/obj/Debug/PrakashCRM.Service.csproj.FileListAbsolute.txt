@@ -1772,6 +1772,8 @@ C:\PrakashCRM_SalesPerson\Azures-Code\crm\PrakashCRM.Service\obj\Debug\PrakashCR
 C:\PrakashCRM_SalesPerson\Azures-Code\crm\PrakashCRM.Service\obj\Debug\PrakashC.8F542BDA.Up2Date
 C:\PrakashCRM_SalesPerson\Azures-Code\crm\PrakashCRM.Service\obj\Debug\PrakashCRM.Service.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\crm\PrakashCRM.Service\obj\Debug\PrakashCRM.Service.pdb
+C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\obj\Debug\PrakashCRM.Service.csproj.AssemblyReference.cache
+C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\obj\Debug\PrakashCRM.Service.csproj.CoreCompileInputs.cache
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\PrakashCRM.Service.dll.config
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\PrakashCRM.Service.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\PrakashCRM.Service.pdb
@@ -1887,8 +1889,6 @@ C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\b
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\System.Web.WebPages.Deployment.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\System.Web.WebPages.Razor.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\bin\Antlr3.Runtime.pdb
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\obj\Debug\PrakashCRM.Service.csproj.AssemblyReference.cache
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\obj\Debug\PrakashCRM.Service.csproj.CoreCompileInputs.cache
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\obj\Debug\PrakashC.8F542BDA.Up2Date
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\obj\Debug\PrakashCRM.Service.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM.Service\obj\Debug\PrakashCRM.Service.pdb
