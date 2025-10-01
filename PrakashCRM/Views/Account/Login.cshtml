@@ -245,7 +245,13 @@
                             }
                             else {
                                 $('#divImage').hide();
+                                if (data.Status == "Inactive") {
+                                    alert("User is Inactive");
+                                }
+                                else {
+                                    
                                 window.location.replace('@Url.Action("Index", "SPDashboard")');
+                                }
                             }
                         }
                         else {
