@@ -1001,8 +1001,8 @@ namespace PrakashCRM.Service.Controllers
             return (responseModel, errordetail);
         }
 
-        [Route("GetAllDepartmentForDDL")]
-        public List<Departments> GetAllDepartmentForDDL()
+        [Route("GetDepartmentName")]
+        public List<Departments> GetDepartmentName()
         {
             API ac = new API();
             List<Departments> departments = new List<Departments>();

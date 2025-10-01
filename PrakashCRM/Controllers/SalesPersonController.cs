@@ -713,9 +713,9 @@ namespace PrakashCRM.Controllers
 
             return Json(reportingperson, JsonRequestBehavior.AllowGet);
         }
-        public async Task<JsonResult> GetAllDepartmentForDDL()
+        public async Task<JsonResult> GetDepartmentName()
         {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "Salesperson/GetAllDepartmentForDDL";
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "Salesperson/GetDepartmentName";
             HttpClient client = new HttpClient();
             List<Departments> departments = new List<Departments>();
 

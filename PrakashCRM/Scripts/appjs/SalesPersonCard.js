@@ -81,7 +81,7 @@ $(document).ready(function () {
     BindViewTransaction();
     BindReportingPerson();
     BindStatus();
-    BindDepartment();
+    BindDepartmentName();
     if ($('#hfIsSalespersonEdit').val() == "True") {
         GetDetailsByCode($('#txtPostCode').val());
     }
@@ -219,9 +219,9 @@ function BindBranch() {
 }
 
 
-function BindDepartment() {
+function BindDepartmentName() {
     $.ajax({
-        url: '/SalesPerson/GetAllDepartmentForDDL',
+        url: '/SalesPerson/GetDepartmentName',
         type: 'GET',
         contentType: 'application/json',
         success: function (data) {
