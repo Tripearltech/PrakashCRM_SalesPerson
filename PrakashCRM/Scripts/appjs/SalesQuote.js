@@ -1846,7 +1846,9 @@ function GetCreditLimitAndCustDetails(companyName) {
                                 $('#ddlBillTo').append(billtoAddOpts);
                                 $('#ddlBillTo').val(billtoCode);
                         }
-                        
+                        else {
+                            $('#ddlBillTo').append("<option value='-1'>---Select---</option>");
+                        }
 
                         $('#btnAddNewBillTo').prop('disabled', false);
 
@@ -1856,9 +1858,9 @@ function GetCreditLimitAndCustDetails(companyName) {
                         else if ($('#hfSavedShiptoCode').val() != "") {
                             $('#ddlBillTo').val($('#hfSavedShiptoCode').val());
                         }
-                        else {
-                            $('#ddlBillTo').append("<option value='-1'>---Select---</option>");
-                        }
+                        //else {
+                        //    $('#ddlBillTo').append("<option value='-1'>---Select---</option>");
+                        //}
 
                         //$('#ddlBillTo').attr('disabled', true);
 
