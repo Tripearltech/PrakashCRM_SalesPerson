@@ -50,7 +50,7 @@ namespace PrakashCRM.Service.Controllers
         {
             API ac = new API();
             LoggedInUserProfile loggedInUserProfile = new LoggedInUserProfile();
-            
+
             var result = ac.GetData<SPProfile>("EmployeesDotNetAPI", "No eq '" + SPNo + "' and PCPL_OTP eq '" + OTP + "'");
 
             if (result.Result.Item1.value.Count > 0)
@@ -110,7 +110,7 @@ namespace PrakashCRM.Service.Controllers
             ContactNoOTPForLogin responseUser = new ContactNoOTPForLogin();
 
             var result = PatchItemOTPUpdate("EmployeesDotNetAPI", requestUser, responseUser, "No='" + SPNo + "'");
-            
+
             if (result.Result.Item1.No != null)
                 responseUser = result.Result.Item1;
 
@@ -155,7 +155,7 @@ namespace PrakashCRM.Service.Controllers
                 userCustVendor.No = result.Result.Item1.value[0].No;
 
                 userCustVendor.Company_E_Mail = result.Result.Item1.value[0].Company_E_Mail;
-               userCustVendor.Role = result.Result.Item1.value[0].Role;
+                userCustVendor.Role = result.Result.Item1.value[0].Role;
 
                 userCustVendor.Password = result.Result.Item1.value[0].Password;
             }
@@ -325,7 +325,7 @@ namespace PrakashCRM.Service.Controllers
             var result1 = ac.GetData<SPEmailToPerson>("EmployeesDotNetAPI", "No eq '" + userNo + "'");
 
             if (result1.Result.Item1.value.Count > 0)
-            { 
+            {
                 reportingToPersonNo = result1.Result.Item1.value[0].Reporting_Person_No;
                 userFName = result1.Result.Item1.value[0].First_Name;
                 userLName = result1.Result.Item1.value[0].Last_Name;
@@ -486,7 +486,7 @@ namespace PrakashCRM.Service.Controllers
             if (result.Result.Item1.value.Count > 0)
             {
                 user = result.Result.Item1.value[0];
-                
+
             }
 
             return user;
@@ -562,7 +562,7 @@ namespace PrakashCRM.Service.Controllers
             {
                 EmailService emailService = new EmailService();
                 StringBuilder sbMailBody = new StringBuilder();
-                
+
                 string LoginURL = "<a title='Prakash Chemicals' href='" + portalUrl + "' target='_blank'>Log In</a>";
                 sbMailBody.Append("<table cellpadding='8' cellspacing='5' border='0' width='100%' style='box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);'>");
                 sbMailBody.Append("<tr><td>Welcome " + requestUser.First_Name.Trim() + " " + requestUser.Last_Name.Trim() + "</td></tr>");
@@ -795,7 +795,7 @@ namespace PrakashCRM.Service.Controllers
             return postcodes;
         }
 
-        
+
         [Route("GetSPCodesOfReportingPersonUser")]
         public List<SPCodesOfReportingPersonUser> GetSPCodesOfReportingPersonUser(string LoggedInUserNo)
         {

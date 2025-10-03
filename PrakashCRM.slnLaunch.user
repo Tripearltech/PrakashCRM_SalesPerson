@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "PrakashCRM\\PrakashCRM.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "PrakashCRM.Service\\PrakashCRM.Service.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
