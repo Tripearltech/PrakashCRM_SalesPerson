@@ -1801,7 +1801,7 @@ function GetCreditLimitAndCustDetails(companyName) {
 
                         if (data.CustNo != null) {
                             $('#hfCustomerNo').val(data.CustNo);
-                            consigneeAddText = data.CustName + "," + data.Address + "," + data.Address_2 + " " + data.City + "-" + data.Post_Code;
+                            consigneeAddText = data.CustName + "," + data.Address + " ," + data.Address_2 + " " + data.City + "-" + data.Post_Code;
                             //
                             consigneeAddValue = data.CustName + "_" + data.Address + "_" + data.Address_2 + "_" + data.City + "_" + data.Post_Code;
                             //
@@ -1833,14 +1833,23 @@ function GetCreditLimitAndCustDetails(companyName) {
 
                         $('#ddlBillTo option').remove();
                         var billtoAddOpts = "<option value='-1'>---Select---</option>";
+                        var billtoCode = "";
+                        var billtoAdd = "";
+
 
                         if (data.ShiptoAddress != null) {
                             for (var i = 0; i < data.ShiptoAddress.length; i++) {
-                                billtoAddOpts = billtoAddOpts + "<option value=\"" + data.ShiptoAddress[i].Code + "\">" + data.ShiptoAddress[i].Address + "</option>";
+                                //billtoAdd = data.ShiptoAddress[i].Address;
+                                billtoAddOpts += "<option value=\"" + data.ShiptoAddress[i].Code + "\">" + data.ShiptoAddress[i].Address + "</option>";
                             }
+                                billtoCode = data.ShiptoAddress[0].Code;
+                                $('#ddlBillTo').append(billtoAddOpts);
+                                $('#ddlBillTo').val(billtoCode);
+                        }
+                        else {
+                            $('#ddlBillTo').append("<option value='-1'>---Select---</option>");
                         }
 
-                        $('#ddlBillTo').append(billtoAddOpts);
                         $('#btnAddNewBillTo').prop('disabled', false);
 
                         if ($('#hfShiptoCode').val() != "") {
@@ -1849,11 +1858,11 @@ function GetCreditLimitAndCustDetails(companyName) {
                         else if ($('#hfSavedShiptoCode').val() != "") {
                             $('#ddlBillTo').val($('#hfSavedShiptoCode').val());
                         }
-                        else {
-                            $('#ddlBillTo').val('-1');
-                        }
+                        //else {
+                        //    $('#ddlBillTo').append("<option value='-1'>---Select---</option>");
+                        //}
 
-                        $('#ddlBillTo').attr('disabled', false);
+                        //$('#ddlBillTo').attr('disabled', true);
 
                         $('#ddlDeliveryTo option').remove();
                         var shiptoAdd = "<option value='-1'>---Select---</option>";
@@ -1888,7 +1897,7 @@ function GetCreditLimitAndCustDetails(companyName) {
 
                         $('#ddlBillTo').append(billtoAddOpts);
                         $('#ddlBillTo').val('-1');
-                        $('#ddlBillTo').attr('disabled', true);
+                        //$('#ddlBillTo').attr('disabled', true);
 
                         $('#ddlDeliveryTo option').remove();
                         var shiptoAdd = "<option value='-1'>---Select---</option>";
