@@ -246,7 +246,8 @@
                             else {
                                 $('#divImage').hide();
                                 if (data.Status == "Inactive") {
-                                    alert("User is Inactive");
+                                    var msg = "User is Inactive";
+                                    ShowActionMsg(msg);
                                 }
                                 else {
                                     
@@ -345,7 +346,20 @@
             });
 
         }
+        function ShowActionMsg(actionMsg) {
 
+            Lobibox.notify('error', {
+                pauseDelayOnHover: true,
+                size: 'mini',
+                rounded: true,
+                icon: 'bx bx-check-circle',
+                delayIndicator: false,
+                continueDelayOnInactiveTab: false,
+                position: 'top right',
+                msg: actionMsg
+            });
+
+        }
         function ShowErrorMsg(errMsg) {
 
             Lobibox.notify('error', {
