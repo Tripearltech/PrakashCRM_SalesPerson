@@ -230,22 +230,22 @@ function BindDepartmentName() {
                 $.each(data, function (i, data) {
                     $('<option>',
                         {
-                            value: data.No,
-                            text: data.Department
+                            value:data.No,
+                            text:data.Department
                         }).html(data.Department).appendTo('#DDlDepartmentName');
                 });
-
+               
                 if ($("#hfDepartMent").val() != "") {
                     $("#DDlDepartmentName").val($("#hfDepartMent").val());
                 }
-
-
+                 
+                
             }
         },
         error: function (data1) {
             alert(data1);
         }
-
+    
     });
 
 }
@@ -265,7 +265,7 @@ function BindRole() {
                         $('<option>',
                             {
                                 value: data.No,
-                                text: data.Role_Name
+                                text:data.Role_Name
                             }
                         ).html(data.Role_Name).appendTo("#ddlRole");
                     });
@@ -493,6 +493,16 @@ function CheckSPCardValues() {
     else {
         $('#lblFNameMsg').text("");
         $('#lblFNameMsg').css('display', 'none');
+    }
+  
+    if ($('#DDlDepartmentName').val() == "-1") {
+        $('#lblDepartmentMsg').text("Please select Department Name");
+        $('#lblDepartmentMsg').css('display', 'block');
+        flag = false;
+    }
+    else {
+        $('#lblDepartmentMsg').text("");
+        $('#lblDepartmentMsg').css('display', 'none');
     }
 
     if ($('#DDlDepartmentName').val() == "-1") {

@@ -269,7 +269,7 @@
                                     ShowActionMsg(msg);
                                 }
                                 else {
-
+                                    
                                 window.location.replace('@Url.Action("Index", "SPDashboard")');
                                 }
                             }
@@ -366,6 +366,7 @@
 
         }
         function ShowActionMsg(actionMsg) {
+
             Lobibox.notify('error', {
                 pauseDelayOnHover: true,
                 size: 'mini',
@@ -376,8 +377,8 @@
                 position: 'top right',
                 msg: actionMsg
             });
-        }
 
+        }
         function ShowErrorMsg(errMsg) {
 
             Lobibox.notify('error', {

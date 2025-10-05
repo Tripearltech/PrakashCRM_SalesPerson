@@ -669,7 +669,7 @@ namespace PrakashCRM.Controllers
             return Json(role, JsonRequestBehavior.AllowGet);
         }
 
-
+  
         public async Task<JsonResult> GetAllViewTransactionForDDL()
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "Salesperson/GetAllViewTransactionForDDL";

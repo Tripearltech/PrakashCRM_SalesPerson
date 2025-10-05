@@ -735,6 +735,7 @@ namespace PrakashCRM.Service.Controllers
             return reportingperson;
         }
 
+
         [Route("GetAllSalespersonForDDL")]
         public List<SPSalespeoplePurchaser> GetAllSalespersonForDDL()
         {

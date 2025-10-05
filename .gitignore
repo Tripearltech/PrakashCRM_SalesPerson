@@ -1,0 +1,10 @@
+/.vs
+/PrakashCRM.Data/obj/Debug
+*.cache
+*.cache
+/PrakashCRM/obj/Debug
+/.vs/PrakashCRM
+/PrakashCRM.Service/obj
+/PrakashCRM/bin
+/PrakashCRM/obj/Debug
+/.vs
