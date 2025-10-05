@@ -1102,5 +1102,19 @@ namespace PrakashCRM.Service.Controllers
             }
             return (responseModel, errordetail);
         }
+        [HttpGet]
+        [Route("GetBusinessReport")]
+        public List<SPBusinessPlanReport> GetBusinessReport()
+        {
+            API ac = new API();
+            List<SPBusinessPlanReport> businessreport = new List<SPBusinessPlanReport>();
+            var result = ac.GetData<SPBusinessPlanReport>("BusinessPlanReport", "");
+            if (result != null && result.Result.Item1.value.Count > 0)
+            {
+                businessreport = result.Result.Item1.value;
+                businessreport = businessreport.DistinctBy(a => a.SalesPerson_Name).ToList();
+            }
+            return businessreport;
+        }
     }
 }

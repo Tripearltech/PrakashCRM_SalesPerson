@@ -81,7 +81,7 @@ $(document).ready(function () {
     BindViewTransaction();
     BindReportingPerson();
     BindStatus();
-
+    BindDepartmentName();
     if ($('#hfIsSalespersonEdit').val() == "True") {
         GetDetailsByCode($('#txtPostCode').val());
     }
@@ -128,7 +128,7 @@ function BindPostCodes() {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                
+
                 if (data.length > 0) {
 
                     $('#ddlCity').append($('<option value="-1">---Select---</option>'));
@@ -160,7 +160,7 @@ function BindCountry() {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                
+
                 if (data.length > 0) {
 
                     $('#ddlCountry').append($('<option value="-1">---Select---</option>'));
@@ -185,6 +185,7 @@ function BindCountry() {
     );
 }
 
+
 function BindBranch() {
     $.ajax(
         {
@@ -192,7 +193,7 @@ function BindBranch() {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                
+
                 if (data.length > 0) {
 
                     $('#ddlBranch').append($('<option value="-1">---Select---</option>'));
@@ -217,6 +218,38 @@ function BindBranch() {
     );
 }
 
+
+function BindDepartmentName() {
+    $.ajax({
+        url: '/SalesPerson/GetDepartmentName',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (data) {
+            if (data.length > 0) {
+                $('#DDlDepartmentName').append($('<option value="-1">---Select---</option>'));
+                $.each(data, function (i, data) {
+                    $('<option>',
+                        {
+                            value: data.No,
+                            text: data.Department
+                        }).html(data.Department).appendTo('#DDlDepartmentName');
+                });
+
+                if ($("#hfDepartMent").val() != "") {
+                    $("#DDlDepartmentName").val($("#hfDepartMent").val());
+                }
+
+
+            }
+        },
+        error: function (data1) {
+            alert(data1);
+        }
+
+    });
+
+}
+
 function BindRole() {
     $.ajax(
         {
@@ -224,7 +257,7 @@ function BindRole() {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                
+
                 if (data.length > 0) {
 
                     $('#ddlRole').append($('<option value="-1">---Select---</option>'));
@@ -263,7 +296,7 @@ function BindViewTransaction() {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                
+
                 if (data.length > 0) {
 
                     $('#ddlViewTransaction').append($('<option value="-1">---Select---</option>'));
@@ -295,7 +328,7 @@ function BindReportingPerson() {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                
+
                 if (data.length > 0) {
 
                     $('#ddlReportingPerson').append($('<option value="-1">---Select---</option>'));
@@ -322,31 +355,31 @@ function BindReportingPerson() {
 
 function BindStatus() {
 
-        $('<option>',
-            {
-                value: "Active",
-                text: "Active"
-            }
-        ).html("Active").appendTo("#ddlStatus");
-       
-        $('<option>',
-            {
-                value: "Inactive",
-                text: "Inactive"
-            }
-        ).html("Inactive").appendTo("#ddlStatus");
-        
+    $('<option>',
+        {
+            value: "Active",
+            text: "Active"
+        }
+    ).html("Active").appendTo("#ddlStatus");
+
+    $('<option>',
+        {
+            value: "Inactive",
+            text: "Inactive"
+        }
+    ).html("Inactive").appendTo("#ddlStatus");
+
     if ($('#hfStatus').val() != "") {
         $("#ddlStatus").val($('#hfStatus').val());
-    }               
+    }
 }
 
 function GetDetailsByCode(pincode) {
 
     $("#txtCity").prop("disabled", false);
-    
+
     $("#txtCountry").prop("disabled", false);
-    
+
     if (pincode != "") {
         $.ajax(
             {
@@ -354,12 +387,12 @@ function GetDetailsByCode(pincode) {
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {
-                    
+
                     if (data.length > 0) {
-                        
+
                         $("#txtCity").val(data[0].City);
                         $("#txtCountry").val(data[0].Country_Region_Code);
-                        
+
                     }
                     $("#txtCity").prop("disabled", true);
                     $("#txtCountry").prop("disabled", true);
@@ -379,7 +412,7 @@ function BindSalesperson() {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                
+
                 if (data.length > 0) {
 
                     $('#ddlSalesperson').append($('<option value="-1">---Select---</option>'));
@@ -440,7 +473,7 @@ function postCode_autocomplete() {
 };
 
 function CheckSPCardValues() {
-
+    debugger
     $('#btnSaveSpinner').show();
     var flag = true;
 
@@ -460,6 +493,16 @@ function CheckSPCardValues() {
     else {
         $('#lblFNameMsg').text("");
         $('#lblFNameMsg').css('display', 'none');
+    }
+
+    if ($('#DDlDepartmentName').val() == "-1") {
+        $('#lblDepartmentMsg').text("Please select Department Name");
+        $('#lblDepartmentMsg').css('display', 'block');
+        flag = false;
+    }
+    else {
+        $('#lblDepartmentMsg').text("");
+        $('#lblDepartmentMsg').css('display', 'none');
     }
 
     if ($('#txtLName').val() == "") {

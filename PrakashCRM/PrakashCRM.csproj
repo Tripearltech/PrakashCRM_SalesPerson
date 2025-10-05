@@ -1148,6 +1148,7 @@
     <Content Include="Scripts\appjs\BusinessPlan.js" />
     <Content Include="Scripts\appjs\BusinessPlanContactList.js" />
     <Content Include="Scripts\appjs\BusinessPlanPendingAppr.js" />
+    <Content Include="Scripts\appjs\BusinessPlanReport.js" />
     <Content Include="Scripts\appjs\BusinessPlanStatusSPWise.js" />
     <Content Include="Scripts\appjs\commonListTable.js" />
     <Content Include="Scripts\appjs\CompanyContactCard.js" />
@@ -1363,6 +1364,7 @@
     <Content Include="Views\SPReports\CustomerLedgerEntry.cshtml" />
     <Content Include="Views\SPReports\CustomerOutsatnding.cshtml" />
     <Content Include="Views\SPFeedback\FeedBackQuestion.cshtml" />
+    <Content Include="Views\SPBusinessPlan\BusinessPlanReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

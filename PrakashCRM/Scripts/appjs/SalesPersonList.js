@@ -204,7 +204,7 @@ function bindGridData(skip, top, firsload, orderBy, orderDir, filter) {
                 $('#tableBody').empty();
                 $.each(data, function (index, item) {
                     var rowData = "<tr><td></td><td><a href='/SalesPerson/SalesPersonCard?No=" + item.No + "'><i class='bx bxs-edit'></i></a></td><td align='center'><a class='ViewChangePassCls' onclick='ChangePassword(\"" + item.No + "\",\"" + item.Company_E_Mail + "\")'><i class='bx bx-key'></i></a></td>" +
-                        "<td>" + item.No + "</td><td>" + item.PCPL_Employee_Code + "</td><td>" + item.First_Name + "</td><td>" + item.Last_Name + "</td><td>" + item.Company_E_Mail + "</td><td>" + item.Job_Title + "</td><td>" + item.Address + "</td>";
+                        "<td>" + item.No + "</td><td>" + item.PCPL_Employee_Code + "</td><td>" + item.First_Name + "</td><td>" + item.Last_Name + "</td><td>" + item.Company_E_Mail + "</td><td>" + item.Job_Title + "</td><td>" + item.Role + "</td><td>" + item.PCPL_Department_Name + "</td>";
 
                     if (item.PCPL_Enable_OTP_On_Login) {
                         rowData += "<td><span class='badge bg-primary'>Yes</span></td>";
@@ -250,13 +250,13 @@ function dataTableFunction(orderBy, orderDir) {
     if (orderDir == "asc") {
         $('#dataList th:lt(3)').removeClass("sorting_asc").removeClass("sorting_disabled");
         $('#dataList th:gt(9)').removeClass("sorting_asc").removeClass("sorting_disabled");
-        $('#dataList th').slice(3, 10).removeClass("sorting_asc").removeClass("sorting_desc").removeClass("sorting_disabled").addClass("sorting");
+        $('#dataList th').slice(3, 11).removeClass("sorting_asc").removeClass("sorting_desc").removeClass("sorting_disabled").addClass("sorting");
         $("#dataList th:nth-child(" + (orderBy + 1) + ")").removeClass("sorting").removeClass("sorting_desc").addClass("sorting_asc");
     }
     if (orderDir == "desc") {
         $('#dataList th:lt(3)').removeClass("sorting_desc").removeClass("sorting_disabled");
         $('#dataList th:gt(9)').removeClass("sorting_desc").removeClass("sorting_disabled");
-        $('#dataList th').slice(3, 10).removeClass("sorting_desc").removeClass("sorting_asc").removeClass("sorting_disabled").addClass("sorting");
+        $('#dataList th').slice(3, 11).removeClass("sorting_desc").removeClass("sorting_asc").removeClass("sorting_disabled").addClass("sorting");
         $("#dataList th:nth-child(" + (orderBy + 1) + ")").removeClass("sorting").removeClass("sorting_asc").addClass("sorting_desc");
     }
 }
@@ -457,7 +457,7 @@ function ClearCustomFilter() {
     $('#ddlField').val('-1');
     $('#ddlOperator').val('Contains');
     $('#txtSearch').val('');
-    
+
 }
 
 function ShowErrMsg(errMsg) {

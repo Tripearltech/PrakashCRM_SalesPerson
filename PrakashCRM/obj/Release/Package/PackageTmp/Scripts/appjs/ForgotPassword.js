@@ -29,10 +29,10 @@
 
             $.get(apiUrl + 'GetByEmail?email=' + $('#forgotEmail').val(), function (data) {
 
-                if (data.Company_E_Mail != null && data.No != null) {
+                if (data.Company_E_Mail != null && data.No != null && data.Role) {
 
                     $.get(
-                        apiUrl + 'ForgotPassword?email=' + data.Company_E_Mail + '&userNo=' + data.No + '&portalUrl=' + portalUrl,
+                        apiUrl + 'ForgotPassword?email=' + data.Company_E_Mail + '&userNo=' + data.No + '&role=' + data.Role + '&portalUrl=' + portalUrl ,
                         function (data) {
                             $('#divImage').hide();
                             if (sessionStorage.getItem('#modal') !== 'true') {

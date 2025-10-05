@@ -194,7 +194,10 @@ namespace PrakashCRM.Controllers
                     orderByField = "Job_Title " + orderDir;
                     break;
                 case 9:
-                    orderByField = "Address " + orderDir;
+                    orderByField = "Role " + orderDir;
+                    break;
+                case 10:
+                    orderByField = "PCPL_Department_Name " + orderDir;
                     break;
                 default:
                     orderByField = "No asc";
@@ -250,7 +253,7 @@ namespace PrakashCRM.Controllers
         {
             //SPProfilePost userpost;
             //userpost = (SPProfilePost)user;
-            
+
             DateTime userBirthDate = Convert.ToDateTime(userpost.Birth_Date);
             userpost.Birth_Date = userBirthDate.ToString("yyyy-MM-dd");
 
@@ -265,6 +268,7 @@ namespace PrakashCRM.Controllers
 
             userpost.Global_Dimension_1_Code = userpost.Global_Dimension_1_Code == "-1" ? "" : userpost.Global_Dimension_1_Code;
             userpost.Role_No = userpost.Role_No == "-1" ? "" : userpost.Role_No;
+            userpost.PCPL_Department_Code = userpost.PCPL_Department_Code == "-1" ? "" : userpost.PCPL_Department_Code;
             userpost.View_Transaction_No = userpost.View_Transaction_No == "-1" ? "" : userpost.View_Transaction_No;
             userpost.Reporting_Person_No = userpost.Reporting_Person_No == "-1" ? "" : userpost.Reporting_Person_No;
             userpost.Address_2 = userpost.Address_2 == null ? "" : userpost.Address_2;
@@ -365,6 +369,7 @@ namespace PrakashCRM.Controllers
                 ViewBag.View_Transaction_No = userProfile.View_Transaction_No;
                 ViewBag.Reporting_Person_No = userProfile.Reporting_Person_No;
                 ViewBag.SalespersonCode = userProfile.Salespers_Purch_Code;
+                ViewBag.PCPL_Department_Code = userProfile.PCPL_Department_Code;
                 ViewBag.Birth_Date = userProfile.Birth_Date;
                 ViewBag.Status = userProfile.Status;
             }
@@ -418,12 +423,12 @@ namespace PrakashCRM.Controllers
             return RedirectToAction("Profile");
         }
 
-        
+
         [HttpPost]
         public bool DeleteProfileImage()
         {
             bool flag = false;
-            
+
             string path = Server.MapPath("~/SPProfileImages/");
 
             if (!Directory.Exists(path))
@@ -440,7 +445,7 @@ namespace PrakashCRM.Controllers
                     flag = true;
                 }
             }
-            
+
             return flag;
         }
 
@@ -664,6 +669,7 @@ namespace PrakashCRM.Controllers
             return Json(role, JsonRequestBehavior.AllowGet);
         }
 
+
         public async Task<JsonResult> GetAllViewTransactionForDDL()
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "Salesperson/GetAllViewTransactionForDDL";
@@ -707,7 +713,25 @@ namespace PrakashCRM.Controllers
 
             return Json(reportingperson, JsonRequestBehavior.AllowGet);
         }
+        public async Task<JsonResult> GetDepartmentName()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "Salesperson/GetDepartmentName";
+            HttpClient client = new HttpClient();
+            List<Departments> departments = new List<Departments>();
 
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                departments = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Departments>>(data);
+            }
+
+            return Json(departments, JsonRequestBehavior.AllowGet);
+        }
         public async Task<JsonResult> GetAllSalespersonForDDL()
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "Salesperson/GetAllSalespersonForDDL";

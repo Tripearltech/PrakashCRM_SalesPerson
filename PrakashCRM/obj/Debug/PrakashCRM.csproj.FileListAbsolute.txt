@@ -1787,8 +1787,6 @@ C:\PrakashCRM_SalesPerson\Azures-Code\crm\PrakashCRM\obj\Debug\PrakashCRM.csproj
 C:\PrakashCRM_SalesPerson\Azures-Code\crm\PrakashCRM\obj\Debug\PrakashCRM.csproj.Up2Date
 C:\PrakashCRM_SalesPerson\Azures-Code\crm\PrakashCRM\obj\Debug\PrakashCRM.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\crm\PrakashCRM\obj\Debug\PrakashCRM.pdb
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\obj\Debug\PrakashCRM.csproj.AssemblyReference.cache
-C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\obj\Debug\PrakashCRM.csproj.CoreCompileInputs.cache
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\bin\PrakashCRM.dll.config
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\bin\PrakashCRM.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\bin\PrakashCRM.pdb
@@ -1911,6 +1909,8 @@ C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\bin\Syste
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\bin\System.Web.WebPages.Razor.xml
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\bin\Antlr3.Runtime.pdb
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\obj\Debug\PrakashCRM.csproj.AssemblyReference.cache
+C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\obj\Debug\PrakashCRM.csproj.CoreCompileInputs.cache
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\obj\Debug\PrakashCRM.csproj.Up2Date
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\obj\Debug\PrakashCRM.dll
 C:\PrakashCRM_SalesPerson\Azures-Code\PrakshCRM_SelesPerson\PrakashCRM\obj\Debug\PrakashCRM.pdb

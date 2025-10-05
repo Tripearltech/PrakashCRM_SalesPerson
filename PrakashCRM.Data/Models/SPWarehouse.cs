@@ -280,8 +280,6 @@ namespace PrakashCRM.Data.Models
 
     public class SPWarehouseClose
     {
-        public string vendorcompanyNo;
-
         public string transporterCode { get; set; }
         public string systemids { get; set; }
         public string lrno { get; set; }

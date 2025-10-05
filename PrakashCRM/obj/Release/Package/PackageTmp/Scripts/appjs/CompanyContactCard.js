@@ -924,7 +924,7 @@ function GetDetailsByCode(pincode) {
 
     //$("#ddlCountry").prop("disabled", false);
     //$("#ddlCountry").val("-1");
-    pincode = jQuery("#hfPostCode").val();
+    pincode = jQuery("#txtPincode").val();
     if (pincode != "") {
         //$.ajax(
         //    {
