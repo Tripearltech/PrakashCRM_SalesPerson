@@ -27,6 +27,10 @@ namespace PrakashCRM.Controllers
         {
             return View();
         }
+        public ActionResult BusinessPlanReport()
+        {
+            return View();
+        }
 
         public async Task<JsonResult> GetBusinessPlanCustWiseListData(string page, string SPCode, int orderBy, string orderDir, string filter, int skip, int top)
         {
@@ -273,6 +277,29 @@ namespace PrakashCRM.Controllers
             }
 
             return Json(qtyDetails, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> GetBusinessReport(string filter)
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPBusinessPlan/";
+
+            apiUrl += "GetBusinessReport";//?LoggedInUserNo=" + Session["loggedInUserNo"].ToString() + "&filter=" + filter
+
+            HttpClient client = new HttpClient();
+            List<SPBusinessPlanReport> businessreport = new List<SPBusinessPlanReport>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                businessreport = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPBusinessPlanReport>>(data);
+            }
+
+            return Json(businessreport, JsonRequestBehavior.AllowGet);
         }
 
     }

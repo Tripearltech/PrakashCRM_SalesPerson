@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "AdminBusinessPlan";
+    Layout = "~/Views/Shared/_SalespersonMasterLayout.cshtml";
+}
+
+<div class="page-content">
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="/SPDashboard/Index"><i class="bx bx-tachometer"></i>&nbsp;Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Business Report</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <hr />
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="row g-1">
+                    <div class="col-12">
+                        <div class="filter-box row g-3 align-items-center">
+
+                            <!-- Single Year Dropdown -->
+                            <div class="col-md-2">
+                                <label>Year</label>
+                                <select class="form-select" id="ddlYear">
+                                    <option>2023-2024</option>
+                                    <option>2024-2025</option>
+                                    <option>2025-2026</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Sales Person</label>
+                                <select class="form-select" id="ddlSalesPerson">
+                                    <option>Please Select</option>
+                                    <option>Viral Prajapati</option>
+                                    <option>Yash Pastagia</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button class="btn btn-primary me-2">Search</button>
+                                <select class="form-select me-2" style="max-width: 150px;">
+                                    <option>--Select--</option>
+                                    <option>Excel</option>
+                                    <option>PDF</option>
+                                </select>
+                                <button class="btn btn-danger">Export</button>
+                            </div>
+                        </div>
+
+                        <table class="table mt-2 mb-0 table-striped">
+                            <thead>
+                                <tr class="border-top">
+                                    <th scope="col">Sales Person</th>
+                                    <th scope="col">Demand Qty</th>
+                                    <th scope="col">Target Qty</th>
+                                    <th scope="col">Sales Qty</th>
+                                    <th scope="col">Sales % (Qty)</th>
+                                    <th scope="col">Target Amount</th>
+                                    <th scope="col">Sales Amount</th>
+                                    <th scope="col">Sales % (Amount)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblbusinessreport">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='loader' id='divImage' style="display:none">
+    <!-- MODAL CONTENT -->
+    <div class='loader-content'>
+        <img alt="Loading... Please wait!" src="~/Layout/assets/images/login-images/load-image-2.gif" width="100" height="100" />
+    </div>
+</div>
+<div class="modal" id="modalErrMsg" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:red">Error</h5>
+                <button id="btnCloseModalErrMsg" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="color:red" align="center">
+                <img src="~/Layout/assets/images/appImages/CancelIcon.png" />
+                <br /><br />
+                <h6 id="modalErrDetails" style="color:red"></h6>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/appjs/BusinessPlanReport.js"></script>
+

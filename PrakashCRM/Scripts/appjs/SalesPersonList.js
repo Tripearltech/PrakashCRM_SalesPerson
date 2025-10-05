@@ -457,7 +457,7 @@ function ClearCustomFilter() {
     $('#ddlField').val('-1');
     $('#ddlOperator').val('Contains');
     $('#txtSearch').val('');
-    
+
 }
 
 function ShowErrMsg(errMsg) {

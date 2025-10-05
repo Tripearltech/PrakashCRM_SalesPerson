@@ -253,7 +253,7 @@ namespace PrakashCRM.Controllers
         {
             //SPProfilePost userpost;
             //userpost = (SPProfilePost)user;
-            
+
             DateTime userBirthDate = Convert.ToDateTime(userpost.Birth_Date);
             userpost.Birth_Date = userBirthDate.ToString("yyyy-MM-dd");
 
@@ -423,12 +423,12 @@ namespace PrakashCRM.Controllers
             return RedirectToAction("Profile");
         }
 
-        
+
         [HttpPost]
         public bool DeleteProfileImage()
         {
             bool flag = false;
-            
+
             string path = Server.MapPath("~/SPProfileImages/");
 
             if (!Directory.Exists(path))
@@ -445,7 +445,7 @@ namespace PrakashCRM.Controllers
                     flag = true;
                 }
             }
-            
+
             return flag;
         }
 

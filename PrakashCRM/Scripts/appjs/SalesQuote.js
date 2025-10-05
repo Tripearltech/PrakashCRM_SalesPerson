@@ -404,10 +404,10 @@ $(document).ready(function () {
     //    var prodOpts = $('#hfProdNo').val();
     //    var prodOptsTR = $('#hfProdNoEdit').val();
     //    var dropShipmentOpt = $('#chkDropShipment').is(':checked') ? 'true' : 'false';
-        //var inqProdLineNo = $('#hfProdLineNo').val() || ''; // Capture InqProdLineNo
+    //var inqProdLineNo = $('#hfProdLineNo').val() || ''; // Capture InqProdLineNo
 
-        //var actionsHtml = `<a class='SQLineCls' onclick='EditSQProd(${inqProdLineNo || 0},"ProdTR_${prodOpts}")'><i class='bx bxs-edit'></i></a>`;
-        //actionsHtml += `&nbsp;<a class='SQLineCls' onclick='DeleteSQProd(this)'><i class='bx bxs-trash'></i></a>`;
+    //var actionsHtml = `<a class='SQLineCls' onclick='EditSQProd(${inqProdLineNo || 0},"ProdTR_${prodOpts}")'><i class='bx bxs-edit'></i></a>`;
+    //actionsHtml += `&nbsp;<a class='SQLineCls' onclick='DeleteSQProd(this)'><i class='bx bxs-trash'></i></a>`;
 
     //    var commissionPerUnit = isCommission ? $('#ddlCommissionPerUnitPercent').val() : "";
     //    var commissionPercent = isCommission ? $('#txtCommissionPercent').val() : "";
@@ -656,7 +656,7 @@ $(document).ready(function () {
 
             `<label id="${prodOpts}_DropShipment">${dropShipmentOpt}</label>`,
 
-           "", // 23 → hidden
+            "", // 23 → hidden
 
             "", // 24 → hidden
 
@@ -3619,18 +3619,7 @@ function BindCSOutstandingDuelist() {
                 var TROpts = "";
 
                 $.each(data, function (index, item) {
-                    TROpts += "<tr>"
-                        + "<td>" + item.Document_Type + "</td>"
-                        + "<td>" + item.Bill_No + "</td>"
-                        + "<td>" + item.Bill_Date + "</td>"
-                        + "<td>" + item.Product_Name + "</td>"
-                        + "<td>" + item.Terms + "</td>"
-                        + "<td>" + item.Due_Date + "</td>"
-                        + "<td>" + item.Invoice_Amount + "</td>"
-                        + "<td>" + item.Remain_Amount + "</td>"
-                        + "<td>" + item.Total_Days + "</td>"
-                        + "<td>" + item.Overdue_Days + "</td>"
-                        + "</tr>";
+                    TROpts += "<tr>"+ "<td>" + item.Document_Type + "</td>"+ "<td>" + item.Bill_No + "</td>"+ "<td>" + item.Bill_Date + "</td>"+ "<td>" + item.Product_Name + "</td>"+ "<td>" + item.Terms + "</td>"+ "<td>" + item.Due_Date + "</td>"+ "<td>" + item.Invoice_Amount + "</td>"+ "<td>" + item.Remain_Amount + "</td>"+ "<td>" + item.Total_Days + "</td>"+ "<td>" + item.Overdue_Days + "</td>"+ "</tr>";
                 });
 
                 $('#tblCSOutstandingDuelist').append(TROpts);

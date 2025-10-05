@@ -195,7 +195,7 @@
                 $('#lblOTPExpiredMsg').css("display", "block");
                 $('#btnResendOTP').css('display', 'block');
                 $('#btnVerify').css('display', 'none');
-                
+
             }
 
             document.getElementById("btnStop").addEventListener("click", stopTimer);
@@ -245,7 +245,14 @@
                             }
                             else {
                                 $('#divImage').hide();
+                                if (data.Status == "Inactive") {
+                                    var msg = "User is Inactive";
+                                    ShowActionMsg(msg);
+                                }
+                                else {
+
                                 window.location.replace('@Url.Action("Index", "SPDashboard")');
+                                }
                             }
                         }
                         else {
@@ -332,12 +339,24 @@
             $.get(apiUrl + 'GetAdminContactNo', function (data) {
 
                 if (data != "") {
-                    
+
                     $('#hfAdminContactNo').val(data);
                 }
 
             });
 
+        }
+        function ShowActionMsg(actionMsg) {
+            Lobibox.notify('error', {
+                pauseDelayOnHover: true,
+                size: 'mini',
+                rounded: true,
+                icon: 'bx bx-check-circle',
+                delayIndicator: false,
+                continueDelayOnInactiveTab: false,
+                position: 'top right',
+                msg: actionMsg
+            });
         }
 
         function ShowErrorMsg(errMsg) {
