@@ -1209,6 +1209,11 @@ function ShowSQProds(SQNo) {
     );
 
 }
+$('#txtAddress').on('keyup', function () {
+    CheckContactValues();
+});$('#txtAddress1').on('keyup', function () {
+    CheckContactValues();
+});
 
 function CheckContactValues() {
 
@@ -1222,6 +1227,8 @@ function CheckContactValues() {
     var emailformat = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var companyemail = $('#txtCompanyEmail').val();
     var contactemail = $('#txtContactEmail').val();
+    var address = $('#txtAddress').val().trim();
+    var address1 = $('#txtAddress1').val().trim();
 
     if (phoneno.length > 0) {
         if (!(phoneno.match(numbers) && phoneno.length == 10)) {
@@ -1245,14 +1252,32 @@ function CheckContactValues() {
         $('#lblCCompanyNameMsg').css('display', 'none');
     }
 
-    if ($('#txtAddress').val() == "") {
+    
+    if (address === "") {
         $('#lblCCompanyAddressMsg').text("Please Fill Company Address");
+        $('#lblCCompanyAddressMsg').css('display', 'block');
+        flag = false;
+    }
+    else if (address.length > 50)
+    {
+        $('#lblCCompanyAddressMsg').text("Address cannot exceed 50 characters");
         $('#lblCCompanyAddressMsg').css('display', 'block');
         flag = false;
     }
     else {
         $('#lblCCompanyAddressMsg').text("");
         $('#lblCCompanyAddressMsg').css('display', 'none');
+    } 
+
+      if (address1.length > 50)
+    {
+        $('#lblCCompanyAddressMsg1').text("Address2 cannot exceed 50 characters");
+        $('#lblCCompanyAddressMsg1').css('display', 'block');
+        flag = false;
+    }
+    else {
+        $('#lblCCompanyAddressMsg1').text("");
+        $('#lblCCompanyAddressMsg1').css('display', 'none');
     }
 
     if ($('#txtCompanyEmail').val() == "") {
@@ -1281,7 +1306,7 @@ function CheckContactValues() {
     }
 
     if ($('#ddlArea').val() == "-1") {
-        $('#lblCCompanyAreaMsg').text("Please Fill Area");
+        $('#lblCCompanyAreaMsg').text("Please Select Area");
         $('#lblCCompanyAreaMsg').css('display', 'block');
         flag = false;
     }
