@@ -452,7 +452,7 @@ namespace PrakashCRM.Service.Controllers
             SPContact requestContact = new SPContact();
 
             requestContact.Company_No = CompanyNo;
-            requestContact.Salesperson_Code = SPCode;
+            requestContact.Salesperson_Code = SPCode;   
             requestContact.Name = Name;
             requestContact.Type = "Person";
             requestContact.Mobile_Phone_No = Mobile_Phone_No;
@@ -1077,8 +1077,8 @@ namespace PrakashCRM.Service.Controllers
             API ac = new API();
             List<Area> areas = new List<Area>();
 
-            var result = ac.GetData<Area>("AreasListDotNetAPI", "Pincode eq '" + Pincode + "'");
-
+           
+            var result = ac.GetData<Area>("AreasListDotNetAPI", "Pincode eq '" + Pincode + "' and IsActive eq true");
             if (result != null && result.Result.Item1.value.Count > 0)
                 areas = result.Result.Item1.value;
 
