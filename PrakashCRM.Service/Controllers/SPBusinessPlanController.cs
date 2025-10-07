@@ -1116,5 +1116,19 @@ namespace PrakashCRM.Service.Controllers
             }
             return businessreport;
         }
+        [HttpGet]
+        [Route("GetSalespersonDropDwon")]
+        public List<SPSalespersonDropDwon> GetSalespersonDropDwon()
+        {
+            API ac = new API();
+            List<SPSalespersonDropDwon> salespersondropdwon = new List<SPSalespersonDropDwon>();
+            var result = ac.GetData<SPSalespersonDropDwon>("BusinessPlanReport","");
+            if (result != null && result.Result.Item1.value.Count > 0)
+            {
+                salespersondropdwon = result.Result.Item1.value;
+                salespersondropdwon = salespersondropdwon.DistinctBy(a => a.Sales_Person).ToList();
+            }
+            return salespersondropdwon;
+        }
     }
 }

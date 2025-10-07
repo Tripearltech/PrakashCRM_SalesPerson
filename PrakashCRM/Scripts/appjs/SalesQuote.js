@@ -1842,9 +1842,9 @@ function GetCreditLimitAndCustDetails(companyName) {
                                 //billtoAdd = data.ShiptoAddress[i].Address;
                                 billtoAddOpts += "<option value=\"" + data.ShiptoAddress[i].Code + "\">" + data.ShiptoAddress[i].Address + "</option>";
                             }
-                                billtoCode = data.ShiptoAddress[0].Code;
-                                $('#ddlBillTo').append(billtoAddOpts);
-                                $('#ddlBillTo').val(billtoCode);
+                            billtoCode = data.ShiptoAddress[0].Code;
+                            $('#ddlBillTo').append(billtoAddOpts);
+                            $('#ddlBillTo').val(billtoCode);
                         }
                         else {
                             $('#ddlBillTo').append("<option value='-1'>---Select---</option>");

@@ -234,6 +234,9 @@ namespace PrakashCRM.Data.Models
         public string Sales_Person { get; set; }
         public string Year { get; set; }
     }
-
-
+    public class SPSalespersonDropDwon
+    {
+        public string SalesPerson_Name { get; set; }
+        public string Sales_Person { get; set; }
+    }
 }

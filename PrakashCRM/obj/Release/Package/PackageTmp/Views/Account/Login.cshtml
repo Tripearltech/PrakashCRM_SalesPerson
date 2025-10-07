@@ -140,6 +140,26 @@
     <script>
         $(document).ready(function () {
 
+            //  Email max length validation (50 characters)
+            $('#email').on('input', function () {
+                const maxLength = 50;
+                const emailVal = $(this).val();
+
+                if (emailVal.length > maxLength) {
+                    $(this).val(emailVal.substring(0, maxLength));
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        size: 'mini',
+                        rounded: true,
+                        delayIndicator: false,
+                        icon: 'bx bx-x-circle',
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        msg: 'Maximum 50 characters allowed!'
+                    });
+                }
+            });
+
             //GetAdminContact();
             var intervalID;
             var seconds = parseInt($("#lblSeconds").text());
@@ -373,6 +393,5 @@
             });
         }
     </script>
-
 </body>
 </html>

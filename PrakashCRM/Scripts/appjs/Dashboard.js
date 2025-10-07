@@ -20,6 +20,7 @@ $(document).ready(function () {
     BindWarehouseSalesAcceptTask();
     BindWarehousePurchaseAcceptTask();
     BindNonPerformingList();
+    BindTodaylist();
     //BindSalespersonData();
     //BindSupportSP();
     //BindGProductData();
@@ -543,6 +544,40 @@ function BindCombinedData() {
 
         error: function (xhr, status, error) {
             alert("Error fetching combined data: " + xhr.responseText);
+        }
+    });
+}
+
+function BindTodaylist() {
+    var salespersonCode = ""; // assuming dropdown for salesperson
+    var date = ""; // assuming input for date
+
+    $.ajax({
+        url: '/SPDashboard/GetTodayVisit',
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
+            $('#tbltodayvist').empty();
+            var rowData = "";
+
+            if (data && data.length > 0) {
+                $.each(data, function (index, item) {
+                    rowData += "<tr>" +
+                        "<td>" + (item.Date || '') + "</td>" +
+                        "<td>" + (item.Visit_Name || '') + "</td>" +
+                        "<td>" + (item.Visit_SubType_Name || '') + "</td>" +
+                        "<td>" + (item.Pur_Visit || '') + "</td>" +
+                        "</tr>";
+                });
+            } else {
+                rowData = "<tr><td colspan='5' style='text-align:left;'>No Records Found</td></tr>";
+            }
+
+            $('#tbltodayvist').append(rowData);
+        },
+        error: function (xhr, status, error) {
+            alert("Error fetching data: " + xhr.responseText);
         }
     });
 }

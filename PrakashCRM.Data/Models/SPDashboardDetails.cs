@@ -196,5 +196,15 @@ namespace PrakashCRM.Data.Models
         public List<SPSupportSPlist> SupportSPs { get; set; }
         public List<SPProductlist> Products { get; set; }
     }
-   
+
+    public class SPTodayVisitlist
+    {
+        public string Date { get; set; }
+        public string Visit_Name { get; set; }
+        public  string Visit_SubType_Name { get; set; }
+        public string Pur_Visit { get; set; }
+        public string Salesperson_Code { get; set; }
+    }
+
+
 }
