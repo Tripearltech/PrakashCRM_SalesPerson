@@ -158,6 +158,7 @@ namespace PrakashCRM.Data.Models
     {
         public string No { get; set; }
         public string Visit_Month { get; set; }
+        public double No_of_Actual_visit { get; set; }
         public string Visit_Type { get; set; }
         public string Visit_Sub_Type_No { get; set; }
         public string Visit_Sub_Type_Name { get; set; }

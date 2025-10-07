@@ -275,26 +275,26 @@ namespace PrakashCRM.Controllers
 
         //        return Json(supportsp, JsonRequestBehavior.AllowGet);
         //    }
-        //    public async Task<JsonResult> GetProductData()
+        //public async Task<JsonResult> GetProductData()
+        //{
+        //    string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetProductData";
+
+        //    HttpClient client = new HttpClient();
+        //    List<SPProductlist> productlists = new List<SPProductlist>();
+
+        //    client.BaseAddress = new Uri(apiUrl);
+        //    client.DefaultRequestHeaders.Accept.Clear();
+        //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+        //    HttpResponseMessage response = await client.GetAsync(apiUrl);
+        //    if (response.IsSuccessStatusCode)
         //    {
-        //        string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetProductData";
-
-        //        HttpClient client = new HttpClient();
-        //        List<SPProductlist> productlists = new List<SPProductlist>();
-
-        //        client.BaseAddress = new Uri(apiUrl);
-        //        client.DefaultRequestHeaders.Accept.Clear();
-        //        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-        //        HttpResponseMessage response = await client.GetAsync(apiUrl);
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var data = await response.Content.ReadAsStringAsync();
-        //            productlists = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPProductlist>>(data);
-        //        }
-
-        //        return Json(productlists, JsonRequestBehavior.AllowGet);
+        //        var data = await response.Content.ReadAsStringAsync();
+        //        productlists = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPProductlist>>(data);
         //    }
+
+        //    return Json(productlists, JsonRequestBehavior.AllowGet);
+        //}
 
         public async Task<JsonResult> GetCombinedSalesData()
         {
@@ -315,6 +315,27 @@ namespace PrakashCRM.Controllers
             }
 
             return Json(combinedData, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> GetTodayVisit()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetTodayVisit";
+
+            HttpClient client = new HttpClient();
+            List<SPTodayVisitlist> toadyvisit = new List<SPTodayVisitlist>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                toadyvisit = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPTodayVisitlist>>(data);
+            }
+
+            return Json(toadyvisit, JsonRequestBehavior.AllowGet);
         }
 
 

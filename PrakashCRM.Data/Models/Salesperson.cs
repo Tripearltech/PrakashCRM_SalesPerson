@@ -142,7 +142,7 @@ namespace PrakashCRM.Data.Models
 
         public string Address_2 { get; set; }
 
-        [Required(ErrorMessage ="Department is required")]
+        [Required(ErrorMessage = "Department is required")]
         public string PCPL_Department_Code { get; set; }
 
         public string Password { get; set; }

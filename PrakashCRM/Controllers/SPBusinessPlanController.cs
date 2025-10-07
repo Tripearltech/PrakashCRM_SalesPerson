@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.ExtendedProperties;
+﻿using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.ExtendedProperties;
 using Newtonsoft.Json;
 using PrakashCRM.Data.Models;
 using System;
@@ -29,8 +30,15 @@ namespace PrakashCRM.Controllers
         }
         public ActionResult BusinessPlanReport()
         {
-            return View();
+            var model = new SPSalespersonDropDwon
+            {
+                SalesPerson_Name = "",
+                Sales_Person = ""
+            };
+
+            return View(model);
         }
+
 
         public async Task<JsonResult> GetBusinessPlanCustWiseListData(string page, string SPCode, int orderBy, string orderDir, string filter, int skip, int top)
         {
@@ -279,7 +287,7 @@ namespace PrakashCRM.Controllers
             return Json(qtyDetails, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetBusinessReport(string filter)
+        public async Task<JsonResult> GetBusinessReport()
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPBusinessPlan/";
 
@@ -300,6 +308,29 @@ namespace PrakashCRM.Controllers
             }
 
             return Json(businessreport, JsonRequestBehavior.AllowGet);
+        }
+        
+        public async Task<JsonResult> GetSalespersonDropDwon()
+        {
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPBusinessPlan/";
+
+            apiUrl += "GetSalespersonDropDwon";
+
+            HttpClient client = new HttpClient();
+            List<SPSalespersonDropDwon> salespersondropdwon = new List<SPSalespersonDropDwon>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                salespersondropdwon = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPSalespersonDropDwon>>(data);
+            }
+
+            return Json(salespersondropdwon, JsonRequestBehavior.AllowGet);
         }
 
     }

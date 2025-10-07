@@ -140,10 +140,11 @@
     <script>
         $(document).ready(function () {
 
-             //  Email max length validation (50 characters)
+            //  Email max length validation (50 characters)
             $('#email').on('input', function () {
                 const maxLength = 50;
                 const emailVal = $(this).val();
+
                 if (emailVal.length > maxLength) {
                     $(this).val(emailVal.substring(0, maxLength));
                     Lobibox.notify('error', {
@@ -269,7 +270,7 @@
                                     ShowActionMsg(msg);
                                 }
                                 else {
-                                    
+
                                 window.location.replace('@Url.Action("Index", "SPDashboard")');
                                 }
                             }
@@ -366,7 +367,6 @@
 
         }
         function ShowActionMsg(actionMsg) {
-
             Lobibox.notify('error', {
                 pauseDelayOnHover: true,
                 size: 'mini',
@@ -377,8 +377,8 @@
                 position: 'top right',
                 msg: actionMsg
             });
-
         }
+
         function ShowErrorMsg(errMsg) {
 
             Lobibox.notify('error', {
@@ -393,6 +393,5 @@
             });
         }
     </script>
-
 </body>
 </html>
