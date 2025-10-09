@@ -288,6 +288,7 @@
                         <tr>
                             <td>
                                 <select id="ddlClosingHours" class="form-select"></select>
+                                <label class="text-danger" style="display:none" id="ErrorClosingTimeMsg"></label>
                                 @*@Html.DropDownListFor(model => model.End_Time, Enumerable.Empty<SelectListItem>(), new { @id = "ddlClosingHours", @class = "form-select" })*@
                             </td>
                             <td>
@@ -319,6 +320,7 @@
                 <div class="col-md-4">
                     <label class="form-label">Closing KM</label>
                     <input type="text" id="txtClosingKM" class="form-control" />
+                    <label class="text-danger" id="ErrorClosingKM" style="display:none"></label>
                     @*@Html.TextBoxFor(model => model.End_km, new { @id = "txtClosingKM", @class = "form-control" })*@
                 </div>
                 <div class="col-md-4">

@@ -130,7 +130,7 @@ $(document).ready(function () {
             $('#chkEnableOTPOnLogin').prop('disabled', false);
         }
         else {
-            $('#chkEnableOTPOnLogin').prop('disabled', true);
+            $('#chkEnableOTPOnLogin').prop('disabled', false);
         }
 
         //if ($('#chkAllowLogin').val() == "true") {
