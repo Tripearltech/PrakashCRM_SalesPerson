@@ -1,4 +1,4 @@
-﻿@model PrakashCRM.Data.Models.SPDailyVisitDetails
+﻿﻿@model PrakashCRM.Data.Models.SPDailyVisitDetails
 @{
     ViewBag.Title = "DailyVisit";
     Layout = "~/Views/Shared/_SalespersonMasterLayout.cshtml";
@@ -159,7 +159,7 @@
                         <button id="btnCustAdd" class="btn btn-primary bx bx-plus" title="Add New Contact Company"></button>
                     </div>
                     <div class="col-md-6">
-                        <button id="btnCPersonAdd" class="btn btn-primary bx bx-plus" title="Add New Contact Person"></button>
+                        <button id="btnCPersonAdd" class="btn btn-primary bx bx-plus" title="Add New Contact Person" disabled></button>
                     </div>
                 </div>
             </div>
@@ -193,18 +193,31 @@
                     <div class="col-md-4">
                         <label class="form-label">UOM</label>
                         <input type="text" id="txtUOM" class="form-control" />
+                        @*@Html.TextBoxFor(model => model.Unit_of_Measure, new { @id = "txtUOM", @class = "form-control" })*@
                     </div>
                 </div>
-
+                @*<div class="row g-3">
+                        <div class="col-md-4">
+                            <input type="checkbox" id="chkShowAllProducts" class="form-check-input" />&nbsp;Show All Products
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                    <br />*@
                 <div class="row g-3">
                     <div class="col-md-12">
                         <label class="form-label">Competitor Name</label>
                         <select class="form-select" id="ddlCompetitors" data-placeholder="---Select---" multiple>
                         </select>
+                        @*@Html.DropDownListFor(model => model.Competitor_Name, Enumerable.Empty<SelectListItem>(), new { @id = "ddlCompetitor", @class = "form-control" })*@
                     </div>
                 </div>
                 <div class="row g-3">
                     <div class="col-md-4">
+                        @*<label class="form-label">Competitor Name</label>
+                            @Html.DropDownListFor(model => model.Competitor_Name, Enumerable.Empty<SelectListItem>(), new { @id = "ddlCompetitor", @class = "form-control" })*@
                     </div>
                     <div class="col-md-4">
                     </div>
@@ -275,6 +288,7 @@
                         <tr>
                             <td>
                                 <select id="ddlClosingHours" class="form-select"></select>
+                                <label class="text-danger" style="display:none" id="ErrorClosingTimeMsg"></label>
                                 @*@Html.DropDownListFor(model => model.End_Time, Enumerable.Empty<SelectListItem>(), new { @id = "ddlClosingHours", @class = "form-select" })*@
                             </td>
                             <td>
@@ -306,6 +320,7 @@
                 <div class="col-md-4">
                     <label class="form-label">Closing KM</label>
                     <input type="text" id="txtClosingKM" class="form-control" />
+                    <label class="text-danger" id="ErrorClosingKM" style="display:none"></label>
                     @*@Html.TextBoxFor(model => model.End_km, new { @id = "txtClosingKM", @class = "form-control" })*@
                 </div>
                 <div class="col-md-4">
@@ -329,7 +344,7 @@
                     <input type="file" id="AttachmentFile" class="form-control" />
                 </div>
                 <div class="col-md-1">
-                    <button id="btnAddAttachment" class="btn btn-primary">Add</button>
+                    <button id="btnAddAttachment" class="btn btn-primary" disabled>Add</button>
                 </div>
             </div>
             <br />
@@ -368,7 +383,7 @@
                 <br />
                 <div class="row g-3">
                     <div class="col-md-12" align="right">
-                        <button id="btnFileUpload" class="btn btn-primary">Upload</button>
+                        <button id="btnFileUpload" class="btn btn-primary" disabled>Upload</button>
                     </div>
                 </div>
 
@@ -674,16 +689,12 @@
         </div>
     </div>
 </div>
-<input type="hidden" id="hdnRedirectContactCompanyList" value='@Url.Action("ContactCompanyList", "SPContacts")' />
-<input type="hidden" id="hdnRedirectDailyVisit" value='@Url.Action("DailyVisit", "SPVisitEntry")' />
-
 
 @*@Scripts.Render("~/bundles/jquery")*@
 <script src="~/Layout/assets/js/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="~/Scripts/appjs/DailyVisit.js"></script>
 <script>
-    debugger;
 
     $('#ddlCompetitors').select2({
         theme: "bootstrap-5",
@@ -703,10 +714,10 @@
 
     $(document).ready(function () {
 
-       $('#btnCustAdd').click(function () {
-            var redirectUrl = '@Url.Action("ContactCompanyList", "SPContacts")';
-            window.location.replace(redirectUrl);
-       });
+        $('#btnCustAdd').click(function () {
+
+            window.location.replace('@Url.Action("CompanyContactCard", "SPContacts")');
+        });
 
         $('#btnSave').click(function () {
 
@@ -842,8 +853,7 @@
                     const res = await rawResponse.ok;
                     //if (res) {
                         $('#divImage').hide();
-                         var redirectUrl = $('#hdnRedirectDailyVisit').val();
-                         if (redirectUrl) window.location.href = redirectUrl;
+                        window.location.replace('@Url.Action("DailyVisit", "SPVisitEntry")');
                         $('#hfDailyVisitEdit').val("false");
                     //}
 

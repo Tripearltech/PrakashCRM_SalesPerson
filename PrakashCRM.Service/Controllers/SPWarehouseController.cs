@@ -732,7 +732,7 @@ namespace PrakashCRM.Service.Controllers
                 filter = $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and Transporter_No eq '{TransporterNo}' and {latestRateFilter}";
             }
 
-            var result = ac.GetData1<TransporterRateCard>("Transporter_Rate_Details", filter, 0, 0, "Rate_Effective_Date desc");
+            var result = ac.GetData1<TransporterRateCard>("Transporter_Rate_Details", filter, 0, 0, "Rate_for_Standard_Weight asc");
 
             if (result.Result.Item1 != null)
                 transporterRateCards = result.Result.Item1.value;

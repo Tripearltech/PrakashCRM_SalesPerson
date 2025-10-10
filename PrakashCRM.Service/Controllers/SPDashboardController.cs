@@ -402,18 +402,48 @@ namespace PrakashCRM.Service.Controllers
         }
         [HttpGet]
         [Route("GetTodayVisit")]
-        public List<SPTodayVisitlist> GetTodayVisit()
+        public List<SPTodayVisitlist> GetTodayVisit(string Date, string Salesperson_Code)
         {
             API ac = new API();
             List<SPTodayVisitlist> todayVisit = new List<SPTodayVisitlist>();
 
             //string filter = $"Salesperson_Code eq '{salespersonCode}' and Date eq '{date}'";
-            var result = ac.GetData<SPTodayVisitlist>("DailyVisitsDotNetAPI","");
+            var result = ac.GetData<SPTodayVisitlist>("TodayTask", "Date eq " + Date + " and Salesperson_Code eq '" + Salesperson_Code + "'");
 
             if (result.Result.Item1 != null && result.Result.Item1.value != null && result.Result.Item1.value.Count > 0)
                 todayVisit = result.Result.Item1.value;
 
             return todayVisit;
         }
+
+        [HttpGet]
+        [Route("GetWeeklytask")]
+        public List<SPWeeklytasklist> GetWeeklytask(string Week_Plan_Date, string Salesperson_Code)
+        {
+            API ac = new API();
+            List<SPWeeklytasklist> weeklydyvisit = new List<SPWeeklytasklist>();
+
+            var result = ac.GetData<SPWeeklytasklist>("WeeklyVisitReport", "Week_Plan_Date eq " + Week_Plan_Date + " and Salesperson_Code eq '" + Salesperson_Code + "'");
+
+            if (result.Result.Item1 != null && result.Result.Item1.value != null && result.Result.Item1.value.Count > 0)
+                weeklydyvisit = result.Result.Item1.value;
+
+            return weeklydyvisit;
+        }
+        [HttpGet]
+        [Route("GetMonthlyTask")]
+        public List<SPMonthlylist> GetMonthlyTask(string Visit_Month, string Salesperson_Code)
+        {
+            API ac = new API();
+            List<SPMonthlylist> monthlyVisit = new List<SPMonthlylist>();
+
+            var result = ac.GetData<SPMonthlylist>("MonthlyTask", "Visit_Month eq '" + Visit_Month + "' and Salesperson_Code eq '" + Salesperson_Code + "'");
+
+            if (result.Result.Item1 != null && result.Result.Item1.value != null && result.Result.Item1.value.Count > 0)
+                monthlyVisit = result.Result.Item1.value;
+
+            return monthlyVisit;
+        }
+
     }
 }

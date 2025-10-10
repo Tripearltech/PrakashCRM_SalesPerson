@@ -287,11 +287,9 @@ namespace PrakashCRM.Controllers
             return Json(qtyDetails, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetBusinessReport()
+        public async Task<JsonResult> GetBusinessReport(string year)
         {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPBusinessPlan/";
-
-            apiUrl += "GetBusinessReport";//?LoggedInUserNo=" + Session["loggedInUserNo"].ToString() + "&filter=" + filter
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPBusinessPlan/GetBusinessReport";
 
             HttpClient client = new HttpClient();
             List<SPBusinessPlanReport> businessreport = new List<SPBusinessPlanReport>();
@@ -309,7 +307,9 @@ namespace PrakashCRM.Controllers
 
             return Json(businessreport, JsonRequestBehavior.AllowGet);
         }
-        
+
+
+
         public async Task<JsonResult> GetSalespersonDropDwon()
         {
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPBusinessPlan/";

@@ -1660,7 +1660,8 @@ namespace PrakashCRM.Service.Controllers
                             PCPL_Interest = SQLines[a].PCPL_Interest,
                             PCPL_Commission_Payable = SQLines[a].PCPL_Commission_Payable,
                             PCPL_Commission_Payable_Name = SQLines[a].PCPL_Commission_Payable_Name,
-                            TPTPL_Short_Closed = SQLines[a].TPTPL_Short_Closed
+                            TPTPL_Short_Closed = SQLines[a].TPTPL_Short_Closed,
+                            PCPL_MRP_Price = SQLines[a].PCPL_MRP_Price
 
                         });
                     }

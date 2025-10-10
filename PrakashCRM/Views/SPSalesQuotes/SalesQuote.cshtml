@@ -405,7 +405,7 @@
                                         <input id="txtProductName" type="text" class="form-control" />
                                         <br />
                                         @*<input type="checkbox" id="chkShowAllProducts" class="form-check-input" />&nbsp;Show All
-                                            &nbsp;&nbsp;*@
+                        &nbsp;&nbsp;*@
                                         <input type="checkbox" id="chkIsLiquidProd" class="form-check-input" />&nbsp;Is Liquid Product
                                         @*@Html.TextBoxFor(model => model.Description, new { @id = "txtProductName", @class = "form-control" })*@
                                     </div>
@@ -485,6 +485,7 @@
                         </div>
 
                         <div class="row g-3">
+
                             <div class="col-md-6">
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label">Inco Terms<span class="required" style="color:red;margin-left:2px">*</span></label>
@@ -659,6 +660,13 @@
                                         <input type="text" id="txtTotalCost" class="form-control" />
                                         @*@Html.TextBoxFor(model => model.Total_Cost, new { @id = "txtInsurance", @class = "form-control" })*@
                                     </div>
+                                </div>                               
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label">MRP Price<span class="required" style="color:red;margin-left:2px">*</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="txtMRPPrice" class="form-control" />
+                                        @*@Html.TextBoxFor(model => model.PCPL_MRP_Price, new { @id = "txtBasicPurchaseCost", @class = "form-control" })*@
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -676,28 +684,120 @@
                                 </div>
                             </div>
                         </div>
+                        @*<div class="row g-3">
+                            
+                        </div>*@
 
-                        <div class="row g-3" style="display:none">
-                            <div class="col-md-6">
-                                <label class="col-sm-3 col-form-label">GST Place of Supply</label>
-                                <div class="col-sm-9">
+                            <div class="row g-3" style="display:none">
+                                <div class="col-md-6">
+                                    <label class="col-sm-3 col-form-label">GST Place of Supply</label>
+                                    <div class="col-sm-9">
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-8"></div>
+                                        <div class="col-sm-4" align="right">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <button id="btnSaveProd" type="button" class="btn btn-primary"><i class="bx bxs-save"></i> Save Product</button>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <button id="btnResetProdDetails" type="button" class="btn btn-danger"><i class="lni lni-close"></i> Clear</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="mb-0 font-weight-bold">SalesQuote Line Items</h6>
+                            <hr />
+
+                            <div class="row g-3">
+                                @*style="overflow-x:auto"*@
+                                <div class="col-md-12">
+                                    @*tblSalesQuoteTempLineItems*@
+                                    <div class="table-responsive">
+                                        <table id="dataList" class="display responsive nowrap" style="width: 100%; display: none">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>Product No</th>
+                                                    <th>Product Name</th>
+                                                    <th>Qty</th>
+                                                    <th>UOM</th>
+                                                    <th>Packing Style</th>
+                                                    <th>Basic Purchase Cost</th>
+                                                    <th>Sales Price</th>
+                                                    <th>Delivery Date</th>
+                                                    <th>Total Cost</th>
+                                                    <th>Margin</th>
+                                                    <th>Payment Terms</th>
+                                                    <th>Inco Terms</th>
+                                                    <th>Transport Method</th>
+                                                    <th>Transport Cost</th>
+                                                    <th>Sales Discount</th>
+                                                    <th>Commission(%/Per Unit)</th>
+                                                    <th>Commission Percent</th>
+                                                    <th>Commission Amount</th>
+                                                    <th>Credit Days</th>
+                                                    <th>Interest</th>
+                                                    <th>Drop Shipment</th>
+                                                    <th hidden></th>
+                                                    <th hidden></th>
+                                                    <th>Margin Percent</th>
+                                                    <th>Commission Payable</th>
+                                                    <th hidden></th>
+                                                    <th>IsLiquid Prod</th> @*30*@
+                                                    <th>Concentrate%</th> @*31*@
+                                                    <th>NetWeight</th> @*32*@
+                                                    <th>LiquidRate</th> @*33*@
+                                                    <th>Drop Shipment Vendor</th>
+                                                    <th>MRP Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblProducts">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
+                        <!-- -->
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <div class="row mb-3">
-                                    <div class="col-sm-8"></div>
+                                    <div class="col-sm-8">
+                                        <input id="hdnLoggedInUserSPCode" value="@Session["loggedInUserSPCode"].ToString()" style="display:none" />
+                                        <input id="getServiceApiUrl" value="@System.Configuration.ConfigurationManager.AppSettings["ServiceApiUrl"].ToString()" style="display:none" />
+                                        <input type="hidden" id="hdnSalespersonEmail" value="" />
+                                        <input id="hdnLoggedInUserRole" value="@Session["loggedInUserRole"]" style="display:none" />
+                                        <input id="hdnLoggedInUserEmail" value="@Session["loggedInUserEmail"]" style="display:none" />
+                                        <input id="hdnLoggedInUserNo" value="@Session["loggedInUserNo"]" style="display:none" />
+                                        <input id="hdnApprovalFor" value="" style="display:none" />
+                                        <input id="hdnCustBalanceLCY" value="" style="display:none" />
+                                        <input type="hidden" id="hdnSalesQuoteAction" value="@Session["SalesQuoteAction"]" />
+                                        <input type="hidden" id="hdnSalesQuoteActionErr" value="@Session["SalesQuoteActionErr"]" />
+                                    </div>
                                     <div class="col-sm-4" align="right">
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <button id="btnSaveProd" type="button" class="btn btn-primary"><i class="bx bxs-save"></i> Save Product</button>
+                                                    <button id="btnSave" class="btn btn-success" type="button"><i class="bx bxs-save"></i> Save</button>
                                                 </td>
                                                 <td></td>
                                                 <td>
-                                                    <button id="btnResetProdDetails" type="button" class="btn btn-danger"><i class="lni lni-close"></i> Clear</button>
+                                                    <a href="/SPSalesQuotes/SalesQuoteList" class="btn btn-danger"><i class="lni lni-close"></i> Cancel</a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -706,141 +806,160 @@
                             </div>
                         </div>
 
-                        <h6 class="mb-0 font-weight-bold">SalesQuote Line Items</h6>
-                        <hr />
+                        <div id="dvSQAprJustificationDetails" style="display:none">
 
-                        <div class="row g-3">
-                            @*style="overflow-x:auto"*@
-                            <div class="col-md-12">
-                                @*tblSalesQuoteTempLineItems*@
-                                <div class="table-responsive">
-                                    <table id="dataList" class="display responsive nowrap" style="width: 100%; display: none">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th>Product No</th>
-                                                <th>Product Name</th>
-                                                <th>Qty</th>
-                                                <th>UOM</th>
-                                                <th>Packing Style</th>
-                                                <th>Basic Purchase Cost</th>
-                                                <th>Sales Price</th>
-                                                <th>Delivery Date</th>
-                                                <th>Total Cost</th>
-                                                <th>Margin</th>
-                                                <th>Payment Terms</th>
-                                                <th>Inco Terms</th>
-                                                <th>Transport Method</th>
-                                                <th>Transport Cost</th>
-                                                <th>Sales Discount</th>
-                                                <th>Commission(%/Per Unit)</th>
-                                                <th>Commission Percent</th>
-                                                <th>Commission Amount</th>
-                                                <th>Credit Days</th>
-                                                <th>Interest</th>
-                                                <th>Drop Shipment</th>
-                                                <th hidden></th>
-                                                <th hidden></th>
-                                                <th>Margin Percent</th>
-                                                <th>Commission Payable</th>
-                                                <th hidden></th>
-                                                <th>IsLiquid Prod</th> @*30*@
-                                                <th>Concentrate%</th> @*31*@
-                                                <th>NetWeight</th> @*32*@
-                                                <th>LiquidRate</th> @*33*@
-                                                <th>Drop Shipment Vendor</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tblProducts">
-                                        </tbody>
-                                    </table>
+                            <h6 class="mb-0 font-weight-bold">SalesQuote Approval Details</h6>
+                            <hr />
+
+                            <div id="dvAprDetailsFinanceUser" style="display:none">
+                                <div class="row g-3">
+                                    <div class="col-md-12">
+                                        <div class="row mb-3">
+                                            <div class="col-sm-12">
+                                                <table class="table mb-0 table-striped">
+                                                    <tr>
+                                                        <td style="font-weight:bold" width="30%">Customer Name</td>
+                                                        <td id="AprDetailsCustName" width="70%"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="font-weight:bold" width="30%">Justification For</td>
+                                                        <td id="AprDetailsApprovalFor" width="70%"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="font-weight:bold" width="30%">Justification Reason</td>
+                                                        <td id="AprDetailsJustificationReason" width="70%"></td>
+                                                    </tr>
+                                                </table>
+                                                <br />
+                                                <table class="table mb-0 table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Trader/Mfg</th>
+                                                            <th>Total Expo</th>
+                                                            <th>Overdue</th>
+                                                            <th>Avg Delay Days</th>
+                                                            <th>Approve/Reject</th>
+                                                            <th>Location</th>
+                                                            <th>Class Customer</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="tdTraderMfg"></td>
+                                                            <td id="tdTotalExpo"></td>
+                                                            <td id="tdOverdue"></td>
+                                                            <td id="tdAvgDelayDays"></td>
+                                                            <td id="tdDetailsStatus"></td>
+                                                            <td id="tdDetailsLocationCode"></td>
+                                                            <td id="tdClassCustomer"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <br />
 
-                    </div>
 
-                    <!-- -->
-                    <div class="row g-3">
-                        <div class="col-md-12">
-                            <div class="row mb-3">
-                                <div class="col-sm-8">
-                                    <input id="hdnLoggedInUserSPCode" value="@Session["loggedInUserSPCode"].ToString()" style="display:none" />
-                                    <input id="getServiceApiUrl" value="@System.Configuration.ConfigurationManager.AppSettings["ServiceApiUrl"].ToString()" style="display:none" />
-                                    <input type="hidden" id="hdnSalespersonEmail" value="" />
-                                    <input id="hdnLoggedInUserRole" value="@Session["loggedInUserRole"]" style="display:none" />
-                                    <input id="hdnLoggedInUserEmail" value="@Session["loggedInUserEmail"]" style="display:none" />
-                                    <input id="hdnLoggedInUserNo" value="@Session["loggedInUserNo"]" style="display:none" />
-                                    <input id="hdnApprovalFor" value="" style="display:none" />
-                                    <input id="hdnCustBalanceLCY" value="" style="display:none" />
-                                    <input type="hidden" id="hdnSalesQuoteAction" value="@Session["SalesQuoteAction"]" />
-                                    <input type="hidden" id="hdnSalesQuoteActionErr" value="@Session["SalesQuoteActionErr"]" />
-                                </div>
-                                <div class="col-sm-4" align="right">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <button id="btnSave" class="btn btn-success" type="button"><i class="bx bxs-save"></i> Save</button>
-                                            </td>
-                                            <td></td>
-                                            <td>
-                                                <a href="/SPSalesQuotes/SalesQuoteList" class="btn btn-danger"><i class="lni lni-close"></i> Cancel</a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <div id="dvcustomerOutStanding" style="display:none">
 
-                    <div id="dvSQAprJustificationDetails" style="display:none">
+                            <h6 id="lblOutstandingValue" style="font-weight:bold" width="30%">Customer OutStanding/Over-Due Report</h6>
+                            <hr />
 
-                        <h6 class="mb-0 font-weight-bold">SalesQuote Approval Details</h6>
-                        <hr />
-
-                        <div id="dvAprDetailsFinanceUser" style="display:none">
+                            @*<div id="tblCSOutstandingDuelist" style="display:none">*@
                             <div class="row g-3">
                                 <div class="col-md-12">
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <table class="table mb-0 table-striped">
-                                                <tr>
-                                                    <td style="font-weight:bold" width="30%">Customer Name</td>
-                                                    <td id="AprDetailsCustName" width="70%"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="font-weight:bold" width="30%">Justification For</td>
-                                                    <td id="AprDetailsApprovalFor" width="70%"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="font-weight:bold" width="30%">Justification Reason</td>
-                                                    <td id="AprDetailsJustificationReason" width="70%"></td>
-                                                </tr>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Document Type</th>
+                                                        <th scope="col">Bill No</th>
+                                                        <th scope="col">Bill Date</th>
+                                                        <th scope="col">Product Name</th>
+                                                        <th scope="col">Payment Terms</th>
+                                                        <th scope="col">Due Date</th>
+                                                        <th scope="col">Invoice Amount</th>
+                                                        <th scope="col">Remain Amount</th>
+                                                        <th scope="col">Total Days</th>
+                                                        <th scope="col">Overdue Days</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblCSOutstandingDuelist">
+                                                    <!--<tr>
+                                    <td>Invoice</td>
+                                    <td>PSIBD/2223/5044</td>
+                                    <td>11-01-2023</td>
+                                    <td>ETHYL ACETATE - 210 KGS</td>
+                                    <td>30 DAYS</td>
+                                    <td>10-02-2023</td>
+                                    <td class="right-align">2,23,640.00</td>
+                                    <td class="right-align">2,23,640.00</td>
+                                    <td>41</td>
+                                    <td class="overdue-positive">11</td>
+                                </tr>
+                                <tr>
+                                    <td>Invoice</td>
+                                    <td>PSIBD/2223/5204</td>
+                                    <td>21-01-2023</td>
+                                    <td>ETHYL ACETATE - 210 KGS</td>
+                                    <td>30 DAYS</td>
+                                    <td>20-02-2023</td>
+                                    <td class="right-align">2,23,640.00</td>
+                                    <td class="right-align">2,23,640.00</td>
+                                    <td>31</td>
+                                    <td class="overdue-positive">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Invoice</td>
+                                    <td>PSIBD/2223/5355</td>
+                                    <td>31-01-2023</td>
+                                    <td>ETHYL ACETATE - 210 KGS</td>
+                                    <td>30 DAYS</td>
+                                    <td>02-03-2023</td>
+                                    <td class="right-align">2,19,923.00</td>
+                                    <td class="right-align">2,19,923.00</td>
+                                    <td>21</td>
+                                    <td class="overdue-negative">-9</td>
+                                </tr>-->
+                                                    <!-- Totals Row -->
+                                                    <!--<tr class="total-row" style="font-weight: bold; background-color: #eee;">
+                                    <td scope="col" colspan="6" style="text-align: right; ">Total: </td>
+                                    <td class="right-align">8,95,922.00</td>
+                                    <td class="right-align">8,95,922.00</td>
+                                    <td colspan="2"></td>
+                                </tr>-->
+                                                </tbody>
                                             </table>
-                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*</div>*@
+                        </div>
+                        <div id="dvSQJustificationDetails" style="display:none">
+
+                            <br />
+                            <h6 id="lblJustificationTitle" class="mb-0 font-weight-bold"></h6>
+                            <hr />
+
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-12">
                                             <table class="table mb-0 table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th>Trader/Mfg</th>
-                                                        <th>Total Expo</th>
-                                                        <th>Overdue</th>
-                                                        <th>Avg Delay Days</th>
-                                                        <th>Approve/Reject</th>
-                                                        <th>Location</th>
-                                                        <th>Class Customer</th>
+                                                        <th scope="col">Target Date</th>
+                                                        <th scope="col">Sales Quote No</th>
+                                                        <th scope="col">Justification</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td id="tdTraderMfg"></td>
-                                                        <td id="tdTotalExpo"></td>
-                                                        <td id="tdOverdue"></td>
-                                                        <td id="tdAvgDelayDays"></td>
-                                                        <td id="tdDetailsStatus"></td>
-                                                        <td id="tdDetailsLocationCode"></td>
-                                                        <td id="tdClassCustomer"></td>
-                                                    </tr>
+                                                <tbody id="tblSQJustificationDetails">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -849,113 +968,6 @@
                             </div>
                         </div>
                     </div>
-                    <br />
-
-
-                    <div id="dvcustomerOutStanding" style="display:none">
-
-                        <h6 id="lblOutstandingValue" style="font-weight:bold" width="30%">Customer OutStanding/Over-Due Report</h6>
-                        <hr />
-
-                        @*<div id="tblCSOutstandingDuelist" style="display:none">*@
-                        <div class="row g-3">
-                            <div class="col-md-12">
-                                <div class="row mb-3">
-                                    <div class="col-sm-12">
-                                        <table class="table mb-0 table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Document Type</th>
-                                                    <th scope="col">Bill No</th>
-                                                    <th scope="col">Bill Date</th>
-                                                    <th scope="col">Product Name</th>
-                                                    <th scope="col">Payment Terms</th>
-                                                    <th scope="col">Due Date</th>
-                                                    <th scope="col">Invoice Amount</th>
-                                                    <th scope="col">Remain Amount</th>
-                                                    <th scope="col">Total Days</th>
-                                                    <th scope="col">Overdue Days</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tblCSOutstandingDuelist">
-                                                <!--<tr>
-                                                    <td>Invoice</td>
-                                                    <td>PSIBD/2223/5044</td>
-                                                    <td>11-01-2023</td>
-                                                    <td>ETHYL ACETATE - 210 KGS</td>
-                                                    <td>30 DAYS</td>
-                                                    <td>10-02-2023</td>
-                                                    <td class="right-align">2,23,640.00</td>
-                                                    <td class="right-align">2,23,640.00</td>
-                                                    <td>41</td>
-                                                    <td class="overdue-positive">11</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Invoice</td>
-                                                    <td>PSIBD/2223/5204</td>
-                                                    <td>21-01-2023</td>
-                                                    <td>ETHYL ACETATE - 210 KGS</td>
-                                                    <td>30 DAYS</td>
-                                                    <td>20-02-2023</td>
-                                                    <td class="right-align">2,23,640.00</td>
-                                                    <td class="right-align">2,23,640.00</td>
-                                                    <td>31</td>
-                                                    <td class="overdue-positive">1</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Invoice</td>
-                                                    <td>PSIBD/2223/5355</td>
-                                                    <td>31-01-2023</td>
-                                                    <td>ETHYL ACETATE - 210 KGS</td>
-                                                    <td>30 DAYS</td>
-                                                    <td>02-03-2023</td>
-                                                    <td class="right-align">2,19,923.00</td>
-                                                    <td class="right-align">2,19,923.00</td>
-                                                    <td>21</td>
-                                                    <td class="overdue-negative">-9</td>
-                                                </tr>-->
-                                                <!-- Totals Row -->
-                                                <!--<tr class="total-row" style="font-weight: bold; background-color: #eee;">
-                                                    <td scope="col" colspan="6" style="text-align: right; ">Total: </td>
-                                                    <td class="right-align">8,95,922.00</td>
-                                                    <td class="right-align">8,95,922.00</td>
-                                                    <td colspan="2"></td>
-                                                </tr>-->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @*</div>*@
-                    </div>
-                    <div id="dvSQJustificationDetails" style="display:none">
-
-                        <br />
-                        <h6 id="lblJustificationTitle" class="mb-0 font-weight-bold"></h6>
-                        <hr />
-
-                        <div class="row g-3">
-                            <div class="col-md-12">
-                                <div class="row mb-3">
-                                    <div class="col-sm-12">
-                                        <table class="table mb-0 table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Target Date</th>
-                                                    <th scope="col">Sales Quote No</th>
-                                                    <th scope="col">Justification</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tblSQJustificationDetails">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -2080,6 +2092,7 @@
         salesquoteheader.ApprovalFor = $('#hfApprovalFor').val();
         salesquoteheader.TargetDate = $('#txtTargetDate').val();
         salesquoteheader.ValidUntillDate = $('#txtSQValidUntillDate').val();
+        salesquoteheader.PCPL_MRP_Price = $('#txtMRPPrice').val();
 
         // Product Details
         $("#tblProducts TR[id^='ProdTR_']").each(function () {
@@ -2111,7 +2124,7 @@
             productDetails.PCPL_Credit_Days = parseFloat($(this).find("TD").eq(20).html()) || 0;
             productDetails.PCPL_Interest = parseFloat($(this).find("TD").eq(21).html()) || 0;
             productDetails.PCPL_Commission_Payable = ($(this).find("TD").eq(26).html() === " ") ? "" : $(this).find("TD").eq(26).html();
-
+            productDetails.PCPL_MRP_Price = ($(this).find("TD").eq(33).html() === " ") ? "" : $(this).find("TD").eq(33).html();
             var prodNo = productDetails.No;
             var dropShipHtml = $("#" + prodNo + "_DropShipment").html();
             if (dropShipHtml === "Yes") {

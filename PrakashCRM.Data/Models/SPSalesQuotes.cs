@@ -685,6 +685,7 @@ namespace PrakashCRM.Data.Models
         public string PCPL_Vendor_Name { get; set; }
 
         public bool TPTPL_Short_Closed { get; set; }
+        public bool PCPL_MRP_Price { get; set; }
 
         public List<SPSQInvQtyReserve> InvQuantities { get; set; }
     }
@@ -1308,6 +1309,7 @@ namespace PrakashCRM.Data.Models
         public double Net_Weight { get; set; }
 
         public double Gross_Weight { get; set; }
+        public double PCPL_Purchase_Cost { get; set; }
 
         public List<SPSQProductPackingStyle> ProductPackingStyle { get; set; }
     }
@@ -1321,6 +1323,7 @@ namespace PrakashCRM.Data.Models
         public double PCPL_MRP_Price { get; set; }
 
         public int PCPL_Purchase_Days { get; set; }
+        public int PCPL_Purchase_Cost { get; set; }
     }
 
     public class SPSQNoSeriesDetails
