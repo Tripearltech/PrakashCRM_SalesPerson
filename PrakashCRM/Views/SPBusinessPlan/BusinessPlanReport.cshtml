@@ -26,30 +26,23 @@
                 <div class="row g-1">
                     <div class="col-12">
                         <div class="filter-box row g-3 align-items-center">
-
-                            <!-- Single Year Dropdown -->
                             <div class="col-md-2">
-                                <select class="form-select" placeholder="Year" id="ddlYear">
-                                    <option>2025-2026</option>
-                                    <option>2026-2027</option>
+                                <select class="form-select" placeholder="Year" id="txtddlYear">
                                 </select>
                             </div>
 
                             <div class="col-md-2">
                                 <input type="hidden" id="hdnddlSalesPerson" value="@Model.Sales_Person" />
                                 @Html.DropDownListFor(model => model.Sales_Person, Enumerable.Empty<SelectListItem>(), new { @id = "txtddlSalesPerson", @class = "form-select" })
-                                @*@Html.ValidationMessageFor(model => model.PCPL_Department_Code, "", new { @class = "text-danger" })*@
                                 <label id="lblDepartmentMsg" style="color:red;display:none"></label>
                             </div>
                             <div class="col-md-2">
                                 <button type="button" id="btnSearch" class="btn btn-primary">Search</button>
                             </div>
                             <div class="col-md-4 d-flex align-items-end">
-                                @*<button id="idlsearch" class="btn btn-primary me-2">Search</button>*@
                                 <select class="form-select me-2" style="max-width: 150px;">
                                     <option>--Select--</option>
                                     <option>Excel</option>
-                                    <option>PDF</option>
                                 </select>
                                 <button class="btn btn-danger">Export</button>
                             

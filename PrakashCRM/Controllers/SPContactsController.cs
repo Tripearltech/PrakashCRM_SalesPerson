@@ -77,7 +77,7 @@ namespace PrakashCRM.Controllers
             }
 
             apiUrl = apiUrl + "GetAllCompanies?SPCode=" + Session["loggedInUserSPCode"].ToString() + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
-            
+
             HttpClient client = new HttpClient();
             List<SPCompanyList> Companies = new List<SPCompanyList>();
 
@@ -133,7 +133,7 @@ namespace PrakashCRM.Controllers
             }
 
             apiUrl = apiUrl + "GetAllContacts?SPCode=" + Session["loggedInUserSPCode"].ToString() + "&skip=" + skip + "&top=" + top + "&orderby=" + orderByField + "&filter=" + filter;
-            
+
             HttpClient client = new HttpClient();
             List<SPContactList> contacts = new List<SPContactList>();
 
@@ -166,7 +166,7 @@ namespace PrakashCRM.Controllers
 
             if (No != "" || (Session["CompanyNo"] != null && Session["CompanyNo"].ToString() != ""))
             {
-                 
+
                 if (Session["CompanyNo"].ToString() == "")
                     Session["CompanyNo"] = No;
 
@@ -185,7 +185,7 @@ namespace PrakashCRM.Controllers
                 ViewBag.ContactProducts = contactProducts;
 
                 Session["isCompanyContactEdit"] = true;
-                
+
             }
 
             ViewBag.Salesperson_Code = Session["loggedInUserSPCode"].ToString();
@@ -197,7 +197,7 @@ namespace PrakashCRM.Controllers
             }
             else
                 companycontact.PCPL_Enable_OTP_On_Login = true;
-                return View(companycontact);
+            return View(companycontact);
 
         }
 
@@ -248,7 +248,7 @@ namespace PrakashCRM.Controllers
                 var data = await response.Content.ReadAsStringAsync();
                 responseCompany = Newtonsoft.Json.JsonConvert.DeserializeObject<SPCompanyResponse>(data);
 
-                if(responseCompany.errorDetails.isSuccess)
+                if (responseCompany.errorDetails.isSuccess)
                 {
                     if (Convert.ToBoolean(Session["isCompanyContactEdit"]) == true)
                         Session["CompanyContactAction"] = "Updated";
@@ -257,7 +257,7 @@ namespace PrakashCRM.Controllers
                 }
                 else
                     Session["CompanyContactActionErr"] = responseCompany.errorDetails.message;
-                
+
             }
 
             //if (Convert.ToBoolean(Session["isCompanyContactEdit"]) == true)
@@ -265,7 +265,7 @@ namespace PrakashCRM.Controllers
             //else
             //    Session["CompanyContactAction"] = "Added";
 
-            return RedirectToAction("CompanyContactCard","SPContacts", new { No = responseCompany.No });
+            return RedirectToAction("CompanyContactCard", "SPContacts", new { No = responseCompany.No });
         }
 
         public bool NullContactSession()
@@ -577,7 +577,7 @@ namespace PrakashCRM.Controllers
             }
 
             int qtySum = 0;
-            for(int i = 0; i < ILEList.Count; i++)
+            for (int i = 0; i < ILEList.Count; i++)
             {
                 qtySum += ILEList[i].Quantity;
             }
@@ -766,7 +766,7 @@ namespace PrakashCRM.Controllers
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPContacts/GetAllSalesPersonForDDL";
 
             HttpClient client = new HttpClient();
-            
+
             List<SPSalespeoplePurchaser> salesperson = new List<SPSalespeoplePurchaser>();
 
             client.BaseAddress = new Uri(apiUrl);

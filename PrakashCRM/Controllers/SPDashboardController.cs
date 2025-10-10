@@ -319,7 +319,15 @@ namespace PrakashCRM.Controllers
 
         public async Task<JsonResult> GetTodayVisit()
         {
-            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetTodayVisit";
+            //string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetTodayVisit";
+
+             string SalesPersonCode = Session["loggedInUserSPCode"].ToString();
+            //string SalesPersonCode = "DIYA";
+
+            string Date = DateTime.Now.ToString("yyyy-MM-dd");
+           // string Date = "2025-09-26";
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/";
+            apiUrl = apiUrl + "GetTodayVisit?Date=" + Date + "&Salesperson_Code=" + SalesPersonCode;
 
             HttpClient client = new HttpClient();
             List<SPTodayVisitlist> toadyvisit = new List<SPTodayVisitlist>();
@@ -336,6 +344,63 @@ namespace PrakashCRM.Controllers
             }
 
             return Json(toadyvisit, JsonRequestBehavior.AllowGet);
+
+        }
+        public async Task<JsonResult> GetWeeklytask()
+        {
+            //string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/GetTodayVisit";
+
+             string SalesPersonCode = Session["loggedInUserSPCode"].ToString();
+            //string SalesPersonCode = "DIYA";
+
+            string Week_Plan_Date = DateTime.Now.ToString("yyyy-MM-dd");
+           // string Date = "2025-09-26";
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/";
+            apiUrl = apiUrl + "GetWeeklytask?Week_Plan_Date=" + Week_Plan_Date + "&Salesperson_Code=" + SalesPersonCode;
+
+            HttpClient client = new HttpClient();
+            List<SPWeeklytasklist> weeklydyvisit = new List<SPWeeklytasklist>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                weeklydyvisit = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPWeeklytasklist>>(data);
+            }
+
+            return Json(weeklydyvisit, JsonRequestBehavior.AllowGet);
+
+        }
+        public async Task<JsonResult> GetMonthlyTask()
+        {
+             string SalesPersonCode = Session["loggedInUserSPCode"].ToString();
+            //string SalesPersonCode = "DIYA";
+
+            string Visit_Month = DateTime.Now.ToString("MMMM");
+            //string Visit_Month = "October";
+            string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/";
+            apiUrl = apiUrl + "GetMonthlyTask?Visit_Month=" + Visit_Month + "&Salesperson_Code=" + SalesPersonCode;
+
+            HttpClient client = new HttpClient();
+            List<SPMonthlylist> monthlyVisit = new List<SPMonthlylist>();
+
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                monthlyVisit = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPMonthlylist>>(data);
+            }
+
+            return Json(monthlyVisit, JsonRequestBehavior.AllowGet);
+
         }
 
 

@@ -50,13 +50,13 @@
         GetAndFillWeeklyPlanForDailyPlan();
 
     });
-    
+
     $('#ddlStartHours, #ddlStartMinutes,#ddlStartAMPM, #ddlClosingHours, #ddlClosingMinutes, #ddlClosingAMPM').change(function () {
 
         CalculateUpdateTotalTime();
 
-    }); 
-      $("#txtClosingKM").on('keyup', function () {
+    });
+    $("#txtClosingKM").on('keyup', function () {
         let startKM = parseFloat($('#txtStartingKM').val());
         let closeKM = parseFloat($('#txtClosingKM').val());
 
@@ -112,7 +112,7 @@
         //    $('#dvCustomerContact').css('display', 'none');
         //    $('#dvProdDetails').css('display', 'none');
         //}
-        
+
     });
 
     $('#ddlSubType').change(function () {
@@ -542,7 +542,7 @@ function BindClosingTime() {
     var closeAMPM = "<option value=\"-1\"></option><option value=\"AM\">AM</option><option value=\"PM\">PM</option>";
     $('#ddlClosingAMPM').append(closeAMPM);
 
-}  
+}
 function CalculateUpdateTotalTime() {
     var startHH = $('#ddlStartHours').val();
     var startMM = $('#ddlStartMinutes').val();
@@ -728,10 +728,10 @@ function BindProducts() {
                         itemOpts += "<option value='" + item.Item_No + "'>" + item.Item_Name + "</option>";
                     });
                 }
-                
+
                 $('#ddlProductName').append(itemOpts);
                 $('#ddlProductName').val('-1');
-                
+
             },
             error: function () {
                 //alert("error");
@@ -954,8 +954,7 @@ function BindContactPerson() {
 
 }
 
-function BindInvoiceDetails()
-{
+function BindInvoiceDetails() {
     const CCompanyDetails = $('#ddlCustomerName').val().split('__');
     //url: '/SPVisitEntry/GetCustomerInvoiceForDDL?CompanyNo=' + $('#ddlCustomerName').val(),
 
@@ -1164,7 +1163,7 @@ function FillWeekPlanDetails(ProdTR) {
     $('#hfWeekNo').val($("#" + ProdTR).find("TD").eq(16).html());
     $('#hfWeekStartDate').val($("#" + ProdTR).find("TD").eq(17).html());
     $('#hfWeekEndDate').val($("#" + ProdTR).find("TD").eq(18).html());
-    
+
     const ProdTRDetails = ProdTR.split('_');
     BindWeekPlanLineDetails(ProdTRDetails[1]);
 }

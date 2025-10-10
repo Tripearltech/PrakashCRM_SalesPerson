@@ -2,85 +2,122 @@
 
 $(document).ready(function () {
     BindSalespersonDropDwon();
+    BindFinancialYears();
 
-    // Default report bind (optional)
-    BindBusinessPlanReport('');
-
-    // Search button click
-    $('#btnSearch').on('click', function () {
-        var selectedSalesPerson = $('#txtddlSalesPerson').val();
-
-        if (selectedSalesPerson == "-1" || selectedSalesPerson == "" || selectedSalesPerson == null) {
-            $('#lblDepartmentMsg').text('Please select a Sales Person.').show();
-            return;
-        } else {
-            $('#lblDepartmentMsg').hide();
-        }
-        BindBusinessPlanReport(selectedSalesPerson);
+    // Refresh report when FY or salesperson changes
+    $('#txtddlYear, #txtddlSalesPerson').on('change', function () {
+        BindBusinessPlanReport();
     });
 });
 
+function getFinancialYears(financialYear) {
+    let currentFinancialYear;
 
+    if (financialYear) {
+        const startYear = parseInt(financialYear.split('-')[0]);
+        currentFinancialYear = `${startYear}-${startYear + 1}`;
+    } else {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
 
-function BindBusinessPlanReport(salesPersonCode) {
-    $.ajax({
-        url: '/SPBusinessPlan/GetBusinessReport',
-        type: 'GET',
-        data: { salesPersonCode: salesPersonCode },
-        traditional: true, // 🔹 ensures parameter passes correctly
-        success: function (data) {
-            $("#tblbusinessreport").empty();
-            var TROpts = "";
-
-            if (data && data.length > 0) {
-                $.each(data, function (index, item) {
-                    TROpts += "<tr>"
-                        + "<td>" + item.SalesPerson_Name + "</td>"
-                        + "<td>" + item.Demand_Qty + "</td>"
-                        + "<td>" + item.Target_Qty + "</td>"
-                        + "<td>" + item.Sales_Qty + "</td>"
-                        + "<td>" + item.Sales_Percentage_Qty + "%</td>"
-                        + "<td>" + item.Target_Amt + "</td>"
-                        + "<td>" + item.Sales_Amt + "</td>"
-                        + "<td>" + item.Sales_Percentage_Amt + "%</td>"
-                        + "</tr>";
-                });
-            } else {
-                TROpts = "<tr><td colspan='8' style='text-align:center;color:red;'>No records found</td></tr>";
-            }
-
-            $('#tblbusinessreport').append(TROpts);
-        },
-        error: function (xhr, status, error) {
-            console.error("Error:", error);
-            alert("Error while fetching data");
+        if (currentMonth < 3) {
+            currentFinancialYear = `${currentYear - 1}-${currentYear}`;
+        } else {
+            currentFinancialYear = `${currentYear}-${currentYear + 1}`;
         }
-    });
+    }
+
+    const baseYear = parseInt(currentFinancialYear.split('-')[0]);
+
+    return {
+        current: `${baseYear}-${baseYear + 1}`,
+        previous: `${baseYear - 1}-${baseYear}`,
+        next: `${baseYear + 1}-${baseYear + 2}`
+    };
 }
 
-function BindSalespersonDropDwon() {
-	$.ajax({
-		url: '/SPBusinessPlan/GetSalespersonDropDwon',
-		type: 'GET',
-		contentType: 'application/json',
-		success: function (data) {
-			if (data.length > 0) {
-				$('#txtddlSalesPerson').append($('<option value="-1">---Select---</option>'));
-				$.each(data, function (i, data) {
-					$('<option>',
-						{
-							value: data.Sales_PersonCode,
-							text: data.SalesPerson_Name
-						})
-						.html(data.SalesPerson_Name).appendTo('#txtddlSalesPerson');
-					});
-				if ($("#hdnddlSalesPerson").val() != "") {
-					$("#txtddlSalesPerson").val($("#hdnddlSalesPerson").val());
-				}
-			}
-		},
-		error: function (data1) {
-			alert(data1);
-		}
-	});
+function bindYearDropdown(financialYearData) {
+    $('#txtddlYear').empty();
+    const yearOpts = `
+        <option value='${financialYearData.previous}'>${financialYearData.previous}</option>
+        <option value='${financialYearData.current}' selected>${financialYearData.current}</option>
+        <option value='${financialYearData.next}'>${financialYearData.next}</option>
+    `;
+    $('#txtddlYear').append(yearOpts);
+}
+
+function bindFYHeader(financialYearData) {
+    $('#pre-FY').text(financialYearData.previous);
+    $('#curr-FY').text(financialYearData.current);
+}
+function BindFinancialYears() {
+    const fyData = getFinancialYears();
+    bindYearDropdown(fyData);
+    bindFYHeader(fyData);
+    BindBusinessPlanReport();
+
+    function BindBusinessPlanReport() {
+        var selectedFY = $('#txtddlYear').val();
+        var selectedSalesperson = $('#txtddlSalesPerson').val();
+
+        $.ajax({
+            url: '/SPBusinessPlan/GetBusinessReport',
+            type: 'GET',
+            data: { year: selectedFY, salesperson: selectedSalesperson },
+            success: function (data) {
+                var $tbody = $("#tblbusinessreport tbody");
+                $tbody.empty();
+
+                if (data && data.length > 0) {
+                    $.each(data, function (index, item) {
+                        var row = "<tr>"
+                            + "<td>" + item.SalesPerson_Name + "</td>"
+                            + "<td>" + item.Demand_Qty + "</td>"
+                            + "<td>" + item.Target_Qty + "</td>"
+                            + "<td>" + item.Sales_Qty + "</td>"
+                            + "<td>" + item.Sales_Percentage_Qty + "%</td>"
+                            + "<td>" + item.Target_Amt + "</td>"
+                            + "<td>" + item.Sales_Amt + "</td>"
+                            + "<td>" + item.Sales_Percentage_Amt + "%</td>"
+                            + "</tr>";
+                        $tbody.append(row);
+                    });
+                } else {
+                    $tbody.append("<tr><td colspan='8' style='text-align:center;color:red;'>No records found</td></tr>");
+                }
+            },
+            error: function () {
+                alert("Error while fetching data.");
+            }
+        });
+    }
+    function BindSalespersonDropDwon() {
+        $.ajax({
+            url: '/SPBusinessPlan/GetSalespersonDropDwon',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                var $ddl = $('#txtddlSalesPerson');
+                $ddl.empty();
+                $ddl.append('<option value="-1">---Select---</option>');
+
+                if (data && data.length > 0) {
+                    $.each(data, function (i, item) {
+                        $('<option>', {
+                            value: item.Sales_PersonCode,
+                            text: item.SalesPerson_Name
+                        }).appendTo($ddl);
+                    });
+
+                    if ($("#hdnddlSalesPerson").val() != "") {
+                        $ddl.val($("#hdnddlSalesPerson").val());
+                    }
+                }
+            },
+            error: function () {
+                alert("Error while fetching salesperson data.");
+            }
+        });
+    }
 }

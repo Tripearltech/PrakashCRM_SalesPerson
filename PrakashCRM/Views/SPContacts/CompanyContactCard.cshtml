@@ -1,4 +1,4 @@
-﻿@model PrakashCRM.Data.Models.SPCompanyContact
+﻿﻿@model PrakashCRM.Data.Models.SPCompanyContact
 @{
     ViewBag.Title = "CompanyContactCard";
     Layout = "~/Views/Shared/_SalespersonMasterLayout.cshtml";
@@ -26,7 +26,7 @@
                         <a href="/SPDashboard/Index"><i class="bx bx-tachometer"></i>&nbsp;Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="/SPContacts/ContactCompanyList"> Contact List </a> 
+                        <a href="/SPContacts/ContactCompanyList"> Contact List </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Contact Card
@@ -164,8 +164,8 @@
                                         <label id="lblCCompanyEmailMsg" style="color:red;display:none"></label>
                                     </div>
                                     @*<div class="col-sm-1">
-                        <i class="bx bx-mail-send"></i>
-                    </div>*@
+                                            <i class="bx bx-mail-send"></i>
+                                        </div>*@
                                 </div>
                             </div>
                         </div>
@@ -188,9 +188,9 @@
                                         <label id="lblCCompanyPhoneNoMsg" style="color:red;display:none"></label>
                                     </div>
                                     @*<div class="col-sm-1">
-                        <i class="bx bx-phone-call"></i>
-                        <i class="bx bx-message"></i>
-                    </div>*@
+                                            <i class="bx bx-phone-call"></i>
+                                            <i class="bx bx-message"></i>
+                                        </div>*@
                                 </div>
                             </div>
                         </div>
@@ -472,7 +472,8 @@
                                                                 {
                                                                     <td name="contactIsPrimary">Yes</td>
                                                                 }
-                                                                else {
+                                                                else
+                                                                {
                                                                     <td name="contactIsPrimary">No</td>
                                                                 }
                                                                 <td hidden name="contactDeptCode">@contact.PCPL_Department_Code</td>
@@ -560,13 +561,13 @@
                             }
 
                             @*<h6 class="mb-0 font-weight-bold">Daily Visit Plan</h6>
-                            <hr />
+                                <hr />
 
-                            <h6 class="mb-0 font-weight-bold">Business Plan</h6>
-                            <hr />
+                                <h6 class="mb-0 font-weight-bold">Business Plan</h6>
+                                <hr />
 
-                            <h6 class="mb-0 font-weight-bold">Sales Quote</h6>
-                            <hr />*@
+                                <h6 class="mb-0 font-weight-bold">Sales Quote</h6>
+                                <hr />*@
 
                             <!-- -->
                             <div class="card">
@@ -858,33 +859,33 @@
                 <button id="btnCloseCompanyDetails" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
-                    <div class="row g-3">
-                        <div class="col-md-12">
-                            <table>
-                                <tr>
-                                    <td><label style="font-weight:bold">Company Name: </label></td>
-                                    <td>&nbsp;</td>
-                                    <td><label id="lblCompanyName"></label></td>
-                                </tr>
-                                <tr>
-                                    <td><label style="font-weight:bold">Salesperson Code: </label></td>
-                                    <td>&nbsp;</td>
-                                    <td><label id="lblSPCode"></label></td>
-                                </tr>
-                                <tr>
-                                    <td><label style="font-weight:bold">Company Address: </label></td>
-                                    <td>&nbsp;</td>
-                                    <td><label id="lblCompanyAddress"></label></td>
-                                </tr>
-                            </table>
-                        </div>
+
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <table>
+                            <tr>
+                                <td><label style="font-weight:bold">Company Name: </label></td>
+                                <td>&nbsp;</td>
+                                <td><label id="lblCompanyName"></label></td>
+                            </tr>
+                            <tr>
+                                <td><label style="font-weight:bold">Salesperson Code: </label></td>
+                                <td>&nbsp;</td>
+                                <td><label id="lblSPCode"></label></td>
+                            </tr>
+                            <tr>
+                                <td><label style="font-weight:bold">Company Address: </label></td>
+                                <td>&nbsp;</td>
+                                <td><label id="lblCompanyAddress"></label></td>
+                            </tr>
+                        </table>
                     </div>
-                    
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="modal" id="modalDeleteContactProdMsg" tabindex="-1" aria-hidden="true" style="display:none">
     <div class="modal-dialog modal-dialog-centered">
@@ -925,7 +926,7 @@
 <script src='@Url.Content("~/Scripts/jquery.validate.js")' type='text/javascript'></script>
 <script src='@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")' type='text/javascript'></script>
 @*<script src="~/Layout/vendors/raphael/raphael.min.js"></script>
-<script src="~/Layout/vendors/morris.js/morris.min.js"></script>*@
+    <script src="~/Layout/vendors/morris.js/morris.min.js"></script>*@
 <script>
     $(document).ready(function () {
 
@@ -988,4 +989,3 @@
 
     }
 </script>
-

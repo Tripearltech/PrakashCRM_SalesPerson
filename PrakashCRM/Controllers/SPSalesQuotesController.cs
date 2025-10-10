@@ -858,23 +858,6 @@ namespace PrakashCRM.Controllers
             {
                 var data = await response.Content.ReadAsStringAsync();
                 invdetails = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SPSQInvDetailsRes>>(data);
-
-                //if (invdetails.Count > 0)
-                //{
-                //    for (int i = 0; i < invdetails.Count; i++)
-                //    {
-                //        availableQty += invdetails[i].Remaining_Quantity;
-
-                //        if (invdetails[i].PCPL_MRP_Price > 0)
-                //            mrp = invdetails[i].PCPL_MRP_Price;
-                //    }
-
-                //    invdetails_.Remaining_Quantity = availableQty;
-                //    invdetails_.PCPL_Manufacturer_Name = invdetails[0].PCPL_Manufacturer_Name;
-                //    invdetails_.Lot_No = invdetails[0].Lot_No;
-                //    invdetails_.PCPL_MRP_Price = mrp;
-                //}
-
             }
 
             return Json(invdetails, JsonRequestBehavior.AllowGet);

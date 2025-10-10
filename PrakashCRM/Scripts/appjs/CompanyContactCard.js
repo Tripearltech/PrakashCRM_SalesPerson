@@ -74,7 +74,7 @@ $(document).ready(function () {
 
         $('#modalErrMsg').css('display', 'block');
         $('#modalErrDetails').text(CompanyContactActionErr);
-        
+
         /*ShowErrMsg(CompanyContactActionErr);*/
 
         $.get('NullContactSession', function (data) {
@@ -170,7 +170,7 @@ $(document).ready(function () {
     BindSalesPerson();
     BindSourceofContacts();
     BindDepartment();
-    
+
 
     var UrlVars = getUrlVars();
 
@@ -179,8 +179,8 @@ $(document).ready(function () {
         BindProducts();
         BindContactSQ("", "");
         BindFinancialYear();
-        BindContactDailyVisit("","");
-        
+        BindContactDailyVisit("", "");
+
     }
 
     $('#txtPincode').blur(function () {
@@ -342,7 +342,7 @@ $(document).ready(function () {
         location.reload(true);
 
     });
-    
+
 });
 
 function EditContact(obj) {
@@ -397,6 +397,7 @@ function EditContact(obj) {
 }
 
 function BindPincodeMin2Char() {
+    debugger
     if (typeof ($.fn.autocomplete) === 'undefined') { return; }
     console.log('init_autocomplete');
 
@@ -486,39 +487,39 @@ function DeleteProduct(obj) {
 
     //if (isdelete) {
 
-        $.post(apiUrl + 'DeleteContactProduct?contactNo=' + contactno + '&prodNo=' + prodno,
+    $.post(apiUrl + 'DeleteContactProduct?contactNo=' + contactno + '&prodNo=' + prodno,
 
-            function (data) {
+        function (data) {
 
-                if (data) {
+            if (data) {
 
-                    var responseMsg = data;
+                var responseMsg = data;
 
-                    if (responseMsg.includes("Error_:")) {
+                if (responseMsg.includes("Error_:")) {
 
-                        const responseMsgDetails = responseMsg.split(':');
-                        $('#btnSchOrderSpinner').hide();
-                        $('#modalErrMsg').css('display', 'block');
-                        $('#modalErrDetails').text(responseMsgDetails[1]);
+                    const responseMsgDetails = responseMsg.split(':');
+                    $('#btnSchOrderSpinner').hide();
+                    $('#modalErrMsg').css('display', 'block');
+                    $('#modalErrDetails').text(responseMsgDetails[1]);
 
-                    }
-                    else if (responseMsg.includes("Error : ")) {
+                }
+                else if (responseMsg.includes("Error : ")) {
 
-                        const errDetails = responseMsg.split(':');
-                        $('#modalErrMsg').css('display', 'block');
-                        $('#modalErrDetails').text(errDetails[1].trim());
+                    const errDetails = responseMsg.split(':');
+                    $('#modalErrMsg').css('display', 'block');
+                    $('#modalErrDetails').text(errDetails[1].trim());
 
-                    }
-                    else {
+                }
+                else {
 
-                        $('#modalDeleteContactProdMsg').css('display', 'block');
-                        $('#lblDeleteProdMsg').text("Contact Product " + responseMsg);
-                        $('#lblDeleteProdMsg').css('color', 'green');
+                    $('#modalDeleteContactProdMsg').css('display', 'block');
+                    $('#lblDeleteProdMsg').text("Contact Product " + responseMsg);
+                    $('#lblDeleteProdMsg').css('color', 'green');
 
-                    }
                 }
             }
-        );
+        }
+    );
 
     //}
 }
@@ -1103,7 +1104,7 @@ function BindContactBusinessPlan(PlanYear) {
 
         const PlanYear_ = PlanYear.split('-');
         $('#lblDetailsPrevYear').text((parseInt(PlanYear_[0]) - 1) + "-" + PlanYear_[0]);
-        
+
         var TROpts = "";
         var i;
         $('#tblDetailsContactBusinessPlan').empty();
@@ -1210,7 +1211,7 @@ function ShowSQProds(SQNo) {
 }
 $('#txtAddress').on('keyup', function () {
     CheckContactValues();
-});$('#txtAddress1').on('keyup', function () {
+}); $('#txtAddress1').on('keyup', function () {
     CheckContactValues();
 });
 
@@ -1240,7 +1241,7 @@ function CheckContactValues() {
             $('#lblCCompanyPhoneNoMsg').css('display', 'none');
         }
     }
-    
+
     if ($('#txtCustomerName').val() == "") {
         $('#lblCCompanyNameMsg').text("Please Fill Company Name");
         $('#lblCCompanyNameMsg').css('display', 'block');
@@ -1251,14 +1252,13 @@ function CheckContactValues() {
         $('#lblCCompanyNameMsg').css('display', 'none');
     }
 
-    
+
     if (address === "") {
         $('#lblCCompanyAddressMsg').text("Please Fill Company Address");
         $('#lblCCompanyAddressMsg').css('display', 'block');
         flag = false;
     }
-    else if (address.length > 50)
-    {
+    else if (address.length > 50) {
         $('#lblCCompanyAddressMsg').text("Address cannot exceed 50 characters");
         $('#lblCCompanyAddressMsg').css('display', 'block');
         flag = false;
@@ -1270,6 +1270,16 @@ function CheckContactValues() {
 
       if (address1.length > 50)
     {
+        $('#lblCCompanyAddressMsg1').text("Address2 cannot exceed 50 characters");
+        $('#lblCCompanyAddressMsg1').css('display', 'block');
+        flag = false;
+    }
+    else {
+        $('#lblCCompanyAddressMsg1').text("");
+        $('#lblCCompanyAddressMsg1').css('display', 'none');
+    }
+
+    if (address1.length > 50) {
         $('#lblCCompanyAddressMsg1').text("Address2 cannot exceed 50 characters");
         $('#lblCCompanyAddressMsg1').css('display', 'block');
         flag = false;
@@ -1313,7 +1323,7 @@ function CheckContactValues() {
         $('#lblCCompanyAreaMsg').text("");
         $('#lblCCompanyAreaMsg').css('display', 'none');
     }
-    
+
     if ($('#PanNo').val().length > 0 && $('#PanNo').val().length != 10) {
         $('#lblCCompanyPANNoMsg').text("PAN No. should be in 10 character");
         $('#lblCCompanyPANNoMsg').css('display', 'block');
