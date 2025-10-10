@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 using System.Threading.Tasks;
+using Microsoft.Ajax.Utilities;
 
 namespace PrakashCRM.Service.Controllers
 {
@@ -298,12 +299,11 @@ namespace PrakashCRM.Service.Controllers
             API ac = new API();
             List<FeedbBackLines> feedBackQuestions = new List<FeedbBackLines>();
             var result = (dynamic)null;
-            //var filter = "";
-            //filter += "Feedback_Header_No eq '" + FeedbackId + "'";
             result = ac.GetData<FeedbBackLines>("FeedbackLinesListDotNetAPI", "");
             if (result != null && result.Result.Item1.value.Count > 0)
             {
-                feedBackQuestions = result.Result.Item1.value;
+                feedBackQuestions = result.Result.Item1.value;//.DistinctBy(a => a.Code).ToList();
+                feedBackQuestions = feedBackQuestions.DistinctBy(a => a.Feedback_Question_No).ToList();
             }
             return feedBackQuestions;
         }

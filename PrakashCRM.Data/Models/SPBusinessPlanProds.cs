@@ -221,5 +221,22 @@ namespace PrakashCRM.Data.Models
 
         public double totalTargetQty { get; set; }
     }
-
+    public class SPBusinessPlanReport
+    {
+        public string SalesPerson_Name { get; set; }
+        public double Demand_Qty { get; set; }
+        public double Target_Qty { get; set; }
+        public double Sales_Qty { get; set; }
+        public double Sales_Percentage_Qty { get; set; }
+        public double Target_Amt { get; set; }
+        public double Sales_Amt { get; set; }
+        public double Sales_Percentage_Amt { get; set; }
+        public string Sales_Person { get; set; }
+        public string Year { get; set; }
+    }
+    public class SPSalespersonDropDwon
+    {
+        public string SalesPerson_Name { get; set; }
+        public string Sales_Person { get; set; }
+    }
 }

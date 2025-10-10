@@ -397,7 +397,6 @@ function EditContact(obj) {
 }
 
 function BindPincodeMin2Char() {
-    debugger
     if (typeof ($.fn.autocomplete) === 'undefined') { return; }
     console.log('init_autocomplete');
 

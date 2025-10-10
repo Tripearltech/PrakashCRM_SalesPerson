@@ -351,7 +351,7 @@ function BindMonthlyVisits(year,TypeNo,SubTypeNo) {
                     $.each(data, function (index, item) {
 
                         //rowData += "<tr><td>" + item.Visit_Month + "</td><td>" + item.No_of_Visit + "</td><td>" + item.Visit_Type + "</td><td>" + item.Visit_Sub_Type_Name + "</td><td><a class='clsDelYearMonthPlan' onclick='showDelPopup(this)'><i class='bx bx-trash'></i></a></td></tr>";
-                        rowData += "<tr><td>" + item.Visit_Month + "</td><td>" + item.No_of_Visit + "</td><td>0</td><td>" + item.Visit_Type + "</td><td>" + item.Visit_Sub_Type_Name + "</td></tr>";
+                        rowData += "<tr><td>" + item.Visit_Month + "</td><td>" + item.No_of_Visit + "</td><td>" + item.No_of_Actual_visit +"</td><td>" + item.Visit_Type + "</td><td>" + item.Visit_Sub_Type_Name + "</td></tr>";
 
                     });
                     

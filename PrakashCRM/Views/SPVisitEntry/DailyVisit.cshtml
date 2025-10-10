@@ -142,7 +142,7 @@
                     <!--<div class="col-md-1">-->
                     @*<br />*@
                     <!--<button id="btnCustAdd" class="btn btn-primary">+</button>
-                </div>-->
+                    </div>-->
                     <div class="col-md-6">
                         <label class="form-label">Contact Person<span class="required" style="color: red; margin-left: 2px">*</span></label>
                         <select id="ddlContactPerson" class="form-select"></select>
@@ -152,14 +152,14 @@
                     <!--<div class="col-md-1">-->
                     @*<br />*@
                     <!--<button id="btnCPersonAdd" class="btn btn-primary">+</button>
-                </div>-->
+                    </div>-->
                 </div>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <button id="btnCustAdd" class="btn btn-primary bx bx-plus" title="Add New Contact Company"></button>
                     </div>
                     <div class="col-md-6">
-                        <button id="btnCPersonAdd" class="btn btn-primary bx bx-plus" title="Add New Contact Person" disabled></button>
+                        <button id="btnCPersonAdd" class="btn btn-primary bx bx-plus" title="Add New Contact Person"></button>
                     </div>
                 </div>
             </div>
@@ -173,88 +173,75 @@
                 </div>
             </div>
             <br /><br />
-                  <div id="dvProdDetails" style="display:none">
-                      <h6 class="mb-0 text-uppercase">Product Details</h6>
-                      <hr />
-                      <div class="row g-3">
-                          <div class="col-md-4">
-                              <label class="form-label">Product Name<span class="required" style="color: red; margin-left: 2px">*</span>&nbsp;&nbsp;<input type="checkbox" id="chkShowAllProducts" class="form-check-input" />&nbsp;Show All</label>
-                              <select id="ddlProductName" class="form-select">
-                              </select>
-                              <label id="lblProdMsg" class="form-label" style="color:red;display:none"></label>
-                              @*@Html.DropDownListFor(model => model.Product_No, Enumerable.Empty<SelectListItem>(), new { @id = "ddlProductName", @class = "form-select" })*@
-                          </div>
-                          <div class="col-md-4">
-                              <label class="form-label">Qty<span class="required" style="color: red; margin-left: 2px">*</span></label>
-                              <input type="text" id="txtProdQty" class="form-control" />
-                              <label id="lblProdQtyMsg" class="form-label" style="color:red"></label>
-                              @*@Html.TextBoxFor(model => model.Quantity, new { @id = "txtProdQty", @class = "form-control" })*@
-                          </div>
-                          <div class="col-md-4">
-                              <label class="form-label">UOM</label>
-                              <input type="text" id="txtUOM" class="form-control" />
-                              @*@Html.TextBoxFor(model => model.Unit_of_Measure, new { @id = "txtUOM", @class = "form-control" })*@
-                          </div>
-                      </div>
-                      @*<div class="row g-3">
-                          <div class="col-md-4">
-                              <input type="checkbox" id="chkShowAllProducts" class="form-check-input" />&nbsp;Show All Products
-                          </div>
-                          <div class="col-md-4">
-                          </div>
-                          <div class="col-md-4">
-                          </div>
-                      </div>
-                      <br />*@
-                      <div class="row g-3">
-                          <div class="col-md-12">
-                              <label class="form-label">Competitor Name</label>
-                              <select class="form-select" id="ddlCompetitors" data-placeholder="---Select---" multiple>
-                              </select>
-                              @*@Html.DropDownListFor(model => model.Competitor_Name, Enumerable.Empty<SelectListItem>(), new { @id = "ddlCompetitor", @class = "form-control" })*@
-                          </div>
-                      </div>
-                      <div class="row g-3">
-                          <div class="col-md-4">
-                              @*<label class="form-label">Competitor Name</label>
-                @Html.DropDownListFor(model => model.Competitor_Name, Enumerable.Empty<SelectListItem>(), new { @id = "ddlCompetitor", @class = "form-control" })*@
-                          </div>
-                          <div class="col-md-4">
-                          </div>
-                          <div class="col-md-4" align="right">
-                              <br />
-                              <button type="button" id="btnSaveProd" class="btn btn-primary">Save Product</button>
-                          </div>
-                      </div>
-                      <br />
-                      <!-- -->
+            <div id="dvProdDetails" style="display:none">
+                <h6 class="mb-0 text-uppercase">Product Details</h6>
+                <hr />
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Product Name<span class="required" style="color: red; margin-left: 2px">*</span>&nbsp;&nbsp;<input type="checkbox" id="chkShowAllProducts" class="form-check-input" />&nbsp;Show All</label>
+                        <select id="ddlProductName" class="form-select">
+                        </select>
+                        <label id="lblProdMsg" class="form-label" style="color:red;display:none"></label>
+                        @*@Html.DropDownListFor(model => model.Product_No, Enumerable.Empty<SelectListItem>(), new { @id = "ddlProductName", @class = "form-select" })*@
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Qty<span class="required" style="color: red; margin-left: 2px">*</span></label>
+                        <input type="text" id="txtProdQty" class="form-control" />
+                        <label id="lblProdQtyMsg" class="form-label" style="color:red"></label>
+                        @*@Html.TextBoxFor(model => model.Quantity, new { @id = "txtProdQty", @class = "form-control" })*@
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">UOM</label>
+                        <input type="text" id="txtUOM" class="form-control" />
+                    </div>
+                </div>
 
-                      <div class="row g-3" align="center">
-                          <div class="col-md-12">
-                              <div class="row mb-3">
-                                  <div class="col-sm-12">
-                                      <table id="tblProdList" class="table mb-0 table-striped" style="display:none">
-                                          <thead>
-                                              <tr>
-                                                  <th></th>
-                                                  <th hidden></th>
-                                                  <th scope="col" width="60%">Product Name</th>
-                                                  <th scope="col">Qty</th>
-                                                  <th scope="col">UOM</th>
-                                                  <th scope="col">Competitors</th>
-                                                  <th hidden></th>
-                                              </tr>
-                                          </thead>
-                                          <tbody id="tblProducts">
-                                          </tbody>
-                                      </table>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label class="form-label">Competitor Name</label>
+                        <select class="form-select" id="ddlCompetitors" data-placeholder="---Select---" multiple>
+                        </select>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4" align="right">
+                        <br />
+                        <button type="button" id="btnSaveProd" class="btn btn-primary">Save Product</button>
+                    </div>
+                </div>
+                <br />
+                <!-- -->
 
-                      <!-- -->
-                  </div>
+                <div class="row g-3" align="center">
+                    <div class="col-md-12">
+                        <div class="row mb-3">
+                            <div class="col-sm-12">
+                                <table id="tblProdList" class="table mb-0 table-striped" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th hidden></th>
+                                            <th scope="col" width="60%">Product Name</th>
+                                            <th scope="col">Qty</th>
+                                            <th scope="col">UOM</th>
+                                            <th scope="col">Competitors</th>
+                                            <th hidden></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblProducts">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- -->
+            </div>
             <h6 class="mb-0 text-uppercase">Date Time & KM Details</h6>
             <hr />
             <div class="row g-3">
@@ -274,10 +261,10 @@
                                 <select id="ddlStartAMPM" class="form-select"></select>
                                 @*@Html.DropDownListFor(model => model.StartTimeAMPM, Enumerable.Empty<SelectListItem>(), new { @id = "ddlStartAMPM", @class = "form-select" })*@
                                 @*<select id="ddlStartAMPM" name="ddlStartAMPM" class="form-select">
-                                    <option value=""></option>
-                                    <option value="AM">AM</option>
-                                    <option value="PM">PM</option>
-                                </select>*@
+                                        <option value=""></option>
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
+                                    </select>*@
                             </td>
                         </tr>
                     </table>
@@ -299,10 +286,10 @@
                                 <select id="ddlClosingAMPM" class="form-select"></select>
                                 @*@Html.DropDownListFor(model => model.EndTimeAMPM, Enumerable.Empty<SelectListItem>(), new { @id = "ddlClosingAMPM", @class = "form-select" })*@
                                 @*<select id="ddlClosingAMPM" name="ddlClosingAMPM" class="form-select">
-                                    <option value=""></option>
-                                    <option value="AM">AM</option>
-                                    <option value="PM">PM</option>
-                                </select>*@
+                                        <option value=""></option>
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
+                                    </select>*@
                             </td>
                         </tr>
                     </table>
@@ -344,7 +331,7 @@
                     <input type="file" id="AttachmentFile" class="form-control" />
                 </div>
                 <div class="col-md-1">
-                    <button id="btnAddAttachment" class="btn btn-primary" disabled>Add</button>
+                    <button id="btnAddAttachment" class="btn btn-primary">Add</button>
                 </div>
             </div>
             <br />
@@ -383,7 +370,7 @@
                 <br />
                 <div class="row g-3">
                     <div class="col-md-12" align="right">
-                        <button id="btnFileUpload" class="btn btn-primary" disabled>Upload</button>
+                        <button id="btnFileUpload" class="btn btn-primary">Upload</button>
                     </div>
                 </div>
 
@@ -689,12 +676,16 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="hdnRedirectContactCompanyList" value='@Url.Action("ContactCompanyList", "SPContacts")' />
+<input type="hidden" id="hdnRedirectDailyVisit" value='@Url.Action("DailyVisit", "SPVisitEntry")' />
+
 
 @*@Scripts.Render("~/bundles/jquery")*@
 <script src="~/Layout/assets/js/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="~/Scripts/appjs/DailyVisit.js"></script>
 <script>
+    debugger;
 
     $('#ddlCompetitors').select2({
         theme: "bootstrap-5",
@@ -714,10 +705,10 @@
 
     $(document).ready(function () {
 
-        $('#btnCustAdd').click(function () {
-
-            window.location.replace('@Url.Action("CompanyContactCard", "SPContacts")');
-        });
+       $('#btnCustAdd').click(function () {
+            var redirectUrl = '@Url.Action("ContactCompanyList", "SPContacts")';
+            window.location.replace(redirectUrl);
+       });
 
         $('#btnSave').click(function () {
 
@@ -853,7 +844,8 @@
                     const res = await rawResponse.ok;
                     //if (res) {
                         $('#divImage').hide();
-                        window.location.replace('@Url.Action("DailyVisit", "SPVisitEntry")');
+                         var redirectUrl = $('#hdnRedirectDailyVisit').val();
+                         if (redirectUrl) window.location.href = redirectUrl;
                         $('#hfDailyVisitEdit').val("false");
                     //}
 

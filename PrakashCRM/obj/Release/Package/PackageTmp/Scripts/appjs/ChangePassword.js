@@ -95,7 +95,7 @@
 
         }
         else {
-            alert($('#txtNewPass').val());
+            //alert($('#txtNewPass').val());
             $('#divImage').show();
             //$.get(apiUrl + 'GetPassByEmail?email=nishant.m@tripearltech.com', function (userPass) {
             $.get(apiUrl + 'GetPassByEmail?email=' + $('#hfLoggedInUserEmail').val(), function (userPass) {
@@ -103,7 +103,7 @@
                     $.get(apiUrl + 'GetByEmail?email=' + $('#hfLoggedInUserEmail').val(), function (data) {
                         if (data.Company_E_Mail != null && data.No != null) {
                             //var newpass = encodeURIComponent($('#txtNewPass').val());
-                            $.get(apiUrl + "ChangePassword?email=" + data.Company_E_Mail + "&userNo=" + data.No + "&newPassword=" + $('#txtNewPass').val(),
+                            $.get(apiUrl + "ChangePassword?email=" + data.Company_E_Mail + "&userNo=" + data.No + "&role=" + data.Role + "&newPassword=" + $('#txtNewPass').val(),
                                 function (data) {
                                     if (data) {
                                         $('#divImage').hide();

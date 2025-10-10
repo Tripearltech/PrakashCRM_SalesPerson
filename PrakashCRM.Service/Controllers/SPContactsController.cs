@@ -64,7 +64,7 @@ namespace PrakashCRM.Service.Controllers
                 Companies.AddRange(company2);
             }
 
-            // ✅ Add Mobile, Name, Email from Primary Contact
+            // Add Mobile, Name, Email from Primary Contact
             foreach (var company in Companies)
             {
                 try
@@ -86,7 +86,6 @@ namespace PrakashCRM.Service.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Optional: Handle or log error
                     company.Mobile_Phone_No = "";
                     company.PCPL_Primary_Contact_Name = "";
                     company.PCPL_Primary_Contact_Email = "";

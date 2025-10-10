@@ -309,21 +309,21 @@ namespace PrakashCRM.Service.Controllers
         }
 
         // Taeget vs Sales list
-        //    [Route("GetSalespersonData")]
-        //    public List<SPSelaspersonlist> GetSalespersonData()
-        //    {
-        //        API ac = new API();
-        //        List<SPSelaspersonlist> salespersonlist = new List<SPSelaspersonlist>();
+        //[Route("GetSalespersonData")]
+        //public List<SPSelaspersonlist> GetSalespersonData()
+        //{
+        //    API ac = new API();
+        //    List<SPSelaspersonlist> salespersonlist = new List<SPSelaspersonlist>();
 
-        //        string filter = "IsSalesPerson eq true";
-        //        var result = ac.GetData<SPSelaspersonlist>("TargetvsSalesReport", filter);
+        //    string filter = "IsSalesPerson eq true";
+        //    var result = ac.GetData<SPSelaspersonlist>("TargetvsSalesReport", filter);
 
-        //        if (result.Result.Item1.value.Count > 0)
-        //            salespersonlist = result.Result.Item1.value;
-        //        salespersonlist = salespersonlist.DistinctBy(a => a.SalesPerson_Name).ToList();
+        //    if (result.Result.Item1.value.Count > 0)
+        //        salespersonlist = result.Result.Item1.value;
+        //    salespersonlist = salespersonlist.DistinctBy(a => a.SalesPerson_Name).ToList();
 
-        //        return salespersonlist;
-        //    }
+        //    return salespersonlist;
+        //}
 
 
         //    [HttpGet]
@@ -400,6 +400,20 @@ namespace PrakashCRM.Service.Controllers
 
             return combinedData;
         }
+        [HttpGet]
+        [Route("GetTodayVisit")]
+        public List<SPTodayVisitlist> GetTodayVisit()
+        {
+            API ac = new API();
+            List<SPTodayVisitlist> todayVisit = new List<SPTodayVisitlist>();
 
+            //string filter = $"Salesperson_Code eq '{salespersonCode}' and Date eq '{date}'";
+            var result = ac.GetData<SPTodayVisitlist>("DailyVisitsDotNetAPI","");
+
+            if (result.Result.Item1 != null && result.Result.Item1.value != null && result.Result.Item1.value.Count > 0)
+                todayVisit = result.Result.Item1.value;
+
+            return todayVisit;
+        }
     }
 }
