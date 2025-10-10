@@ -51,18 +51,50 @@
 
     });
     
-    $('#ddlClosingAMPM').change(function () {
+    $('#ddlStartHours, #ddlStartMinutes,#ddlStartAMPM, #ddlClosingHours, #ddlClosingMinutes, #ddlClosingAMPM').change(function () {
 
         CalculateUpdateTotalTime();
 
+    }); 
+      $("#txtClosingKM").on('keyup', function () {
+        let startKM = parseFloat($('#txtStartingKM').val());
+        let closeKM = parseFloat($('#txtClosingKM').val());
+
+        // Reset previous error
+        $('#ErrorClosingKM').text("").css('display', 'none');
+
+        if (isNaN(startKM) || isNaN(closeKM)) {
+            $('#txtTotalKM').val("");
+            return;
+        }
+
+        if (closeKM === startKM) {
+            $('#ErrorClosingKM').text("Closing KM cannot be equal to Starting KM.").css('display', 'block');
+            $('#txtTotalKM').val("");
+        }
+        else if (closeKM < startKM) {
+            $('#ErrorClosingKM').text("Closing KM cannot be less than Starting KM").css('display', 'block');
+            $('#txtTotalKM').val("");
+        }
+        else {
+
+            let totalKM = closeKM - startKM;
+
+            if (totalKM < 0) {
+                totalKM = 0;
+            }
+            $('#txtTotalKM').val(totalKM);
+            $('#txtTotalKM').attr('readonly', true);
+        }
     });
 
-    $('#txtClosingKM').change(function () {
 
-        $('#txtTotalKM').val($('#txtClosingKM').val() - $('#txtStartingKM').val());
-        $('#txtTotalKM').attr('readonly', true);
+    //$('#txtClosingKM').change(function () {
 
-    });
+    //    $('#txtTotalKM').val($('#txtClosingKM').val() - $('#txtStartingKM').val());
+    //    $('#txtTotalKM').attr('readonly', true);
+
+    //});
 
     $('#ddlType').change(function () {
 
@@ -447,7 +479,7 @@ function BindFinancialYear() {
 
 
 function BindStartingTime() {
-
+    debugger
     var startHrs = "";
     for (var i = 0; i <= 12; i++) {
         var Hrs = "";
@@ -510,39 +542,68 @@ function BindClosingTime() {
     var closeAMPM = "<option value=\"-1\"></option><option value=\"AM\">AM</option><option value=\"PM\">PM</option>";
     $('#ddlClosingAMPM').append(closeAMPM);
 
-}
-
+}  
 function CalculateUpdateTotalTime() {
+    var startHH = $('#ddlStartHours').val();
+    var startMM = $('#ddlStartMinutes').val();
+    var startAMPM = $('#ddlStartAMPM').val();
 
-    var startHH = "", startMM = "";
-    var closeHH = "", closeMM = "";
-    var diffHH = "", diffMM = "";
+    var closeHH = $('#ddlClosingHours').val();
+    var closeMM = $('#ddlClosingMinutes').val();
+    var closeAMPM = $('#ddlClosingAMPM').val();
+    $('#ErrorClosingTimeMsg').text("");
 
-    if ($('#ddlStartAMPM').val() == "AM" && $('#ddlClosingAMPM').val() == "PM") {
-        closeHH = 12 + parseInt($('#ddlClosingHours').val());
+   
+    if (closeAMPM == "-1") {
+         
+        $('#txtTotalTime').val("");
+        return;
     }
-    else if ($('#ddlStartAMPM').val() == "PM" && $('#ddlClosingAMPM').val() == "AM") {
-        closeHH = 12 + parseInt($('#ddlClosingHours').val());
+
+    startHH = parseInt(startHH);
+    startMM = parseInt(startMM);
+    closeHH = parseInt(closeHH);
+    closeMM = parseInt(closeMM);
+     
+    if (startAMPM === "PM" && startHH !== 12) {
+        startHH += 12;
     }
-    else {
-        closeHH = parseInt($('#ddlClosingHours').val());
+    if (startAMPM === "AM" && startHH === 12) {
+        startHH = 0;
+    } 
+    if (closeAMPM === "PM" && closeHH !== 12) {
+        closeHH += 12;
+    }
+    if (closeAMPM === "AM" && closeHH === 12) {
+        closeHH = 0;
+    }
+     
+    var startTime = new Date(0, 0, 0, startHH, startMM, 0);
+    var closeTime = new Date(0, 0, 0, closeHH, closeMM, 0);
+
+    if (closeTime <= startTime) {
+
+        $('#ErrorClosingTimeMsg').text("Please select a valid time.");
+        $('#ErrorClosingTimeMsg').css('display', 'block');
+        $('#txtTotalTime').val("");
+        return;
     }
 
-    //diffHH = $('#ddlClosingHours').val() - $('#ddlStartHours').val();
-    diffHH = closeHH - parseInt($('#ddlStartHours').val());
-    diffMM = $('#ddlClosingMinutes').val() - $('#ddlStartMinutes').val();
+    
+    var diff = closeTime - startTime;
 
-    if (diffHH <= 9)
-        diffHH = "0" + diffHH;
+    var diffHH = Math.floor(diff / (1000 * 60 * 60));
+    var diffMM = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-    if (diffMM <= 9)
-        diffMM = "0" + diffMM;
+     
+    diffHH = diffHH < 10 ? "0" + diffHH : diffHH;
+    diffMM = diffMM < 10 ? "0" + diffMM : diffMM;
 
-    var totalTime = diffHH + ":" + diffMM + ":" + "00";
+    var totalTime = diffHH + ":" + diffMM + ":00";
     $('#txtTotalTime').val(totalTime);
     $('#txtTotalTime').attr('readonly', true);
-
 }
+
 
 function BindVisitTypes() {
 

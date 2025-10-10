@@ -173,6 +173,7 @@ namespace PrakashCRM.Controllers
                 Task<SPCompanyContact> task = Task.Run<SPCompanyContact>(async () => await GetCompanyContactForEdit(Session["CompanyNo"].ToString()));
                 companycontact = task.Result;
 
+
                 Task<List<SPContactResponse>> task1 = Task.Run<List<SPContactResponse>>(async () => await GetAllContactsOfCompany(Session["CompanyNo"].ToString()));
                 contacts = task1.Result;
                 ViewBag.Contactscount = contacts.Count;
@@ -191,11 +192,12 @@ namespace PrakashCRM.Controllers
             if (companycontact.Company_Name != null)
             {
                 companycontact.PCPL_Allow_Login = false;
-                companycontact.PCPL_Enable_OTP_On_Login = false;
+                companycontact.PCPL_Enable_OTP_On_Login = true;
                 return View(companycontact);
-            }   
+            }
             else
-                return View(new SPCompanyContact());
+                companycontact.PCPL_Enable_OTP_On_Login = true;
+                return View(companycontact);
 
         }
 
