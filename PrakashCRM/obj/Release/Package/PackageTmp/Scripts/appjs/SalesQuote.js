@@ -2112,8 +2112,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                     item.Net_Weight,
                     item.PCPL_Liquid_Rate,
                     item.PCPL_Vendor_No,  
+                    item.PCPL_Packing_MRP_Price,
                     `<label id="${item.No}_SQLineNo" style='display:none'>${item.Line_No}</label>`,
-                    item.PCPL_MRP_Price,
                 ];
 
                 var colCount = $('#dataList thead th').length;

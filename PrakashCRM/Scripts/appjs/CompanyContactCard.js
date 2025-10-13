@@ -1266,17 +1266,6 @@ function CheckContactValues() {
     else {
         $('#lblCCompanyAddressMsg').text("");
         $('#lblCCompanyAddressMsg').css('display', 'none');
-    } 
-
-      if (address1.length > 50)
-    {
-        $('#lblCCompanyAddressMsg1').text("Address2 cannot exceed 50 characters");
-        $('#lblCCompanyAddressMsg1').css('display', 'block');
-        flag = false;
-    }
-    else {
-        $('#lblCCompanyAddressMsg1').text("");
-        $('#lblCCompanyAddressMsg1').css('display', 'none');
     }
 
     if (address1.length > 50) {

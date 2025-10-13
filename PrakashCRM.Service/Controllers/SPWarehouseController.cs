@@ -720,11 +720,11 @@ namespace PrakashCRM.Service.Controllers
             }
 
             string latestRateFilter = "Latest_Rate eq true";
+
             if (string.IsNullOrEmpty(TransporterNo))
             {
                 // TransporterNo Empty + Pincode + TransporterNo + LatestRate
-                filter += $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}'";
-                
+                filter += $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and {latestRateFilter}";
             }
             else
             {

@@ -1612,21 +1612,6 @@ namespace PrakashCRM.Service.Controllers
                     List<SPSQLines> SQLineList = new List<SPSQLines>();
                     for(int a = 0; a < SQLines.Count; a++)
                     {
-                        //SPSQLines SQLines_ = new SPSQLines();
-                        //SQLines_.Line_No = SQLines[a].Line_No;
-                        //SQLines_.No = SQLines[a].No;
-                        //SQLines_.Description = SQLines[a].Description;
-                        //SQLines_.Location_Code = SQLines[a].Location_Code;
-                        //SQLines_.Unit_Price = SQLines[a].Unit_Price;
-                        //SQLines_.Quantity = SQLines[a].Quantity;
-                        //SQLines_.Delivery_Date = SQLines[a].Delivery_Date;
-                        //SQLines_.PCPL_Packing_Style_Code = SQLines[a].PCPL_Packing_Style_Code;
-                        //SQLines_.PCPL_Transport_Method = SQLines[a].PCPL_Transport_Method;
-                        //SQLines_.PCPL_MRP = SQLines[a].PCPL_MRP;
-                        //SQLines_.Drop_Shipment = SQLines[a].Drop_Shipment;
-                        //SQLines_.PCPL_Vendor_No = SQLines[a].PCPL_Vendor_No;
-
-                        //SQHeaderDetails.ProductsRes.Add(SQLines_);
                         SQLineList.Add(new SPSQLines()
                         {
                             Line_No = SQLines[a].Line_No,
@@ -1661,7 +1646,7 @@ namespace PrakashCRM.Service.Controllers
                             PCPL_Commission_Payable = SQLines[a].PCPL_Commission_Payable,
                             PCPL_Commission_Payable_Name = SQLines[a].PCPL_Commission_Payable_Name,
                             TPTPL_Short_Closed = SQLines[a].TPTPL_Short_Closed,
-                            PCPL_MRP_Price = SQLines[a].PCPL_MRP_Price
+                            PCPL_Packing_MRP_Price = SQLines[a].PCPL_Packing_MRP_Price
 
                         });
                     }

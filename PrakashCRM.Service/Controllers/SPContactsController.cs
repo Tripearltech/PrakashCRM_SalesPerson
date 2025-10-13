@@ -452,7 +452,7 @@ namespace PrakashCRM.Service.Controllers
             SPContact requestContact = new SPContact();
 
             requestContact.Company_No = CompanyNo;
-            requestContact.Salesperson_Code = SPCode;   
+            requestContact.Salesperson_Code = SPCode;
             requestContact.Name = Name;
             requestContact.Type = "Person";
             requestContact.Mobile_Phone_No = Mobile_Phone_No;
