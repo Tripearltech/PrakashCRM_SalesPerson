@@ -685,7 +685,7 @@ namespace PrakashCRM.Data.Models
         public string PCPL_Vendor_Name { get; set; }
 
         public bool TPTPL_Short_Closed { get; set; }
-        public bool PCPL_MRP_Price { get; set; }
+        public double PCPL_Packing_MRP_Price { get; set; }
 
         public List<SPSQInvQtyReserve> InvQuantities { get; set; }
     }

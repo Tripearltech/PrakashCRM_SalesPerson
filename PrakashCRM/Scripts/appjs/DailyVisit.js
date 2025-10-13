@@ -553,9 +553,9 @@ function CalculateUpdateTotalTime() {
     var closeAMPM = $('#ddlClosingAMPM').val();
     $('#ErrorClosingTimeMsg').text("");
 
-   
+
     if (closeAMPM == "-1") {
-         
+
         $('#txtTotalTime').val("");
         return;
     }
@@ -564,20 +564,20 @@ function CalculateUpdateTotalTime() {
     startMM = parseInt(startMM);
     closeHH = parseInt(closeHH);
     closeMM = parseInt(closeMM);
-     
+
     if (startAMPM === "PM" && startHH !== 12) {
         startHH += 12;
     }
     if (startAMPM === "AM" && startHH === 12) {
         startHH = 0;
-    } 
+    }
     if (closeAMPM === "PM" && closeHH !== 12) {
         closeHH += 12;
     }
     if (closeAMPM === "AM" && closeHH === 12) {
         closeHH = 0;
     }
-     
+
     var startTime = new Date(0, 0, 0, startHH, startMM, 0);
     var closeTime = new Date(0, 0, 0, closeHH, closeMM, 0);
 
@@ -589,13 +589,13 @@ function CalculateUpdateTotalTime() {
         return;
     }
 
-    
+
     var diff = closeTime - startTime;
 
     var diffHH = Math.floor(diff / (1000 * 60 * 60));
     var diffMM = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-     
+
     diffHH = diffHH < 10 ? "0" + diffHH : diffHH;
     diffMM = diffMM < 10 ? "0" + diffMM : diffMM;
 

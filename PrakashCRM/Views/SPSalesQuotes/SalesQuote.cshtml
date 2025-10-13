@@ -2092,7 +2092,7 @@
         salesquoteheader.ApprovalFor = $('#hfApprovalFor').val();
         salesquoteheader.TargetDate = $('#txtTargetDate').val();
         salesquoteheader.ValidUntillDate = $('#txtSQValidUntillDate').val();
-        salesquoteheader.PCPL_MRP_Price = $('#txtMRPPrice').val();
+        salesquoteheader.PCPL_Packing_MRP_Price = $('#txtMRPPrice').val();
 
         // Product Details
         $("#tblProducts TR[id^='ProdTR_']").each(function () {
@@ -2124,7 +2124,7 @@
             productDetails.PCPL_Credit_Days = parseFloat($(this).find("TD").eq(20).html()) || 0;
             productDetails.PCPL_Interest = parseFloat($(this).find("TD").eq(21).html()) || 0;
             productDetails.PCPL_Commission_Payable = ($(this).find("TD").eq(26).html() === " ") ? "" : $(this).find("TD").eq(26).html();
-            productDetails.PCPL_MRP_Price = ($(this).find("TD").eq(33).html() === " ") ? "" : $(this).find("TD").eq(33).html();
+            productDetails.PCPL_Packing_MRP_Price = ($(this).find("TD").eq(33).html() === " ") ? "" : $(this).find("TD").eq(33).html();
             var prodNo = productDetails.No;
             var dropShipHtml = $("#" + prodNo + "_DropShipment").html();
             if (dropShipHtml === "Yes") {
