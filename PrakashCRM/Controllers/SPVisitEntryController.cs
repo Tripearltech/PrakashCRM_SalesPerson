@@ -878,7 +878,7 @@ namespace PrakashCRM.Controllers
                 Session["DailyVisitAction"] = "Created";
             }
 
-            return RedirectToAction("DailyVisit");
+            return RedirectToAction("DailyVisitList");
         }
 
         public bool NullDailyVisitSession()
