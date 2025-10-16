@@ -327,65 +327,84 @@
     });
 
     $('#btnCPersonAdd').click(function () {
-
+        debugger
+        if ($('#ddlCustomerName').val() != '-1' && $('#ddlCustomerName').val() != null ) {
         $('#modalAddNewCPerson').css('display', 'block');
         BindDepartment();
-
-    });
-
-    $('#btnConfirmAddCPerson').click(function () {
-
-        var errMsg = CheckCPersonFieldValues();
-
-        if (errMsg != "") {
-            $('#lblAddMsg').text(errMsg);
-            $('#lblAddMsg').css('color', 'red').css('display', 'block');
         }
         else {
-
-            $('#btnAddSpinner').css('display', 'block');
-            var CPersonDetails = {};
-
-            CPersonDetails.Name = $('#txtCPersonName').val();
-            CPersonDetails.Company_No = $('#ddlCustomerName').val();
-            CPersonDetails.Mobile_Phone_No = $('#txtCPersonMobile').val();
-            CPersonDetails.E_Mail = $('#txtCPersonEmail').val();
-            CPersonDetails.PCPL_Job_Responsibility = $('#txtJobResponsibility').val();
-            CPersonDetails.PCPL_Department_Code = $('#ddlDepartment').val();
-            CPersonDetails.Type = "Person";
-            CPersonDetails.Salesperson_Code = $('#hfSPNo').val();
-            CPersonDetails.PCPL_Allow_Login = $('#chkAllowLogin').is(":checked");
-            CPersonDetails.chkEnableOTPOnLogin = $('#chkEnableOTPOnLogin').is(":checked");
-
-            (async () => {
-                const rawResponse = await fetch('/SPVisitEntry/AddNewContactPerson', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(CPersonDetails)
-                });
-                const res = await rawResponse.ok;
-                if (res) {
-
-                    $('#btnAddSpinner').css('display', 'none');
-                    //$('#hfContactDetails').val($('#hfContactCompanyNo').val() + "_" + $('#hfPrimaryContactNo').val());
-                    //BindContact($('#hfContactDetails').val());
-                    $('#lblAddMsg').text("Contact Person Added Successfully");
-                    $('#lblAddMsg').css('color', 'green').css('display', 'block');
-                    ResetCPersonDetails();
-
-                }
-            })();
+            alert("Select Contact Company");
         }
 
+    });
+    function CheckCPersonFieldValues() {
+
+        var errMsg = "";
+
+        if ($('#txtCPersonName').val() == "" || $('#txtCPersonMobile').val() == "" || $('#txtCPersonEmail').val() == "" || $('#ddlDepartment').val() == "-1" ||
+            $('#txtJobResponsibility').val() == "") {
+            errMsg = "Please Fill Details";
+        }
+
+        return errMsg;
+    }
+    $('#btnConfirmAddCPerson').click(function () {
+        debugger
+       
+
+            var errMsg = CheckCPersonFieldValues();
+
+            if (errMsg != "") {
+                $('#lblAddMsg').text(errMsg);
+                $('#lblAddMsg').css('color', 'red').css('display', 'block');
+            }
+            else {
+
+                $('#btnAddSpinner').css('display', 'block');
+                var CPersonDetails = {};
+
+                CPersonDetails.Name = $('#txtCPersonName').val();
+                const CompanyDetails = $('#ddlCustomerName').val().split('_');
+                CPersonDetails.Company_No = CompanyDetails[0];
+                CPersonDetails.Mobile_Phone_No = $('#txtCPersonMobile').val();
+                CPersonDetails.E_Mail = $('#txtCPersonEmail').val();
+                CPersonDetails.PCPL_Job_Responsibility = $('#txtJobResponsibility').val();
+                CPersonDetails.PCPL_Department_Code = $('#ddlDepartment').val();
+                CPersonDetails.Type = "Person";
+                CPersonDetails.Salesperson_Code = $('#hfSPNo').val();
+                CPersonDetails.PCPL_Allow_Login = $('#chkAllowLogin').is(":checked");
+                CPersonDetails.chkEnableOTPOnLogin = $('#chkEnableOTPOnLogin').is(":checked");
+
+                (async () => {
+                    const rawResponse = await fetch('/SPVisitEntry/AddNewContactPerson', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(CPersonDetails)
+                    });
+                    const res = await rawResponse.ok;
+                    if (res) {
+
+                        $('#btnAddSpinner').css('display', 'none');
+                        //$('#hfContactDetails').val($('#hfContactCompanyNo').val() + "_" + $('#hfPrimaryContactNo').val());
+                        //BindContact($('#hfContactDetails').val());
+                        $('#lblAddMsg').text("Contact Person Added Successfully");
+                        $('#lblAddMsg').css('color', 'green').css('display', 'block');
+                        ResetCPersonDetails();
+
+                    }
+                })();
+            }
+
+        
     });
 
     $('#btnCloseAddNewCPerson').click(function () {
 
         $('#modalAddNewCPerson').css('display', 'none');
-
+        BindContactPerson();
     });
 
 });
@@ -463,7 +482,17 @@ function BindFinancialYear() {
 
 }
 
+function ResetCPersonDetails() {
 
+    $('#txtCPersonName').val("");
+    $('#txtCPersonMobile').val("");
+    $('#txtCPersonEmail').val("");
+    $('#txtJobResponsibility').val("");
+    BindDepartment();
+    $('#chkAllowLogin').prop('checked', false);
+    $('#chkEnableOTPOnLogin').prop('checked', false);
+
+}
 function BindStartingTime() {
     debugger
     var startHrs = "";
