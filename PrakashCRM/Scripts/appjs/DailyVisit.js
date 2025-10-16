@@ -50,13 +50,13 @@
         GetAndFillWeeklyPlanForDailyPlan();
 
     });
-    
+
     $('#ddlStartHours, #ddlStartMinutes,#ddlStartAMPM, #ddlClosingHours, #ddlClosingMinutes, #ddlClosingAMPM').change(function () {
 
         CalculateUpdateTotalTime();
 
-    }); 
-      $("#txtClosingKM").on('keyup', function () {
+    });
+    $("#txtClosingKM").on('keyup', function () {
         let startKM = parseFloat($('#txtStartingKM').val());
         let closeKM = parseFloat($('#txtClosingKM').val());
 
@@ -112,7 +112,7 @@
         //    $('#dvCustomerContact').css('display', 'none');
         //    $('#dvProdDetails').css('display', 'none');
         //}
-        
+
     });
 
     $('#ddlSubType').change(function () {
@@ -571,7 +571,7 @@ function BindClosingTime() {
     var closeAMPM = "<option value=\"-1\"></option><option value=\"AM\">AM</option><option value=\"PM\">PM</option>";
     $('#ddlClosingAMPM').append(closeAMPM);
 
-}  
+}
 function CalculateUpdateTotalTime() {
     var startHH = $('#ddlStartHours').val();
     var startMM = $('#ddlStartMinutes').val();
@@ -582,9 +582,9 @@ function CalculateUpdateTotalTime() {
     var closeAMPM = $('#ddlClosingAMPM').val();
     $('#ErrorClosingTimeMsg').text("");
 
-   
+
     if (closeAMPM == "-1") {
-         
+
         $('#txtTotalTime').val("");
         return;
     }
@@ -593,20 +593,20 @@ function CalculateUpdateTotalTime() {
     startMM = parseInt(startMM);
     closeHH = parseInt(closeHH);
     closeMM = parseInt(closeMM);
-     
+
     if (startAMPM === "PM" && startHH !== 12) {
         startHH += 12;
     }
     if (startAMPM === "AM" && startHH === 12) {
         startHH = 0;
-    } 
+    }
     if (closeAMPM === "PM" && closeHH !== 12) {
         closeHH += 12;
     }
     if (closeAMPM === "AM" && closeHH === 12) {
         closeHH = 0;
     }
-     
+
     var startTime = new Date(0, 0, 0, startHH, startMM, 0);
     var closeTime = new Date(0, 0, 0, closeHH, closeMM, 0);
 
@@ -618,13 +618,13 @@ function CalculateUpdateTotalTime() {
         return;
     }
 
-    
+
     var diff = closeTime - startTime;
 
     var diffHH = Math.floor(diff / (1000 * 60 * 60));
     var diffMM = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-     
+
     diffHH = diffHH < 10 ? "0" + diffHH : diffHH;
     diffMM = diffMM < 10 ? "0" + diffMM : diffMM;
 
@@ -757,10 +757,10 @@ function BindProducts() {
                         itemOpts += "<option value='" + item.Item_No + "'>" + item.Item_Name + "</option>";
                     });
                 }
-                
+
                 $('#ddlProductName').append(itemOpts);
                 $('#ddlProductName').val('-1');
-                
+
             },
             error: function () {
                 //alert("error");
@@ -983,8 +983,7 @@ function BindContactPerson() {
 
 }
 
-function BindInvoiceDetails()
-{
+function BindInvoiceDetails() {
     const CCompanyDetails = $('#ddlCustomerName').val().split('__');
     //url: '/SPVisitEntry/GetCustomerInvoiceForDDL?CompanyNo=' + $('#ddlCustomerName').val(),
 
@@ -1193,7 +1192,7 @@ function FillWeekPlanDetails(ProdTR) {
     $('#hfWeekNo').val($("#" + ProdTR).find("TD").eq(16).html());
     $('#hfWeekStartDate').val($("#" + ProdTR).find("TD").eq(17).html());
     $('#hfWeekEndDate').val($("#" + ProdTR).find("TD").eq(18).html());
-    
+
     const ProdTRDetails = ProdTR.split('_');
     BindWeekPlanLineDetails(ProdTRDetails[1]);
 }

@@ -64,7 +64,7 @@ namespace PrakashCRM.Service.Controllers
                 Companies.AddRange(company2);
             }
 
-            // Add Mobile, Name, Email from Primary Contact
+            // ✅ Add Mobile, Name, Email from Primary Contact
             foreach (var company in Companies)
             {
                 try
@@ -86,6 +86,7 @@ namespace PrakashCRM.Service.Controllers
                 }
                 catch (Exception ex)
                 {
+                    // Optional: Handle or log error
                     company.Mobile_Phone_No = "";
                     company.PCPL_Primary_Contact_Name = "";
                     company.PCPL_Primary_Contact_Email = "";
@@ -160,7 +161,7 @@ namespace PrakashCRM.Service.Controllers
 
             if (result != null && result.Result.Item1.value.Count > 0)
                 company = result.Result.Item1.value;
-            
+
             return company;
         }
 
@@ -216,7 +217,7 @@ namespace PrakashCRM.Service.Controllers
                     responseCompany.errorDetails = ed;
 
                 }
-                    
+
             }
             else
             {
@@ -251,7 +252,7 @@ namespace PrakashCRM.Service.Controllers
                             ed1 = result1.Result.Item2;
                             responseCompany.errorDetails = ed1;
                         }
-                            
+
 
                         //if (result1.Result.Item2.message != null)
                         //    ed1 = result1.Result.Item2;
@@ -451,7 +452,7 @@ namespace PrakashCRM.Service.Controllers
             SPContact requestContact = new SPContact();
 
             requestContact.Company_No = CompanyNo;
-            requestContact.Salesperson_Code = SPCode;   
+            requestContact.Salesperson_Code = SPCode;
             requestContact.Name = Name;
             requestContact.Type = "Person";
             requestContact.Mobile_Phone_No = Mobile_Phone_No;
@@ -551,7 +552,7 @@ namespace PrakashCRM.Service.Controllers
         [HttpPost]
         [Route("DeleteContactProduct")]
         public string DeleteContactProduct(string contactNo, string prodNo)
-        {   
+        {
             string response = "";
             SPDeleteContactProd reqDeleteContactProd = new SPDeleteContactProd();
             SPDeleteContactProdOData resDeleteContactProd = new SPDeleteContactProdOData();
@@ -570,7 +571,7 @@ namespace PrakashCRM.Service.Controllers
 
             if (!resDeleteContactProd.errorDetails.isSuccess)
                 response = "Error_:" + resDeleteContactProd.errorDetails.message;
-            
+
             return response;
         }
 
@@ -646,7 +647,7 @@ namespace PrakashCRM.Service.Controllers
             List<SPDailyVisit> dailyVisitData = new List<SPDailyVisit>();
             var result = (dynamic)null;
 
-            if(FromDate != null && ToDate != null)
+            if (FromDate != null && ToDate != null)
                 result = ac.GetData<SPDailyVisit>("DailyVisitsDotNetAPI", "Salesperson_Code eq '" + SPCode + "' and Entry_Type eq 'ENTRY' and Date ge " + FromDate + " and Date le " + ToDate);
             else
                 result = ac.GetData<SPDailyVisit>("DailyVisitsDotNetAPI", "Salesperson_Code eq '" + SPCode + "' and Entry_Type eq 'ENTRY'");
@@ -781,7 +782,7 @@ namespace PrakashCRM.Service.Controllers
         {
             API ac = new API();
             List<SPItemList> items = new List<SPItemList>();
-            
+
             var result = ac.GetData<SPItemList>("ItemDotNetAPI", "");
 
             if (result != null && result.Result.Item1.value.Count > 0)
@@ -1076,7 +1077,7 @@ namespace PrakashCRM.Service.Controllers
             API ac = new API();
             List<Area> areas = new List<Area>();
 
-           
+
             var result = ac.GetData<Area>("AreasListDotNetAPI", "Pincode eq '" + Pincode + "' and IsActive eq true");
             if (result != null && result.Result.Item1.value.Count > 0)
                 areas = result.Result.Item1.value;

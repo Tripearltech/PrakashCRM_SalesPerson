@@ -21,6 +21,8 @@ $(document).ready(function () {
     BindWarehousePurchaseAcceptTask();
     BindNonPerformingList();
     BindTodaylist();
+    BindWeeklytasklist();
+    BindMonthlyTask();
     //BindSalespersonData();
     //BindSupportSP();
     //BindGProductData();
@@ -549,9 +551,6 @@ function BindCombinedData() {
 }
 
 function BindTodaylist() {
-    var salespersonCode = ""; // assuming dropdown for salesperson
-    var date = ""; // assuming input for date
-
     $.ajax({
         url: '/SPDashboard/GetTodayVisit',
         type: 'GET',
@@ -563,18 +562,63 @@ function BindTodaylist() {
 
             if (data && data.length > 0) {
                 $.each(data, function (index, item) {
-                    rowData += "<tr>" +
-                        "<td>" + (item.Date || '') + "</td>" +
-                        "<td>" + (item.Visit_Name || '') + "</td>" +
-                        "<td>" + (item.Visit_SubType_Name || '') + "</td>" +
-                        "<td>" + (item.Pur_Visit || '') + "</td>" +
-                        "</tr>";
+                    rowData += "<tr>" + "<td>" + item.Date + "</td>" + "<td>" + item.Visit_Name + "</td>" + "<td>" + item.Visit_SubType_Name + "</td>" + "<td>" + item.Customer_Name + "</td>" + "<td>" + item.Purpose_Of_Visit + "</td>" + "</tr>";
                 });
             } else {
                 rowData = "<tr><td colspan='5' style='text-align:left;'>No Records Found</td></tr>";
             }
 
             $('#tbltodayvist').append(rowData);
+        },
+        error: function (xhr, status, error) {
+            alert("Error fetching data: " + xhr.responseText);
+        }
+    });
+}
+function BindWeeklytasklist() {
+    $.ajax({
+        url: '/SPDashboard/GetWeeklytask',
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
+            $('#tblweeklytasklist').empty();
+            var rowData = "";
+
+            if (data && data.length > 0) {
+                $.each(data, function (index, item) {
+                    rowData += "<tr>" + "<td>" + item.Week_Plan_Date + "</td>" + "<td>" + item.Visit_Type_Name + "</td>" + "<td>" + item.Visit_Sub_Type_Name + "</td>" + "<td>" + item.ContactCompanyName + "</td>" + "<td>" + item.Contact_Person_Name + "</td>" + "</tr>";
+                });
+            } else {
+                rowData = "<tr><td colspan='5' style='text-align:left;'>No Records Found</td></tr>";
+            }
+
+            $('#tblweeklytasklist').append(rowData);
+        },
+        error: function (xhr, status, error) {
+            alert("Error fetching data: " + xhr.responseText);
+        }
+    });
+}
+function BindMonthlyTask() {
+    $.ajax({
+        url: '/SPDashboard/GetMonthlyTask',
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
+            $('#tblMonthlist').empty();
+            var rowData = "";
+
+            if (data && data.length > 0) {
+                $.each(data, function (index, item) {
+                    rowData += "<tr>" + "<td>" + item.Visit_Month + "</td>" + "<td>" + item.Visit_Type + "</td>" + "<td>" + item.Visit_SubType_Name + "</td>" + "<td>" + item.No_of_Visit + "</td>" + "</tr>";
+                });
+            } else {
+                rowData = "<tr><td colspan='5' style='text-align:left;'>No Records Found</td></tr>";
+            }
+
+            $('#tblMonthlist').append(rowData);
         },
         error: function (xhr, status, error) {
             alert("Error fetching data: " + xhr.responseText);

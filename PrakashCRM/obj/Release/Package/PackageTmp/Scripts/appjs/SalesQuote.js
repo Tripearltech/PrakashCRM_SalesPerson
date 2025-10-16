@@ -326,12 +326,12 @@ $(document).ready(function () {
     });
 
     $('#ddlPackingStyle').change(function () {
-
         const packingStyleDetails = $('#ddlPackingStyle').val().split('_');
-        $('#txtBasicPurchaseCost').val(parseFloat(packingStyleDetails[0]));
+        $('#txtBasicPurchaseCost').val(parseFloat(packingStyleDetails[0]).toFixed(2));
         $('#txtBasicPurchaseCost').prop('disabled', true);
+        $('#txtMRPPrice').val(parseFloat(packingStyleDetails[3]).toFixed(4));
+        $('#txtMRPPrice').prop('disabled', true);
         $('#hfPurchaseDays').val(parseInt(packingStyleDetails[2]));
-
     });
 
     $('#btnResetProdDetails').click(function () {
@@ -352,144 +352,6 @@ $(document).ready(function () {
             $('#dataList td.dataTables_empty').remove(); // row hata diya
         }
     });
-    //$('#btnSaveProd').click(function () {
-    //    var isLiquidProd = $('#chkIsLiquidProd').prop('checked') ? 'true' : 'false';
-    //    var isCommission = $('#chkIsCommission').prop('checked');
-
-    //    // Validations (unchanged)
-    //    if ($('#txtProductName').val() === "" || $('#txtProductName').val() === null) {
-    //        ShowErrMsg("Please select a Product Name before saving.");
-    //        $('#txtProductName').focus();
-    //        return;
-    //    }
-    //    if ($('#ddlPackingStyle').val() === "" || $('#ddlPackingStyle').val() === null || $('#ddlPackingStyle').val() === "-1") {
-    //        ShowErrMsg("Please select a Packing Style before saving.");
-    //        $('#ddlPackingStyle').focus();
-    //        return;
-    //    }
-    //    if ($('#txtProdQty').val() === "" || $('#txtProdQty').val() === null) {
-    //        ShowErrMsg("Please select a Qty before saving.");
-    //        $('#txtProdQty').focus();
-    //        return;
-    //    }
-    //    if ($('#txtBasicPurchaseCost').val() === "" || $('#txtBasicPurchaseCost').val() === null) {
-    //        ShowErrMsg("Please select a Basic Purchase Cost before saving.");
-    //        $('#txtBasicPurchaseCost').focus();
-    //        return;
-    //    }
-    //    if ($('#ddlIncoTerms').val() === "" || $('#ddlIncoTerms').val() === null || $('#ddlIncoTerms').val() === "-1") {
-    //        ShowErrMsg("Please select Inco Terms before saving.");
-    //        $('#ddlIncoTerms').focus();
-    //        console.log("Inco Terms validation failed: ", $('#ddlIncoTerms').val());
-    //        return;
-    //    }
-    //    if ($('#ddlPaymentTerms').val() === "" || $('#ddlPaymentTerms').val() === null || $('#ddlPaymentTerms').val() === "-1") {
-    //        ShowErrMsg("Please select Payment Terms before saving.");
-    //        $('#ddlPaymentTerms').focus();
-    //        console.log("Payment Terms validation failed: ", $('#ddlPaymentTerms').val());
-    //        return;
-    //    }
-    //    if ($('#txtSalesPrice').val() === "" || $('#txtSalesPrice').val() === null) {
-    //        ShowErrMsg("Please select a Sales Price before saving.");
-    //        $('#txtSalesPrice').focus();
-    //        return;
-    //    }
-    //    if ($('#txtDeliveryDate').val() === "" || $('#txtDeliveryDate').val() === null) {
-    //        ShowErrMsg("Please select a Delivery Date before saving.");
-    //        $('#txtDeliveryDate').focus();
-    //        return;
-    //    }
-
-    //    // Proceed with saving the product details
-    //    var prodOpts = $('#hfProdNo').val();
-    //    var prodOptsTR = $('#hfProdNoEdit').val();
-    //    var dropShipmentOpt = $('#chkDropShipment').is(':checked') ? 'true' : 'false';
-    //var inqProdLineNo = $('#hfProdLineNo').val() || ''; // Capture InqProdLineNo
-
-    //var actionsHtml = `<a class='SQLineCls' onclick='EditSQProd(${inqProdLineNo || 0},"ProdTR_${prodOpts}")'><i class='bx bxs-edit'></i></a>`;
-    //actionsHtml += `&nbsp;<a class='SQLineCls' onclick='DeleteSQProd(this)'><i class='bx bxs-trash'></i></a>`;
-
-    //    var commissionPerUnit = isCommission ? $('#ddlCommissionPerUnitPercent').val() : "";
-    //    var commissionPercent = isCommission ? $('#txtCommissionPercent').val() : "";
-    //    var commissionAmt = isCommission ? $('#txtCommissionAmt').val() : "";
-    //    var commissionPayable = isCommission ? $('#ddlCommissionPayable').val() : "";
-
-    //    var prodOptsArray = [
-    //        '', actionsHtml,
-    //        prodOpts,
-    //        $('#txtProductName').val(),
-    //        $('#txtProdQty').val(),
-    //        $('#txtUOM').val(),
-    //        $('#ddlPackingStyle option:selected').text(),
-    //        $('#txtBasicPurchaseCost').val(),
-    //        $('#txtSalesPrice').val(),
-    //        $('#txtDeliveryDate').val(),
-    //        $('#txtTotalCost').val(),
-    //        $('#txtMargin').val(),
-    //        $('#ddlPaymentTerms').val(),
-    //        $('#ddlIncoTerms').val(),
-    //        $('#ddlTransportMethod').val(),
-    //        $('#txtTransportCost').val(),
-    //        $('#txtSalesDiscount').val(),
-    //        commissionPerUnit,
-    //        commissionPercent,
-    //        commissionAmt,
-    //        $('#txtCreditDays').val(),
-    //        $('#txtInterest').val(),
-    //        `<label id="${prodOpts}_DropShipment">${dropShipmentOpt}</label>`,
-    //        "", // 23 → hidden
-    //        "", // 24 → hidden
-    //        `<label id="${prodOpts}_MarginPercent">${$('#spnMarginPercent').text()}</label>`,
-    //        commissionPayable,
-    //        //"", // 27 → Vendor No
-    //        //"", // 28 → Vendor Name
-    //        `<label id="${prodOpts}_InqProdLineNo" style="display:none;">${inqProdLineNo}</label>`,
-    //        isLiquidProd,
-    //        (isLiquidProd === 'true' ? $('#txtConcentratePercent').val() : ""),
-    //        (isLiquidProd === 'true' ? $('#txtNetWeight').val() : ""),
-    //        (isLiquidProd === 'true' ? $('#txtLiquidRate').val() : ""),
-    //        (dropShipmentOpt === 'true' ? $('#ddlItemVendors').val() : "")
-    //    ];
-
-    //    // Ensure column count matches header count
-    //    var colCount = $('#dataList thead th').length;
-    //    if (prodOptsArray.length < colCount) {
-    //        while (prodOptsArray.length < colCount) prodOptsArray.push('');
-    //    } else if (prodOptsArray.length > colCount) {
-    //        prodOptsArray = prodOptsArray.slice(0, colCount);
-    //    }
-
-    //    if (prodOptsTR) {
-    //        var rowIdSelector = '#ProdTR_' + prodOptsTR;
-    //        var rowApi = dtable.row(rowIdSelector);
-
-    //        if (rowApi.any()) {
-    //            rowApi.data(prodOptsArray).draw(false);
-    //            $(rowApi.node()).attr('id', 'ProdTR_' + prodOpts);
-    //            $(rowApi.node()).find("td").eq(0).addClass("dtr-control");
-    //        } else {
-    //            var newNode = dtable.row.add(prodOptsArray).draw(false).node();
-    //            $(newNode).attr('id', 'ProdTR_' + prodOpts);
-    //            $(newNode).find("td").eq(0).addClass("dtr-control");
-    //        }
-    //        $('#hfProdNoEdit').val('');
-    //    } else {
-    //        var newNode = dtable.row.add(prodOptsArray).draw(false).node();
-    //        $(newNode).attr('id', 'ProdTR_' + prodOpts);
-    //        $(newNode).find("td").eq(0).addClass("dtr-control");
-    //        $('#dataList').show();
-    //    }
-    //    dtable.responsive.recalc();
-
-    //    // Update available credit limit
-    //    $('#txtAvailableCreditLimit').prop('disabled', false);
-    //    var availableCreditLimit = parseFloat($('#txtAvailableCreditLimit').val().replaceAll(",", "")) -
-    //        (parseFloat($('#txtSalesPrice').val()) * parseFloat($('#txtProdQty').val()));
-    //    $('#txtAvailableCreditLimit').val(commaSeparateNumber(availableCreditLimit.toFixed(2)));
-    //    $('#txtAvailableCreditLimit').prop('disabled', true);
-    //    dataTableFunction();
-    //    ResetQuoteLineDetails();
-    //});
 
     $('#btnSaveProd').click(function () {
 
@@ -536,6 +398,15 @@ $(document).ready(function () {
             ShowErrMsg("Please select a Basic Purchase Cost before saving.");
 
             $('#txtBasicPurchaseCost').focus();
+
+            return;
+
+        }
+        if ($('#txtMRPPrice').val() === "" || $('#txtMRPPrice').val() === null) {
+
+            ShowErrMsg("Please select a MRP Price before saving.");
+
+            $('#txtMRPPrice').focus();
 
             return;
 
@@ -591,6 +462,7 @@ $(document).ready(function () {
 
         // Proceed with saving the product details
 
+
         var prodOpts = $('#hfProdNo').val();
 
         var prodOptsTR = $('#hfProdNoEdit').val();
@@ -619,7 +491,6 @@ $(document).ready(function () {
         var prodOptsArray = [
 
             '', actionsHtml,
-
             prodOpts,
             $('#txtProductName').val(),
             $('#txtProdQty').val(),
@@ -657,34 +528,18 @@ $(document).ready(function () {
             `<label id="${prodOpts}_DropShipment">${dropShipmentOpt}</label>`,
 
             "", // 23 → hidden
-
             "", // 24 → hidden
-
             `<label id="${prodOpts}_MarginPercent">${$('#spnMarginPercent').text()}</label>`,
-
             commissionPayable,
             `<label id="${prodOpts}_InqProdLineNo" style="display:none;">${inqProdLineNo}</label>`,
-
-            //"",
-
             isLiquidProd,
-
-            //(isLiquidProd === 'true' ? $('#txtConcentratePercent').val() : ""),
-
-            //(isLiquidProd === 'true' ? $('#txtNetWeight').val() : ""),
-
-            //(isLiquidProd === 'true' ? $('#txtLiquidRate').val() : ""),
-
             Concentrate,
-
             NetWeigth,
-
             LiquidRate,
-
-            (dropShipmentOpt === 'Yes' ? $('#ddlItemVendors').val() : "")
+            (dropShipmentOpt === 'Yes' ? $('#ddlItemVendors').val() : ""),
+            $('#txtMRPPrice').val()
 
         ];
-
         // Ensure column count matches header count
 
         var colCount = $('#dataList thead th').length;
@@ -1282,6 +1137,7 @@ $(document).ready(function () {
             $('#txtDeliveryDate').val("");
             $('#chkDropShipment').prop('checked', false);
             $('#chkDropShipment').change();
+            $('#txtMRPPrice').val("0.00");
 
         }
 
@@ -2172,11 +2028,7 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
             if (ScheduleStatus == "Completed") {
                 $('#btnSaveProd').prop('disabled', true);
                 $('#btnSave').prop('disabled', true);
-                //$('#dvIsShortclose').css('display', 'none');
             }
-            //else {
-            //    $('#dvIsShortclose').css('display', 'block');
-            //}
 
             if (data.ShortcloseStatus) {
                 //$('#chkIsShortclose').prop('checked', true);
@@ -2224,10 +2076,6 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                         actionsHtml += `&nbsp;<a class='SQLineCls' title='Click to shortclose' onclick='ShortcloseSQProd("${item.Line_No}")'><i class='bx bx-message-rounded-x'></i></a>`;
                     }
                 }
-
-                var dropShipmentLabel = item.Drop_Shipment ? "Yes" : "No";
-                var isLiquid = item.PCPL_Liquid ? "Yes" : "No";
-
                 var rowArray = [
                     "", // dtr-control
                     actionsHtml,
@@ -2263,8 +2111,8 @@ function GetSalesQuoteDetailsAndFill(SalesQuoteNo, ScheduleStatus, SQStatus, SQF
                     item.PCPL_Concentration_Rate_Percent,
                     item.Net_Weight,
                     item.PCPL_Liquid_Rate,
-                    item.PCPL_Vendor_No,
-                    //item.PCPL_Vendor_Name,      
+                    item.PCPL_Vendor_No,  
+                    item.PCPL_Packing_MRP_Price,
                     `<label id="${item.No}_SQLineNo" style='display:none'>${item.Line_No}</label>`,
                 ];
 
@@ -2352,15 +2200,12 @@ function GetProductDetails(productName) {
 
                         if ($('#hfInqProdPackingStyle').val() != "" && $('#hfInqProdPackingStyle').val() != null) {
                             if ($('#hfInqProdPackingStyle').val() == data.ProductPackingStyle[i].Packing_Style_Code) {
-                                inqProdPackingStyle = data.ProductPackingStyle[i].PCPL_MRP_Price + "_" + data.ProductPackingStyle[i].Packing_Style_Code +
-                                    "_" + data.ProductPackingStyle[i].PCPL_Purchase_Days;
+                                inqProdPackingStyle = data.ProductPackingStyle[i].PCPL_Purchase_Cost + "_" + data.ProductPackingStyle[i].Packing_Style_Code + "_" + data.ProductPackingStyle[i].PCPL_Purchase_Days + "_" + data.ProductPackingStyle[i].PCPL_MRP_Price;
                             }
                         }
-
-                        packingstyleOpts += "<option value='" + data.ProductPackingStyle[i].PCPL_MRP_Price + "_" + data.ProductPackingStyle[i].Packing_Style_Code +
-                            "_" + data.ProductPackingStyle[i].PCPL_Purchase_Days + "'>" +
-                            data.ProductPackingStyle[i].Packing_Style_Description + "</option>";
-
+                        packingstyleOpts +=
+                            "<option value='" + data.ProductPackingStyle[i].PCPL_Purchase_Cost + "_" + data.ProductPackingStyle[i].Packing_Style_Code + "_" + data.ProductPackingStyle[i].PCPL_Purchase_Days + "_" + data.ProductPackingStyle[i].PCPL_MRP_Price + "'>" + data.ProductPackingStyle[i].Packing_Style_Description +
+                            "</option>";
                     }
 
                     $('#ddlPackingStyle').append(packingstyleOpts);
@@ -2428,8 +2273,6 @@ function EditSQProd(Line_No, ProdTR) {
 
     $('#txtProductName').val($("#" + ProdTR).find("TD").eq(3).html());
 
-    //$('#txtProductName').blur(); // This should trigger the autocomplete and show buttons
-
     $('#hfSQProdLineNo').val($("#" + prodNo + "_SQLineNo").text());
 
     $('#txtProdQty').val($("#" + ProdTR).find("TD").eq(4).html());
@@ -2460,19 +2303,9 @@ function EditSQProd(Line_No, ProdTR) {
 
         $("#chkDropShipment").prop('checked', true);
 
-        //productDetails.Drop_Shipment = true;
-
         $('#chkDropShipment').change();
 
-        //BindItemVendors($('#hfProdNo').val());
-
-        /* $("#ddlItemVendors").show();*/
-
         $("#dvVendors").show();
-
-        ////$("#ddlItemVendors").empty();
-
-        //$('#ddlItemVendors').val(VendorDrop);
 
         $('#hfSavedItemVendorNo').val(VendorDrop);
 
@@ -2480,12 +2313,7 @@ function EditSQProd(Line_No, ProdTR) {
 
         $("#chkDropShipment").prop('checked', false);
 
-        /* $("#ddlItemVendors").val(VendorDrop); */
-
     }
-
-
-    //if ($("#" + ProdTR).find("TD").eq(17).html() != "") {
 
     if (isChkCommissionChecked == false) {
 
@@ -2569,14 +2397,13 @@ function EditSQProd(Line_No, ProdTR) {
     // Set InqProdLineNo from DataTable
     var inqProdLineNo = $("#" + prodNo + "_InqProdLineNo").text();
     $('#hfProdLineNo').val(inqProdLineNo || Line_No);
-
     $('#txtTotalCost').val($("#" + ProdTR).find("TD").eq(10).html());
-
     if ($("#" + prodNo + "_InqProdLineNo").val() != "") {
-
         $('#hfProdLineNo').val($("#" + prodNo + "_InqProdLineNo").val());
-
     }
+
+    //$("#txtMRPprice" + ProdTR).find("TD").eq(33).text().trim();
+    $('#txtMRPPrice').val($("#" + ProdTR).find("TD").eq(33).html());
 
 }
 
@@ -2725,8 +2552,9 @@ function AdditionalQtyChange() {
         salesQuoteDetails.AdditionalQty = $('#txtAdditionalQty').val();
 
         if ($('#txtAdditionalQty').val() > 0) {
-            salesQuoteDetails.MRPAmt = ($('#txtProdMRP').val() * $('#txtAdditionalQty').val());
+            salesQuoteDetails.MRPAmt = ($('#txtProdMRP').val() * $ ('#txtAdditionalQty').val());
             salesQuoteDetails.BasicPriceAmt = ($('#txtBasicPurchaseCost').val() * $('#txtAdditionalQty').val());
+            //salesQuoteDetails.BasicPriceAmt = ($('#txtMRPPrice').val() * $('#txtAdditionalQty').val());
             salesQuoteDetails.ExciseAmt = ($('#txtExcise').val() * $('#txtAdditionalQty').val());
             salesQuoteDetails.QuantityDiscount = ($('#txtAdditionalQty').val() * $('#hfQuantityDiscount').val());
             salesQuoteDetails.TradeDiscount = ($('#txtAdditionalQty').val() * $('#hfTradeDiscount').val());
@@ -3132,6 +2960,8 @@ function ResetQuoteLineDetails() {
     $('#ddlItemVendors').empty();
     $('#ddlItemVendors').append("<option value='-1'>---Select---</option>");
     $('#ddlItemVendors').val('-1');
+    $('#txtMRPPrice').val("");
+    $('#txtMRPPrice').prop('disabled', true);
 
 
     $('#hfProdNoEdit').val("");
@@ -3148,6 +2978,7 @@ function AddReqQty() {
 
     $('#txtProdQty').val($('#txtReqQty').val());
     $('#txtBasicPurchaseCost').val($('#txtMrpFromILE').val());
+    $('#txtMRPPrice').val($('#txtMrpFromILE').val());
     //alert($('#txtReqQty').val());
     $('#btnClose,.btn-close').click();
 

@@ -1108,14 +1108,19 @@ namespace PrakashCRM.Service.Controllers
         {
             API ac = new API();
             List<SPBusinessPlanReport> businessreport = new List<SPBusinessPlanReport>();
+
             var result = ac.GetData<SPBusinessPlanReport>("BusinessPlanReport", "");
+
             if (result != null && result.Result.Item1.value.Count > 0)
             {
                 businessreport = result.Result.Item1.value;
-                businessreport = businessreport.DistinctBy(a => a.SalesPerson_Name).ToList();
+                businessreport= businessreport.DistinctBy(a => a.SalesPerson_Name).ToList();
             }
+
             return businessreport;
         }
+
+
         [HttpGet]
         [Route("GetSalespersonDropDwon")]
         public List<SPSalespersonDropDwon> GetSalespersonDropDwon()
