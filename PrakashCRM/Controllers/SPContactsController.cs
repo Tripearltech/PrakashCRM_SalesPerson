@@ -196,7 +196,12 @@ namespace PrakashCRM.Controllers
                 return View(companycontact);
             }
             else
+            {
                 companycontact.PCPL_Enable_OTP_On_Login = true;
+                Session["CompanyNo"] = "";
+                Session["isCompanyContactEdit"] = false;
+            }
+
             return View(companycontact);
 
         }
