@@ -50,24 +50,9 @@
                         <div class="menu-title">Dashboard</div>
                     </a>
                 </li>
-                @*<li>
-            <a href="/SPItems/ItemPriceChange">
-                <div class="parent-icon">
-                    <i class='bx bx-rupee'></i>
-                </div>
-                <div class="menu-title">Item Price Change</div>
-            </a>
-        </li>*@
-                @*<li>
-            <a href="/SPActivities/Activities">
-                <div class="parent-icon">
-                    <i class='bx bx-calendar'></i>
-                </div>
-                <div class="menu-title">Activities</div>
-            </a>
-        </li>*@
+                <li class="formasterdata">
                 <li class="menu-label">Master Data</li>
-                <li>
+                <li class="forcontact">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-user-pin'></i>
@@ -77,13 +62,11 @@
                     <ul>
                         <li>
                             <a href="/SPContacts/ContactCompanyList"><i class="bx bx-right-arrow-alt"></i>Contact List</a>
-                        </li>
-                        <li>
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Web Contact List</a>
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="forcontact">
                     <a href="/SPCustomers/CustomerList">
                         <div class="parent-icon">
                             <i class='bx bx-group'></i>
@@ -92,7 +75,7 @@
                     </a>
                 </li>
                 <li class="menu-label">Operations</li>
-                <li>
+                <li class="forSalesperson">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-phone-call'></i>
@@ -108,7 +91,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="forsalesquote">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-file'></i>
@@ -116,21 +99,21 @@
                         <div class="menu-title">Sales Quote</div>
                     </a>
                     <ul>
-                        <li>
+                        <li class="forSalesperson">
                             <a href="/SPSalesQuotes/SalesQuoteList"><i class="bx bx-right-arrow-alt"></i>Sales Quote List</a>
                         </li>
-                        <li>
+                        <li class="forApproved">
                             <a href="/SPSalesQuotes/SalesQuoteStatus"><i class="bx bx-right-arrow-alt"></i>Sales Quote Status</a>
                         </li>
-                        <li>
+                        <li class="forSalesperson">
                             <a href="/SPSalesQuotes/DispatchDetails"><i class="bx bx-right-arrow-alt"></i>Dispatch Details</a>
                         </li>
-                        <li>
+                        <li class="forSalesperson">
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Web SalesQuote List</a>
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="forSalesperson">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-file'></i>
@@ -143,7 +126,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="forfinance forsalesinvoice">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-file'></i>
@@ -157,7 +140,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li class="forbusinessplan">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-bar-chart'></i>
@@ -166,24 +149,35 @@
                     </a>
                     <ul>
                         <li class="foradmin">
-                            <a href="/SPAdminBusinessPlan/AdminBusinessPlan"><i class="bx bx-right-arrow-alt"></i>Admin Business Plan</a>
+                            <a href="/SPAdminBusinessPlan/AdminBusinessPlan">
+                                <i class="bx bx-right-arrow-alt"></i>Admin Business Plan
+                            </a>
                         </li>
                         <li class="foradmin">
-                            <a href="/SPBusinessPlan/AssignBusinessPlan"><i class="bx bx-right-arrow-alt"></i>Assign Business Plan</a>
+                            <a href="/SPBusinessPlan/AssignBusinessPlan">
+                                <i class="bx bx-right-arrow-alt"></i>Assign Business Plan
+                            </a>
                         </li>
-                        <li>
-                            <a href="/SPBusinessPlan/BusinessPlanContactList"><i class="bx bx-right-arrow-alt"></i>Create Business Plan</a>
+                        <li class="forSalesperson">
+                            <a href="/SPBusinessPlan/BusinessPlanContactList">
+                                <i class="bx bx-right-arrow-alt"></i>Create Business Plan
+                            </a>
                         </li>
-                        <li>
-                            <a href="/SPBusinessPlan/BusinessPlanReport"><i class="bx bx-right-arrow-alt"></i>Business Plan Report</a>
+                        <li class="forSalesperson">
+                            <a href="/SPBusinessPlan/BusinessPlanReport">
+                                <i class="bx bx-right-arrow-alt"></i>Business Plan Report
+                            </a>
                         </li>
-                        <li>
-                            @*<a href="/SPBusinessPlan/BusinessPlanStatus"><i class="bx bx-right-arrow-alt"></i>Business Plan Status</a>*@
-                            <a href="/SPBusinessPlan/BusinessPlanStatusSPWise"><i class="bx bx-right-arrow-alt"></i>Business Plan Approval</a>
+                        <li class="foradmin">
+                            <a href="/SPBusinessPlan/BusinessPlanStatusSPWise">
+                                <i class="bx bx-right-arrow-alt"></i>Business Plan Approval
+                            </a>
                         </li>
                     </ul>
                 </li>
-                <li>
+
+
+                <li class="forSalesperson">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-show-alt'></i>
@@ -202,7 +196,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="forwarehouse">
                     <a class="has-arrow" href="javascript:;">
                         <div class="parent-icon">
                             <i class="bx bx-store-alt"></i>
@@ -218,7 +212,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="forwarehouse">
                     <a class="has-arrow" href="javascript:;">
                         <div class="parent-icon">
                             <i class="bx bx-store-alt"></i>
@@ -231,59 +225,7 @@
                         </li>
                     </ul>
                 </li>
-                @*<li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon">
-                    <i class="bx bx-store-alt"></i>
-                </div>
-                <div class="menu-title">Warehouse</div>
-            </a>
-            <ul>
-                <li>
-                    <a class="has-arrow" href="javascript:;"><i class="bx bx-right-arrow-alt"></i>Sales</a>
-                    <ul>
-                        <li>
-                            <a href="/SPWarehouseSales/IncomingTaskList"><i class="bx bx-right-arrow-alt"></i>Incoming Task</a>
-                        </li>
-                        <li>
-                            <a href="/SPWarehouseSales/AcceptedTaskList"><i class="bx bx-right-arrow-alt"></i>Accepted Task</a>
-                        </li>
-                        <li>
-                            <a href="/SPWarehouseSales/ClosedTaskList"><i class="bx bx-right-arrow-alt"></i>Closed Task</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="javascript:;"><i class="bx bx-right-arrow-alt"></i>Purchase</a>
-                    <ul>
-                        <li>
-                            <a href="/SPWarehousePurchase/IncomingTaskList"><i class="bx bx-right-arrow-alt"></i>Incoming Task</a>
-                        </li>
-                        <li>
-                            <a href="/SPWarehousePurchase/AcceptedTaskList"><i class="bx bx-right-arrow-alt"></i>Accepted Task</a>
-                        </li>
-                        <li>
-                            <a href="/SPWarehousePurchase/ClosedTaskList"><i class="bx bx-right-arrow-alt"></i>Closed Task</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="javascript:;"><i class="bx bx-right-arrow-alt"></i>Transfer</a>
-                    <ul>
-                        <li>
-                            <a href="/SPWarehouseTransfer/IncomingTaskList"><i class="bx bx-right-arrow-alt"></i>Incoming Task</a>
-                        </li>
-                        <li>
-                            <a href="/SPWarehouseTransfer/AcceptedTaskList"><i class="bx bx-right-arrow-alt"></i>Accepted Task</a>
-                        </li>
-                        <li>
-                            <a href="/SPWarehouseTransfer/ClosedTaskList"><i class="bx bx-right-arrow-alt"></i>Closed Task</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>*@
-                <li>
+                <li class="forfinance">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-rupee'></i>
@@ -299,9 +241,9 @@
                         </li>
                     </ul>
                 </li>
-                <li class="menu-label">Reports</li>
-                <li style="display:block">
-                    @*hide for live Mihir*@
+                <!-- Reports Section -->
+                <li class="forreports">
+                    <div class="menu-label">Reports</div>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-line-chart'></i>
@@ -309,63 +251,56 @@
                         <div class="menu-title">Reports</div>
                     </a>
                     <ul>
-                        <li>
+                        <li class="forfinance">
                             <a href="/SPReports/InventoryView"><i class="bx bx-right-arrow-alt"></i>Inventory View Report</a>
                         </li>
-                        <li>
+                        <li class="forfinance">
                             <a href="/SPReports/CustomerLedgerEntry"><i class="bx bx-right-arrow-alt"></i>Customer Ledger Entry</a>
                         </li>
-                        <li>
-                            <a href="/SPReports/CustomerOutsatnding"><i class="bx bx-right-arrow-alt"></i>Customer Out Satnding</a>
+                        <li class="forfinance">
+                            <a href="/SPReports/CustomerOutsatnding"><i class="bx bx-right-arrow-alt"></i>Customer Outstanding</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="bx bx-right-arrow-alt"></i>Feed back Report</a>
+                        <li class="forSalesperson">
+                            <a href="#"><i class="bx bx-right-arrow-alt"></i>Feedback Report</a>
                         </li>
-                        <li>
+                        <li class="forfinance">
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Stock Management</a>
                         </li>
-                        <li>
+                        <li class="forSalesperson">
                             <a href="/SPMarketUpdate/MarketUpdateList"><i class="bx bx-right-arrow-alt"></i>Market Update</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="bx bx-right-arrow-alt"></i>Business Plan Report</a>
-                        </li>
-                        <li>
+                        <li class="foradmin1">
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Complain</a>
                         </li>
-                        <li>
+                        <li class="foradmin">
                             <a href="/SPSiteError/SiteErrorList"><i class="bx bx-right-arrow-alt"></i>Site Error</a>
                         </li>
-                        <li>
+                        <li class="foradmin">
                             <a href="/SPSiteActivity/SiteActivityList"><i class="bx bx-right-arrow-alt"></i>Site Activity</a>
                         </li>
-                        <li>
+                        <li class="foradmin1">
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Complaint Status</a>
                         </li>
-                        <li>
+                        <li class="forSalesperson">
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Inquiry Management</a>
                         </li>
-                        <li>
+                        <li class="forSalesperson">
                             <a href="/SPVisitEntry/DailyVisitExpenseReport"><i class="bx bx-right-arrow-alt"></i>Daily Visit Expense</a>
                         </li>
-                        <li>
+                        <li class="forSalesperson">
                             <a href="#"><i class="bx bx-right-arrow-alt"></i>Daily Visit Month Wise</a>
+                        </li>
+                        <li class="foradmin1">
+                            <a href="#"><i class="bx bx-right-arrow-alt"></i>Web Site Log</a>
+                        </li>
+                        <li class="foradmin1">
+                            <a href="#"><i class="bx bx-right-arrow-alt"></i>Site Configuration</a>
                         </li>
                     </ul>
                 </li>
-                @*<li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon">
-                            <i class='bx bx-bar-chart-square'></i>
-                        </div>
-                        <div class="menu-title">Charts</div>
-                    </a>
-                    <ul>
-                       
-                    </ul>
-                </li>*@
+
                 <li class="menu-label">Setup & Logs</li>
-                <li class="foradmin">
+                <li class="foradmins">
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
                             <i class='bx bx-wrench'></i>
@@ -389,11 +324,11 @@
                             <a href="/SPNotification/NotificationSetupList"><i class="bx bx-right-arrow-alt"></i>NotificationSetup List</a>
                         </li>
                         @*<li>
-                    <a href="#"><i class="bx bx-right-arrow-alt"></i>Feedback Question</a>
-                </li>*@
+                                <a href="#"><i class="bx bx-right-arrow-alt"></i>Feedback Question</a>
+                            </li>*@
                     </ul>
                 </li>
-                <li style="display:block">
+                <li style="display:block" class="forFeedback">
                     @*hide for live Mihir*@
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon">
@@ -744,17 +679,55 @@
     @Scripts.Render("~/bundles/mainlayoutjs")
     <script>
         $(document).ready(function () {
+            var role = $('#hfUserRole').val().trim();
 
-            /*if ($('#hfUserEmail').val() == "it@prakashchemicals.com" || $('#hfUserEmail').val() == "nishant.m@tripearltech.com")*/
-
-            if ($('#hfUserRole').val() == "Admin" || $('#hfUserRole').val() == "HOD") {
-                $('.foradmin').css('display', 'block');
+            // Admin
+            if (role === "Admin") {
+                $('.foradmin, .forreports,.forFeedback,.forcontact,foradmin1').show();
+                $('li.menu-label:contains("Operations")').hide();
+                $('.forSalesperson,.forsalesinvoice,.forbusinessplan,.forwarehouse,.forfinance,.forApproved,.forsalesquote').hide();
+                return;
             }
-            else {
-                $('.foradmin').css('display', 'none');
+
+            // HOD
+            if (role === "HOD") {
+                $('.forSalesperson, .forwarehouse, .forreports, .forfinance, .forbusinessplan, .formasterdata,.foradmin,.forFeedback,.forcontact,.forApproved').show();
+                $('.foradmins').hide(); // Hide Setup & Logs menu
+                $('li.menu-label:contains("Setup & Logs")').hide();
+                return;
             }
 
+            // Salesperson
+            if (role === "Salesperson") {
+                $('.forSalesperson, .forsalesinvoice, .forbusinessplan, .forreports,.forFeedback,.forcontact,.forApproved').show();
+                $('.foradmin, .forwarehouse, .forfinance:not(.forsalesinvoice), .formasterdata,.foradmins,.foradmin1').hide();
+                $('li.menu-label:contains("Setup & Logs")').hide();
+                return;
+            }
+
+            // Logistics-Manager 
+            if (role === "Logisitics-Manager") {
+                $('.forwarehouse').show();
+                $('.foradmin, .forSalesperson, .forreports, .forfinance, .forbusinessplan, .formasterdata,.foradmins,.forFeedback,.forcontact,.forApproved,.forsalesquote').hide();
+                $('li.menu-label:contains("Setup & Logs")').hide();
+                $('li.menu-label:contains("Reports")').hide();
+                $('li.menu-label:contains("Master Data")').hide();
+                $('#salesQuoteMenu').hide();
+                return;
+            }
+
+            // Finance
+            if (role === "Finance") {
+                $('.forfinance,.forApproved').show();
+                $('.foradmin, .forSalesperson, .forwarehouse, .forbusinessplan, .formasterdata,.foradmins,.forFeedback,.forcontact,.forreport,.foradmin1').hide();
+                $('li.menu-label:contains("Setup & Logs")').hide();
+                $('li.menu-label:contains("Master Data")').hide();
+                return;
+            }
         });
     </script>
+
+
+
 </body>
 </html>

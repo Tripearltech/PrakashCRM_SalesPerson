@@ -199,21 +199,21 @@ namespace PrakashCRM.Data.Models
 
     public class SPTodayVisitlist
     {
+        public string Week_Plan_Date { get; set; }
+        public string Visit_Name { get; set; }
+        public  string Visit_Sub_Type_Name { get; set; }
+        public string Pur_Visit { get; set; }
+        public string Salesperson_Code { get; set; }
+        public string ContactCompanyName { get; set; }
+    }
+    public class SPWeeklytasklist
+    {
         public string Date { get; set; }
         public string Visit_Name { get; set; }
         public  string Visit_SubType_Name { get; set; }
         public string Purpose_Of_Visit { get; set; }
         public string Salesperson_Code { get; set; }
         public string Customer_Name { get; set; }
-    }
-    public class SPWeeklytasklist
-    {
-        public string Week_Plan_Date { get; set; }
-        public string Visit_Type_Name { get; set; }
-        public  string Visit_Sub_Type_Name { get; set; }
-        public string ContactCompanyName { get; set; }
-        public string Salesperson_Code { get; set; }
-        public string Contact_Person_Name { get; set; }
     }
     public class SPMonthlylist
     {

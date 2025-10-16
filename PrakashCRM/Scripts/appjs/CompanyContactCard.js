@@ -49,8 +49,6 @@ $(document).ready(function () {
     });
 
     if ($('#hdnCompanyContactAction').val() != "") {
-
-        //$('#divImage').hide();
         $('#btnSaveSpinner').hide();
 
         var CompanyContactActionDetails = 'Contact Company ' + $('#hdnCompanyContactAction').val() + ' Successfully';
@@ -66,16 +64,12 @@ $(document).ready(function () {
     }
 
     if ($('#hdnCompanyContactActionErr').val() != "") {
-
-        //$('#divImage').hide();
         $('#btnSaveSpinner').hide();
 
         var CompanyContactActionErr = $('#hdnCompanyContactActionErr').val();
 
         $('#modalErrMsg').css('display', 'block');
         $('#modalErrDetails').text(CompanyContactActionErr);
-
-        /*ShowErrMsg(CompanyContactActionErr);*/
 
         $.get('NullContactSession', function (data) {
 
@@ -90,40 +84,6 @@ $(document).ready(function () {
 
     });
 
-    /*$('#GSTNo').change(function () {
-        debugger;
-        var str = $('#GSTNo').val();
-        //if (str.match(/[a-z]/g) && str.match(/[A-Z]/g) && str.match(/[0-9]/g) && str.match(/[^a-zA-Z\d]/g) && str.length == 15) {
-        if ((str.match(/[a-z]/g) || str.match(/[A-Z]/g)) && str.match(/[0-9]/g) && str.length >= 15) {
-            //document.getElementById('lblGSTValMsg').innerText = "";
-        }
-        else {
-
-            //document.getElementById('lblGSTValMsg').innerText = "GSTNo should have 15 Character & Special Character not allowed.";
-
-            var msg = "GSTNo should have 15 Character & Special Character not allowed.";
-            ShowErrMsg(msg);
-
-            $('#GSTNo').val('');
-            $('#GSTNo').focus();
-        }
-    });*/
-
-    //$('#GSTNo').blur(function () {
-
-    //    if ($('#PanNo').val().length > 0 && $('#GSTNo').val().length == 15) {
-
-    //        var GSTNo = $('#GSTNo').val();
-    //        if (!GSTNo.includes($('#PanNo').val())) {
-    //            $('#GSTNo').val("");
-    //            var errMsg = "GST No should contains PAN No";
-    //            ShowErrMsg(errMsg)
-    //        }
-
-    //    }
-
-    //});
-
     $('#chkAllowLogin').on('change', function () {
 
         if ($('#chkAllowLogin').is(':checked') == true) {
@@ -133,38 +93,11 @@ $(document).ready(function () {
             $('#chkEnableOTPOnLogin').prop('disabled', false);
         }
 
-        //if ($('#chkAllowLogin').val() == "true") {
-        //    $('#chkEnableOTPOnLogin').prop('disabled', false);
-        //}
-        //else {
-        //    $('#chkEnableOTPOnLogin').prop('disabled', true);
-        //}
-
     });
 
-    //$('#PanNo').change(function () {
-    //    debugger;
-    //    var str = $('#PanNo').val();
-    //    //if (str.match(/[a-z]/g) && str.match(/[A-Z]/g) && str.match(/[0-9]/g) && str.match(/[^a-zA-Z\d]/g) && str.length == 15) {
-    //    if (str.match(/[a-z]/g) && str.match(/[A-Z]/g) && str.match(/[0-9]/g) && str.length >= 10) {
-    //        document.getElementById('lblPanValMsg').innerText = "";
-    //    }
-    //    else {
-
-    //        document.getElementById('lblPanValMsg').innerText = "PanNo should have 10 Character & Special Character not allowed.";
-    //        $('#PanNo').val('');
-    //        $('#PanNo').focus();
-    //    }
-    //});
-
-    //searchName_autocomplete();
     BindPincodeMin2Char();
     BindCompany();
-    //BindCountry();
-    //BindState();
-    //BindPostCodes(); //for city
     BindArea();
-    //BindDistrict();
     BindIndustry();
     BindBusinessType();
     BindSalesPerson();
@@ -189,9 +122,6 @@ $(document).ready(function () {
             $('#ddlArea').empty();
             $('#ddlArea').append("<option value='-1'>---Select---</option>");
             $("#txtCountry,#txtState,#txtDistrict,#txtCity").val("");
-            //$("#txtState").val("");
-            //$("#txtDistrict").val("");
-            //$("#txtCity").val("");
         }
 
     });
@@ -205,10 +135,6 @@ $(document).ready(function () {
 
         }
         else {
-
-            //$('#tblContactProds').css('display', 'block');
-            //var ProdTR = "<tr><td><a class='DeleteContactCls' onclick='DeleteContact(this);'><i class='bx bx-trash'></i></a></td><td>" + $('#ddlProducts').val() + "</td><td>" + $('#ddlProducts option:selected').text() + "</td></tr>";
-            //$('#tblContactProds > tbody').append(ProdTR);
 
             $('#btnAddContactProdSpinner').css('display', 'block');
 

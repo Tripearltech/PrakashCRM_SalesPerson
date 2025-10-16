@@ -54,6 +54,7 @@ namespace PrakashCRM.Data.Models
         public SPDailyVisitExpanse dailyVisitExpense { get; set; }
 
         public List<SPVEWeeklyDailyPlanProds> dailyVisitProds { get; set; }
+        public string Pur_Visit { get; set; }
 
         //public int DailyVisitExpNo { get; set; }
         //public int DailyVisitNo { get; set; }
@@ -119,6 +120,7 @@ namespace PrakashCRM.Data.Models
         public string Week_End_Date { get; set; }
         public string Entry_Type { get; set; }
         public bool Is_PDC { get; set; }
+        public string Pur_Visit { get; set; }
         public bool IsActive { get; set; }
         public errorDetails errorDetails { get; set; } = null;
     }
@@ -159,6 +161,7 @@ namespace PrakashCRM.Data.Models
         public string Week_End_Date { get; set; }
         public string Entry_Type { get; set; }
         public bool Is_PDC { get; set; }
+        public string Pur_Visit { get; set; }
         public bool IsActive { get; set; }
     }
 

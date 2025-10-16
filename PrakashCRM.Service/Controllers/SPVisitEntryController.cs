@@ -1078,6 +1078,7 @@ namespace PrakashCRM.Service.Controllers
             reqDailyVisit.Week_End_Date = dailyVisitDetails.Week_End_Date;
             reqDailyVisit.Entry_Type = "ENTRY";
             reqDailyVisit.Is_PDC = dailyVisitDetails.Is_PDC;
+            reqDailyVisit.Pur_Visit = dailyVisitDetails.Pur_Visit;
             reqDailyVisit.IsActive = true;
 
             var result = PostItemDailyVisit("DailyVisitsDotNetAPI", reqDailyVisit, resDailyVisit);
