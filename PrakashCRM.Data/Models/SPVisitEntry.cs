@@ -167,22 +167,6 @@ namespace PrakashCRM.Data.Models
 
     public class SPVEWeekSalesPlanDetails
     {
-        //public string Week { get; set; }
-        //public string Month_Detail_No { get; set; }
-        //public string Week_Plan_Date { get; set; }
-        //public string SalesPerson_Code { get; set; }
-        //public string Visit_Type { get; set; }
-        //public string Visit_Sub_Type { get; set; }
-        //public string Week_Day { get; set; }
-        //public string Week_Date { get; set; }
-        //public string Contact_Company_No { get; set; }
-        //public string ContactCompanyName { get; set; }
-        //public string Pur_Visit { get; set; }
-        //public string Target { get; set; }
-        //public string Remarks { get; set; }
-        //public string Status { get; set; }
-        //public bool IsActive { get; set; }
-
         public string IsWeekPlanEdit { get; set; }
         public string No { get; set; }
         public string Financial_Year { get; set; }
@@ -238,21 +222,6 @@ namespace PrakashCRM.Data.Models
 
     public class SPVEWeekSalesPlanPost
     {
-        //public string Week_No { get; set; }
-
-        //public string Month_Detail_No { get; set; }
-        //public string Week_Plan_Date { get; set; }
-        //public string SalesPerson_Code { get; set; }
-        //public string Visit_Type { get; set; }
-        //public string Visit_Sub_Type { get; set; }
-        //public string Week_Day { get; set; }
-        //public string Week_Date { get; set; }
-        //public string Contact_Company_No { get; set; }
-        //public string Pur_Visit { get; set; }
-        //public string Target { get; set; }
-        //public string Remarks { get; set; }
-        //public string Status { get; set; }
-        //public bool IsActive { get; set; }
 
         public string Financial_Year { get; set; }
         public string Week_No { get; set; }
@@ -266,9 +235,9 @@ namespace PrakashCRM.Data.Models
         public string Event_No { get; set; }
         public string Topic_Name { get; set; }
         public string Mode_of_Visit { get; set; }
-        public string Pur_Visit { get; set; }
         public string Remarks { get; set; }
         public string SalesPerson_Code { get; set; }
+        public string Pur_Visit { get; set; }
         public bool IsActive { get; set; }
 
     }

@@ -383,7 +383,7 @@ $(document).ready(function () {
 
         }
 
-        if ($('#txtProdQty').val() === "" || $('#txtProdQty').val() === null) {
+        if ($('#txtProdQty').val() === "" || $('#txtProdQty').val() === null || $('#txtProdQty').val() === "0") {
 
             ShowErrMsg("Please select a Qty before saving.");
 

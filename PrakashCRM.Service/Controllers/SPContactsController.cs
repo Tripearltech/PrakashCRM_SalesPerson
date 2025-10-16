@@ -171,53 +171,58 @@ namespace PrakashCRM.Service.Controllers
             SPCompany requestCompany = new SPCompany();
             SPCompanyResponse responseCompany = new SPCompanyResponse();
             SPContact responseContact = new SPContact();
-
-            requestCompany.Name = companycontact.Company_Name;
-            requestCompany.Area_Code = companycontact.Area_Code == "-1" ? "" : companycontact.Area_Code;
-            requestCompany.District = companycontact.District == null || companycontact.District == "" ? "" : companycontact.District;
-            //requestCompany.District = companycontact.District;
-            requestCompany.Post_Code = companycontact.Post_Code == null || companycontact.Post_Code == "" ? "" : companycontact.Post_Code;
-            requestCompany.State_Code = companycontact.State_Code == null || companycontact.State_Code == "" ? "" : companycontact.State_Code;
-            //requestCompany.State_Code = companycontact.State_Code;
-            requestCompany.City = companycontact.City == null || companycontact.City == "" ? "" : companycontact.City;
-            //requestCompany.City = companycontact.City;
-            requestCompany.Country_Region_Code = companycontact.Country_Region_Code == null || companycontact.Country_Region_Code == "" ? "" : companycontact.Country_Region_Code;
-            //requestCompany.Country_Region_Code = companycontact.Country_Region_Code;
-            requestCompany.Salesperson_Code = companycontact.Salesperson_Code;
-            requestCompany.PCPL_Secondary_SP_Code = companycontact.PCPL_Secondary_SP_Code == "-1" || companycontact.PCPL_Secondary_SP_Code == "" ? "" :
-                companycontact.PCPL_Secondary_SP_Code;
-            requestCompany.Address = companycontact.Address;
-            requestCompany.Address_2 = companycontact.Address_2 == null ? "" : companycontact.Address_2;
-            requestCompany.PCPL_URL = companycontact.PCPL_URL == null ? "" : companycontact.PCPL_URL;
-            requestCompany.Industry_No = companycontact.Industry_No == "-1" ? "" : companycontact.Industry_No;
-            requestCompany.Business_Type_No = companycontact.Business_Type_No == "-1" ? "" : companycontact.Business_Type_No;
-            requestCompany.GST_Registration_No = companycontact.GST_Registration_No == null ? "" : companycontact.GST_Registration_No;
-            requestCompany.P_A_N_No = companycontact.P_A_N_No == null ? "" : companycontact.P_A_N_No;
-            requestCompany.Assessee_Code = companycontact.Assessee_Code == null ? "" : companycontact.Assessee_Code;
-            requestCompany.Source_Of_Contact_No = companycontact.Source_Of_Contact_No == "-1" ? "" : companycontact.Source_Of_Contact_No;
-            requestCompany.Phone_No = companycontact.Phone_No == null ? "" : companycontact.Phone_No;
-            requestCompany.Mobile_Phone_No = companycontact.Mobile_Phone_No == null ? "" : companycontact.Mobile_Phone_No;
-            requestCompany.E_Mail = companycontact.E_Mail;
-            requestCompany.Credit_Limit = companycontact.Credit_Limit;
-            requestCompany.Type = "Company";
-
             var ac = new API();
             errorDetails ed = new errorDetails();
             errorDetails ed1 = new errorDetails();
-
             var result = (dynamic)null;
+
+            requestCompany.Name = companycontact.Company_Name;
+            requestCompany.Area_Code = companycontact.Area_Code == "-1" ? "" : companycontact.Area_Code;
+            requestCompany.District = string.IsNullOrEmpty(companycontact.District) ? "" : companycontact.District;
+            requestCompany.Post_Code = string.IsNullOrEmpty(companycontact.Post_Code) ? "" : companycontact.Post_Code;
+            requestCompany.State_Code = string.IsNullOrEmpty(companycontact.State_Code) ? "" : companycontact.State_Code;
+            requestCompany.City = string.IsNullOrEmpty(companycontact.City) ? "" : companycontact.City;
+            requestCompany.Country_Region_Code = string.IsNullOrEmpty(companycontact.Country_Region_Code) ? "" : companycontact.Country_Region_Code;
+            requestCompany.Salesperson_Code = companycontact.Salesperson_Code;
+            requestCompany.PCPL_Secondary_SP_Code = (companycontact.PCPL_Secondary_SP_Code == "-1" || string.IsNullOrEmpty(companycontact.PCPL_Secondary_SP_Code)) ? "" : companycontact.PCPL_Secondary_SP_Code;
+            requestCompany.Address = companycontact.Address;
+            requestCompany.Address_2 = companycontact.Address_2 ?? "";
+            requestCompany.PCPL_URL = companycontact.PCPL_URL ?? "";
+            requestCompany.Industry_No = companycontact.Industry_No == "-1" ? "" : companycontact.Industry_No;
+            requestCompany.Business_Type_No = companycontact.Business_Type_No == "-1" ? "" : companycontact.Business_Type_No;
+            requestCompany.GST_Registration_No = companycontact.GST_Registration_No ?? "";
+            requestCompany.P_A_N_No = companycontact.P_A_N_No ?? "";
+            requestCompany.Assessee_Code = companycontact.Assessee_Code ?? "";
+            requestCompany.Source_Of_Contact_No = companycontact.Source_Of_Contact_No == "-1" ? "" : companycontact.Source_Of_Contact_No;
+            requestCompany.E_Mail = companycontact.E_Mail;
+            requestCompany.Credit_Limit = companycontact.Credit_Limit;
+            requestCompany.Type = "Company";
+            if (!string.IsNullOrEmpty(companycontact.Phone_No))
+                requestCompany.Phone_No = companycontact.Phone_No;
+            if (!string.IsNullOrEmpty(companycontact.Mobile_Phone_No))
+                requestCompany.Mobile_Phone_No = companycontact.Mobile_Phone_No;
 
             if (isEdit)
             {
-                result = PatchItemContact("ContactDotNetAPI", requestCompany, responseCompany, "No='" + CompanyNo + "'");
+                var existingCompanyResult = ac.GetData<SPCompany>("ContactDotNetAPI", $"No eq '{CompanyNo}'");
+                if (existingCompanyResult.Result.Item1.value.Count > 0)
+                {
+                    var existingCompany = existingCompanyResult.Result.Item1.value[0];
+                    if (string.IsNullOrEmpty(requestCompany.Phone_No))
+                        requestCompany.Phone_No = existingCompany.Phone_No;
+                    if (string.IsNullOrEmpty(requestCompany.Mobile_Phone_No))
+                        requestCompany.Mobile_Phone_No = existingCompany.Mobile_Phone_No;
+                    if (string.IsNullOrEmpty(requestCompany.E_Mail))
+                        requestCompany.E_Mail = existingCompany.E_Mail;
+                }
+                //Call Patch API
+                result = PatchItemContact("ContactDotNetAPI", requestCompany, responseCompany, $"No='{CompanyNo}'");
                 if (result.Result.Item1 != null)
                 {
                     responseCompany = result.Result.Item1;
                     ed = result.Result.Item2;
                     responseCompany.errorDetails = ed;
-
                 }
-
             }
             else
             {
@@ -228,22 +233,22 @@ namespace PrakashCRM.Service.Controllers
                     responseCompany = result.Result.Item1;
                     ed = result.Result.Item2;
                     responseCompany.errorDetails = ed;
-
-                    if (responseCompany.No != null && responseCompany.No != "")
+                    if (!string.IsNullOrEmpty(responseCompany.No))
                     {
-                        SPContact requestContact = new SPContact();
-
-                        requestContact.Salesperson_Code = companycontact.Salesperson_Code;
-                        requestContact.Name = companycontact.Contact_Name;
-                        requestContact.Company_No = responseCompany.No;
-                        requestContact.Type = "Person";
-                        requestContact.Mobile_Phone_No = companycontact.Mobile_Phone_No;
-                        requestContact.E_Mail = companycontact.Contact_EMail;
-                        requestContact.PCPL_Job_Responsibility = companycontact.PCPL_Job_Responsibility;
-                        requestContact.PCPL_Department_Code = companycontact.PCPL_Department_Code;
-                        requestContact.PCPL_Allow_Login = companycontact.PCPL_Allow_Login;
-                        requestContact.PCPL_Enable_OTP_On_Login = companycontact.PCPL_Enable_OTP_On_Login;
-                        requestContact.Is_Primary = companycontact.Is_Primary;
+                        SPContact requestContact = new SPContact
+                        {
+                            Salesperson_Code = companycontact.Salesperson_Code,
+                            Name = companycontact.Contact_Name,
+                            Company_No = responseCompany.No,
+                            Type = "Person",
+                            Mobile_Phone_No = companycontact.Mobile_Phone_No,
+                            E_Mail = companycontact.Contact_EMail,
+                            PCPL_Job_Responsibility = companycontact.PCPL_Job_Responsibility,
+                            PCPL_Department_Code = companycontact.PCPL_Department_Code,
+                            PCPL_Allow_Login = companycontact.PCPL_Allow_Login,
+                            PCPL_Enable_OTP_On_Login = companycontact.PCPL_Enable_OTP_On_Login,
+                            Is_Primary = companycontact.Is_Primary
+                        };
 
                         var result1 = ac.PostItem("ContactDotNetAPI", requestContact, responseContact);
                         if (result1.Result.Item1 != null)
@@ -252,29 +257,15 @@ namespace PrakashCRM.Service.Controllers
                             ed1 = result1.Result.Item2;
                             responseCompany.errorDetails = ed1;
                         }
-
-
-                        //if (result1.Result.Item2.message != null)
-                        //    ed1 = result1.Result.Item2;
-
-                        //if (result1.Result.Item2.message != null)
-                        //    ed1 = result1.Result.Item2;
                     }
-                    //else
-                    //{
-                    //    ed1.message = "Error in Company Creation";
-                    //}
                 }
             }
 
             if (result.Result.Item2.message != null)
                 ed = result.Result.Item2;
 
-            //responseCompany.errorDetails = (ed == null ? ed1 : ed);
-
             return responseCompany;
         }
-
 
         public async Task<(SPCompanyResponse, errorDetails)> PostItemContact<SPCompanyResponse>(string apiendpoint, SPCompany requestModel, SPCompanyResponse responseModel)
         {

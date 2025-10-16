@@ -138,6 +138,7 @@
                                                     <label class="col-sm-3 col-form-label">Birth Date</label>
                                                     <div class="col-sm-9">
                                                         @Html.TextBoxFor(x => x.Birth_Date, new { Value = Model.Birth_Date, @class = "form-control datepicker", autocomplete = "off", @alt = "Date Of Birth" })
+                                                        @Html.HiddenFor(model => model.Birth_Date, new { Value = @ViewBag.Birth_Date })
                                                     </div>
                                                 </div>
                                             </div>

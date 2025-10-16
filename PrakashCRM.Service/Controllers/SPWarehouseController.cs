@@ -708,11 +708,11 @@ namespace PrakashCRM.Service.Controllers
             {
                 for (int i = 0; i < packinguomlist.Length; i++)
                 {
-                    if (packinguomlist[i] != "")
-                        UOMfilter += "UOM eq '" + packinguomlist[i] + "' or ";
+                    if (!string.IsNullOrWhiteSpace(packinguomlist[i]))
+                        UOMfilter += $"UOM eq '{packinguomlist[i]}' or ";
                 }
-                UOMfilter += " UOM eq ''";
-                UOMfilter = "(" + UOMfilter + ")";
+                UOMfilter += "UOM eq ''";
+                UOMfilter = $"({UOMfilter})";
             }
             else
             {
@@ -723,14 +723,15 @@ namespace PrakashCRM.Service.Controllers
 
             if (string.IsNullOrEmpty(TransporterNo))
             {
-                // TransporterNo Empty + Pincode + TransporterNo + LatestRate
-                filter += $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and {latestRateFilter}";
+                // TransporterNo is empty
+                filter = $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and {UOMfilter} and {latestRateFilter}";
             }
             else
             {
-                // TransporterNo + Pincode + TransporterNo + LatestRate
+                // Case: TransporterNo is provided
                 filter = $"From_Post_Code eq '{FromPincode}' and To_Post_Code eq '{ToPincode}' and Transporter_No eq '{TransporterNo}' and {latestRateFilter}";
             }
+
 
             var result = ac.GetData1<TransporterRateCard>("Transporter_Rate_Details", filter, 0, 0, "Rate_for_Standard_Weight asc");
 

@@ -324,10 +324,10 @@ namespace PrakashCRM.Controllers
              string SalesPersonCode = Session["loggedInUserSPCode"].ToString();
             //string SalesPersonCode = "DIYA";
 
-            string Date = DateTime.Now.ToString("yyyy-MM-dd");
+            string Week_Plan_Date = DateTime.Now.ToString("yyyy-MM-dd");
            // string Date = "2025-09-26";
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/";
-            apiUrl = apiUrl + "GetTodayVisit?Date=" + Date + "&Salesperson_Code=" + SalesPersonCode;
+            apiUrl = apiUrl + "GetTodayVisit?Week_Plan_Date=" + Week_Plan_Date + "&Salesperson_Code=" + SalesPersonCode;
 
             HttpClient client = new HttpClient();
             List<SPTodayVisitlist> toadyvisit = new List<SPTodayVisitlist>();
@@ -353,10 +353,10 @@ namespace PrakashCRM.Controllers
              string SalesPersonCode = Session["loggedInUserSPCode"].ToString();
             //string SalesPersonCode = "DIYA";
 
-            string Week_Plan_Date = DateTime.Now.ToString("yyyy-MM-dd");
+            string Date = DateTime.Now.ToString("yyyy-MM-dd");
            // string Date = "2025-09-26";
             string apiUrl = ConfigurationManager.AppSettings["ServiceApiUrl"].ToString() + "SPDashboard/";
-            apiUrl = apiUrl + "GetWeeklytask?Week_Plan_Date=" + Week_Plan_Date + "&Salesperson_Code=" + SalesPersonCode;
+            apiUrl = apiUrl + "GetWeeklytask?Date=" + Date + "&Salesperson_Code=" + SalesPersonCode;
 
             HttpClient client = new HttpClient();
             List<SPWeeklytasklist> weeklydyvisit = new List<SPWeeklytasklist>();
