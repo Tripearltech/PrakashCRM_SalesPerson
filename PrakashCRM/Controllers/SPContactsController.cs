@@ -164,10 +164,11 @@ namespace PrakashCRM.Controllers
             List<SPContactResponse> contacts = new List<SPContactResponse>();
             List<SPContactProducts> contactProducts = new List<SPContactProducts>();
 
-            if (No != "" || (Session["CompanyNo"] != null && Session["CompanyNo"].ToString() != ""))
+
+            if (No != "")
             {
 
-                if (Session["CompanyNo"].ToString() == "")
+                //if (Session["CompanyNo"].ToString() == "")
                     Session["CompanyNo"] = No;
 
                 Task<SPCompanyContact> task = Task.Run<SPCompanyContact>(async () => await GetCompanyContactForEdit(Session["CompanyNo"].ToString()));
@@ -197,7 +198,8 @@ namespace PrakashCRM.Controllers
             }
             else
                 companycontact.PCPL_Enable_OTP_On_Login = true;
-            return View(companycontact);
+            
+                return View(companycontact);
 
         }
 

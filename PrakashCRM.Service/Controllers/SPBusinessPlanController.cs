@@ -272,7 +272,7 @@ namespace PrakashCRM.Service.Controllers
             API ac = new API();
             List<SPItemList> prods = new List<SPItemList>();
 
-            var result = ac.GetData<SPItemList>("ItemDotNetAPI", "");
+            var result = ac.GetData1<SPItemList>("ItemDotNetAPI","",0,0, "Description asc");
 
             if (result.Result.Item1.value.Count > 0)
                 prods = result.Result.Item1.value;
